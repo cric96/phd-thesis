@@ -1,0 +1,264 @@
+% !TEX root = main.tex
+\begin{figure*}
+\centering
+\begin{minipage}[b]{\textwidth}
+\begin{minipage}[b]{0.25\textwidth}\centering
+\begin{tikzpicture}[
+framed,
+node distance=1.0cm and 0.5cm,
+every node/.style={scale=.8}
+]
+% physical nodes
+\node[host] (h1) [anchor=north,label=above:{}] {};
+\node[host] (h2) [right=of h1,label=above:{}] {};
+\node[host] (h3) [below=of h1, label=above:{}] {};
+\node[host] (h4) [right=of h3, label=above:{}] {};
+
+\node[node] (n11) at (h1.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+\node[node] (n12) at (h1.south east) [xshift=-\nm,yshift=\nm] {$\LComm$};
+\node[node] (n13) at (h1.north east) [xshift=-\nm,yshift=-\nm] {$\LAct$};
+\node[node] (n14) at (h1.north west) [xshift=\nm,yshift=-\nm] {$\LComp$};
+\node[node] (n15) at (h1) [] {$\LState$};
+% logical node 2
+\node[nodeA] (n21) at (h2.south west) [xshift=\nm,yshift=\nm] {$\LComm$};
+\node[nodeA] (n22) at (h2.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+\node[nodeA] (n23) at (h2.north east) [xshift=-\nm,yshift=-\nm] {$\LSens$};
+\node[nodeA] (n24) at (h2.north west) [xshift=\nm,yshift=-\nm] {$\LComp$};
+\node[nodeA] (n25) at (h2) [] {$\LState$};
+% logical node 3
+\node[nodeB] (n31) at (h3.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+\node[nodeB] (n32) at (h3.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+\node[nodeB] (n33) at (h3.north east) [xshift=-\nm,yshift=-\nm] {$\LComm$};
+\node[nodeB] (n34) at (h3.north west) [xshift=\nm,yshift=-\nm] {$\LComp$};
+\node[nodeB] (n35) at (h3) [] {$\LState$};
+% logical node 4
+\node[nodeC] (n41) at (h4.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+\node[nodeC] (n42) at (h4.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+\node[nodeC] (n43) at (h4.north east) [xshift=-\nm,yshift=-\nm] {$\LComp$};
+\node[nodeC] (n44) at (h4.north west) [xshift=\nm,yshift=-\nm] {$\LComm$};
+\node[nodeC] (n45) at (h4) [] {$\LState$};
+
+% physical links
+\draw[plink] 
+	(h1) -- (h2)
+	(h2) -- (h3)
+	(h2) -- (h4)
+	(h3) -- (h4)
+;
+% logical links
+\draw[llink]
+    (n12) to [] (n21)
+    (n21) to [] (n44)
+    (n21) to [bend right=30] (n33)
+    (n33) to [] (n44);
+\end{tikzpicture}
+\end{minipage}\hfill%
+\begin{minipage}[b]{0.7\textwidth}\centering
+\begin{minted}[fontsize=\small,frame=none]{scala}
+@multitier object P2P extends PulverisedSystem {
+  // Definition of device kinds and possible network connections
+  @peer type Node <: { type Tie <: Multiple[Node] }
+  @peer type SensorComponent <: Node
+  // Pulverised component allocation on devices
+  @peer type ActuatorComponent <: Node
+  @peer type StateComponent <: Node
+  @peer type BehaviourComponent <: Node
+  @peer type CommunicationComponent <: Node
+}
+\end{minted}
+\end{minipage}
+\subcaption{Peer-to-peer: 1-to-1 mapping between logical and physical devices.\label{img:p2p}}
+\end{minipage}
+
+\noindent\rule{\textwidth}{1pt}
+
+\begin{minipage}[b]{\textwidth}
+\begin{minipage}[b]{0.25\textwidth}\centering
+\begin{tikzpicture}[
+framed,
+node distance=0cm and 0.4cm,
+every node/.style={scale=.6}
+]
+
+% physical nodes
+\node[host,minimum width=1.5cm] (h1) [anchor=north,label=above:{}] {};
+\node[host,minimum width=1.5cm] (h2) [right=of h1,label=above:{}] {};
+\node[host,minimum width=1.5cm] (h3) [right=of h2, label=above:{}] {};
+\node[host,minimum width=2.5cm] (he) [above right=0.2cm and -0.5cm of h1,label=above:{}] {};
+\node[host,minimum width=3.5cm] (h5) [above=1.4cm of h2,label=right:{}] {};
+
+\node[node] (n11) at (h1.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+\node[node] (n12) at (h1.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+\node[node] (n13) at (h1.north east) [xshift=-\nm,yshift=-\nm] {$\LState$};
+\node[node] (n14) at (h1.north west) [xshift=\nm,yshift=-\nm] {$\LComp$};
+\node[node] (n15) at (he) [xshift=-2*\nm] {$\LComm$};
+% logical node 2
+\node[nodeA] (n21) at (h2.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+\node[nodeA] (n22) at (h2.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+\node[nodeA] (n23) at (h2.north east) [xshift=-\nm,yshift=-\nm] {$\LState$};
+\node[nodeA] (n24) at (h2.north west) [xshift=\nm,yshift=-\nm] {$\LComp$};
+\node[nodeA] (n25) at (he) [xshift=0] {$\LComm$};
+% logical node 3
+\node[nodeB] (n31) at (h3.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+\node[nodeB] (n32) at (h3.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+\node[nodeB] (n33) at (h3.north east) [xshift=-\nm,yshift=-\nm] {$\LState$};
+\node[nodeB] (n34) at (h3.north west) [xshift=\nm,yshift=-\nm] {$\LComp$};
+\node[nodeB] (n35) at (h5) [xshift=2*\nm] {$\LComm$};
+
+% physical links
+\draw[plink] 
+	(h1) -- (he)
+	(h2) -- (he)
+	(h3) -- (h5)
+	(he) -- (h5);
+
+\draw[llink]
+    %(n15) to [bend left=20] (n35)
+    (n25) to [bend left=30] (n35);
+\end{tikzpicture}
+\end{minipage}\hfill%
+\begin{minipage}[b]{0.7\textwidth}\centering
+\begin{minted}[fontsize=\footnotesize,frame=none]{scala}
+@multitier object BrokerBased extends PulverisedSystem {
+  // Definition of device kinds and possible network connections
+  @peer type Node <: { type Tie <: Single[Broker] }
+  @peer type Broker <: { type Tie <: Multiple[Node] with Multiple[Broker] }
+  // Pulverised component allocation on devices
+  @peer type SensorComponent <: Node
+  @peer type ActuatorComponent <: Node
+  @peer type StateComponent <: Node
+  @peer type BehaviourComponent <: Node
+  @peer type CommunicationComponent <: Broker
+}
+\end{minted}
+\end{minipage}
+
+\subcaption{Multi-broker: the communication is offloaded in part to the edge, and in part to the cloud.\label{img:broker}}
+\end{minipage}
+
+\noindent\rule{\textwidth}{1pt}
+
+%\begin{minipage}[b][0.3\textheight][b]{0.48\textwidth}
+%\begin{tikzpicture}[
+%framed,
+%node distance=0.4cm and 0.2cm,
+%every node/.style={scale=\tpscale}
+%]
+%
+%% physical nodes
+%\node[host,minimum width=1.5cm] (h1) [anchor=north,label=above:{}] {};
+%\node[host,minimum width=1.5cm] (h2) [right=of h1,label=above:{}] {};
+%\node[host,minimum width=1.5cm] (h3) [right=of h2, label=above:{}] {};
+%\node[host,minimum width=2.5cm] (he) [above right=0.6cm and -1cm of h1,label=above:{}] {};
+%\node[host,minimum width=3.5cm] (h5) [above=2.6cm of h2,label=right:{}] {};
+%
+%\node[node] (n11) at (h1.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+%\node[node] (n12) at (h1.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+%\node[node] (n13) at (he.north) [xshift=-2*\nm,yshift=-\nm] {$\LComm$};
+%\node[node] (n14) at (h1.north) [yshift=-\nm] {$\LComp$};
+%\node[node] (n15) at (he.south) [xshift=-2*\nm,yshift=\nm] {$\LState$};
+%% logical node 2
+%\node[nodeA] (n21) at (h2.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+%\node[nodeA] (n22) at (h2.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+%\node[nodeA] (n23) at (he.north) [xshift=0*\nm,yshift=-\nm] {$\LComm$};
+%\node[nodeA] (n24) at (h2.north) [yshift=-\nm] {$\LComp$};
+%\node[nodeA] (n25) at (he.south) [xshift=0,yshift=\nm] {$\LState$};
+%% logical node 3
+%\node[nodeB] (n31) at (h3.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+%\node[nodeB] (n32) at (h3.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+%\node[nodeB] (n33) at (h5.south) [xshift=2*\nm,yshift=\nm] {$\LComm$};
+%\node[nodeB] (n34) at (h3.north) [yshift=-\nm] {$\LComp$};
+%\node[nodeB] (n35) at (h5.south) [xshift=4*\nm,yshift=\nm] {$\LState$};
+%
+%% physical links
+%\draw[plink] 
+%	(h1) -- (he)
+%	(h2) -- (he)
+%	(h3) -- (h5)
+%	(he) -- (h5);
+%
+%\draw[llink]
+%    %(n15) to [bend left=20] (n35)
+%    (n23) to [bend left=20] (n33);
+%\end{tikzpicture}
+%\subcaption{todo}
+%\end{minipage}\hfill%
+%\begin{minipage}[b][0.3\textheight][b]{0.48\textwidth}
+%code
+%\subcaption{todo}
+%\end{minipage}
+%
+\begin{minipage}[b]{\textwidth}
+\begin{minipage}[b]{0.25\textwidth}\centering
+\begin{tikzpicture}[
+framed,
+node distance=0.4cm and 0.2cm,
+every node/.style={scale=.7}
+]
+
+% physical nodes
+\node[host,minimum width=1.5cm] (h1) [anchor=north,label=above:{}] {};
+\node[host,minimum width=1.5cm] (h2) [right=of h1,label=above:{}] {};
+\node[host,minimum width=1.5cm] (h3) [right=of h2, label=above:{}] {};
+\node[host,minimum width=2.5cm] (he) [above right=0.3cm and -1cm of h1,label=above:{}] {};
+\node[host,minimum width=3cm] (h5) [above=1.6cm of h2,label=right:{}] {};
+
+\node[node] (n11) at (h1.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+\node[node] (n12) at (h1.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+\node[node] (n13) at (he.south east) [xshift=-2.7*\nm,yshift=\nm] {$\LComm$};
+\node[node] (n14) at (he.south west) [xshift=1*\nm,yshift=\nm] {$\LComp$};
+\node[node] (n15) at (he.north) [xshift=-2*\nm,yshift=-\nm] {$\LState$};
+% logical node 2
+\node[nodeA] (n21) at (h2.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+\node[nodeA] (n22) at (h2.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+\node[nodeA] (n23) at (he.south east) [xshift=-1*\nm,yshift=\nm] {$\LComm$};
+\node[nodeA] (n24) at (he.south west) [xshift=2.6*\nm,yshift=\nm] {$\LComp$};
+\node[nodeA] (n25) at (he.north) [xshift=0,yshift=-\nm] {$\LState$};
+% logical node 3
+\node[nodeB] (n31) at (h3.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+\node[nodeB] (n32) at (h3.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+\node[nodeB] (n33) at (h5.south east) [xshift=-5*\nm,yshift=\nm] {$\LComm$};
+\node[nodeB] (n34) at (h5.south east) [xshift=-3*\nm,yshift=\nm] {$\LComp$};
+\node[nodeB] (n35) at (h5.south east) [xshift=-1*\nm,yshift=\nm] {$\LState$};
+
+% physical links
+\draw[plink] 
+	(h1) -- (he)
+	(h2) -- (he)
+	(h3) -- (h5)
+	(he) -- (h5);
+	
+\draw[llink]
+   (n23) to [bend left=25] (n33);
+\end{tikzpicture}
+\end{minipage}\hfill%
+\begin{minipage}[b][0.19\textheight][b]{0.70\textwidth}\centering
+\begin{minted}[fontsize=\footnotesize,frame=none]{scala}
+@multitier object IoTSystem extends PulverisedSystem {
+  // Definition of device kinds and possible network connections
+  @peer type Thin <: { type Tie <: Multiple[Thick] }
+  @peer type Thick <: { type Tie <: Multiple[Thick] with Multiple[Thin]}
+  // Pulverised component allocation on devices
+  @peer type SensorComponent <: Thin
+  @peer type ActuatorComponent <: Thin
+  @peer type StateComponent <: Thick
+  @peer type BehaviourComponent <: Thick
+  @peer type CommunicationComponent <: Thick
+}
+\end{minted}
+\end{minipage}
+\subcaption{IoT with thin clients: end devices only host sensors and actuators, other components are offloaded either to the edge or the cloud.\label{img:thin}}
+\end{minipage}
+
+
+\caption{
+Examples of pulverised architectures. Thick boxes represent physical devices, dashed boxes represent pulverised components, and different logical devices are identified by colour (red, green, and blue).
+A pulverised component is hosted on the physical device in which it is contained.
+Communication among different logical devices that imply communication among physical devices is depicted with a dashed red line.
+%\emph{Peer-to-peer} (leftmost): 1-to-1 mapping between logical and physical devices;
+%\emph{Multi-broker} (centre-left): the communication is offloaded in part to the edge, and in part to the cloud;
+%\emph{Big Data-like} (centre-right): communication and state components are hosted in centralised nodes;
+%\emph{IoT with thin clients} (right) end devices only host sensors and actuators.
+}
+\label{fig:pulv}
+\end{figure*}

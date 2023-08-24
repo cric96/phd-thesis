@@ -1,0 +1,60 @@
+
+
+Dear Roberto Casadei,
+ 
+On behalf of the ACSOS 2023 Program Committee, we are delighted to inform you that the artifact as part of your research paper 
+
+Self-Organisation Programming: A Functional Reactive Macro Approach
+
+has been accepted for presentation as part of ACSOS 2023 Artifact track.
+ 
+The Program Committee worked very hard to review all the submitted artifacts in a very short period of time. We expect you to follow their suggestions when you revise your artifact and parts of the research paper that are in relation to the artifact during the preparation of the final manuscript. 
+
+Please do not forget the upcoming important dates: 
+- August 5th, 2023 Camera-ready paper
+- August 5th, 2023 Author registration due date
+
+Additionally, please note that we expect at least one co-author to present the artifact in person during the artifact session at the conference. 
+
+The reviews and comments are attached below. Once again, congratulations on your work. If you have any additional questions, please feel free to get in touch.
+
+Best Regards, 
+Ana Petrovska and David King
+ACSOS 2023 Artifact Track Chairs
+
+
+SUBMISSION: 6478
+TITLE: Self-Organisation Programming: A Functional Reactive Macro Approach
+
+
+----------------------- REVIEW 1 ---------------------
+SUBMISSION: 6478
+TITLE: Self-Organisation Programming: A Functional Reactive Macro Approach
+AUTHORS: Roberto Casadei, Francesco Dente, Gianluca Aguzzi, Danilo Pianini and Mirko Viroli
+
+----------- Overall evaluation -----------
+SCORE: 0 (borderline paper)
+----- TEXT:
+I attempted to recreate the experimental environment using docker-compose up. Regrettably, this process took over three hours and caused my laptop to crash without successfully replicating the environment within containers.
+
+Subsequently, I tried to reproduce the experiment natively. I was able to execute Alchemist tasks related to the graphical display. However, I noticed that the interface buttons, such as "add effect" or "remove selected", were non-functional.
+
+When it came to tasks related to batch processing, I terminated the process after nearly an hour of waiting due to a lack of progress. Despite these challenges, I was able to reproduce the charts using the data already available in the repository.
+
+The authors have included a warning that re-running the entire experiment may take a substantial amount of time on a standard computer. While this is appreciated, I recommend that the authors provide a clearer indication of the expected runtime. If possible, a rough estimate - for instance, could it potentially take up to 24 hours? Additionally, it would be useful to know the approximate time taken to run individual tasks, such as runGradientScafiBatch.
+
+Without such information, it becomes challenging to discern whether the process is progressing slowly or if it has encountered a critical issue. Providing clearer expectations about runtime would significantly improve the user experience and the reproducibility of the experiment.
+
+
+
+----------------------- REVIEW 2 ---------------------
+SUBMISSION: 6478
+TITLE: Self-Organisation Programming: A Functional Reactive Macro Approach
+AUTHORS: Roberto Casadei, Francesco Dente, Gianluca Aguzzi, Danilo Pianini and Mirko Viroli
+
+----------- Overall evaluation -----------
+SCORE: 2 (accept)
+----- TEXT:
+there are two github links in this paper, one to the experimental results, which does explain how to run it, and one to something else which as no adequate explanation - if the authors intend for the experiment results to be the artifact, then it is also an accept, and if they intend the other github site to be an artifact, then it needs a much better README file, but is otherwise acceptable
+
+

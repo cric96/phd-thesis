@@ -1,0 +1,212 @@
+\documentclass{article} 
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{hyperref}
+\usepackage[usenames]{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{nameref}
+
+\RequirePackage[sort&compress,sectionbib,numbers]{natbib}
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\usepackage{xr}
+\externaldocument[main:]{../paper20-mdpi-jsan-si-autonomy}
+\usepackage{xr-hyper}
+
+
+\newcounter{reviewer}
+\newcounter{comment}[reviewer]
+
+\setcounter{reviewer}{-1} % start with zero
+\newcommand{\reviewer}{
+	\subsection*{\refstepcounter{reviewer}Reviewer \arabic{reviewer}}
+}
+\newcommand{\reviewerl}[1]{
+	\subsection*{\refstepcounter{reviewer}\label{#1}Reviewer \arabic{reviewer}}
+}
+\newcommand{\reviewerlt}[2]{
+	\subsection*{\refstepcounter{reviewer}\label{#1}#2}
+}
+\newcommand{\comment}[1]{
+	\subsubsection*{\refstepcounter{comment}Reviewer comment \arabic{comment}} %\arabic{reviewer}.
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{\setlength{\parskip}{0.5\baselineskip}%
+ #1 }}
+}
+\newcommand{\rcref}[2]{\ref{#1}.\ref{#2}}
+\newcommand{\commref}[1]{\ref{#1}}
+\newcommand{\commentl}[2]{
+	\subsubsection*{\refstepcounter{comment}\label{#1}Comment \arabic{comment}} %\arabic{reviewer}.
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{ #2 }}
+}
+\newcommand{\edcomment}[1]{
+	\subsubsection*{Comment}
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{ #1 }}
+}
+\newcommand{\reply}[1]{	\\[2pt]
+	\textbf{Author response:} 	
+	#1
+}
+\newcommand{\action}[1]{	\\[2pt]
+	\textbf{Action to address the comment:} 
+	#1
+}
+\newcommand{\corrstart}{\color{red}}
+\newcommand{\corrend}{\color{black}}
+\newcommand{\correction}[1]{\corrstart #1\corrend{}}
+\newcommand{\checkstart}{\color{violet}}
+\newcommand{\tocheck}[1]{\checkstart{}#1\corrend{}}
+
+\makeatletter
+\renewcommand\p@comment{\thereviewer.}
+\makeatother
+
+\newcommand{\say}[3]{
+\noindent\fcolorbox{black}{cyan!20!white}{
+\begin{minipage}{\textwidth}
+\textbf{{#1}} \textbf{({@}#2)}: #3
+\end{minipage}
+}
+}
+
+\usepackage{cleveref}
+
+
+\begin{document}
+
+\input{revision-letter-general-response}
+
+\raggedbottom
+
+%\section*{Comment and replies}
+
+%\reviewerlt{r0}{Editor's Comments}
+%\edcomment{
+%}
+%\reply{
+%}
+
+% (x) I don't feel qualified to judge about the English language and style
+
+%Yes	Can be improved	Must be improved	Not applicable
+%Does the introduction provide sufficient background and include all relevant references?
+%( )	(x)	( )	( )
+%Is the research design appropriate?
+%( )	(x)	( )	( )
+%Are the methods adequately described?
+%( )	(x)	( )	( )
+%Are the results clearly presented?
+%(x)	( )	( )	( )
+%Are the conclusions supported by the results?
+%(x)	( )	( )	( )
+
+
+\reviewerlt{r5}{Comments and Replies}
+
+\comment{
+The work addresses the collective autonomy concept, defines an agent control architecture for aggregate multi-agent systems (MAS), discusses how the aggregate computing framework relates to both individual and collective autonomy and shows how it can be used to program collective autonomous behavior.  
+ 
+ The authors present a simulated case study to exemplify the concepts (individual versus collective goals) and outline a research roadmap towards reliable aggregate autonomy.
+ 
+ The authors claim that it is important to directly address the MAS collective dimension, rather than programming individual agents and then verifying that local behaviors lead to the intended, but not explicitly captured, global behavior. 
+}
+\reply{
+The Reviewer got it right, with a very good summary.
+}
+
+\comment{
+ In general, the paper is well written---however, the subject borderline the journal area.
+}
+\reply{
+Though the journal title might seem not significantly overlapping with the focus of this paper, we also note that
+this journal has a rather broad scope: it is on ``the science and technology of sensor and actuator networks''\footnote{\url{https://www.mdpi.com/journal/jsan/about}}, which includes -- beside others -- the software dimension.
+%
+Furthermore, the manuscript has been submitted to the ``Agents and Robots for Reliable Engineered Autonomy'' special issue\footnote{\url{https://www.mdpi.com/journal/jsan/special_issues/REA}}, which addresses ``autonomous agents'' (a key theme in distributed artificial intelligence).
+%
+We believe that the subject of the manuscript 
+ is very relevant -- among others -- to the following topics explicitly mentioned in the Special Issue \emph{Call for Papers}:
+ \begin{itemize}
+ \item ``Agent oriented software engineering to model high-level control in robotic development'';
+ \item ``Agent programming languages and tools for developing robotic or intelligent autonomous systems''.
+ \end{itemize}
+%
+%However, we may agree that the journal focus is \emph{usually} different with respect to this very special issue.
+}
+
+
+\comment{
+ The paper has a good survey of state of the art considering several papers.
+}
+\reply{ Thanks for noticing this: we believe 
+ that a contribution of this manuscript
+ is (also) providing a software engineering- and programming language-oriented
+ perspective and synthesis around the problem of specifying the collective autonomy of multi-agent systems. 
+}
+
+\comment{
+ It is not clear the innovation of the proposed architecture. The authors should explain the improvements of its model over other models.
+}
+\reply{Thanks for the suggestion; we agree that a clearer discussion of differences/similarities with respect to related work could clarify the paper contribution.}
+\action{
+We have added a new subsection, \Cref{main:s:summary-comparison-rw},
+ discussing how the approach relates to other works, and improves over them.
+}
+
+
+\comment{
+Figure 3 should be close to its first reference.
+}
+\reply{ Thanks for underlining this issue in fruition. }
+\action{ We have moved Figure 3 near to \Cref{main:sb:results}.}
+
+
+\comment{
+In order to improve the paper, authors should favor visual diagrams in explaining the functioning of the proposed multi-agent system instead of lines of code. 
+}
+\reply{ We agree that a simpler, graphical notation could help readers in the fruition of the examples.}
+\action{
+We have added diagrams 
+ corresponding to the ScaFi code 
+ for the crowd example
+ and the case study:
+ these are available, respectively, in \Cref{main:fig:crowd-diagram}
+  and \Cref{main:fig:eval:diagram}.
+}
+
+
+\comment{
+Minor remarks:
+
+- Page 1: acronym ECT was not defined
+
+- line 29: consider putting the reference at the end of the sentence
+
+- Page 2, line 54: w.r.t was not defined
+
+- Page 7, line 5: has unbalanced brackets
+}
+\reply{
+Thanks for pointing out these minor issues.
+}
+\action{ 
+We have fixed all the reported minor issues
+(except the second one since the reference was specific to the term ``environment'' in the middle of the sentence).
+%
+In particular,
+ ICT stands for ``Information and Communications Technology'' 
+ (we have expanded the acronym);
+ ``w.r.t.'' stood for ``with respect to'' (we have expanded the occurrences),
+ and the unbalanced brackets have been balanced.
+}
+
+
+
+
+
+%\bibliographystyle{elsarticle-num}
+%\bibliography{bibliography}
+
+\end{document}

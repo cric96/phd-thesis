@@ -1,0 +1,145 @@
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.20 of 2018/03/10
+%
+\documentclass[runningheads]{llncs}
+
+\usepackage[T1]{fontenc}
+\def\doi#1{\href{https://doi.org/\detokenize{#1}}{\url{https://doi.org/\detokenize{#1}}}}
+%
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{acronym}
+\usepackage{subcaption}
+\usepackage{amsfonts}
+\DeclareTextFontCommand{\mytexttt}{\ttfamily\hyphenchar\font=45\relax}
+% Used for displaying a sample figure. If possible, figure files should
+% be included in EPS format.
+%
+% If you use the hyperref package, please uncomment the following line
+% to display URLs in blue roman font according to Springer's eBook style:
+% \renewcommand\UrlFont{\color{blue}\rmfamily}
+%
+\usepackage{listings}
+\input{yaml-def}
+\input{scala-def}
+\lstset{language=scafi}
+% Please use the
+\acrodef{cmarl}[CMARL]{Cooperative Many Agent Reinforcement Learning}
+\acrodef{marl}[MARL]{Multi Agent Reinforcement Learning}
+\acrodef{dsl}[DSL]{Domain Specific Language}
+\acrodef{rl}[RL]{Reinforcement Learning}
+\begin{document}
+%
+\title{ScaRLib: A Framework for Cooperative Many Agent Deep Reinforcement learning in Scala -- Artefact Guidelines}
+%
+\titlerunning{Cooperative Many Agent Deep Reinforcement Learning in Scala}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+\author{
+Davide Domini\inst{1}\orcidID{0009-0006-8337-8990} \and
+Filippo Cavallari\inst{1}\orcidID{0009-0006-4050-9989} \and
+Gianluca Aguzzi\inst{1}\orcidID{0000-0002-1553-4561} \and
+Mirko Viroli\inst{1}\orcidID{0000-0003-2702-5702}}
+%
+\authorrunning{D. Domini et al.}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+\institute{Alma Mater Studiorum -- Università di Bologna
+\\
+\email{\{filippo.cavallari2\}@studio.unibo.it \{davide.domini2,gianluca.aguzzi,mirko.viroli\}@unibo.it}}
+%
+\maketitle              % typeset the header of the contribution
+\section{Introduction}
+
+This document describes the artefact associated with the tool paper entitled ScaRLib: 
+A Framework for Cooperative Many Agent Deep Reinforcement learning in Scala'' and accepted at COORDINATION'23.
+%
+More specifically, we demonstrate the validity and usefulness of our tool by claming 
+ the Available and Functional (And Reusable) badges, 
+ elucidating how these claims were substantiated, 
+ and offering instructions on utilizing the artefact to duplicate the simulations 
+ and outcomes featured in the principal paper.
+\section{Claims}
+We claim the following badges:
+\begin{enumerate}
+  \item[C.1] \textbf{Available} (2) since the library is published on Maven\footnote{\url{https://central.sonatype.com/artifact/io.github.davidedomini/ScaRLib/1.6.4}} (also in Zenodo\footnote{\url{https://doi.org/10.5281/zenodo.7830970}}) and the simulation is available through Zenodo\footnote{\url{https://doi.org/10.5281/zenodo.7831045}}. 
+  \item[C.2] \textbf{Functional (And Reusable)} (1.2)  %exposes the simulations and the results of the experiments presented in the paper. Particularly, it is 
+  since the artefact is:
+  \begin{itemize}
+  \item \textbf{documented}, since the library has a README explaining the main abstractions and how to use them, it has a template~\footnote{\url{https://github.com/ScaRLib-group/ScaRLib-experiments-startup}} that can be used to create new ScaRLib projects and a simulation where it actually shows how to use it;
+  \item \textbf{consistent}, since it is the implementation of what is described in the paper, both at library and simulation level;
+  \item \textbf{complete}, since the information provided is comprehensive and contains all the necessary details to replicate the results presented in the paper;
+  \item \textbf{exercisable}, since it is possible to run the simulations and to observe the results  leveraging the scripting included
+  \item \textbf{reusable}, since the library has been published on manve central and can be integrated into any modern java project by following the instructions described in the project template.
+\end{itemize}
+In the following section, we will describe how to use the artefact to replicate the simulations and outcomes featured in the paper.
+\end{enumerate}
+\section{Installation and Smoke test.} 
+We have created a VirtualBox virtual machine with the minimum installation required to perform the experiments. To import the OVA file associated with the virtual machine, you will need to open VirtualBox and select \textit{File} and then \textit{Import Appliance}. After that, you will need to choose the OVA file and click on \textit{Import}. For more information, please visit \url{https://www.virtualbox.org/manual/ch01.html#ovf}.
+
+If you are using your own computer, please ensure that the following installations are present:
+\begin{itemize}
+  \item JDK (version 17 or above)
+  \item Python (version 3.9 or above)
+\end{itemize}
+To run a smoke test, follow the below steps:
+\begin{itemize}
+  \item Clone the repository at the designated location using the command: \\\lstinline|git clone <repo url>| \\in the VM, the repository is already cloned in the ~/Desktop folder called ScaRLib-flock-demo
+  \item Open the terminal inside the folder
+  \item Install the dependencies using the command: \\ \lstinline|pip install -r requirements.txt|
+  \item Execute the command: \lstinline|./gradlew runSmokeTest|
+  \item If everything is working properly, you should be able to see a swarm of drones similar to the one shown in Figure 9 (a) of the paper.
+\end{itemize}
+Now you are ready to reproduce the experiments described in the paper.
+
+\section{Project structure}
+
+The project repository is structured as follows:
+\begin{itemize}
+  \item \texttt{./src}: 
+  this folder contains everything necessary to simulate the flock of drones. Here you will find both the main code for the training phase and the code for the evaluation phase. You can also find the YAML description for each simulation.
+
+  \item \texttt{/runs}: contains the logs of the simulations related to training phases.
+  
+  \item \texttt{./network}: this folder contains the neural network used in the evaluation phase. Here will be also stored the weights of the trained neural network foreach each simulation.
+  
+  \item \texttt{process.py}: the python script used to generate the charts shown in Figure 10
+  
+  \item \texttt{./data}: contains the data used to generate the charts shown in Figure 10
+\end{itemize}
+
+\section{Reproducing the simulations and charts}
+To reproduce the simulations and the charts discussed in the Section 4, follow the below steps:
+\begin{itemize}
+\item By executing the following command it is possible to start the learning process for the flocking case study \begin{lstlisting}
+./gradlew runCohesionAndCollisionTraining
+\end{lstlisting}
+If you want to visualize the progress of the simulation you can use 
+\begin{lstlisting}
+/gradlew runCohesionAndCollisionTrainingGui 
+\end{lstlisting}
+If you want to see the evolution of the reward function (Figure 8), you can leverage tensorboard by executing the following command:
+\begin{lstlisting}
+tensorboard --logdir runs
+\end{lstlisting}
+This could be particularly slow on a local machine ($\sim$2 hours). For this reason, we have already uploaded the logs of the training phase to the \texttt{runs/} directory and the weights of the neural network to the \texttt{networks/network} file.
+\item To replicate the evaluation phase of several deployments shown in Figure 9, run the following command:
+\begin{lstlisting}
+./gradlew runCohesionAndCollisionEval
+// with the gui:
+./gradlew runCohesionAndCollisionEvalGui
+\end{lstlisting}
+This will launch 3 batch of simulation. Each batch will contain 16 simulations. The first batch consists of 50 nodes, the second one of 100 nodes and the third one of 200 nodes. 
+This will produce the data used to generate the charts shown in Figure 10 in the folder \texttt{./data}.
+Also in this case, we have already uploaded the data to the \texttt{data/} directory since the evaluation phase is very time consuming ($\sim$1 hour).
+\item To generate the figures, execute \texttt{python plotter.py}. Make sure to install the required Python dependencies on your local machine with \texttt{pip install -r requirements.txt}. The plots will be saved in the folder \texttt{./charts} after the script runs successfully..
+\end{itemize}
+
+\end{document}

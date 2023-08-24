@@ -1,0 +1,20 @@
+%!TeX root = paper22-coord-ac-rl.tex
+In \scafi{} it is can be devised as:
+\begin{lstlisting}[mathescape]
+val $speed_0$ = 0.0
+def crf(source, risingSpeed, metric) {
+  rep((infinity, $speed_0$)) {
+    case (g, $speed$) => 
+      mux(source)((0.0, $speed_0$)) { // source has g = 0 and $speed_0$ = 0
+        mux(anyHoodPlus(nbr(g) + metric() + $speed$ * deltaTime()) < g) {
+          // constraints exist, standard gradient logic
+          (minHoodPlus(nbr(g) + metric()), $speed_0$)
+        } {
+          // no constraints exist, slow rising detected
+          (g + $speed$ * deltaTime(), risingSpeed)
+        }
+      }
+  }._1 // select the gradient output
+}
+\end{lstlisting}
+Where \lstinline|deltaTime| is a \scafi{} operator that returns the time elapseds between two rounds.

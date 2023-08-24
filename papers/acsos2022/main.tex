@@ -1,0 +1,1406 @@
+
+%%%%%%%    AC     %%%%%%%
+\newcommand{\export}{export}
+\newcommand{\round}{round}
+%%%%%%%    RL     %%%%%%%
+\newcommand{\RS}{\mathcal{S}}
+\newcommand{\RA}{\mathcal{A}}
+\newcommand{\RP}{\mathcal{P}}
+\newcommand{\RR}{\mathcal{R}}
+\newcommand{\RE}{\mathbb{E}}
+%% Utils
+\newcommand{\decision}[1]{{\color{red} #1}}
+\newcommand{\mtext}[1]{\text{\texttt{#1}}}
+\newcommand{\revision}[1]{{#1}}
+\newenvironment{iequation}{\(}{\). }
+\def\tablename{Table}
+\sloppypar
+%% Acronyms
+\acrodef{api}[API]{Application Program Interface}
+\acrodef{RL}[RL]{Reinforcement Learning}
+\acrodef{MDP}[MDP]{Markov Decision Process}
+\acrodef{AC}[AC]{Aggregate Computing}
+\acrodef{CAS}[CAS]{Collective Adaptive System}
+\acrodef{iot}[IoT]{Internet of Things}
+\acrodef{it}[IT]{Information Technology}
+\acrodef{ci}[CI]{Collective Intelligence}
+\acrodef{marl}[MARL]{multi-agent reinforcement learning}
+\newcommand{\scafiinline}[1]{\lstinline[language=scafi]$#1$}
+%\end{lstlisting}
+
+%\chapter{Addressing Collective Computations Efficiency: Towards a Platform-level Reinforcement Learning Approach}
+
+\chapter{Addressing Collective Computations Efficiency}
+
+
+\section{Introduction}
+\input{scala-def.tex}
+\lstset{language=scafi}
+
+Modern distributed computing scenarios, such as the \ac{iot}, Industry 4.0, and smart cities, promote a vision in which large numbers of devices operate and interact to achieve a collective good.
+%
+Even though several modern paradigms contribute to this vision, such as \emph{autonomic}~\cite{DBLP:journals/computer/KephartC03}, \emph{pervasive}~\cite{DBLP:journals/wc/Satyanarayanan01} and \emph{collective}~\cite{DBLP:journals/computer/Abowd16} computing, engineering such large-scale distributed systems is currently an open challenge. 
+%
+Indeed, conventional device-centric programming approaches somewhat neglect the \emph{collective} dimension of systems and often fall short at addressing the challenges exposed by the aforementioned systems, which may include resiliently producing the desired emergent global behaviour, 
+addressing distributed control, dynamicity, and the managing systems and their integration~\cite{DBLP:journals/fgcs/BellmanBDEGLLNP21} across complex \ac{it} infrastructures.
+%
+To overcome these limitations, novel approaches are emerging that aim at promoting perspectives whereby collective behaviours are understood and reasoned about directly at their global or ensemble level~\cite{DBLP:journals/sttt/NicolaJW20,DBLP:conf/birthday/BucchiaroneM19,DBLP:journals/sttt/BuresGHPKVK20,DBLP:journals/jlap/ViroliBDACP19}.
+
+\ac{AC}~\cite{DBLP:journals/computer/BealPV15}
+ is one such approach,
+ where system-level behaviour 
+ is expressed through a single \emph{aggregate program} operating on \emph{computational fields}~\cite{DBLP:journals/jlap/ViroliBDACP19}, namely collective data structures mapping devices to values over time.
+%
+In this framework,
+ a programmer defines behaviours
+ as functions mapping input fields to output fields.
+%
+An aggregate program is then deployed
+ to a network of neighbour-interacting devices
+ that will execute it 
+ through asynchronous sense-compute-act \emph{rounds}.
+%
+%In particular, \ac{AC} follows a pragmatic methodology in which the collective behaviours could be reused in different applications since it is decoupled from the underline IT architecture. 
+%
+The idea is that collective behaviour 
+ has to emerge by repeated evaluation of the aggregate program,
+ which describes computations and communications
+ needed to steer the system (and its self-organisation)
+ towards globally coherent goals.
+%
+An aggregate program deals both with \emph{functional} aspects (i.e, how the overall ensemble should behave) 
+ and \emph{non-functional aspects} (e.g., resilience as well as time, memory, and message complexity).
+%
+In part, non-functional aspects 
+ can also be addressed by system designers
+ at the middleware level.
+%while the burden of managing non-functional aspects (e.g., energy consumption, bandwidth consumption, convergence time, etc.) is left to the \emph{execution platform}.
+%
+An \ac{AC} execution platform (\emph{aggregate platform} in short) is the logic or software middleware 
+ on a set of networked devices 
+ that make them work as an \emph{aggregate system}
+ and support the execution of aggregate applications (which are the result of an aggregate program, the actual distributed protocol, and the environment) by properly scheduling rounds of computation~\cite{DBLP:journals/fi/CasadeiPPVW20}. 
+
+The aggregate platform is generally manually configured to run rounds at a certain frequency, or whenever certain triggers fire~\cite{danilo2021lmcs}.
+%
+Instead, in this work, we explore the possibility of applying \ac{RL} at the aggregate platform level
+ in order to learn effective scheduling policies for rounds.
+%
+The idea is to let an aggregate system
+ address non-functional aspects  
+ to improve efficiency % and efficacy
+ while 
+ achieving the same functionality
+ (defined in terms of the eventual collective outcome). 
+%
+Our thesis is exposed through a case study, in which \ac{RL} -- and in particular Q-Learning~\cite{DBLP:conf/icml/LauerR00} -- is successfully applied to reduce system-wide power consumption without modifying the aggregate program.   
+
+The paper is structured as follows.
+%
+\Cref{sec:background} provides background on \ac{AC} and \ac{RL}, and introduces reference examples. 
+%
+\Cref{sec:contribution} describes the core contribution applying \ac{RL} to \ac{AC}. %our idea of using \ac{RL} for non-functional aspects, devising also the learning settings. 
+%
+\Cref{sec:evaluation} provides experimental evaluation. %evaluates the approach. % against the goal of reducing power consumption. %the combination of \ac{AC} and \ac{RL} in the case of reduce the power consumption.
+%
+%Finally, 
+\Cref{sec:conclusion} provides final thoughts and discusses future work.
+
+\section{Background and Related Work}
+\label{sec:background}
+%\meta{- on the purpose of give an overview of AC and RL}
+
+This section
+ describes the system model
+ assumed through the paper (\Cref{s:background:ac}),
+ the reference aggregate program examples
+ (\Cref{s:background:ac-prog}),
+ and the basics of \ac{RL}
+ (\Cref{s:background:rl}).
+
+\subsection{System Model (Aggregate Computing Model)}\label{s:background:ac}
+
+\ac{AC}~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19}
+ is an approach 
+ for engineering the self-organising collective behaviour
+ of a network of asynchronously computing and neighbour-interacting devices.
+%
+The \ac{AC} model 
+ assumes the system and execution model (also called a distributed protocol) described in the following,
+ which shares similarity -- for locality, decentralisation, and progressive computation -- with the dynamics of natural self-organising systems~\cite{bonabeau1999swarm-intelligence}.
+%
+
+\newcommand{\neigh}{\ensuremath{\leadsto}}
+\newcommand{\deviceId}{\ensuremath{\delta}}
+
+Structurally, an aggregate computing system consists of a network $G=(D,\neigh)$ of computing \emph{devices} (nodes $\deviceId \in D$)
+ connected together through a \emph{neighbouring relationship} $\neigh$.
+%
+The neighbouring relationship is application-specific
+ and may derive 
+ from physical connectivity (cf. ad-hoc networks)
+ or 
+ be based on spatial proximity (e.g., a node is connected to all the devices within a certain distance to it).
+
+%\begin{figure}[t]
+%    \centering
+%        \includegraphics[width=\linewidth]{papers/acsos2022/img//aggregate-computing.pdf}
+%        \caption{A graphical representation of functional manipulations of whole computational fields. 
+%       In this example, a discrete network of sensor perceptions is mapped onto a field,
+%        which is then compared with a constant threshold field, 
+%        to create a new field denoting danger zones. 
+        %Local operators like $>$ are naturally lifted to fields by making them work device-wise (i.e, considering as operands the values of the two fields at the same device, and doing the same for all the devices in the field domain).
+%        }
+%        \label{fig:aggregate-computing}
+%    \end{figure}
+
+
+%\begin{comment}
+%\meta{
+%    - expand the need of aggregate computing: what problems sove\\
+%    - describe computational fields, making concrete examples (e.g., temperature, alarms, ...)\\
+%    - on the promotion of reusable and composable programs\\
+%    - on desiderable properties ==$>$ self-stabilisation\\
+%    - what enhance => decoupling from platform aspects, requiring only the definition of a neighbourhood\\
+%    - on paradigmatic examples of aggregate programs, broadcast information and collect data (probably and image could help)
+%    - on computational model $==>$ idea, the previous examples could be achieved with this proactive distributed executions
+%}
+%\end{comment}
+%
+
+%First attempts in engineering \ac{ci} in large scale-distributed systems are inspired by nature~\cite{bonabeau1999swarm-intelligence}. 
+%%
+%In particular, early works leverage \textit{local-to-global} techniques, 
+% where programs describe local activities (computations, communications)
+%  which are supposed to or verified (in theory or practice) to promote \emph{emergence} 
+%  of desired collective behaviours~\cite{DBLP:journals/swarm/BrambillaFBD13}.
+%%
+%Recently, research has proposed approaches adopting 
+% \textit{global-to-local} techniques~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/scp/AlrahmanNL20}, 
+% whereby system behaviour is designed \textit{top-down} 
+% (i.e., by a global perspective), 
+% and then local behaviours are generated automatically from this ``system-wide'' specification.
+
+%
+%Typically, a desired property in this evolution process is \emph{self-stabilisation}~\cite{DBLP:journals/tomacs/ViroliABDP18}, namely the ability of the system of reaching a stable computational field (i.e, the one that does not change its values) once the environmental conditions and inputs stop changing. 
+%
+%To this end, \ac{AC} exposes a set of constructs (i.e, \emph{building-block}) that are proven to be self-stabilising. 
+% Consequently, also the application that uses that operator becomes self-stable.
+%
+
+%
+%Indeed, it only imposes the definition of  
+% (i) a \emph{neighbourhood} relation specifying what nodes can directly communicate, and 
+% (ii) a defined computational model (or execution protocol) used to bring on the collective specification.
+%
+By a dynamical point of view, 
+ system execution proceeds
+ through \emph{asynchronous rounds}
+ of \emph{sense-compute-(inter)act steps}.
+%
+Indeed, a node, to be part of an aggregate system, should %proactively 
+perform \emph{rounds of computation/communication} consisting of:
+\begin{enumerate}
+    \item \emph{context acquisition}: the device collects information 
+     from the sensors and the last messages it received 
+     from each neighbour (including the device itself, to model the state);
+    \item \emph{program execution}: using the context, 
+    the aggregate program is evaluated producing an \emph{\export{}},
+    namely a message sent to the neighbours for yielding the aggregate computation, 
+    triggered by the use of special communication constructs in the aggregate language specification;
+    \item \emph{context action}: \revision{comprising
+    	(i) \emph{communication}, by broadcasting the \export{} to the neighbours; and 
+    	(ii) \emph{actuation}, by driving local actuations using \export{} data as input.}
+  \end{enumerate}
+%
+This system-wide asynchronous evaluation
+ combined with the aggregate program specification (see \Cref{s:background:ac-prog})
+ can eventually lead to interesting collective behaviours~\cite{DBLP:journals/jlap/ViroliBDACP19}. 
+ 
+%
+%Full coverage of \ac{AC} is beyond the scope of this paper;
+% however, the reader can refer to %of the abstractions, the foundation (\emph{field calcus}), and the applications are discussed in
+% ~\cite{DBLP:journals/jlap/ViroliBDACP19}
+% for a comprehensive introduction. 
+
+\subsection{Reference Examples}
+\label{s:background:ac-prog}
+
+In this section,
+ we present the two aggregate computing algorithms (aggregate programs)
+ that will be considered throughout the paper,
+ especially in the experimental evaluation of \Cref{sec:evaluation}.
+%
+We introduce them as black boxes, 
+ focussing on their input/output interface and dynamics,
+ since the details of aggregate programming in field calculi~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19}
+ and languages like ScaFi~\cite{DBLP:conf/isola/CasadeiVAD20}
+ are not essential to understand the content of this paper. 
+%
+The interested reader can refer to \cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:conf/isola/CasadeiVAD20,DBLP:journals/eaai/CasadeiVAPD21} for a complete introduction and further details on that.
+
+Aggregate computing algorithms
+ can be thought as functions
+ over \emph{computational fields} (or \emph{fields} for short)~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/pervasive/MameiZL04}.
+%
+A field is a collective/distributed data structure,
+ typically modelled as 
+ a mapping $\phi: D \to \mathbb{V}$
+ from a domain of devices $\deviceId \in D$
+ to values $v$ from some domain $\mathbb{V}$ of computational values.
+%
+For instance,
+ an expression querying a local temperature sensor,
+ when evaluated in every device in the aggregate system,
+ would yield a field of temperature readings.
+%
+Such field of temperatures may be processed
+ to produce a field of warnings (e.g., when the local temperature exceeds a threshold value),
+ or a field of actuations (e.g., commands for local thermostats).
+%
+Then,
+ an aggregate algorithm
+ is a function from input fields to output fields.
+%
+Let $\Phi_\mathbb{V}$ denote the set of computational fields with co-domain $\mathbb{B}$ in a network $G$,
+ then an $n$-ary field function is a partial map
+ $f: \Phi_\mathbb{V}^n \hookrightarrow \Phi_\mathbb{V}$.
+ 
+A fundamental self-organisation pattern
+ is the so-called \emph{gradient} algorithm~\cite{DBLP:conf/saso/AudritoCDV17},
+ which resiliently maps 
+ a Boolean field of sources 
+ (i.e., the devices for which the field holds $true$) % are the sources of the gradient, whereas the others are non-sources)
+ to a field of minimum distances from those sources
+ (a.k.a. \emph{gradient field}).
+%
+In the Scala-internal aggregate programming language ScaFi~\cite{DBLP:conf/isola/CasadeiVAD20},
+ a gradient can be coded as a function 
+  with signature:
+\begin{lstlisting}
+def gradient(source: Boolean, metric: () => Double): Double
+\end{lstlisting}
+mapping a Boolean \lstinline|source| field
+ and a usually constant and uniform \lstinline|metric| function field (returning an estimation of the distance to a neighbour),
+ to a field of \lstinline|Double|s 
+ denoting the length of the shortest path from any device to its closest source.
+%
+Considering the execution model described in \Cref{s:background:ac},
+ the system dynamics corresponding to an application of function \lstinline|gradient|  would consist in having each device
+ repeatedly evaluate such function application,
+ round by round;
+ while doing so, 
+ the actual \lstinline|source| and \lstinline|metric| fields may change, inducing perturbations
+ that self-stabilising implementations of the gradient algorithm~\cite{DBLP:journals/tomacs/ViroliABDP18} would overcome.
+%
+The reader might play with these and other algorithms online leveraging the ScaFi web playground~\cite{DBLP:conf/coordination/AguzziCMPV21}\footnote{https://scafi.github.io/web}.
+%
+Gradient fields are key structures for self-organisation,
+ for they provide a shortest-path direction for information flows~\cite{DBLP:conf/saso/WolfH07}.
+%
+Indeed, a gradient induces a spanning tree on a network,
+ where the \emph{parent} of a node 
+ is the node's neighbour with the locally minimum value of the gradient.
+%
+The following two aggregate algorithms, graphically illustrated in \Cref{fig:c-and-g}, are intimately related to gradients.
+ 
+\subsubsection{Gradient-cast (G block)}
+%
+The G block supports combined propagation and transformation of values from source nodes outwards.
+%
+In ScaFi,
+ \scafiinline{G} has the following signature:
+\begin{lstlisting}[language=scafi]
+def G[V](source: Boolean, value: V, acc: V => V): V
+\end{lstlisting}
+It is a function
+ from 
+ (i) a \lstinline|source| field (the starting points of propagation),
+ (ii) a \lstinline|value| field (the values that must be incorporated along the propagation),
+ and 
+ (iii) %a usually constant and uniform field of \lstinline|acc|umulation functions 
+ an \lstinline|acc|umulation function
+ that combines
+  the accumulated value (along a gradient from \lstinline|source)| with the local value,
+  to a field of \lstinline|V|-typed values
+  representing the output of the propagation.
+%
+
+\subsubsection{Collect-cast (C block)}
+%
+The C block supports distributed collection or summarisation into sink nodes~\cite{DBLP:journals/cee/AudritoCDPV21}.
+%
+In ScaFi, its signature is as follows:
+\begin{lstlisting}
+def C[P, V](p: P, acc: (V, V) => V, local: V, default: V): V
+\end{lstlisting}
+Indeed, it maps 
+ (i) a \lstinline|p|otential field, e.g., build using a gradient,
+ (ii) %a usually constant and uniform field of 
+ an \lstinline|acc|umulation function,
+ (iii) a field of \lstinline|local| values to be collected from devices that consider the current device as parent,
+ and
+ (iv) a field of \lstinline|default| values for devices that do not consider the current device as parent,
+ to a field of accumulated values.
+%
+The sink devices (at zero potential)
+ will eventually output the overall result of the accumulation (whereas the intermediate nodes will output partial accumulation results, and leaf nodes of the gradient-induced spanning tree their values for the \lstinline|default| field).
+%
+For instance, a call 
+ \lstinline|C(gradient(sink),_+_,1,0)|
+ collects at the \lstinline|sink| the count of all the devices in its subnetwork.
+
+
+The G and C blocks, though relatively simple,
+ can be composed together to 
+ realise quite complex behaviours,
+ such as instances
+ of \emph{self-organising regions}~\cite{DBLP:journals/fgcs/PianiniCVN21},
+ a pattern for dynamically decentralised %coordination and
+  system management 
+ %adopted in several 
+ for scenarios
+ like swarm robotics, the \ac{iot}, 
+ and computational ecosystems.
+%
+
+In~\Cref{sec:contribution},
+ we will consider
+ what would be an efficient scheduling of rounds
+ (cf. \Cref{s:background:ac})
+ for executing G and C computations,
+ and how \ac{RL} could 
+ be leveraged to automatically devise good strategies.
+
+%
+%\scafiinline{C}, instead, 
+% enables the collection of data from the system to the source devices
+% ---and is hence widely used for distributed sensing and summarisation~\cite{DBLP:journals/cee/AudritoCDPV21}.
+%%
+%This operator is one of the building blocks directly implemented in ScaFi:
+%\begin{lstlisting}
+%def C[P, V](potential: P, acc: (V, V) => V, 
+%            local: V, Null: V): V
+%\end{lstlisting}
+%Where \scafiinline{potential} is a gradient field in which,
+% the data (\scafiinline{local}) will be accumulated using \scafiinline{acc} down to the source.
+% \scafiinline{Null} is the idempotent value for the accumulation operation.
+%For instance, \scafiinline{C} can be used to count how many nodes are under the influence of
+% a source:
+%\begin{lstlisting}[caption={A minimal aggregate program program that leverages both of \scafiinline{G} and \scafiinline{C}.},captionpos=b, label={code:reference}]
+%// Some condition that mark zone as interested
+%def source: Boolean = ...
+%// G used to accumulated the gradient
+%val potential = G(source, 0.0, _ + nbrRange(), nbrRange)
+%C(potential, _ + _, 1, 0)
+%\end{lstlisting}
+%
+%These building blocks can be \emph{composed} to create more complex applications, 
+% such as crowd steering~\cite{DBLP:journals/computer/BealPV15} 
+% and distributed decision making~\cite{DBLP:journals/jsan/CasadeiAV21}.
+
+
+
+%\subsection{Aggregate Programming Model}
+%\label{s:background:ac-prog}
+%
+%\acf{AC}~\cite{DBLP:journals/computer/BealPV15}
+% is a macro-programming approach~\cite{DBLP:journals/corr/abs-2201-03473}
+% where the self-organising collective behaviour
+% of a network of asynchronously computing and neighbour-interacting devices 
+% is expressed 
+% in terms of collective data structures called \emph{(computational) fields}~\cite{DBLP:journals/jlap/ViroliBDACP19}.
+%%
+%A field is a computational interpretation of the notion of field from %math and 
+%physics (cf., force fields):
+% it consists of a mapping from a domain of devices 
+% (the computational entities making up the system) 
+% to some computational value 
+% (i.e., the result of a computation or the value sensed from a sensor).
+%%
+%For example, 
+% a field of temperatures may be built by mapping each device 
+% with the value sensed from its temperature sensor. %if the collective program consists in perceiving some environmental information,  the overall field will contain, at each point, the local perceived sensor data. 
+%%
+%Computational fields can express \emph{actuations} too: 
+% e.g., swarm control can be achieved by building a field of velocity vectors expressing the directions of drones.
+%
+%Fields are the inputs and outputs of 
+% aggregate computations.
+%%
+%The mapping of input fields to output fields
+% is specified through aggregate programs
+% written in aggregate programming languages.
+%%
+%The system behaviour is expressed 
+% in terms of output fields.
+%%
+%So for instance, 
+% a field of temperatures could be mapped in a field of Boolean values that reveals zones in danger (\Cref{fig:aggregate-computing});
+% the application may then use the danger field
+% to run actuations (e.g., cooling fans) or call other services (e.g., emergency operators).
+% 
+%The benefits of \ac{AC} include \emph{compositionality}, 
+%as complex collective behaviours can be built 
+% by composing simpler collective behaviours 
+% captured by functions operating on fields,
+% and 
+% \emph{declarativity},
+% since an aggregate program
+% leaves several execution and deployment details unspecified ~\cite{DBLP:journals/fi/CasadeiPPVW20}.
+%%
+%
+%In the following,
+%% for the sake of self-containment,
+% we briefly review aggregate programming in ScaFi~\cite{DBLP:conf/isola/CasadeiVAD20}
+% and the reference examples that will be referred to throughout the paper.
+%%
+%The interested reader can refer to \cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:conf/isola/CasadeiVAD20,DBLP:journals/eaai/CasadeiVAPD21} for a complete introduction and further details on aggregate computing/programming and ScaFi.
+%
+%\subsubsection{Aggregate programming in a nutshell}
+%
+%\begin{figure}
+%\begin{lstlisting}
+%trait Constructs {
+%  def rep[A](init: =>A)(fun: (A) => A): A
+%  def nbr[A](expr: => A): A
+%  def foldhood[A]
+%    (init: => A)(aggr: (A, A) => A)(expr: => A): A
+%  def branch[A](cond: => Boolean)(th: => A)(el: => A)
+%  // Contextual, but foundational
+%  def sense[A](name: String): A
+%}
+%\end{lstlisting}
+%
+%\caption{A subset of the Scala API used to express Field Calculus}
+%\label{code:dsl}
+%\end{figure}
+%
+%Aggregate computing roots its semantics in field calculus~\cite{DBLP:journals/jlap/ViroliBDACP19}, 
+% a core programming model that exposes the minimal set of constructors 
+% required to manipulate the computational fields. 
+%% 
+%In the following, we leverage the ScaFi aggregate programming language~\cite{DBLP:conf/isola/CasadeiVAD20}
+%to showcase field calculus operators.
+% ScaFi is a scala-based toolkit that implements 
+% the field calculus semantic and exposes the main operators through an \ac{api} (\Cref{code:dsl}). 
+%
+%To express a collective computation through computational field manipulation, 
+% a program needs constructs to express \emph{field evolution in time}, 
+% other to express \emph{interactions} between participants and 
+% finally an operators to \emph{split} the system into zones. 
+%
+%\scafiinline{rep(init)(f)} 
+% supports stateful field evolution
+% by locally evolving a field through function \texttt{f},
+% starting with \lstinline|init|. 
+%%
+%For instance, the program: 
+%\begin{lstlisting}[language=scafi]
+%rep(0)(_ + 1) // _ + 1 is a shorthand for x => x + 1 
+%\end{lstlisting}
+%locally increments by 1 the previous value of the overall expression, which is initially 0, and so produces a computational field in which each node yields the count of its rounds.
+%
+%Communication between agents are carried out 
+% combining \scafiinline{nbr(e)} 
+% and \scafiinline{foldhood(init)\{acc\}\{e\}} operators. 
+%% 
+%The latter expresses an aggregation of a neighbourhood field,
+% namely a field composed of values 
+% corresponding to the evaluation
+% of expression \lstinline|e| in neighbours.
+%%
+%In detail, it performs a purely functional folding,
+% applying \lstinline|acc| 
+% to the current accumulation value (initially \lstinline|init|) and each neighbour value for \lstinline|e|,
+%  which is obtained by locally evaluating \lstinline|e|
+%  and substituting the spots \lstinline|nbr(e2)|
+%  with the value that the considered neighbour produced when evaluating \lstinline|e2|.
+%% Particularly, the first argument expresses the initial value of the computation. 
+%%The latter (\scafiinline{expr} is used to pass an expression that will be evaluated using the neighbourhood information.
+%%These values then are going to be combined using the strategy \scafiinline{acc} passed as a second argument. 
+%%
+%%\scafiinline{nbr}, instead, is used to query for a certain  value against the neighbourhood, and therefore enables an explicit communication between nodes. 
+%%
+%Combining \scafiinline{rep}, \scafiinline{foldhood} and \scafiinline{rep},
+% it is possible to 
+% propagate effects beyond a single neighbourhood.
+% %express fields that will be progressvly constructed system-wide.
+%For instance, the program
+%\begin{lstlisting}[language=scafi]
+%rep(sense("temperature")) { maxT => 
+%   foldhood(maxT) { Math.max } { nbr(sense("temperature")) }
+%}
+%\end{lstlisting}
+%produces a gossip process in which, eventually, each node will contain the maximum temperature perceived in the system (\scafiinline{sense} is a ScaFi function that queries a local sensor and returns the value perceived).
+%%
+%%Intuitively, each device stores in its state (via \scafinline{rep}) an aggregation of data from its whole neighbourhood,
+%% and then it is sharing a value comprising the knowledge hold in the state again with the neighbourhood, 
+%% in which there are devices that may not be directly connected and share data.
+%%
+%Intuitively, indeed, by keeping state and interacting with the whole neighbourhood, 
+% a device may indirectly support information exchange
+% between
+% two of its neighbours
+% which may not be directly connected. 
+%
+%Finally, 
+% \scafiinline{branch(cond)\{e1\}\{e2\}}
+% allows to split the system into two separate domains (scoping \lstinline|foldhood| expressions) 
+% that carry out \scafiinline{e1} 
+% where \scafiinline{cond} is true and \scafiinline{e2} otherwise.
+%
+%%Full coverage of \ac{AC} is beyond the scope of this paper;
+%% however, the reader can refer to %of the abstractions, the foundation (\emph{field calcus}), and the applications are discussed in
+%% ~\cite{DBLP:journals/jlap/ViroliBDACP19}
+%% for a comprehensive introduction. 
+% 
+%\subsubsection{Building blocks}
+% By capturing distributed computations and communications as functions from input fields to output fields
+% it is possible to devise a library of reusable ``building blocks'' on top of the Field calculus, 
+% used to express common patterns of collective behaviour.
+%%
+%Two of the most important building blocks are 
+% \emph{gradient-cast} (\scafiinline{G}) 
+% and \emph{converge-cast} (\scafiinline{C})~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/cee/AudritoCDPV21} (\Cref{fig:c-and-g}). 
+%%
+%The first one spreads information from source devices 
+% (identified through a Boolean field) 
+% to the entire system along a \emph{gradient} (i.e., a field of minimum distances from sources).
+%%
+%Particularly, in ScaFi \scafiinline{G} is expressed as:
+%\begin{lstlisting}[language=scafi]
+%def G[V](source: Boolean, field: V, 
+%        acc: V => V, metric: () => Double): V
+%\end{lstlisting}
+%Where the \scafiinline{field} is the value that will be propagated in the gradient distance field built using \scafiinline{metric}. During the propagation, the value will be accumulated using the \scafiinline{acc} lambda.
+%%
+%This API could be used, for instance, to propagate an alarm from zones in danger:
+%\begin{lstlisting}[language=scafi]
+%val temperature = sense("temperature")
+%// share the temperature 
+%val broadcast: Double => Double = id => id 
+%val dangerCondition = temperature > 40
+%G(dangerCondition, temperature, broadcast, nbrRange)
+%\end{lstlisting}
+%Where \scafiinline{nbrRange} is a special sensor that produces the distance against the neighbourhood.
+%
+%\scafiinline{C}, instead, 
+% enables the collection of data from the system to the source devices
+% ---and is hence widely used for distributed sensing and summarisation~\cite{DBLP:journals/cee/AudritoCDPV21}.
+%%
+%This operator is one of the building blocks directly implemented in ScaFi:
+%\begin{lstlisting}
+%def C[P, V](potential: P, acc: (V, V) => V, 
+%            local: V, Null: V): V
+%\end{lstlisting}
+%Where \scafiinline{potential} is a gradient field in which,
+% the data (\scafiinline{local}) will be accumulated using \scafiinline{acc} down to the source.
+% \scafiinline{Null} is the idempotent value for the accumulation operation.
+%For instance, \scafiinline{C} can be used to count how many nodes are under the influence of
+% a source:
+%\begin{lstlisting}[caption={A minimal aggregate program program that leverages both of \scafiinline{G} and \scafiinline{C}.},captionpos=b, label={code:reference}]
+%// Some condition that mark zone as interested
+%def source: Boolean = ...
+%// G used to accumulated the gradient
+%val potential = G(source, 0.0, _ + nbrRange(), nbrRange)
+%C(potential, _ + _, 1, 0)
+%\end{lstlisting}
+%
+%These building blocks can be \emph{composed} to create more complex applications, 
+% such as crowd steering~\cite{DBLP:journals/computer/BealPV15} 
+% and distributed decision making~\cite{DBLP:journals/jsan/CasadeiAV21}.
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=0.49\linewidth]{papers/acsos2022/img//g.pdf}
+    \includegraphics[width=0.49\linewidth]{papers/acsos2022/img//c.pdf}
+    \caption{
+        Representation of the high-level behaviour of G and C. 
+        The time flows left-to-right.
+        The output of the program is contained inside the node.
+        The value outside the nodes and the input field (T stands for true, F stands for false).
+        In G (on the left) the input field is a Boolean field that marks 
+         some nodes as sources and the information 
+         flows from the source (yellow nodes) 
+         to other nodes. 
+        In this process, 
+         each node could manipulate the information 
+         (shown as the sum of local weights and link weights).
+        In C (on the right) the input field consists of a couple of
+         sources and a local field (in this case, a constant value equals 1)
+         and the information is accumulated 
+         (i.e, shown as a sum of local value) in the source, 
+         that works as a sink node.
+    }\label{fig:c-and-g}
+\end{figure*}
+
+\subsection{\acl{RL}}
+\label{s:background:rl}
+
+%\begin{comment}
+%\meta{
+%    - on RL as a general framework to solve sequential decision processes\\
+%    - on MDP as a framework to support RL\\
+%    - devise the goal using MDP formulation\\
+%    - brief intro on Q-Learning\\
+%    - example of Q-Learning applied in various "platform" concerns\\ 
+%}
+%\end{comment}
+
+\ac{RL}~\cite{sutton2018reinforcement-learning} addresses 
+ the problem of learning how to behave 
+ by interacting with the environment.
+%is a framework for devising learning programs, inspired by how humans learn, 
+\ac{RL} settings are usually formalised 
+ as \emph{sequential decision processes} in which an \emph{agent} acts 
+following a \emph{policy} $\pi$ while perceiving information (the \emph{state})
+from a possibly unknown environment. 
+%
+Commonly, environment dynamics is formalised as a \ac{MDP}.
+%
+An \ac{MDP} is a tuple $<\RS, \RA, \RP, \RR>$ where:
+\begin{itemize}
+  \item $\RS$ denotes the set of \emph{states} 
+   (i.e., the information that agents could access from the environment);
+  \item $\RA$ is the set of \emph{actions} 
+   (i.e, the capabilities used by agents to change the environment);
+  \item $\RP(s_{t + 1} | s_t, a_t)$ defines the probability 
+    to reach some state $s_{t + 1}$ starting from $s_t$ 
+    and performing $a_t$ (i.e, \emph{transition probability function});
+  \item $\RR(s_t, a_t, s_{t+1})$ models a probabilistic \emph{reward} function, i.e., a scalar signal quantifying how good the action was against the given environment configuration.
+\end{itemize}
+%
+In \ac{RL} problems, 
+ agents do not have access to $\RR$ or $\RP$ 
+ but they can rely only on the experience,
+ given by triplets $(s_t, a_t, r_t)$ 
+ sampled at a time step $t$. 
+%%
+Therefore, the \emph{long-term return} $G$ 
+ is defined as the discounted sum of rewards 
+ of a possible future trajectory $\tau$ 
+ (i.e, a sequence of time steps):
+%%
+\begin{equation}
+G_{t} = r_t + \gamma r_{t + 1} + \gamma^2 r_{t + 2} + \dots + \gamma^T r_{t + T} = \sum_{k = t}^T \gamma^{k-t} r_k
+\end{equation}
+%%
+Parameter $0 \leq \gamma \leq 1$ is the \emph{discount factor}, 
+ capturing how much the future reward impacts long-term return.
+%%
+The agent's goal in \ac{RL} is the maximisation 
+ of the \emph{expected} long-term return following a policy $\pi$:
+%%
+\begin{iequation}
+J = \mathbb{E_\pi}\big[ G_t \big] = \RE_\pi \big[ \sum_{k = t}^T \gamma^{t-k} r_k \big] 
+\end{iequation}
+A policy devises the agent's \emph{intentions}, 
+ i.e., what action should be performed when it is in a state $s$.
+%
+Over the years, several \ac{RL} algorithms have been proposed. 
+%
+One of the most used is Q-Learning~\cite{DBLP:journals/ml/WatkinsD92}. 
+ It aims at finding the $\pi^*$ 
+ (i.e, the policy with the highest long-term return) 
+ by incrementally refining a $Q$ table. %acting in an unknown environment. 
+%
+A \emph{$Q$ table} is a mapping 
+ that tells how good (or bad) a \emph{state-action} pair is 
+ according to the long-term return while following a policy $\pi$.
+%
+At each time step, 
+ the table is updated through a temporal difference evaluation:
+\begin{equation}
+Q(s_t, a_t) = Q(s_t, a_t) + \alpha  \big[ r_t + \gamma * \underset{a}{\text{max}}(Q(s_{t+1}, a)) - Q(s_t, a_t)\big]
+\end{equation}
+where $\alpha$ is the learning rate, 
+ that is the influence of the new experience 
+ against the learned $Q$ at each update.
+%
+Q-Learning agents follow a $\epsilon$-greedy policy 
+ as \emph{behavioural} policy: 
+ the function chooses a random action with a $\epsilon$ probability, 
+ and the action of the highest value with $1-\epsilon$ probability. 
+%
+This is done mainly for balancing 
+ the \emph{exploitation-exploration} trade-off. 
+%
+Using $Q^*$ we could extract the \emph{target} policy,  
+ i.e, a function that always chooses the action with the highest value in a certain state:
+\begin{iequation}
+\pi^*(s) = \overset{a}{\text{argmax}}(Q(s, a))
+\end{iequation}
+
+%Q-Learning, and its variations leveraging Deep Learning~\cite{DBLP:journals/corr/abs-1907-09475}, 
+% have been having a great momentum thanks to their flexibility and efficacy, 
+% and indeed they are largely used for applications 
+% ranging from robotics to smart grid management~\cite{DBLP:journals/access/JangKHK19}.
+%
+%However, the solutions are application-specific and hardly scale in different scenarios.
+\revision{
+\subsection{Related Work and Motivation}\label{s:related-and-motivation:rl}
+The problem we deal with in this work may fall under the topic of 
+ Multi-Objective Sequential Decision-Making~\cite{DBLP:journals/jair/RoijersVWD13}. 
+ In fact, our goal is to optimise a functional goal 
+  (e.g. crowd steering) and one or more non-functional goals 
+  (e.g. reducing energy consumption, increasing the speed of calculation, and others). 
+  
+In particular, these goals may also conflict, 
+ making it difficult to find the optimal policy for a given problem.
+In this work, we focused on applying \ac{RL} in the case of the trade-off of functional and non-functional concerns, 
+ since it has been already exploited for managing non-functional aspects 
+ in several applications - e.g., reducing the energy in a smart building~\cite{DBLP:journals/iotj/YuQZSJG21}, 
+ improving the efficiency of routing protocols~\cite{DBLP:conf/wimob/HendriksCL18} 
+ and improving cooling in server farms~\cite{DBLP:conf/sensys/LeLWTWW19}.
+%
+Moreover, \ac{RL} is practically the first choice as it allows learning 
+ directly from raw experience without the need to build an explicit model
+ with minimal overhead at inference time 
+(both in the case of deep neural networks and standard tabular methods).
+
+The focus of this work is mainly on energy efficiency 
+ related to self-organising computations---since it is an important topic nowadays related to green computing concerns.
+One way to improve efficiency would be to act at the level of scheduling
+ as already explored in related work about wireless sensor network scheduling.
+ In~\cite{DBLP:journals/automatica/IwakiWWSJ21,DBLP:journals/ijcnds/MihaylovBTN12} the system learns 
+ when a node should be awakened in order to reduce conflicting messages 
+ (and therefore to reduce the power consumption). 
+However, our work is quite different from the previous. 
+ We aim to leverage learning to improve a \emph{general} collective computation 
+ expressed in \ac{AC}-like execution model 
+ (i.e, asynchronous and iterative evaluation of \revision{rounds} eventually lead to collective behaviours--see \Cref{s:background:ac})
+ and not a specific application as is often the case (e.g. distributed sensing in WSN).
+For example, consider a typical AC application, 
+ namely the management of crowds of people equipped with smart devices~\cite{DBLP:journals/computer/BealPV15}. 
+ The self-organising execution model involves fixed and periodic evaluation of rounds. 
+ But this means that at unhurried times with few emergencies, 
+ the system continues to compute the same value without adding any collective information. 
+Therefore, with \ac{RL} we want the system to learn 
+ to identify these ``peaceful'' conditions 
+ and then reduce the number of collective rounds.
+
+Another non-functional aspect that we could handle with 
+ \ac{RL} is the message bandwidth management. 
+Again, several works have tried to find efficient communication protocols~\cite{DBLP:conf/nips/ZhangZL19, su2019cooperative}.
+In the case of AC-like computations, they require each node to communicate 
+ with its neighbourhood through broadcasts to reach eventually 
+ collective data structure. 
+ However, in many cases, this could lead to a waste of messages, 
+ e.g., in very dense conditions it would be sufficient to send local information 
+ only to a subset of the neighbours to reach the same global structure.
+Let us always take the example of crowds. 
+Suppose we are in an extremely dense condition. 
+If a node wants to propagate an alarm to the whole system, 
+ it can only send that message to a subset of its neighbourhood, 
+ following a gossip-like protocol. 
+\ac{RL}, in this case, can be used to learn when nodes should change 
+ the neighbourhood model, reducing the messages sent 
+ while maintaining the same application goal.
+}
+\section{Aggregate Platform Improvement Through \acl{RL}}\label{sec:contribution}
+
+
+%As above mentioned, \ac{AC} is a general approach by which it is possible to devise self-organising reusable collective behaviours, that do not depend on any particular IT architecture. 
+As discussed in \Cref{s:background:ac},
+ in \ac{AC}, collective behaviour 
+ is the result of both
+ an aggregate program
+ and an execution protocol
+ whose details may vary within certain limits
+ without affecting the desired functionality.
+%
+The extent of effects induced by the execution protocol
+ is usually assessed by \emph{simulation testing},
+ possibly accompanied by formal results applicable to the aggregate program at hand---e.g., self-stabilisation~\cite{DBLP:journals/tomacs/ViroliABDP18}
+  or known properties (cf. optimality results) of used algorithms~\cite{DBLP:conf/saso/AudritoCDV17,DBLP:journals/cee/AudritoCDPV21}.
+
+Programming in \ac{AC}
+ focusses primarily on \emph{functional} aspects of an application,
+ but may also pay special attention to non-functional aspects like, e.g., \emph{resilience} (supported by self-organisation algorithms).
+%
+Other non-functional goals such as computational efficiency and bandwidth consumption may also be important (cf. energy-constrained devices), 
+ and can be addressed through (i) \emph{efficient algorithms}, in terms of computation, memory, or message complexity,
+ as well as 
+ (ii) fine-tuned configuration of the \emph{execution platform}, namely of the software middleware, daemon, or simulator responsible for supporting the execution of aggregate applications. 
+%
+%However, non-functional properties may be key---cf. energy-constrained settings. % (cf. low-cost sensors).
+%
+%So, typically, the execution platform is manually configured to fix execution details  like the frequency at which the devices perform rounds.
+%
+For instance, the designer could configure the platform 
+ to schedule computation rounds 
+ at a given frequency
+ that is somewhat related to the desired reactivity
+ and expected environmental dynamics.
+%
+Recent work~\cite{danilo2021lmcs} has also proposed the use of rule-based and reactive policies to let a system \emph{adapt} its execution based on change in inputs or the environment.
+%
+However, such rules are still hand-crafted: they may be highly suboptimal or require to be adjusted when porting the application to different environments.
+%
+%Notice that we assume that devices,
+% when they are part of an aggregate system,
+% cease part of their autonomy,
+% and can therefore be instructed to run rounds. %, for the collective good.
+
+%This is possible because the \ac{AC} paradigm partially constraints the computational node autonomy.
+%
+%Indeed, even if \ac{AC} imposes some rules, the computational units are free, for instance,  to choose when they should compute rounds or how to exchange messages.
+% 
+%So, for instance, nodes should fire rounds eventually, but not with the same clock. 
+
+%In that local autonomy margin, 
+In this work, we explore the possibility of \emph{learning} 
+ how to improve aggregate applications from a non-functional point of view, 
+ leveraging the \ac{RL} framework.
+%
+%Indeed, \ac{RL} has already been applied for similar goals~\cite{DBLP:conf/iccad/TanLQ09, DBLP:journals/corr/abs-1910-07421}, 
+% but the solutions produced are typically application-specific. 
+%
+Particularly, in our idea \ac{RL} enhances general aggregate programs, 
+ making it possible to reuse the same application logic in different contexts.
+%
+This choice has several benefits.
+ Firstly, learning will be used as a mechanism to improve \emph{adaptability}. 
+ Indeed, using hand-craft approaches to handle non-functional aspects 
+ could lead to ad-hoc solutions that might fail against environmental 
+ changes not considered by the designer.
+%
+Using learning instead, the agents self-adapt as a consequence 
+ to maximise the reward signal that guides them towards a collective goal. 
+% First, learning enhances \emph{adaptability}. 
+% Indeed the agent continuously adapts itself in order to maximise a reward signal. 
+%
+Also, in the case of \emph{online} and \emph{continuous} learning, 
+ it is possible to learn a good policy \emph{by doing}, 
+ even if the nodes are in an unknown environment with any prior knowledge of the application domain.
+%
+%This situation is difficult to handle with handcraft algorithms, that require a deep domain knowledge.
+
+\subsection{Learning Setting}\label{sec:learning-setting}
+
+\begin{figure}[b]
+	\centering
+    \includegraphics[width=\linewidth]{papers/acsos2022/img//rl-architecture.pdf}
+    \caption{Description of the general scheme of \ac{RL} applied to the execution platform. 
+    %
+    The agent receives the state and reward from the platform and produces an action that can affect one of the platform aspects (blue circles).}
+    \label{fig:rl-and-ac}
+\end{figure}
+\revision{
+In the \ac{AC} framework, 
+ we can assume homogenous collective behaviours---
+ i.e., agents which participate in the aggregate system should execute the same program. 
+ In terms of the \ac{RL} process, this means that we could find a single policy for the entire system even if we are in multi-agent settings---as pointed out in previous work~\cite{DBLP:conf/acsos/Aguzzi21, aguzzi2022coord-ac-rl,aguzzi2022roadmap-ac-rl}.}
+Specifically, we aim at using a global $Q$-table during the learning time, 
+ by which each node uses and refines it with the local experience.
+This means that each node, after collecting the typical ($s_t, a_t, r_{t+1}$) trajectory,
+ performs the Q-learning update on the shared table.
+%
+ This way, the $Q$-table encapsulates the knowledge of the whole aggregate behaviour.
+%
+At the end of the learning phase then, 
+ the final $Q$-table is conceptually assigned to the whole system, by sharing the $Q$-table with all the agents.
+%
+ The nodes consequently follow a greedy policy over that table, 
+ which is a typical approach used in \emph{swarm}-like system~\cite{DBLP:journals/jmlr/HuttenrauchSN19, DBLP:conf/atal/SosicKZK17}.
+%
+In doing so, the policy works for small networks as well as large networks. % (i.e, scales with the agent's population size).
+
+\ac{RL} was already combined with the \ac{AC} model 
+ to yield behavioural variations~\cite{DBLP:conf/acsos/Aguzzi21}, namely different aggregate programs.
+%
+However, in this work, \ac{RL} does not change the aggregate program; 
+ rather, it changes the orchestration logic of the \ac{AC} execution platform (\Cref{fig:rl-and-ac}). 
+%
+The agent, however, could \emph{inspect} the learning and evaluation process. 
+ Therefore, the agent state should depend on locally produced export and output, 
+ and the messages received from the neighbours.
+%
+The actions chosen by the agents only indirectly influence the local program output: 
+ this is done by producing side-effects at the infrastructural level---e.g., 
+ dropping obsolete messages from neighbours, 
+ or waking up more frequently to more quickly 
+ react to locally perceived changes.
+%
+The actions can also influence the neighbourhood state, e.g., by sending a special message to force neighbours to wake up.
+%
+This work considers a \emph{local} reward function, that should be crafted in a way that brings about the collective goal through emergence. 
+%
+However, the reward definition is \revision{specific to the \emph{non-functional requirement} that is being considered; in other cases, there might be the need to design more complex reward functions,}  
+such as global functions (i.e., the reward signal is received after collective actions) or neighbourhood-level functions (i.e., the signal is received after a neighbourhood-level action).
+\revision{Nevertheless, for the requirement taken into account (e.g., energy efficiency---see next subsection), 
+ the reward function can be reused across several collective program specifications,
+ since it does not depend on the application logic.
+}
+
+\subsection{\acl{RL} to Reduce Energy Consumption}\label{acrl-energy-goal}
+
+
+Among the non-functional goals that \ac{RL} could face, 
+ this study %analyses the application of Distributed Q-Learning 
+ focusses on reducing the \emph{energy consumption} of aggregate computations,
+ by altering the local agent \emph{scheduling policy} (As pointed out in \Cref{s:discussion:ac}).
+%
+\revision{Our goal is to reduce the number of computation rounds and hence the energy needed to achieve certain results in a certain time amount or, dually, 
+ to reduce the amount of time to achieve certain results
+ for a given amount of energy.}
+%
+%\revision{Similar ideas have already been considered} in related works about Wireless sensor network scheduling.
+% In~\cite{DBLP:journals/automatica/IwakiWWSJ21,DBLP:journals/ijcnds/MihaylovBTN12} the system learns 
+% when a node should wake up in order to reduce conflicting messages 
+% (and therefore to reduce the power consumption). 
+% However, our work is quite different from the previous. 
+% We aim to leverage learning to improve a \emph{general} collective computation 
+% expressed in \ac{AC}-like execution model (i.e, asynchronous and continuous evaluation of \revision{rounds} brings to collective specifications).
+%
+In particular, the algorithm should learn how to reduce the round frequency in stable conditions. 
+ To this aim, the program should be self-stabilising~\cite{DBLP:journals/tomacs/ViroliABDP18}, 
+ i.e., it should reach a well-defined eventual fix-point field result, once input fields cease to change.
+\revision{Note that, by reducing the round frequency, 
+ we reduce both the total amount of program evaluation \emph{and} 
+ the message exchange between neighbours 
+ (which typically involves non-negligible power consumption).}
+
+\revision{Even if we consider the whole aggregate computing context as a state (cf. \Cref{s:background:ac}), 
+ in this work the agent observation space is based on the local output 
+ produced by an aggregate program evaluation.} 
+ Following the self-stabilisation assumptions, an agent state encodes the variation of the output history, \revision{thus we constrain the output to be a numeric value}.
+ At each time step $t$, it is computed the local output $o_t$ and $\delta_t$, which consists of three possible values, \texttt{Stable} ($o_t = o_{t-1}$), \texttt{Rising} ($o_t > o_{t-1}$), and \texttt{Decreasing} ($o_ t < o_{t-1}$).
+Also, in order to consider the evolution of $\delta$, each agent stacks the last $w$ values of $\delta$ in its state: $s_t =(\delta_t, \delta_{t-1}, \dots, \delta_{t-w})$.
+
+The actions point out when the agent should fire the next aggregate program evaluation, following a typical wake-up scheduling.
+%
+We consider a discrete action set, e.g., based on possible energy consumption profiles.
+% 
+Each action contains the delta time at which the next round should be triggered. 
+
+Finally, the reward function is devised by only observing the local state of the \ac{AC} execution platform, aiming to reduce the overall consumption by emergence.
+%
+%This way, it is possible to use online learning, without the need for simulations.
+The reward signal should consider two aspects: i) the overall low-power consumption and ii) the time needed to reach a stable condition.  
+In doing this, the signal weighs these two contributions using an additional parameter $\theta$.
+ When the output history contains a $\delta \neq \text{\texttt{Stable}}$, the reward function is evaluated as:
+\begin{iequation}
+r_t = - \theta * \Delta / T
+\end{iequation}
+$T$ is defined by the action with the highest next wake up value.
+%
+This gives a negative reward if the node stays in a non-stable condition for a long time (i.e., when $\Delta = T$).
+Otherwise, the reward function is evaluated as:
+\begin{iequation}
+r_t = (1 - \theta) * (1 - \Delta / T)
+\end{iequation}
+That is the inverse of the case of non-stable conditions. 
+ Thus, this reduces the consumption as much as possible, so the reward is maximised when $\Delta = T$. 
+ %This is a general zero-based scheme, where the agent tends to reach a condition where the reward is zero.
+
+Notice that these settings do not depend on a particular aggregate program, 
+ but they can be used in any program with continuous output and an eventually stable field. 
+%
+Besides, thanks to the local reward function, this learning setting could be also employed for online learning.
+\revision{However, we would highlight that in this case, 
+ we exploited offline learning. 
+ In this way, we could consider the cost of RL at runtime negligible concerning power consumption.}
+
+\newcommand{\rlsol}{{\sc{}Rl}}
+\newcommand{\periodicsol}{{\sc{}Periodic}}
+\newcommand{\adhocsol}{{\sc{}Ad-hoc}}
+\newcommand{\swapscen}{{\sc{}Swap}}
+\newcommand{\multiswap}{{\sc{}MultiSwap}}
+\section{Evaluation}\label{sec:evaluation}
+
+
+Our \ac{RL} approach combined with \ac{AC} is evaluated through a set of simulated experiments, 
+ verifying that an aggregate system eventually learns an improved scheduling policy reducing the overall system consumption.
+%
+To this purpose, we adopt ScaFi~\cite{DBLP:conf/isola/CasadeiVAD20}, 
+ which bundles, together with the language previously discussed, a simulator to execute aggregate programs.
+ 
+%
+For the sake of reproducibility, the code and the instructions to run simulations and produce the charts are open-sourced and available at a public repository\footnote{\url{https://github.com/cric96/experiment-2022-acsos-round-rl}}.
+\begin{table}[t]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+    Parameter & Description & Values                 \\ \hline
+    $\epsilon_0$ & $\epsilon$ at the beginning of simulations & {[}0.1, 0.4{]}        \\ \hline
+    $\gamma$  & Discount factor for Q update & {[}0.99, 0.95{]}   \\ \hline
+    $\alpha$ & Learning rate for Q update & {[} 0.1, 0.4 {]}                    \\ \hline
+    $w$     & State window stack size  & {[}2, 5, 7{]}          \\ \hline
+    $\theta$ & Balance of reactivity vs. consumption & {[}0.975, 0.9, 0.99{]} \\ \hline
+    \end{tabular}
+    \caption{The parameters used in simulations. A simulation consist in a tuple of ($\epsilon_0$, $\gamma$, $\alpha$, $w$, $\theta$).}
+    \label{tab:parameters}
+\end{table}
+\subsection{Simulation Setup}\label{s:simulation-setup}
+In these experiments, the nodes are arranged in a grid large 100x100 meters containing $N=100$ nodes. 
+ An entire simulation episode lasts 80 seconds of simulated time.
+ The training phase is performed for $L=1000$ episodes using the $\epsilon$-greedy policy.
+ In each episode $k$, the $\epsilon$ is decayed in order to balance the exploitation/exploration trade-off:
+\begin{iequation}
+\epsilon_k = \epsilon_0 - (\epsilon_0 / L * k)
+\end{iequation}
+Where $\epsilon_0$ is set as the initial condition.
+In the training phases, we consider only one global Q-table that each agent updates 
+ using local ($s_t, a_t, r_{t+1}$) trajectory items.
+Then, the performance is evaluated in the last $T=50$ episodes, by deploying the greedy policy.
+In that case, each agent owns a copy of the local Q-table as resulting after the training phases.
+ %Each node has four neighbours at most. 
+ The actions available to each node are four, respectively with next-wake up times equal to 100ms, 200ms, 500ms and 1s.
+ The programs that will be tuned with our scheduling policy are the ones described in \Cref{sec:background},
+  namely the gradient-cast (G) and the converge-cast (C) building blocks.
+
+To introduce variability in the dynamics, we consider a variation in the source set. 
+%
+Indeed, 
+ when the source set changes, 
+ the field has to adjust towards the correct fix-point, 
+ and if the nodes do not react quickly, 
+ the convergence time can considerably lengthen.
+%
+If only small changes are considered 
+ %(e.g., removal of a non-critical node), 
+ then learning could promote solutions in which the nodes always 
+ use the greatest next wake-up time. %(i.e., 1 second).
+%
+To introduce such elements of variability, 
+ we devise two scenarios. 
+ In the first one (\swapscen{}), 
+ only one source device exists at the beginning---i.e., the leftmost node in the grid. 
+%
+At the time 40, 
+ the rightmost device becomes a source node:
+ this induces a perturbation in the system
+ that would 
+ be received by the aggregate computation,
+ eventually correcting the output computational field.
+%
+The other scenario involves five sources (\multiswap{}):
+ at the initial phase, only one source exists (the central node);
+ at time 30, four new nodes become sources (the ones on the border of the grid); finally, 
+ at time 60, the latter nodes switch back to non-source nodes.
+
+Several parameters should be considered to evaluate the performance of the \ac{RL}-based solution (\rlsol{}). 
+%
+We launch a simulation batch for each tuple shown in \Cref{tab:parameters}.
+%
+To decide what configuration is the best, 
+ the \rlsol{} solution was compared with fixed-rate scheduling (\periodicsol{}) 
+ with the wake-up time equal to 100ms (the lowest),
+ and a heuristic that leads the system to consume as little as possible (\adhocsol{}).
+%
+In particular, in \adhocsol{} the nodes check if the current output is different from the previous one; 
+ in that case, then they double the next wake-up time (up to the maximum value),
+ otherwise, they keep it fixed at the minimum value of the action set (i.e, 100ms).
+%
+We analyse the influence of the parameters on the learning dynamics, 
+ and evaluate the error of each solution as the mean squared error 
+ at each time step, between the \periodicsol{} solution and our \rlsol{} solution:
+%
+\begin{equation}
+    MRSE_t = \sum_{i \leftarrow 0}^N (\mtext{output}_t(i)^{Periodic} - \mtext{output}_t(i)^{Rl})
+\end{equation}
+In the equation, 
+ $t$ is the time step when the error is evaluated 
+ (each second) and $i$ is the index that selects a particular node.
+%
+We also consider the total rounds fired in the entire system:
+\begin{equation}
+    \mtext{ticks}_t = \sum_{i \leftarrow 0}^N (\mtext{rounds}(i))
+\end{equation}
+\texttt{rounds} is a local function that counts how many times the node computes the aggregate program. 
+%
+Another metric extracted is the total ticks per seconds, computed as the difference between two \texttt{ticks} instants: 
+\begin{equation}
+    \mtext{ticks}^{seconds}_t = \mtext{ticks}_t - \mtext{ticks}_{t-1}    
+\end{equation}
+%
+To directly compare \rlsol{} and \adhocsol{}, 
+ we also extract the \emph{error percentage} and the \emph{energy saving percentage}.
+%
+The error percentage tells to what extent the computational field differs from the \periodicsol{}. 
+ So we want to minimise this value at each time step. 
+ The energy saving percentage is computed as: 
+\begin{equation}
+(\mtext{ticks}^{Periodic}_t - \mtext{ticks}_t) / (\mtext{ticks}^{Periodic}_t)
+\end{equation}
+%
+This value should be maximised, since the greater it is, the greater the power saving.
+
+\subsection{Discussion and Results}\label{s:discussion:ac}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.85\linewidth]{papers/acsos2022/img//solution-g.pdf}
+    \caption{The distribution of the solutions after the training phases in \swapscen{} scenario. 
+        Each point consists of one of the configurations expressed in \Cref{tab:parameters}.
+        The colour of nodes shows the $\theta$ parameter. 
+        The size of nodes represents the $w$ value (the smaller the node the smaller the $w$). 
+        The solutions of interest are located in the blue ellipse.
+        Similar results are achieved with C and in the \multiswap{} scenario. 
+    }
+    \label{fig:solutions}
+\end{figure}
+\begin{figure}[b]
+    \centering
+    \includegraphics[width=0.2\linewidth]{papers/acsos2022/img//start.png}
+    \,
+    \includegraphics[width=0.1\linewidth]{papers/acsos2022/img//arrow.png}
+    \,
+    \includegraphics[width=0.2\linewidth]{papers/acsos2022/img//middle.png}
+    \,
+    \includegraphics[width=0.1\linewidth]{papers/acsos2022/img//arrow.png}
+    \,
+    \includegraphics[width=0.2\linewidth]{papers/acsos2022/img//end.png}
+    \caption{The slow-down behaviour of the policy learnt in \swapscen{} scenario.
+    The colours of the small squares denote the node frequencies 
+    (the redder, the higher the frequency).
+    The colours of the large squares denote the output 
+    (the greener, the closest the nodes to the sources).
+    In the leftmost figure, a new source appears in the bottom right corner. 
+    The signal propagation produces a frequency drop on the node that evaluates the new value 
+    (the black node grows toward the gradient direction).
+    }\label{fig:simulation-evolution}
+\end{figure}
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{papers/acsos2022/img//image-rl-500-plain.pdf}
+    \includegraphics[width=\textwidth]{papers/acsos2022/img//image-rl-500-multi.pdf}
+    \includegraphics[width=\textwidth]{papers/acsos2022/img//image-rl-500-c.pdf}
+    \includegraphics[width=\textwidth]{papers/acsos2022/img//image-rl-500-c-power.pdf}
+    \caption{Simulation results. %Simulation performance encountered using \ac{RL} to manage round firing. 
+    % 
+    The leftmost chart shows the total ticks as time passes ($ticks$), 
+    the chart in the middle shows the ticks per second, and the rightmost chart shows the error and consumption measures. 
+    %
+    The first line shows the best performance of the gradient-case program in the simplest scenario (i.e., \swapscen{}). 
+    %
+    The second line evaluates the performance of the gradient in the \multiswap{} scenario.
+    %
+    Finally, the last two lines show how RL manages the C block, with different $\theta$ values. 
+    The overall power-saving using our approach is between 60$\%$ to 40$\%$ with respect to the \periodicsol{} program evaluation.}
+    \label{fig:simulation-results}
+\end{figure*}
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=0.8\textwidth]{papers/acsos2022/img//error-and-ticks.pdf}
+    \caption{Shows the average error and the average ticks during the learning episodes of \swapscen{} scenario. }
+    \label{fig:training-performance}
+ \end{figure*}
+ \begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{papers/acsos2022/img//plain-gradient.pdf}
+    \caption{\revision{Error and energy saving percentage (see \Cref{s:simulation-setup}) as nodes vary. 
+    We use the best policy found in the \swapscen{} scenario as a reference, checking how the error and energy saving change. }}
+    \label{fig:check-scale}
+ \end{figure}
+The simulations demonstrate 
+ that the learning algorithm produces different policies. 
+ Particularly, observing the \Cref{fig:solutions} we could recognize three macro-behaviours:
+\begin{itemize}
+    \item the system tends to reduce the power consumption as much as possible, 
+     leading to high error and non-reactive policy. 
+     It happens mainly with a low value of $\theta$ since the smaller it is 
+     the greater the reward for reducing consumption tends to be.
+    \item When the simulation runs with a high $\theta$ value, 
+    the policies remain with a high power profile to increment 
+    as much as possible the reactivity to the environment changes. 
+    %
+    \item The system tries to balance power efficiency and reactivity, 
+    which is our intended goal. 
+    It is typically achieved with a value in the middle of the two, 
+    but also other parameters influence the training results.
+\end{itemize}
+
+This section discusses the results of 
+ those simulations that have a high power-saving percentage
+ and a low error in each scenario/program
+ since the others do not have any particular point of interest. 
+%
+\Cref{fig:simulation-results} shows the charts of the simulation results.
+%
+In each scenario, the algorithm successfully 
+ reduces the power consumption percentage of the system, 
+ maintaining a low percentage of the output error. 
+%
+ The best performances are typically reached with the highest value of $\theta$, $\gamma$, and $w$.
+%
+Indeed, the first value guides the learning process 
+ to reduce the period in which the node outputs are in an unstable condition. 
+%
+$\gamma$ tends to reduce the long-term consumption, 
+ guiding the node to maximise the overall power.
+% 
+Finally, with a great value of $w$, 
+ agents tend to better understand the output progression and then they better react to local changes. 
+ %$\epsilon$ does not seem that alter so much the results in that cases. 
+
+The best results are achieved in the \swapscen{} (\Cref{fig:training-performance})
+ scenario and with the gradient program. 
+ Here, introducing at most a \revision{10$\%$} of error in the swap moments 
+ (i.e., when the new source appears), 
+ the learning algorithm reduces the power consumption by nearly 60$\%$.
+%
+Particularly, the consumption is near to our \adhocsol{} solution, 
+ but with a remarkably reduced error. 
+%
+Interestingly, at the swap time, the round frequency drops until a peak and then soars (\Cref{fig:simulation-evolution}).
+This behaviour may appear counter-intuitive.
+ At a first glance, indeed, we expect that the nodes tend to maintain a low-cost power consumption, 
+ and then when changes in the environment happen, 
+ the nodes start to increase the frequency to react quickly against them.
+%
+However, if the nodes sleep, they cannot intercept new events. 
+ For this reason, the agents tend to maintain a high power 
+ consumption to identify changes and then they could enter power-saving settings.%
+
+In the \multiswap{} scenario, 
+ the algorithm reaches a good performance with a very low error, 
+ but with slightly higher power consumption (600 ticks on average versus 500 of the \swapscen{} scenario). 
+%
+This happens since we gave more importance to the convergence time 
+ (with $\theta = 0.99$) and therefore the algorithm tended 
+ to prefer solutions with low error. % (i.e, slow convergence time).
+%
+Nevertheless, even if it has higher consumption, 
+ it reaches a similar performance of \periodicsol{} but with half of the ticks.
+%
+
+The same \ac{RL} settings could be used even with different programs. 
+%
+Indeed, the system learns how to reduce consumption also when it is used with block C.
+% 
+Interestingly, $\theta$ could be used to decide the trade-off 
+ between power consumption and reactivity: 
+ the program with $\theta=0.9$ (fourth line \Cref{fig:simulation-results}) 
+ has a low error but a limited reduction in the power consumption ($\sim$ 40 $\%$); 
+ instead, the program with $\theta=0.975$ has an increased convergence 
+ time in the swap moments but the overall consumption is reduced by a factor of 70.
+ %
+%Thus, given some energy constraints, 
+% the designer could tune the system consumption by only changing $\theta$.
+
+\revision{
+Lastly, we want to recall that \ac{AC} programs are scale-free regarding the number of nodes, 
+ since they leverage self-organisation to reach a collective structure. 
+Therefore, even the learnt policy should not depend on the agents in the system. 
+To verify this consideration, we use the same policy found with 
+ 100 nodes in several other deployments (from 100 nodes to 900). 
+ Particularly, in \Cref{fig:check-scale}, the power consumption reduction 
+  remains stable as the nodes vary. 
+  Moreover, the error is constant too. 
+There were some oscillations but the error remains negligible even 
+  if the size has 10 times the nodes of the training configuration. 
+Differently, the heuristic worsens by a factor of three.}
+ \revision{
+\subsection{On practical applicability}\label{s:reality-check}
+We test our algorithm in simulated scenarios, 
+ but it can simply be adapted in a real system, which mainly means:
+\begin{enumerate}
+    \item define the training phase (offline/online);
+    \item integrate the \ac{RL} agent inference to the aggregate middleware% that observes the output and decides when the next tick and when the system will evaluate the program.
+\end{enumerate}
+For 1) if the learning is performed online, 
+ it should be also taken into account the cost of the central server 
+ that performs the learning and the communication among the nodes---
+ or any technique that allows a global Q table to be maintained and consistently updated 
+ (e.g., via gossip algorithm). 
+Obviously, in the case of very dense and large-scale networks that is significant. 
+ Whereas if simulations are used, the cost of learning is negligible. 
+ Currently, our focus has been on the second case---implementing true distributed 
+ online learning, a more detailed evaluation is needed to understand the 
+ cost of maintaining a central and updated Q table.
+%
+For 2) on the other hand, there are several aspects to consider. 
+ In fact, \ac{AC} can adapt to different computing platforms and communication protocols, 
+ as it adopts a fluid approach---see work on pulverisation~\cite{DBLP:journals/fi/CasadeiPPVW20}.
+Thus, although AC typically does not care about the underlying platform, 
+ since our work is heavily dependent on the execution model instead, 
+ we have to be sure that this is closer to reality. 
+%
+Practically, we have to check i) the communication model and ii) the scheduling platform. 
+ For ii), the devices should be able to change the energy-saving model 
+ at runtime to support our \ac{AC} solution---that is already possible 
+ in various embedded systems such as ESP-32.
+Regarding communication instead, 
+ it could be that some scheduling policies that rely on a communication protocol 
+ do not work for another protocol 
+ (e.g., a policy trained with wired TCP, does not work well with wireless UDP due to packet collisions, message flooding, etc). 
+ Therefore, in the case of simulation, we should have a communication model as detailed as possible 
+ to be sure that the policy works in the selected platform too. 
+%Finally, this study needs to do a precise reality check against different types of 
+% deployment, to understand how this is effective in different types of systems.
+ }
+\section{Conclusion}\label{sec:conclusion}
+
+
+This paper puts a stepping stone in combining \ac{RL} with \ac{AC} 
+ to optimise non-functional aspects of collective computations such as power consumption, 
+ energy bandwidth, and reactivity (in terms of convergence time). 
+%
+In particular, this work leverages Q-Learning 
+ to reduce the cost of executing \ac{AC} programs 
+ in different synthetic scenarios.
+%
+The contribution \revision{can be framed within a larger} vision~\revision{\cite{DBLP:conf/acsos/Aguzzi21,aguzzi2022roadmap-ac-rl}} in which 
+ the designer could mainly focus on functionality and key non-functional aspects (e.g., resiliency)
+ at design time, while the platform \revision{is programmed to or instructed to learn} how 
+ to optimise less critical but still highly desired non-functional aspects\revision{---acting upon scheduling (as explored in this paper), deployment~\cite{DBLP:journals/fi/CasadeiPPVW20,casadei2022applsci-digitaltwins}, or online substitution of algorithm variants~\cite{aguzzi2022coord-ac-rl}}. % by exploiting simulations.
+\subsubsection*{Future works}
+this is the first exploration in this direction 
+ and shed the light on possible future works and improvements. 
+%
+Particularly, the state only considers local output and not the neighbourhood state. 
+%
+However, integrating also the neighbours' states could 
+ be necessary to produce better policies 
+ (e.g., a node should consider increasing the local frequency 
+ if the neighbourhood has a higher frequency). 
+%
+Moreover, the output discretisation was done through a handcrafted process. 
+ To improve the policy learnt, 
+ representation learning
+ could be leveraged to extract the right state representation for a given problem. 
+%
+Also, the action space could be improved.
+%
+Indeed, continuous action space better represents the wake-up scheduling period
+ and this could help to reduce the system-wide consumption. 
+%
+\revision{
+Therefore, Q-learning has proven too simple at managing the complexity 
+ that emerges in collective adaptive systems. 
+Among the many recent works applied in this context (e.g., DQN~\cite{DBLP:conf/dac/WeiWZ17}, A2C, MAPPO~\cite{DBLP:conf/smartgridcomm/LeeWN20}, etc.), 
+ the Asynchronous Advantage Actor Critic (A3C)~\cite{DBLP:conf/icml/MnihBMGLHSK16} 
+ seems a good match for our proposed solution, 
+ since it enables continuous state-action space policies (thanks to actor-critic settings)
+ using an asynchronous training model 
+ (i.e., several workers contribute to the global training process). }
+%
+Regarding the reward function, in this case, we considered local signals. 
+ However, since we are interested not only 
+ in individual efficiency but also in system-wide efficiency, 
+ the use of collective reward signals for globally improved power consumption
+ and convergence time could also be investigated. 
+%
+\revision{
+Managing the balance between consumption and convergence time 
+ with a single reward signal has shown to be complex. 
+ In fact, although $\theta$ is a good estimation of the balance between these two factors, 
+ it is not possible to know in advance whether a certain value will lead the system 
+ to prefer performance vs. consumption. 
+ Furthermore, the choice of $\theta$ must be made a priori and cannot be changed at runtime, 
+ making it difficult to change the policy in different profiles. 
+For this reason, in future work, we aim to consider multi-objective reinforcement learning~\cite{DBLP:journals/aamas/HayesRBKMRVZDHH22} as a technique 
+to manage multiple goals, even if they conflict with each other, and find solutions that 
+can concurrently optimise both consumption and responsiveness.
+%
+Finally, to reduce the problem of partial observability, 
+ we stack a sequence of outputs to understand the direction over time. 
+ However, this aspect could be learned using modern neural architectures 
+ that consider memory, i.e., Recurrent Neural Networks combined with Actor-Critic methods (e.g., A3C).}
+%\balance
+\printbibliography
+

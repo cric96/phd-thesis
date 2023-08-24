@@ -1,0 +1,85 @@
+\documentclass[12pt,a4paper,openright,twoside]{book}
+\usepackage[utf8]{inputenc}
+
+%\newcommand{\thesislang}{italian} % decommentare in caso di tesi in italiano
+\newcommand{\thesislang}{english} % commentare in caso di tesi in italiano
+\usepackage{thesis-style}
+% version
+\newcommand{\versionmajor}{0}
+\newcommand{\versionminor}{1}
+\newcommand{\versionpatch}{2}
+\newcommand{\version}{\versionmajor.\versionminor.\versionpatch}
+\typeout{Document version: \version}
+\addbibresource[label=discoli]{papers/discoli/biblio.bib}
+\addbibresource[label=acsos2023]{papers/acsos2023/bibliography.bib}
+\addbibresource[label=acsos2022]{papers/acsos2022/biblio.bib}
+\addbibresource[label=coordination2023]{papers/coordination2023/biblio.bib}
+\addbibresource[label=coordination2022]{papers/coordination2022/biblio.bib}
+\addbibresource[label=mdpi2020]{papers/mdpi2020/bibliography.bib}
+\addbibresource[label=swarm-intellingence2021]{papers/swarm-intelligence2021/biblio.bib}
+\addbibresource[label=coordination2023-macro]{papers/coordination2023-macro/biblio.bib}
+\addbibresource[label=acsos2023-frp]{papers/acsos2023-frp/biblio.bib}
+\addbibresource[label=ieee2022]{papers/ieee2022/bibliography.bib}
+\addbibresource[label=ecas2021]{papers/ecas2021/biblio.bib}
+
+\begin{document}
+	
+\frontmatter
+
+\input{front.tex}
+
+\begin{abstract}	
+Max 2000 characters, strict.
+\end{abstract}
+
+\begin{dedication} % this is optional
+Curiositas mater scientiae.
+\end{dedication}
+
+\begin{acknowledgements} % this is optional
+\end{acknowledgements}
+
+%----------------------------------------------------------------------------------------
+\tableofcontents   
+\listoffigures     % (optional) comment if empty
+\lstlistoflistings % (optional) comment if empty
+%----------------------------------------------------------------------------------------
+
+\mainmatter
+
+%----------------------------------------------------------------------------------------
+\chapter{\introductionname}
+\label{chap:introduction}
+%----------------------------------------------------------------------------------------
+
+Write introduction here.
+\part{Background}
+\chapter{Cyber-Physical Swarms} % or Background
+\label{chap:cpsw}
+%----------------------------------------------------------------------------------------
+\chapter{Macro-programming} % possible chapter for Projects
+\label{chap:macro-programming}
+\chapter{Many-Agent Reinforcement Learning}
+\label{chap:marl}
+\input{acronyms.tex}
+\part{Learning in Cyber-Physical Swarms}
+\begin{refsection}\input{papers/discoli/main.tex}\end{refsection}
+\begin{refsection}\input{papers/acsos2022/main.tex}\end{refsection}
+\begin{refsection}\input{papers/coordination2022/main.tex}\end{refsection}
+\begin{refsection}\input{papers/acsos2023/main.tex}\end{refsection}
+\begin{refsection}\input{papers/coordination2023/main.tex}\end{refsection}
+
+\part{Engineering Cyber-Physical Swarms}
+\begin{refsection}\input{papers/mdpi2020/main.tex}\end{refsection}
+\begin{refsection}\input{papers/swarm-intelligence2021/main.tex}\end{refsection}
+\begin{refsection}\input{papers/ieee2022/main.tex}\end{refsection}
+\begin{refsection}\input{papers/coordination2023-macro/main.tex}\end{refsection}
+\begin{refsection}\input{papers/acsos2023-frp/main.tex}\end{refsection}
+\begin{refsection}\input{papers/ecas2021/main.tex}\end{refsection}
+
+\chapter{Wrap Up}
+
+%----------------------------------------------------------------------------------------
+% BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+\end{document}

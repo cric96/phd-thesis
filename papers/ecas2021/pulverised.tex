@@ -1,0 +1,84 @@
+\begin{figure*}
+\centering
+\begin{minipage}[b][0.3\textheight][b]{0.49\textwidth}
+\begin{tikzpicture}[every node/.style={scale=1.0}]
+\node[hostThin,minimum width=3.4cm,minimum height=3cm,dashed]
+ (h1) [label={[yshift=0.35cm]above:{\textbf{logical \agent{}}}}] {};
+
+\node[lnode] (d1) at (h1.north west) [xshift=\nm,yshift=-\nm,label=above:{behaviour}] {$\LComp$};
+\node[lnode] (d2) at (h1.north east) [xshift=-\nm,yshift=-\nm,label=above:{communication}] {$\LComm$};
+\node[lnode] (d3) at (h1.center) [xshift=0,yshift=0,label=right:{state/knowledge}] {$\LState$};
+\node[lnode] (d4) at (h1.south west) [xshift=\nm,yshift=\nm,label=below:{sensors}] {$\LSens$};
+\node[lnode] (d5) at (h1.south east) [xshift=-\nm,yshift=\nm,label=below:{actuators}] {$\LAct$};
+
+\node[hostThin,minimum width=2.5cm,minimum height=2.5cm,dashed]
+ (h2) [right=2cm of h1, label={above:{\textbf{neighbour \agent{}}}}] {};
+
+\node[lnode] (d21) at (h2.north west) [xshift=\nm,yshift=-\nm] {$\LComm$};
+\node[lnode] (d22) at (h2.north east) [xshift=-\nm,yshift=-\nm] {$\LComp$};
+\node[lnode] (d23) at (h2.center) [xshift=0,yshift=0] {$\LState$};
+\node[lnode] (d24) at (h2.south west) [xshift=\nm,yshift=\nm] {$\LSens$};
+\node[lnode] (d25) at (h2.south east) [xshift=-\nm,yshift=\nm] {$\LAct$};
+
+\draw[loglink] (d1) -- (d3);
+\draw[loglink] (d2) -- (d3);
+\draw[loglink] (d3) -- (d1);
+\draw[loglink] (d3) -- (d2);
+\draw[loglink] (d4) -- (d3);
+\draw[loglink] (d3) -- (d5);
+
+\draw[loglink] (d21) -- (d23);
+\draw[loglink] (d22) -- (d23);
+\draw[loglink] (d23) -- (d21);
+\draw[loglink] (d23) -- (d22);
+\draw[loglink] (d24) -- (d23);
+\draw[loglink] (d23) -- (d25);
+
+\draw[loglink] (d2.east) -- (d21.west);
+\draw[loglink] (d21.west) -- (d2.east);
+\end{tikzpicture}
+\subcaption{A pulverised logical device, split into sub-components, and one of its neighbours.\label{fig:pulv:dev}}
+\end{minipage}\hfill%
+\begin{minipage}[b][0.3\textheight][b]{0.49\textwidth}
+\begin{minted}[mathescape=true]{scala}
+@multitier trait LogicalSystem {
+  // A logical node, connected to other logical nodes
+  @peer type LNode <: { type Tie <: Multiple[LNode] }
+}
+// Partitioning of a logical node into sub-components
+@multitier trait PulverisedSystem extends LogicalSystem {  
+  @peer type SensorComponent        <: LNode  // $\LSens$
+  @peer type ActuatorComponent      <: LNode  // $\LAct$
+  @peer type StateComponent         <: LNode  // $\LState$
+  @peer type BehaviourComponent     <: LNode  // $\LComp$
+  @peer type CommunicationComponent <: LNode  // $\LComm$
+}
+\end{minted}
+%%% THE FOLLOWING IS MORE SPECIFIC BUT COMPLEX
+%@multitier trait LogicalSystem {
+%  // A logical node, connected to other logical nodes
+%  @peer type LNode <: { type Tie <: Multiple[LNode] }
+%}
+%// Partitioning of a logical node into sub-components
+%@multitier trait LogicalNode { system: LogicalSystem =>
+%  @peer type SensorComponent        // $\LSens$
+%             <: { Tie <: LNode#Tie with Single[StateComponent] }
+%  @peer type ActuatorComponent      // $\LAct$
+%             <: { Tie <: LNode#Tie }
+%  @peer type StateComponent         // $\LState$
+%             <: { Tie <: LNode#Tie 
+%                    with Single[ActuatorComponent]
+%                    with Single[BehaviourComponent]
+%                    with Single[CommunicationComponent]}
+%  @peer type BehaviourComponent     // $\LComp$
+%             <: { Tie <: LNode#Tie with Single[StateComponent] }
+%  @peer type CommunicationComponent // $\LComm$
+%             <: { Tie <: LNode#Tie with Single[StateComponent] }
+%}
+\subcaption{\scalaloci{} code describing 
+%the architectural relationship between the sub-components of a partitioned device
+a pulverised logical system. (See \Cref{scafiloci} for more details.)\label{code:loci:pulverised}}
+\end{minipage}
+\caption{Pulverisation model and corresponding \scalaloci{} specification.}
+\label{img:pulverised-loci}
+\end{figure*}

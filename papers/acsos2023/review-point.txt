@@ -1,0 +1,82 @@
+Reviewer 1:
+
+[ ] One point that remains unclear after reading the paper is how the environment chosen for the experiments limits (or not) the capabilities of the approach presented. Being simplified (and quite visual), is does help to compare the different approaches (MLP, GNN, and informed versions) quickly, but it seems to be quite limited to assess how the system would scale, nor how the variability in the agent’s individual behaviors would affect their coordination. 
+
+[ ] In addition, it remains unclear how each of the 3 goals that are stated relate to collective or individual aspects, thus questioning about the individual goals in the presented set up. It is clear that agents perceive information locally, but it seems that the reward functions (this time defined for individual agents) are not directly linked to the goals mentioned. 
+
+
+-----------------------------------------------------------------------------------------
+
+Reviewer 2:
+
+[X] The fundamentals chapter "II. Background and Motivation" is a
+bit long with just under three pages and contains six subsections, so
+the content could be split up. 
+
+[ ] The explanations of machine learning techniques, especially Graph
+Neural Networks, deviate in some places from the standard literature
+and terminology in this research area. This should be improved.
+
+
+Detailed comments:
+
+As stated above, the explanations on Graph Neural Networks (GNNs)
+deviate in some places from standard terminology and literature in the
+machine learning field which may cause confusion. Specifically:
+
+[ ] II.C.: The authors state that, while processing a graph with a GNN,
+"the graph is further partitioned into layers with the node v at its
+bottom layer 0". In machine learning terminology: a GNN - as special
+variant of a neural network - is composed of layers.
+
+[ ] No reference is given for the introduction to GNNs (C. II.). The
+mechanism GNNs use to operate on graphs is called message passing,
+where at the same time each node performs the same steps: it
+collects information of its neighbors, transforms a neighbors
+information and lastly aggregates its own information and the
+neighbors' transformed information to result in a new hidden
+representation for the node. Unfortunately, the paper does not
+mention the mechanism at all. Furthermore, the proposed formulation
+of GNNs in the paper differs from this. As stated in the paper, a
+node requests its neighbors' information and aggregates (e.g. sum,
+max, ..) them all (without transforming it) so that the aggregated
+information is transformed. This change seems to reduce the power of
+the model very much.
+
+[X] For the formulation of second part of the reward function, I would
+have expected |N| > 0 instead of N > 0, since N represents the
+neighborhood of a node.
+
+[ ] In the evaluation chapter (IV.E. Baselines) reduced variants of the
+presented approach (e.g. by omitting the computational field) are
+presented as baselines. This looks to me like a kind of ablation
+study instead of baselines.
+
+[X] In the evaluation chapter, the caption to Fig. 3 as well as its
+explanation in the text (IV. A) is inconsistent with subchapter G.:
+In the evaluation, scenario "a) Zone Fixed" is used for both
+training and testing, in the upper part it is stated that it is only
+used for training.
+
+[X] Figures 4 - 6 show colored areas for each line, which is not
+explained in the captions or text.
+
+[X] Fig. 6: Caption and legend are inconsistent: area vs zone.
+
+-----------------------------------------------------------------------------------------
+
+Review 3:
+
+[X] My only real concern is that the actual test scenario used is so simple that it seems like a poor evaluation of the complexity of the reinforcement system being deployed. I would have liked to see a higher degree of heterogeneity and to see a demonstration that the learned information actually generalized in a meaningful fashion, which cannot really be done with such a simple scenario. --> It cannot be addressed for this submission.
+
+-----------------------------------------------------------------------------------------
+
+Meta Review:
+
+Weaknesses:
+
+[ ] The evaluation scenario is too simple, and a proper demonstration of the generalization and scalability of the solution is not currently provided in the paper. 
+
+[ ] The description of the machine learning techniques deviates from the terminology used in the literature.
+
+[ ] the authors should revisit the "Background and Motivation" section and verify the terminology used. Using a common terminology that is used in the literature would facilitate the understanding of the paper. We recommend the authors to fix this for the camera-ready version.

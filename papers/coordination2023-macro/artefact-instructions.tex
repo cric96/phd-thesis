@@ -1,0 +1,198 @@
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.20 of 2018/03/10
+%
+\documentclass[runningheads]{llncs}
+
+\usepackage[T1]{fontenc}
+\def\doi#1{\href{https://doi.org/\detokenize{#1}}{\url{https://doi.org/\detokenize{#1}}}}
+%
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{acronym}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{subcaption}
+% Used for displaying a sample figure. If possible, figure files should
+% be included in EPS format.
+%
+% If you use the hyperref package, please uncomment the following line
+% to display URLs in blue roman font according to Springer's eBook style:
+% \renewcommand\UrlFont{\color{blue}\rmfamily}
+%
+\usepackage{listings}
+\input{scala-def}
+\lstset{language=scafi}
+% Please use the
+
+\newcommand{\MacroSwarm}{{\sc{}MacroSwarm}}
+\newcommand{\scafi}{{\sc{}ScaFi}}
+
+\acrodef{api}[API]{Application Program Interface}
+\acrodef{dsl}[DSL]{domain-specific language}
+
+\sloppypar
+
+\begin{document}
+%
+\title{\MacroSwarm{}: a Field-based Compositional Framework for Swarm Programming -- Artefact guidelines}
+
+%% Page limit: 7-15 pages (without counting references)
+\newcommand{\meta}[1]{{\color{blue} #1}}%
+%\titlerunning{Abbreviated paper title}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+\author{Gianluca Aguzzi%\inst{1}
+\orcidID{0000-0002-1553-4561} \and
+Roberto Casadei%\inst{1}
+\orcidID{0000-0001-9149-949X} \and
+Mirko Viroli%\inst{1}
+\orcidID{0000-0003-2702-5702}}
+%
+\authorrunning{G. Aguzzi et al.}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+\institute{Alma Mater Studiorum -- Università di Bologna
+\\
+\email{\{gianluca.aguzzi,roby.casadei,mirko.viroli\}@unibo.it}}
+%
+\maketitle              % typeset the header of the contribution
+%
+%
+\section{Introduction}
+
+This document describes the artefact associated with the paper entitled ``\MacroSwarm{}: a Field-based Compositional Framework for Swarm Programming'' and accepted at COORDINATION'23.
+%
+In particular,
+ we claim the Available and Functional badges,
+ motivate how the claims are supported,
+ and generally
+ explain how to use the artefact
+ to replicate the simulations/results
+ included in the main paper.
+
+\section{Claims}
+
+
+%In this companion paper, we provide a demonstration 
+%on how to utilize and replicate the simulations generated in the MacroSwarm paper in order to 
+%get the artefact badges. 
+%Particularly, 
+
+We claim the following badges:
+\begin{enumerate}
+  \item[C.1] \textbf{Available} (2) since the artefact is publicly available on Zenodo\footnote{\url{https://zenodo.org/badge/latestdoi/611692727}}. 
+  \item[C.2] \textbf{Functional} (1.1)  %exposes the simulations and the results of the experiments presented in the paper. Particularly, it is 
+  since the artefact is:
+  \begin{itemize}
+  \item \textbf{documented}, since it comes with a \texttt{README.md} file with sufficient descriptions and instructions;
+  \item \textbf{consistent}, since it implements the API described in the paper;
+  \item \textbf{complete}, since it provides all the necessary information to replicate the results presented in the paper;
+   \item \textbf{exercisable}, since it is possible to run the simulations and to observe the results leveraging the scripting included. Even if the artefact documentation is not exhaustive, it is possible to understand how the API works from the examples provided.
+   \end{itemize}
+\end{enumerate}
+
+\section{Installation and Smoke test.} 
+
+We have prepared a VirtualBox VM with a minimal installation that is required to conduct the experiments. To import the OVA file associated with the VM, you need to open VirtualBox and click on \textit{File} and then \textit{Import Appliance}. Then, you need to select the OVA file and click on \textit{Import}. More details can be found at \url{https://www.virtualbox.org/manual/ch01.html#ovf}.
+If you are using your own PC, kindly ensure that the following installations are present:
+\begin{itemize}
+  \item JDK (version 11 or above)
+  \item Python (version 3.9 or above)
+\end{itemize}
+To run a smoke test, follow the below steps:
+\begin{itemize}
+  \item Clone the repository at the designated location using the command: \lstinline|git clone <repo url>| (in the VM, the repository is already cloned in the \texttt{~/Desktop} folder called experiment-2023-coordination-swarm-behaviour)
+  \item Open the terminal inside the folder
+  \item Execute the command: \lstinline|./gradlew runConstantMovementGraphic|
+  \item If everything is working fine, you will be able to observe a swarm of drones similar to the one presented in Fig 2.
+\end{itemize}
+Now you are ready to play with the several experiments and to re-run the simulation presented in the paper.
+
+\section{Project structure}
+
+The project repository is structured as follows:
+\begin{itemize}
+  \item \texttt{./src}: 
+  this directory houses the source code for the macro swarm library. 
+  The \texttt{it.unibo.scafi.examples} package contains a range of examples associated with each macro swarm API. 
+  For each example, there is a corresponding YAML configuration located in the \texttt{src/main/yaml} folder.
+
+  \item \texttt{/data}: this directory contains all of the data generated for the simulation described in Section 5.
+  
+  \item \texttt{./charts}: here, you can find the charts produced from the simulation shown in the Figure 5.
+  
+  \item \texttt{./snapshots}: 
+  this directory stores all of the snapshots taken during the simulation.
+  
+  \item \texttt{process.py}: 
+  this Python script is used to plot the results obtained from the simulation.
+  
+\end{itemize}
+
+\section{Playing with the artefact}
+
+The following instructions work on the shared VM, 
+ but should also apply to any PC configured as explained in Section 3 of this document.
+ 
+In order to exercise \MacroSwarm{}, 
+ we have provided several simulations, 
+ each one demonstrating a different swarm behaviour. 
+These examples can be listed by running \texttt{./gradlew tasks} and looking for the Alchemist tasks group. 
+If preferred, you can also view the simulations in the folder \texttt{src/main/yaml}. 
+Each yml file in this folder has a corresponding gradle task named \texttt{run<FileName>Graphic}. 
+For example, to run the sample associated with the file \texttt{src/main/yaml/constantMovement}, 
+use the following command: 
+\begin{lstlisting}
+./gradlew runConstantMovementGraphic
+\end{lstlisting}
+This will open a window with a swarm of drones moving in a straight line.
+
+In order to interact with the simulation GUI, 
+please refer to the Alchemist documentation as this is the graphical user interface of these simulations: \url{https://alchemistsimulator.github.io/reference/swing/}.
+%
+In particular, press \texttt{P} to start a simulation on the GUI.
+Finally, it is possible to run all the graphical simulations by executing the following command:
+\begin{lstlisting}
+./gradlew runAllGraphic
+\end{lstlisting}
+\section{Reproducing the simulations and charts}
+
+The rescue scenario discussed in Section 5 can be accessed through the \texttt{src/main/yaml/rescue.yml} file. 
+If you want to replicate the data, the snapshots and the charts, follow the next instructions:
+\begin{itemize}
+\item \textbf{Snapshots generation}: by executing \texttt{./gradlew runRescueGraphic} it is possible to view the system's dynamics presented in Figure 4. 
+
+\item \textbf{Data generation}: to replicate the data, execute \texttt{./gradlew runRescueBatch} which initiates 64 simulations with distinct seeds. 
+This process may require several hours to complete. 
+However, if you want to reproduce the charts, the data generated for the rescue case study has already been uploaded to the \texttt{data/} directory. 
+
+\item \textbf{Charts generation}: finally, to reproduce the plots (Figure 5), run \texttt{python plotter.py}. 
+If you are using a local machine, please install the necessary Python dependencies with \texttt{pip install -r requirements.txt}.
+The execution of the script will create the figures in the folder \texttt{./charts}.
+\end{itemize}
+
+%\bibitem{ref_article1}
+%Author, F.: Article title. Journal \textbf{2}(5), 99--110 (2016)
+%
+%\bibitem{ref_lncs1}
+%Author, F., Author, S.: Title of a proceedings paper. In: Editor,
+%F., Editor, S. (eds.) CONFERENCE 2016, LNCS, vol. 9999, pp. 1--13.
+%Springer, Heidelberg (2016). \doi{10.10007/123456789_0}
+%
+%\bibitem{ref_book1}
+%Author, F., Author, S., Author, T.: Book title. 2nd edn. Publisher,
+%Location (1999)
+%
+%\bibitem{ref_proc1}
+%Author, A.-B.: Contribution title. In: 9th International Proceedings
+%on Proceedings, pp. 1--2. Publisher, Location (2010)
+%
+%\bibitem{ref_url1}
+%LNCS Homepage, \url{http://www.springer.com/lncs}. Last accessed 4
+%Oct 2017
+%\end{thebibliography}
+
+\end{document}

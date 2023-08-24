@@ -1,0 +1,901 @@
+\documentclass{article} 
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{hyperref}
+\usepackage[usenames]{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{nameref}
+\usepackage{acronym}
+\acrodef{AC}[AC]{aggregate computing}
+\acrodef{api}[API]{application program interface}
+\acrodef{CAS}[CAS]{collective adaptive system}
+\acrodef{cps}[CPS]{cyber-physical system}
+\acrodef{ci}[CI]{collective intelligence}
+\acrodef{cct}[CCT]{concurrent collective task}
+\acrodef{dd}[DD]{decentralization domain}
+\acrodef{dbms}[DBMS]{database management system}
+\acrodef{dcp}[DCP]{distributed computational process}
+\acrodefplural{dcp}[DCPes]{distributed computational processes}
+\acrodef{dsl}[DSL]{domain-specific language}
+\acrodef{RL}[RL]{reinforcement learning}
+\acrodef{ict}[ICT]{information and communication technology}
+\acrodef{iot}[IoT]{Internet of Things}
+%\acrodef{it}[IT]{information technology}
+%\acrodef{oca}[OCA]{overlapping collective activity}
+\acrodef{mape}[MAPE]{monitor--analyse--plan--execute}
+\acrodef{scr}[SCR]{self-organizing coordination regions}
+\acrodef{wsn}[WSN]{wireless sensor network}
+
+
+\newcommand{\revise}[1]{{#1}}
+
+
+\RequirePackage[sort&compress,sectionbib,numbers]{natbib}
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\usepackage{xr}
+\externaldocument[main:]{../paper22-ieee-internet-si-decentralised-systems}
+\usepackage{xr-hyper}
+
+
+\newcounter{reviewer}
+\newcounter{comment}[reviewer]
+
+\setcounter{reviewer}{-1} % start with zero
+\newcommand{\reviewer}{
+\subsection*{\refstepcounter{reviewer}Reviewer \arabic{reviewer}}
+}
+\newcommand{\reviewerl}[1]{
+\subsection*{\refstepcounter{reviewer}\label{#1}Reviewer \arabic{reviewer}}
+}
+\newcommand{\reviewerlt}[2]{
+\subsection*{\refstepcounter{reviewer}\label{#1}#2}
+}
+\newcommand{\comment}[1]{
+	\subsubsection*{\refstepcounter{comment}Reviewer Comment \arabic{reviewer}.\arabic{comment}} %\arabic{reviewer}.
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{\setlength{\parskip}{0.5\baselineskip}%
+ #1 }}
+}
+\newcommand{\rcref}[2]{\ref{#1}.\ref{#2}}
+\newcommand{\commref}[1]{\ref{#1}}
+\newcommand{\commentl}[2]{
+	\subsubsection*{\refstepcounter{comment}\label{#1}Reviewer Comment \arabic{reviewer}.\arabic{comment}} %\arabic{reviewer}.
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{ #2 }}
+}
+\newcommand{\edcommentl}[2]{
+	\subsubsection*{\refstepcounter{comment}\label{#1}Editor Comment \arabic{comment}}\label{name:#1}
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{ #2 }}
+}
+\newcommand{\reply}[1]{	\\[2pt]
+	\textbf{Author response:} 	
+	#1
+}
+\newcommand{\related}[1]{	\\[2pt]
+	\textbf{Related comments:} 	
+	#1
+}
+\newcommand{\commentAu}[2]{	\\[2pt]
+	\meta{\textbf{#1 comment:} 	
+	#2}
+}
+\newcommand{\action}[1]{	\\[2pt]
+	\textbf{Action to address the comment:} 
+	#1
+}
+\newcommand{\corrstart}{\color{red}}
+\newcommand{\corrend}{\color{black}}
+\newcommand{\correction}[1]{\corrstart #1\corrend{}}
+\newcommand{\checkstart}{\color{violet}}
+\newcommand{\tocheck}[1]{\checkstart{}#1\corrend{}}
+
+\makeatletter
+\renewcommand\p@comment{\thereviewer.}
+\makeatother
+
+\newcommand{\meta}[1]{{\color{blue}#1}}
+\newcommand{\assigned}[1]{{\color{purple}ASSIGNED TO: \textbf{#1}}}
+
+\newcommand{\revq}[1]{{\emph{\textbf{#1}}}}
+
+
+\newcommand{\say}[3]{
+\noindent\fcolorbox{black}{cyan!20!white}{
+\begin{minipage}{\textwidth}
+\textbf{{#1}} \textbf{({@}#2)}: #3
+\end{minipage}
+}
+}
+
+
+\usepackage{cleveref}
+
+
+\begin{document}
+
+\acused{}
+
+\title{{\Large Revision Letter for} ``Dynamic Decentralization
+Domains for the Internet of
+Things''}
+\author{
+Gianluca Aguzzi
+\and
+Roberto Casadei
+\and 
+Danilo Pianini
+\and 
+Mirko Viroli
+}
+
+\maketitle
+
+Dear Editors, \newline
+
+Thank you very much for giving us the chance to revise our article.
+%
+We have taken into account all your questions and suggestions from the reviewers and implemented corresponding revisions to our manuscript.
+%
+Our replies and corrective actions for your comments are detailed below.
+%
+Based on your comments, we have implemented the following main revisions:
+%
+\begin{itemize}
+\item we have clarified and extended the description of  the contribution, the abstractions, and the API (cf. Editor Comments 1, 2, 3, 5);
+\item we have clarified and extended the discussion of the evaluation (cf. Editor Comment 3, and Reviewer Comments~\ref{r1-casestudy}, \ref{r1-eval}, \ref{r2-discuss-abstracts-for-self});
+\item we have simplified the code snippets,
+	leaving out most of the technicalities not strictly needed to understand the underlying solution,
+	describing each component in detail,
+	and grouping definition and usage in a single image
+	to simplify understanding and comparison;
+\item we introduced a new metric of risk,
+	and we compared how we \emph{spatially}
+	match the predictions of an oracle.
+\end{itemize}
+%
+%
+We are convinced that you will be satisfied with the revised version of our paper and consider this (largely) improved version suitable for publication.
+\\ ~ \\
+
+\noindent Sincerely yours,
+
+Gianluca Aguzzi, Roberto Casadei, Danilo Pianini, Mirko Viroli
+
+
+\raggedbottom
+
+%\section*{Comment and replies}
+
+\pagebreak
+
+\reviewerlt{r0}{Editor's Comments}
+
+\edcommentl{ed-code}{
+Please consider all comments from the reviewers.
+
+Pay particular attention to the following:
+
+(1) The paper seems to have too much code but needs less code and more of a conceptual description.
+}
+\reply{
+To address this comment, we have simplified the code snippets,
+merged them into a single figure (\Cref{main:code}), and put more emphasis on conceptual descriptions of the abstractions involved and the corresponding API---cf. Comments~\ref{r1-contrib}, \ref{r2-discuss-abstracts-for-self}, \ref{r3-api}, \ref{r4-programming-model}, and especially \ref{r4-code-useful}.
+}
+
+\edcommentl{ed-api}{
+(2) You talk of the API but don't give an adequate explanation of how it helps with respect to the contributions.
+}
+\reply{
+We have addressed this issue, by handling Comments~\ref{r1-contrib} and \ref{r3-api}.
+}
+
+\edcommentl{ed-contrib}{
+(3) What is the main contribution of the paper -- there is talk of programming abstractions but it isn't clear what they are and what makes them novel.
+}
+\reply{
+We have addressed this issue, by handling Comments~\ref{r1-distinction}, \ref{r2-discuss-abstracts-for-self}, and \ref{r4-programming-model}.
+}
+%\\
+%\meta{\textbf{Comments on 1,2,3}: 
+%In general, we need to explain better the abstractions and how they are linked to the API.
+%To do so, one should:
+%\begin{itemize}
+%\item improve the figure (by removing the feedback with the environment, as it can confuse the reader)
+%\item present the contribution from a "design abstractions/programming model" perspective
+%\item clarify the relation between DD and CCT
+% \item split Section 2 into two parts, one explaining better the abstraction related to the API and one where the API is introduced. 
+% We could associate each point of the API to the requirements/abstraction devised in the previous sections. 
+% We could even move the API to section 3 => as an implementation part  
+%\end{itemize}
+%}
+
+\edcommentl{ed-casestudy}{
+(4) What does the flood watch example do in a unique way that would highlight or demonstrate the proposed contribution?
+}
+\reply{
+This comment is also related to Comments~\ref{r1-casestudy}, \ref{r1-eval}.
+%
+Essentially, the FloodWatch example
+ requires the creation of dynamic partitions 
+ and domains for collective tasks
+ to properly track the underlying phenomena
+ and support cooperative intervention.
+}
+
+\edcommentl{ed-semantics}{
+(5) What is the semantic intuition and how does it become clear through the programming abstractions?
+}
+\reply{
+The semantic intuition lies in 
+ capturing the collective adaptive behaviour
+ needed to divide the work 
+ for tracking spatiotemporal phenomena.
+%
+The abstractions help to reason in terms of 
+ collective data and computations
+ that evolve in space and time.
+
+Please also refer to the replies to Comments~\ref{r1-contrib}, \ref{r3-api}, and especially \ref{r4-programming-model}.
+%
+}
+%\\
+%\meta{
+%	\textbf{Comments on 4, 5} they should be handled as a consequence of 1,2,3, 
+%	making clear the abstractions and the contributions
+%}
+
+\pagebreak
+
+\reviewerl{r1}
+
+\commentl{r1-overview}{
+Recommendation: Accept If Certain Minor Revisions Are Made
+
+Comments:
+The manuscript is well written and approachable.
+
+However, I am not quite satisfied with the distinction from prior work, the description of the contributions, the explanation of the case study, and the evaluation. That said, I think most of my concerns and questions can be fixed with a few sentences and a slight shift in focus from the case study to the contributions.
+}
+\reply{ 
+We thank the Reviewer for the appreciation and the feedback.
+%
+The points raised by this comment are addressed by addressing Comments~\ref{r1-distinction}, \ref{r1-contrib}, \ref{r1-casestudy}, and \ref{r1-eval}.
+}
+
+
+
+\commentl{r1-distinction}{
+Distinction: Being unfamiliar with the field, it's hard for me to know how novel and significant this approach is relative to others. What exactly is different about CCTs, DDs, or the layered architecture from previous work? Or are the concepts equivalent, and the API / ease of development is the contribution? A few slightly stronger statements about how your this work differs from others would both help position this manuscript, and also make the contributions more understandable.
+}
+%\related{\ref{r2-discuss-alternatives}}
+\reply{
+%\meta{Assigned to ROBY}
+%
+On one hand, the contribution lies in the \emph{combination} of the discussed abstractions
+ to organise the self-organising logic of IoT ecosystems.
+%
+On the other hand, 
+ the discussed abstractions differ
+ from previous work, though they are inspired by it.
+%
+For instance, a CCT is essentially 
+ a generalisation of an aggregate process~\cite{DBLP:journals/eaai/CasadeiVAPD21}---as we do not assume it to be expressed through the spawn construct and to have a specific propagation dynamics.
+%
+In practice, however, we use aggregate processes as a natural implementation of CCTs.
+%
+In contrast to \emph{collective-based tasks} in~\cite{DBLP:journals/tetc/ScekicSVRTMD20},
+ CCTs, like aggregate processes, are more choreographical than orchestrational.
+}
+\action{
+We have clarified how the work differs from others as requested (cf. the section covering related work).
+}
+
+
+\commentl{r1-contrib}{
+Contributions: Given that the API is supposed to be a major part of the contribution, I think it needs more explanation. What is the meaning and intent of each element? How does a developer use them? And how does the second code listing use the API to achieve the application goals? More broadly, how are the sensors organized into domains? What control does the developer have over that organization? Why/how do the domains change over time? How does the organization of the domains affect the CCTs running over them? Why is exclusivity important (the current answer may be enough, but it seems important and a stronger statement would make the value clearer)?
+}
+\reply{
+We have clarified the API by revising \Cref{main:sec:contrib} in order to answer the questions as follows.
+\begin{itemize}
+\item \revq{What is the meaning and intent of each element?}
+\begin{itemize}
+	\item \texttt{DistributedSensing} represents the configuration of the collective value-reading operation,
+	that needs to select a leading node, expand an area of influence, and collect data back to the leader;
+	\item \texttt{Action} represents a collective task that is carried on in response to a distributed perception;
+	\item \texttt{Perception} links each distributed sensing process to the corresponding computed value 
+	(i.e., the result of the collective sensing process);
+	\item \texttt{SituatedRecognition} maps the collective perceptions to actual actions (it is the main logic of the application);
+	\item \texttt{decentralizedRecognitionAndResponse} is the entry point. 
+	Internally it uses \texttt{DistributedSensing} to create DDs leveraging CCTs, then performs actuation as defined by \texttt{SituatedRecognition}.
+\end{itemize}
+%
+\item \revq{How does a developer use them? And how does the second code listing use the API to achieve the application goals? More broadly, how are the sensors organized into domains?}
+We improved the discussion of how each piece needs to be instanced,
+and we provided example user code in \Cref{main:code:example}.
+Also, an actual running example is available in the companion repository~\cite{simulation-doi}.
+%
+\item \revq{What control does the developer have over that organization?}
+\\
+The developer can influence the selection of the leading node,
+the metric space,
+and the accumulation function.
+%
+\item \revq{Why/how do the domains change over time?}
+That depends mostly on the way the leader strength and the distance metric are defined.
+If they use data from the sensors,
+then domains reactively adapt to changes in the tracked spatio-temporal phenomenon.
+%
+\item \revq{How does the organization of the domains affect the CCTs running over them?}
+By providing situational information and pre-digested network partitions
+where to enact situated action.
+%
+\item \revq{Why is exclusivity important (the current answer may be enough, but it seems important and a stronger statement would make the value clearer)?}
+\\
+We do not want different measures to interfere with each other.
+If the designer explicitly desires area to be shaped in a way that uses multiple sensors,
+they are free to do so by appropriately concocting a custom metric.
+\end{itemize}
+
+The information of the answers written here has been integrated in the manuscript in \Cref{main:decentralized-sr}.
+}
+
+\commentl{r1-casestudy}{
+Case study: It's not quite clear how or why the DDs would need to change over time based on the rainfall. Why should areas with similar amounts of rain be clustered - what are the effects of clustering, and why is that a benefit in that case? How does the altimetric profile affect clustering? Though maybe it would be better to simplify the explanation instead, to focus more on the contribution than the case study details.
+Does the exclusivity of DDs prevent using separate regions for sensing vs alerts?
+Contrast with another approach or even static regions would also help improve understanding, both for design/implementation and the results.
+}
+\reply{
+	Clustering areas with similar rainfall together allows better global tracking of the underlying phenomenon.
+	The information can then be exploited when warnings get propagated.
+	If clusters were not following the progression of the weather instability,
+	we would end up with an inconsistent representation of the situation,
+	which would hinder appropriate response:
+	for instance, we might have several zones in which there is a perfectly acceptable
+	mean rainfall value,
+	which is however caused by few extremely rainy spots and many spots with little or no rain.
+	In this case, the system would be tricked into not generating appropriate warnings for areas at risk.
+	Even worse,
+	this effect can propagate to to multiple adjacent areas if there is missing adaptation.
+	For instance, extremely intense rain that happens in a limited area across multiple DDs
+	would get its effect ``diluted'', and thus the risk missed,
+	if areas do not adapt to track the current rainfall. 
+	The system performs separate partitioning processes for rainfall and altimetry.
+	The information on the clusters is then leveraged to build an alert strategy.
+	Then, notice that static regions would not allow us to adequately track dynamic phenomena.
+
+	To tackle this issue, we improved the explanation of the reasons behind the clustering in \Cref{main:ssec:reqs-to-api}.
+%
+%	\meta{Assigned to DANILO}
+%
+%	\meta{Pass done, check.}
+}
+
+%\commentl{r1-contrast-rw}{
+%Contrast with another approach or even static regions would also help improve understanding, both for design/implementation and the results.
+%}
+%\related{\ref{r2-discuss-alternatives}}
+%\reply{
+%	\meta{@CALL The point here is that with static regions, you CANNOT track phenomena that change over time. 
+%	So here we could claim that the aim of your API consists of targeting this kind of environmental situation -- 
+%	and obviously, we can tackle static regions too.
+%	}
+%
+%	\meta{
+%		Roby if the answer to the previous comment is acceptable you can merge this comment with the previous.
+%		It is essentially the same.
+%	}
+%}
+
+\commentl{r1-eval}{
+Evaluation: It's unclear how well the results actually met expectations, or what those expectations were. I suspect the real objective was qualitative - e.g., the API enables or simplifies the specification of a dynamic self-organizing application, and the results matched that specification. If so, the focus should be more on the relationship between the results and the specification. As it was, the case study was somewhat distracting because I was left wondering how well it actually did at predicting / handling the flood events. Did you compare the generated warnings against actual flooding events? The graphs show that alerts were strongly correlated to rainfall, but there was no indication of when / where that rainfall actually became flooding.
+}
+\related{
+\ref{r2-eval}
+}
+\reply{
+	Thank you for the comment.
+	The reviewer is correct, the case study is meant to showcase how a non-trivial system featuring distributed situated recognition
+	and collective counter-action could be implemented with relative ease
+	through the proposed abstractions.
+	%
+	Concerning the evaluation,
+	we could not compare our results directly with actual flooding events,
+	as there is no such data on the open database that we used.
+	%
+	Also, actual floods may depend on more than the current rain level
+	(previous rainfall, accumulation of ice and snow from the previous winter, period of the year, state of maintenance of the sewage system, etc.):
+	as such, although we use real-world data to build a reasonably complex use case, we do not claim absolute realism.
+	%
+	What we actually measure
+	(and react to)
+	is a risk level, as we use information from two
+	(of many)
+	risk factors combined together.
+\action{
+	we tackled the comment as follows:
+	\begin{enumerate}
+		\item introducing a ``risk level'' metric that can be computed by an oracle in \Cref{main:s:experiment:setup}; and
+		\item adding an additional evaluation focused on \emph{spatial} tracking in \Cref{main:s:result-and-discussion}} (see \Cref{main:fig:risk-evolution}).
+	\end{enumerate}
+}
+
+%\meta{
+%	Done, Gianluca and Mirko run a second check and remove this comment if satisfied by the answer.
+%}
+
+
+\comment{
+Minor comments:
+- Typo in abstract: "and eventually decade" $\to$ decay
+}
+\reply{
+Yes, thanks. It has been fixed.
+}
+
+\comment{
+Additional Questions:
+1. How relevant is this manuscript to the readers of this periodical? Please explain your rating in the Detailed Comments section.: Relevant
+
+2. What is the most appropriate forum for the publication of this manuscript?: IEEE Magazine (general interest explanatory article with technical contributions)
+
+1. Please summarize what you view as the key point(s) of the manuscript and the importance of the content to the readers of this periodical.: The manuscript addresses the problem of setting up a decentralized process for adaptive situation recognition and situated action, e.g. using information from dynamically deployed IoT sensor networks.
+
+Their requirements were: 1) support for concurrent collective task (CCT) execution; 2) support for flexible and adaptive decentralization, realized in their approach as dynamic 'decentralization domains' (DDs); and 3) DDs are to autonomously perform internal loops of regional situation recognition and action (sensing $\to$ decision making $\to$ action).
+
+The solution is a layered architecture, with support for multiple possibly overlapping CCTs for flexibility but non-overlapping DDs at the bottom to avoid event duplication.
+This approach differs from prior work by providing a higher-level API for managing DDs that hides the complexity of the propagation dynamics, and structuring it through the exclusivity of the domains.
+
+The topic at least seems important for the design of dynamic, decentralized IoT networks.
+
+2. Is the manuscript technically sound? Please explain your answer in the Detailed Comments section.: Yes
+
+3. What do you see as this manuscript's contribution to the literature in this field?: There seem to be two contributions:
+
+1) the layered architecture of unconstrained CCTs running on top of exclusive DDs; this architecture is simple, yet provides both flexibility and structure for some guarantees and predictability.
+
+2) the high-level API approach to managing the complexity of working with the self-organizing DDs
+
+4. What do you see as the strongest aspect of this manuscript?: The presentation of the core concepts (CCTs and DDs) is very approachable and thought provoking.
+}
+\reply{
+The analysis of the Reviewer is very accurate, and we thank the Reviewer for the appreciation.
+}
+
+\comment{
+5. What do you see as the weakest aspect of this manuscript?: The weakest aspect is the minimal differentiation from existing work and evaluation.
+
+1) The 'Related problems and state-of-the-art approaches' section was a good starting point to introduce the differences at a high level, but not enough by itself.
+
+2) The 'high-level API' was supposedly a distinction / contribution, but it was not actually explained in detail nor was the API compared to existing approaches.
+
+3) The evaluation simply showed the system in operation, without any comparison to prior work or any analysis of how well it did at solving the problem. Even comparison with a naive solution using fixed regions would have been helpful, to show how/why dynamic DDs are useful.
+}
+\related{\ref{r1-overview}, \ref{r1-distinction}, \ref{r1-contrib}, \ref{r1-casestudy}, \ref{r1-eval}.}
+\reply{
+We have addressed (1) by addressing Comment~\ref{r1-distinction},
+(2) by addressing Comments~\ref{r1-distinction}, \ref{r1-contrib},
+and
+(3) by addressing Comments~\ref{r1-casestudy}, \ref{r1-eval}.
+}
+
+\comment{
+1. Does the manuscript contain title, abstract, and/or keywords?: Yes
+
+2. Are the title, abstract, and keywords appropriate? Please elaborate in the Detailed Comments section.: Yes
+
+3. Does the manuscript contain sufficient and appropriate references (maximum 15)? Please elaborate in the Detailed Comments section.: References are sufficient and appropriate
+
+4. Does the introduction clearly state a valid thesis? Please explain your answer in the Detailed Comments section.: Yes
+
+5. How would you rate the organization of the manuscript? Please elaborate in the Detailed Comments section.: Satisfactory
+
+6. Is the manuscript focused? Please elaborate in the Detailed Comments section.: Satisfactory
+
+7. Is the length of the manuscript appropriate for the topic? Please elaborate in the Detailed Comments section.: Satisfactory
+
+8. Please rate and comment on the readability of this manuscript in the Detailed Comments section.: Easy to read
+
+9. Please rate and comment on the timeliness and long term interest of this manuscript to IC readers in the Detailed Comments section. Select all that apply.: Topic and content are of immediate and continuing interest to IC readers
+
+Please rate the manuscript. Explain your choice in the Detailed Comments section.: Good
+}
+\reply{
+We thank the Reviewer for the appreciation.}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\pagebreak
+
+\reviewerl{r2}
+
+\comment{
+Recommendation: Author Should Prepare A Major Revision For A Second Review
+
+Comments:
+I generally liked the style and argument of this paper. It lays out the assumptions and criteria well.
+
+The idea of goal-based requirements for devices to be programmed makes sense. The style of laying out the requirements is good and makes the paper clear.
+}
+\reply{
+We thank the Reviewer for the appreciation and for giving us the chance and indications to revise our manuscript.
+}
+
+\comment{
+Some of the domain details in Section 2 could be made lighter and the space used for the technical contribution and evaluation.
+}
+\reply{
+We were able to elaborate on technical contribution and evaluation as required by this reviewer (see below) and also other reviewers.
+%
+To do this we needed to reduce such a discussion just a little bit.
+}
+
+\commentl{r2-discuss-abstracts-for-self}{
+I did not see enough of a discussion of design abstractions for dynamic decentralization domains that are based on self-adaptive/self-organizing systems. There are some code snippets but they don't appear too unusual or novel. What would be a baseline approach to which they are replacements? In what respects are they better? The discussion just claims they are better.
+}
+\related{\ref{r4-programming-model}, \ref{r3-api}}
+\reply{
+	Once we layed down the requirements for the system,
+	we investigated whether there was an out-of-the-box solution for the problem at hand,
+	and we found none.
+	%
+	Of course,
+	many approaches to self-adaptive and self-organizing systems exist,
+	and many of them can support the proposed pattern,
+	much like the same algorithm can be implemented with different languages.
+	%
+	Among them, we picked one approach that we know well and that we believe is appropriate for expressing the pattern
+	clearly and succinctly.
+	%
+	Potential baselines for the experiments would be alternative implementations in other frameworks,
+	but they would make the evaluation a comparison among frameworks for self-organizing systems
+	rather than an evaluation of the proposed coordination pattern.
+	%
+	Alternatively,
+	the system could have been compared with a cloud-based system,
+	or with a system using a master or driver node
+	(similar to Apache Spark).
+	%
+	However, we believe, that would have resulted in comparing apples with oranges.
+	%
+	Thus, to tackle this comment along with those requesting better evidence of the spatial appropriateness,
+	we included an additional metric based on risk in \Cref{main:s:experiment:setup}; and
+	compared our system with an oracle in
+	\Cref{main:s:result-and-discussion}
+	(see \Cref{main:fig:risk-evolution}),
+	so as to understand how close it can be to an ideal solution.
+}
+
+\commentl{r2-eval}{
+Performance wasn't claimed as a benefit but the evaluation talks of performance, I assume, because it is easier to measure than the quality of design abstractions.
+You may not be able to conduct a human study but the authors should discuss alternative methods briefly and show how the proposed approach is superior.
+}
+\related{
+\ref{r1-eval}, \ref{r1-distinction}, \ref{r1-casestudy}, \ref{r2-discuss-abstracts-for-self}
+}
+\reply{
+	The idea is to show that a system designed with the proposed abstraction can be devised reasonably easily
+	(as witnessed by the paper's companion artifact),
+	and achieve interesting and useful behaviour.
+	We agree that an in-depth evaluation of the ``quality'' of the proposed abstraction
+	would require controlled testing with human subject,
+	which are far beyond the scope of the presented work.
+	An alternative that we considered are static code metrics
+	(non-commenting lines of code, cyclomatic complexity, etc.);
+	however, we discarded them, as for the specific case they are exceedingly sensitive to the specific
+	language and framework,
+	and even poorly defined
+	(for instance, there is not, at the moment, agreement on how cyclomatic complexity should be computed for aggregate computing-based programs).
+
+	Thus, in the evaluation we selected metrics which convey the idea that the system responds as expected
+	to the spatiality and evolution of underlying phenomenon,
+	and left the qualitative evaluation of the compactness and expressiveness of the pattern to the provided code and the companion repository.
+
+	% \meta{TODO: Assigned to DANILO/GIANLUCA}
+
+	% \meta{DANILO: I do not really think there's anything to do in the paper about that.}
+	
+	% \meta{RC: it is ok to not change the paper but the reply should maybe more closely relate to the question --- e.g., by saying that the performance metrics are somewhat used qualitatively as a proxy for correct behaviour.. isn't it?}
+}
+
+\comment{
+1. Please summarize what you view as the key point(s) of the manuscript and the importance of the content to the readers of this periodical.: This paper addresses dynamic decentralization domains and proposes design abstractions for them.
+
+2. Is the manuscript technically sound? Please explain your answer in the Detailed Comments section.: Appears to be - but didn't check completely
+
+3. What do you see as this manuscript's contribution to the literature in this field?: It provides a good account of how interactions may be described in dynamic domains where the parties are independent.
+
+4. What do you see as the strongest aspect of this manuscript?: The paper is well-written and describes the problem and solution well.
+}
+\reply{
+We thank the Reviewer for the appreciation.
+}
+
+\comment{
+5. What do you see as the weakest aspect of this manuscript?: The main claim of the abstract is not justified in the paper. The evaluation is weak.
+}
+\reply{
+We addressed the first weakness by addressing (among the others) Comment~\ref{r2-discuss-abstracts-for-self},
+and the second one by addressing (among the others) Comments~\ref{r2-eval}.%, \ref{r2-discuss-alternatives}.
+}
+
+\comment{
+1. Does the manuscript contain title, abstract, and/or keywords?: Yes
+
+2. Are the title, abstract, and keywords appropriate? Please elaborate in the Detailed Comments section.: Yes
+
+3. Does the manuscript contain sufficient and appropriate references (maximum 15)? Please elaborate in the Detailed Comments section.: References are sufficient and appropriate
+
+4. Does the introduction clearly state a valid thesis? Please explain your answer in the Detailed Comments section.: Yes
+
+5. How would you rate the organization of the manuscript? Please elaborate in the Detailed Comments section.: Could be improved
+
+6. Is the manuscript focused? Please elaborate in the Detailed Comments section.: Satisfactory
+
+7. Is the length of the manuscript appropriate for the topic? Please elaborate in the Detailed Comments section.: Satisfactory
+
+8. Please rate and comment on the readability of this manuscript in the Detailed Comments section.: Readable - but requires some effort to understand
+
+9. Please rate and comment on the timeliness and long term interest of this manuscript to IC readers in the Detailed Comments section. Select all that apply.: Topic and content are of immediate and continuing interest to IC readers
+
+Please rate the manuscript. Explain your choice in the Detailed Comments section.: Good
+}
+\reply{
+We are glad the Reviewer found merits on our manuscripts
+ and believe the revised version has significantly improved it.
+}
+
+
+
+
+
+\pagebreak
+
+\reviewerl{r3}
+
+\comment{
+Recommendation: Author Should Prepare A Major Revision For A Second Review
+
+Comments:
+The idea of developing a programming model for distributed computational systems is interesting but the paper doesn't provide sufficient details about the API or how it was used to develop the application.  
+}
+\related{\ref{r3-api}, \ref{r1-contrib}}
+\reply{
+We thank the Reviewer for the valuable feedback.
+%
+More details about the API and its usage have been provided in \Cref{main:sec:contrib}, as a result of addressing Comments~\ref{r3-api}, \ref{r1-contrib}.
+%
+However, please notice that the amount of details that can be provided is limited due to word restrictions imposed by the magazine.
+}
+
+\commentl{r3-api}{
+Additional Questions:
+1. How relevant is this manuscript to the readers of this periodical? Please explain your rating in the Detailed Comments section.: Relevant
+
+2. What is the most appropriate forum for the publication of this manuscript?: Workshop (preliminary
+work with short currency and minimal validation)
+
+1. Please summarize what you view as the key point(s) of the manuscript and the importance of the content to the readers of this periodical.: This paper proposes a programming model for distributed computational systems and shows how this was used to develop Flooodwatch, a flood warning system.
+
+2. Is the manuscript technically sound? Please explain your answer in the Detailed Comments section.: Partially
+
+3. What do you see as this manuscript's contribution to the literature in this field?: The paper appears to be an extraction from the authors earlier paper "Engineering collective intelligence at the edge with aggregate processes". \textbf{The idea is interesting but the contribution is unclear because the paper doesn't provide sufficient details about the API or how it was used to develop the application.}
+
+4. What do you see as the strongest aspect of this manuscript?: A high level discussion of the requirements of the programming model being proposed.
+
+5. What do you see as the weakest aspect of this manuscript?: \textbf{Insufficient discussion of the API or how the API realizes the requirements.} \textbf{The advantage of the proposed programming model is also not clear - is it accuracy, speed, flexibility, customizability ... ?}
+}
+\related{\ref{r1-contrib}, \ref{r4-programming-model}}
+\reply{
+	As per most API proposals,
+	the core of the idea is to better capture the underlying domain abstractions.
+
+	We believe that the new presentation should have improved and should be much clearer:
+	we added a new subsection ``\nameref{main:ssec:programming-model}'' of \Cref{main:sec:contrib},
+	clarifying the main characteristics of the programming model;
+	we improved the description of the API in \Cref{main:sec:contrib},
+	and we also made the presented code leaner;
+	we unified in a single image the API and its usage example (see \Cref{main:code}),
+	allowing for easier cross-comparison.
+
+%	\meta{
+%		Needs a pass from Mirko.
+%	}
+}
+
+\comment{
+1. Does the manuscript contain title, abstract, and/or keywords?: Yes
+
+2. Are the title, abstract, and keywords appropriate? Please elaborate in the Detailed Comments section.: Yes
+
+3. Does the manuscript contain sufficient and appropriate references (maximum 15)? Please elaborate in the Detailed Comments section.: References are sufficient and appropriate
+
+4. Does the introduction clearly state a valid thesis? Please explain your answer in the Detailed Comments section.: Yes
+
+5. How would you rate the organization of the manuscript? Please elaborate in the Detailed Comments section.: Could be improved
+
+6. Is the manuscript focused? Please elaborate in the Detailed Comments section.: Could be improved
+
+7. Is the length of the manuscript appropriate for the topic? Please elaborate in the Detailed Comments section.: Satisfactory
+
+8. Please rate and comment on the readability of this manuscript in the Detailed Comments section.: Readable - but requires some effort to understand
+
+9. Please rate and comment on the timeliness and long term interest of this manuscript to IC readers in the Detailed Comments section. Select all that apply.: Topic and content are of immediate and continuing interest to IC readers
+
+Please rate the manuscript. Explain your choice in the Detailed Comments section.: Fair
+}
+\reply{
+We are glad the Reviewer found merits on our manuscripts.
+We also thank the Reviewer for the constructive feedback 
+ and believe the revised version has significantly improved it.
+}
+
+
+
+
+\pagebreak
+
+\reviewerl{r4}
+
+\comment{
+Recommendation: Accept If Certain Minor Revisions Are Made
+
+Comments:
+Brief Summary
+
+The paper presents and discuss a programming model for complex decentralized software systems in cyber-physical/pervasive computing.
+
+Relevance of the topic for the Special Issue
+
+Programming models for complex decentralized software systems is a relevant topic for the special issue and the journal.
+
+Significance of the contribution for the Special Issue
+
+Apparently the approach presented in the paper is the result of a long-standing and robust research line that explored innovative programming models for programming complex adaptive systems. The contribution appears then clearly relevant for the special issue.
+}
+\reply{
+We are glad the Reviewer found merits in our manuscript
+ and thank the Reviewer for the feedback.
+}
+
+\commentl{r4-programming-model}{
+Critical Points to be improved
+
+There is a clear gap between section 1 ("Background and Motivation") and section 2 ("Dynamic Decentralization Domain in Practice"): we go from motivation to directly an "API" and code level, apparently skipping the description of the programming model (at a proper level of abstraction).
+
+I would suggest to revise the sections eventually abstracting from some details and/or shortening some points, to find then proper room for including a section in which the main concepts/abstractions of the programming model are presented (including Figure 1). In this description, I would make it even more clear how "the program" is deployed and executed, to remark aspects that concern the special issue (decentralized systems).
+}
+\related{\ref{r1-contrib}, \ref{r2-discuss-abstracts-for-self}, \ref{r3-api}}
+\reply{
+The Reviewer is right that the programming, execution, and deployment model should be clarified. 
+Indeed, to support adaptivity, we assume that the devices repeatedly perceived the environment, evaluate the program, and communicate with neighbours: this kind of execution resembles how ``self-organisation'' unfolds in natural systems.
+Then, a program has to specify \emph{what} the devices and the system as a whole must do when performing such execution steps.
+In principle, we would like to abstract from other details, like the specific deployment of such a program on the system devices and other auxiliary infrastructure.
+}
+\action{
+We have added a new subsection ``\nameref{main:ssec:programming-model}'' of \Cref{main:sec:contrib},
+ clarifying the main characteristics of the programming model: macro-level, self-organisation execution model, declarativity.
+%
+The existing content now is included in the subsection, ``\nameref{main:ssec:reqs-to-api}''.
+%
+%\meta{RC: tried to address it -- pls check and comment\\}
+%
+%\meta{Assigned to ROBY / DANI -- currently, we explain e.g. the round-based execution model after the API and code snippets; I propose to anticipate it at the beginning of \Cref{main:sec:contrib}. May we also mention the ``field'' abstraction? Or at least the fact that the system is programmed ``homogenously'' in a sense.
+%}
+%
+%\meta{GIANLU: 
+%Anticipating the discussion on the execution model should help to understand the proposed API IMHO.
+%Maybe though, I would avoid talking about ``field'' and discuss only ``homogeneously programmed system'' (at the beginning of Sec 2 at least). 
+%Technically, the fact that our API can be expressed with AC \& 
+% field coordination (and therefore through ``fields'') can be seen as a consequence, didn't it? 
+%Even if we discuss that the proposed programming model is a high-level 'wrapper'  AC (Sec 1)...
+%Furthermore, I think that we deliberately avoided talking about ``fields'' 
+% in the API part (but I probably misremember).
+%}
+%
+%	\meta{
+%		DANI: works for me.
+%		I stil believe that ``distributed protocol'' is confusing and in general is a risky phrasing, but if you're happy with it, go on.
+%	}
+%
+}
+
+\commentl{r4-code-useful}{
+These concepts can be used then describe their applications using the FLOODWATCH case study, however trying to abstract to those parts that could be quite hard to get for the readers that are not acquinted with "SCAFI" \& its background model.  I'm not sure that the snippets of code included in the paper are fully effective and useful, since their understanding would imply some deep knowledge of the specific "SCAFI" framework. It would be nice to find a proper balance and an effective level of abstractions in presenting it, given the kind of publication (IEEE Internet Computing).
+}
+\related{\ref{r1-contrib}, \ref{r2-discuss-abstracts-for-self}, \ref{r3-api}, \ref{r4-programming-model}}
+\reply{
+	We believe that the actions taken to address comments 
+	\ref{r4-programming-model},
+	\ref{r1-contrib},
+	\ref{r2-discuss-abstracts-for-self},
+	and \ref{r3-api}
+	globally address also this comment.
+	In particular, we simplified the proposed version of the API,
+	omitting details related to the type system,
+	and we explained the responsibilities and captured abstractions of each component,
+	one by one.
+}
+
+\commentl{r4-intro-more-apps}{
+A final minor remark: when introducing the paper and in background/motivation section, it maybe useful to extend the set of concrete real-world examples of decentralized systems/applications that may benefit from using the suggested programming model.
+}
+\reply{
+	We thank the reviewer for the suggestion.
+	We listed some of the driving applications that led us to the idea of the proposed approach in \Cref{main:declarative-abstractions}.
+
+%\meta{Assigned to DANI}
+
+%\meta{DANI: tackled, but a second opinion on the scenarios would be nice. Also, I can't undestand why it does not reference the correct subsection}
+
+}
+
+\comment{
+Additional Questions:
+1. How relevant is this manuscript to the readers of this periodical? Please explain your rating in the Detailed Comments section.: Relevant
+
+2. What is the most appropriate forum for the publication of this manuscript?: IEEE Transactions (archival quality with fundamental contributions to the field)
+
+1. Please summarize what you view as the key point(s) of the manuscript and the importance of the content to the readers of this periodical.: The paper presents and discuss a programming model for complex decentralized software systems in cyber-physical/pervasive computing.
+
+2. Is the manuscript technically sound? Please explain your answer in the Detailed Comments section.: Appears to be - but didn't check completely
+
+3. What do you see as this manuscript's contribution to the literature in this field?: Programming models for complex decentralized software systems is a relevant topic for the special issue and the journal.
+
+4. What do you see as the strongest aspect of this manuscript?: Apparently the approach presented in the paper is the result of a long-standing and robust research line that explored innovative programming models for programming complex adaptive systems. The contribution appears then clearly relevant for the special issue.
+}
+\reply{
+We thank the Reviewer for the appreciation.
+}
+
+\comment{
+5. What do you see as the weakest aspect of this manuscript?: Too API/code/example oriented.
+}
+\reply{
+We believe that the increased focus on the programming model addresses this comment -- as a result of addressing Comment~\ref{r4-programming-model} as well.
+}
+
+\comment{
+1. Does the manuscript contain title, abstract, and/or keywords?: Yes
+
+2. Are the title, abstract, and keywords appropriate? Please elaborate in the Detailed Comments section.: Yes
+
+3. Does the manuscript contain sufficient and appropriate references (maximum 15)? Please elaborate in the Detailed Comments section.: References are sufficient and appropriate
+
+4. Does the introduction clearly state a valid thesis? Please explain your answer in the Detailed Comments section.: Yes
+
+5. How would you rate the organization of the manuscript? Please elaborate in the Detailed Comments section.: Could be improved
+
+6. Is the manuscript focused? Please elaborate in the Detailed Comments section.: Satisfactory
+
+7. Is the length of the manuscript appropriate for the topic? Please elaborate in the Detailed Comments section.: Satisfactory
+
+8. Please rate and comment on the readability of this manuscript in the Detailed Comments section.: Readable - but requires some effort to understand
+
+9. Please rate and comment on the timeliness and long term interest of this manuscript to IC readers in the Detailed Comments section. Select all that apply.: Topic and content are of immediate and continuing interest to IC readers
+
+Please rate the manuscript. Explain your choice in the Detailed Comments section.: Good 
+}
+\reply{
+We are glad the Reviewer found merits in our manuscript.
+}
+
+
+
+\bibliographystyle{elsarticle-num}
+\bibliography{../bibliography}
+
+\end{document}

@@ -1,0 +1,116 @@
+Reviewer 1:
+2: (accept)
+The paper introduces a hybrid approach to coordinating many agents that are in interaction through their local environment. The goal of the work is to combine environment-side information (a.k.a. field information) to the local decision making stage of agents in order to foster emergent behaviors at the systems’ scale. After a formalization of the problem, an approach to field-informed reinforcement learning is presented. The approach claim to mix automatic and semi-automatic approaches that enable for a decentralized control of a group of agents while using local data gathered by a centralized high-level controller (relying on a GNN) to provide additional information related to the collective task. After the approach is carefully introduced and presented, experiments are presented in a existing simulation that showcase a set of coordination scenarios where a group of simple situated agents try to cover different types of phenomena that are generated in the environment.
+
+Overall, the paper reads well and the approach sounds. The objectives of the work and the motivation are clearly stated, and mention to previous work is clear : though the paper presents an incremental piece of work (built on top of the authors previous work), the contribution claimed are realistic. The source code for the experiments is provided in a Github repository ; which should definitely enable for reproducible results and hopefully more work on the same problem.
+
+One point that remains unclear after reading the paper is how the environment chosen for the experiments limits (or not) the capabilities of the approach presented. Being simplified (and quite visual), is does help to compare the different approaches (MLP, GNN, and informed versions) quickly, but it seems to be quite limited to assess how the system would scale, nor how the variability in the agent’s individual behaviors would affect their coordination. In addition, it remains unclear how each of the 3 goals that are stated relate to collective or individual aspects, thus questioning about the individual goals in the presented set up. It is clear that agents perceive information locally, but it seems that the reward functions (this time defined for individual agents) are not directly linked to the goals mentioned. Nevertheless, the experiments and results are convincing, though again, evaluated through the system’s point of view (the goals) and not the agents’ objectives directly.
+
+-----------------------------------------------------------------------------------------
+
+Reviewer 2:
+1: (weak accept)
+Summary:
+
+The paper proposes a new approach for creating a distributed
+controller to coordinate a multi-agent system named FIRL
+(Field-informed Reinforcement Learning). The approach is hybrid,
+i.e. it combines manual and automatic design of the controller. The
+manual part stems from using manually designed computational fields,
+whereas machine learning techniques (specifically Graph Neural
+Networks (GNNs) and Reinforcement Learning) are used to learn the
+agents' behavior. Furthermore, the presented approach is evaluated,
+demonstrating the necessity of each component for a good performing
+controller.
+
+The combination of "classical" techniques of self-organization with
+machine learning seems promising and interesting for the
+community. The paper is generally well structured and easy to
+follow. The fundamentals chapter "II. Background and Motivation" is a
+bit long with just under three pages and contains six subsections, so
+the content could be split up. The discussed related work seems
+fair. The explanations of machine learning techniques, especially Graph
+Neural Networks, deviate in some places from the standard literature
+and terminology in this research area. This should be improved.
+
+Overall, I vote to weak accept the paper.
+
+
+Detailed comments:
+
+As stated above, the explanations on Graph Neural Networks (GNNs)
+deviate in some places from standard terminology and literature in the
+machine learning field which may cause confusion. Specifically:
+
+- II.C.: The authors state that, while processing a graph with a GNN,
+"the graph is further partitioned into layers with the node v at its
+bottom layer 0". In machine learning terminology: a GNN - as special
+variant of a neural network - is composed of layers.
+
+- No reference is given for the introduction to GNNs (C. II.). The
+mechanism GNNs use to operate on graphs is called message passing,
+where at the same time each node performs the same steps: it
+collects information of its neighbors, transforms a neighbors
+information and lastly aggregates its own information and the
+neighbors' transformed information to result in a new hidden
+representation for the node. Unfortunately, the paper does not
+mention the mechanism at all. Furthermore, the proposed formulation
+of GNNs in the paper differs from this. As stated in the paper, a
+node requests its neighbors' information and aggregates (e.g. sum,
+max, ..) them all (without transforming it) so that the aggregated
+information is transformed. This change seems to reduce the power of
+the model very much.
+
+- For the formulation of second part of the reward function, I would
+have expected |N| > 0 instead of N > 0, since N represents the
+neighborhood of a node.
+
+- In the evaluation chapter (IV.E. Baselines) reduced variants of the
+presented approach (e.g. by omitting the computational field) are
+presented as baselines. This looks to me like a kind of ablation
+study instead of baselines.
+
+- In the evaluation chapter, the caption to Fig. 3 as well as its
+explanation in the text (IV. A) is inconsistent with subchapter G.:
+In the evaluation, scenario "a) Zone Fixed" is used for both
+training and testing, in the upper part it is stated that it is only
+used for training.
+
+- Figures 4 - 6 show colored areas for each line, which is not
+explained in the captions or text.
+
+- Fig. 6: Caption and legend are inconsistent: area vs zone.
+
+-----------------------------------------------------------------------------------------
+
+Review 3:
+The authors present an approach to combining field programming and reinforcement learning. This is interesting because reinforcement learning typically does not scale well in multi-agent or distributed environments. Field programming can potentially address this shortcoming by allowing collections of similarly tasked agents to be reinforced as though they were a single entity.
+
+The authors do a good job of laying out their approach and setting it against its context, and the work is likely to be reproducible.
+
+My only real concern is that the actual test scenario used is so simple that it seems like a poor evaluation of the complexity of the reinforcement system being deployed. I would have liked to see a higher degree of heterogeneity and to see a demonstration that the learned information actually generalized in a meaningful fashion, which cannot really be done with such a simple scenario.
+
+-----------------------------------------------------------------------------------------
+
+Meta Review:
+This paper received two "accepts", and one "weak accept". All reviewers agreed to recommend this paper to be accepted, and their reviews are complementary and helpful in making a stronger camera-ready version of the paper. We provide a brief summary of the paper, its strengths, and weaknesses, highlighting some of the reviewers' comments that support our recommendation.
+
+The authors propose and evaluate a hybrid solution that combines two main approaches for creating distributed controllers: a manual design and an automatic design. The manual design consists of programmers directly building controllers, whereas the automatic design consists of synthesizing programs using ML.
+
+Strengths:
+
+The paper is well-written and tackles an interesting and timely problem for autonomic distributed systems. The solution is well-described, and the authors appropriately contrast their work with other relevant related work in the field. Moreover, the authors provide the necessary code making their results likely to be reproduced.
+
+1. "Overall, the paper reads well and the approach sounds. The objectives of the work and the motivation are clearly stated, and mention to previous work is clear : though the paper presents an incremental piece of work (built on top of the authors previous work), the contribution claimed are realistic. The source code for the experiments is provided in a Github repository ; which should definitely enable for reproducible results and hopefully more work on the same problem."
+2. "The combination of "classical" techniques of self-organization with machine learning seems promising and interesting for the community. The paper is generally well structured and easy to follow."
+3. "The authors do a good job of laying out their approach and setting it against its context, and the work is likely to be reproducible."
+
+Weaknesses:
+
+The evaluation scenario is too simple, and a proper demonstration of the generalization and scalability of the solution is not currently provided in the paper. The description of the machine learning techniques deviates from the terminology used in the literature.
+
+1. "My only real concern is that the actual test scenario used is so simple that it seems like a poor evaluation of the complexity of the reinforcement system being deployed. I would have liked to see a higher degree of heterogeneity and to see a demonstration that the learned information actually generalized in a meaningful fashion, which cannot really be done with such a simple scenario."
+2. "One point that remains unclear after reading the paper is how the environment chosen for the experiments limits (or not) the capabilities of the approach presented. Being simplified (and quite visual), is does help to compare the different approaches (MLP, GNN, and informed versions) quickly, but it seems to be quite limited to assess how the system would scale, nor how the variability in the agent’s individual behaviors would affect their coordination."
+3. "The explanations of machine learning techniques, especially Graph Neural Networks, deviate in some places from the standard literature and terminology in this research area. This should be improved."
+
+We recommend the paper to be accepted, and we highlight the point raised by one of the reviewers: the authors should revisit the "Background and Motivation" section and verify the terminology used. Using a common terminology that is used in the literature would facilitate the understanding of the paper. We recommend the authors to fix this for the camera-ready version.

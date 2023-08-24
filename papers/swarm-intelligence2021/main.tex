@@ -1,0 +1,1592 @@
+
+\newcommand{\rev}[1]{#1}
+
+% revisions
+\newcommand{\LP}[2]{\marginpar{$\color{red}\star$}\color{gray}\sout{#1}\color{blue}\
+  #2 \color{black}}
+\newcommand{\LPr}[2]{{\color{gray}\ #1\ \color{orange}\  #2}}
+\include{scala-def.tex}
+\lstset{frame=single,basewidth=0.5em,language={scafi},
+basicstyle=\lst@ifdisplaystyle\small\fi\ttfamily}
+
+%\chapter{A Field-based Computing Approach to Sensing-driven Clustering in Robot Swarms}
+\chapter{Sensing-driven Clustering in Robot Swarms}
+
+
+%%================================%%
+%% Sample for structured abstract %%
+%%================================%%
+
+% \abstract{\textbf{Purpose:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.
+%
+% \textbf{Methods:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.
+%
+% \textbf{Results:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.
+%
+% \textbf{Conclusion:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.}
+%%\pacs[JEL Classification]{D8, H51}
+
+%%\pacs[MSC Classification]{35A01, 65L10, 65L12, 65L20, 65L70}
+
+\section{Introduction}\label{sec1}
+
+%\meta{ASSIGNED TO: Roby / G. Torta / Mirko}
+
+\emph{Swarm intelligence}
+ is the collective-level ability to solve problems
+ in large groups of relatively simple agents that interact with each other locally, i.e., based on physical/logical proximity~\cite{DBLP:books/daglib/0032898}.
+%
+Swarm intelligence is a phenomenon observed both in natural systems
+ (cf. social insects and animals)
+ and artificial systems
+ (cf. computational ecosystems)~\cite{DBLP:books/daglib/0032898}.
+%
+In computer science and engineering,
+ research fields
+ like \emph{swarm robotics}~\cite{DBLP:journals/swarm/BrambillaFBD13} and self-organising systems~\cite{DBLP:series/ncs/2011SGK,DBLP:conf/saso/2007} emerged to
+ study
+ algorithms, models, and techniques
+ for promoting swarm intelligence
+ in artificial systems for a variety of contexts and applications including (but not limited to) environment monitoring \cite{demasi2020swarm-env-monitoring,DBLP:journals/fi/CasadeiPPVW20}, enterprise software service coordination \cite{DBLP:conf/saso/ClarkBP15}, crowd management~\cite{DBLP:journals/computer/BealPV15}, and most specifically control of robot swarms (groups of relatively simple robots) \cite{DBLP:journals/arobots/ShenWGC04,DBLP:journals/scirobotics/Carrillo-Zapata18}.
+%
+A common distinction is between \emph{behaviour-based} and \emph{automatic} design methods~\cite{DBLP:journals/swarm/BrambillaFBD13}: the former is based on a manual specification of individual behaviour, whereas in the latter the individual behaviour is generated automatically, by searching, adapting, or evolving individual behaviours for effective collective behaviour.
+%
+Common but not exhaustive classes of collective behaviours
+ include spatial organisation (e.g., pattern formation),
+ swarm navigation,
+ and collective-decision making~\cite{DBLP:journals/swarm/BrambillaFBD13}.
+%
+
+In particular, one problem of interest is \emph{swarm clustering} \cite{DBLP:conf/smc/LeeKK05,DBLP:journals/asc/CruzNM17},
+ whereby the classical data clustering task
+ (i.e., the unsupervised learning task where data items are grouped to promote intra-group similarity)
+ is brought in swarm settings.
+%
+This problem revolves around splitting the swarm
+ into groups of individuals, called \emph{clusters},
+ such that the individuals in the same \emph{cluster}
+ are more similar to each other (for some definition of \emph{similarity}) than to those in other clusters.
+%
+Once a cluster is formed, typically it is assigned a sub-goal to be carried on collectively.
+%
+Typical clustering approaches may consider
+ the spatial distribution of the individuals
+ or the goals of the individuals to define clusters
+ \rev{that represent, e.g.,} teams or interaction domains.
+%
+In this paper, we focus on \emph{sensing-based clustering}~\cite{DBLP:conf/ccnc/LinM07}, namely
+ a clustering problem
+ that considers both the spatial distribution of individuals
+ and the environmental values sensed by these individuals (through sensors).
+%
+That is, the goal is to seek for clusters of neighbour individuals with a similar perception of some sensed value.
+%
+The problem can be in a \emph{static} form,
+ where a snapshot of the system state is considered,
+ or in a \emph{dynamic} form,
+ where values change over time
+ and solutions have to deal with change somehow.
+%
+The problem has been considered in Wireless Sensor Networks (WSNs) and Internet-of-Things (IoT) applications like
+  environment monitoring and control~\cite{DBLP:conf/ccnc/LinM07},
+  efficient distributed collection~\cite{DBLP:journals/ijcomsys/PhamLPC10},
+  and disaster management~\cite{DBLP:journals/jaihc/KucukBSK20}.
+%
+However, to the best of our knowledge no existing work addresses the dynamic problem in mobile swarms, which requires specific
+techniques to adaptively re-adjust clusters to face changes.
+%
+\rev{
+Additionally, we look for solutions featuring \emph{resilience}, namely,
+ leveraging distribution and decentralisation to continuously face changes and faults, hence avoiding single points of failures and potential bottlenecks.
+}
+%
+%Therefore, i
+Accordingly, in this work, we present and address the \emph{dynamic sensing-based swarm clustering} problem.
+%
+
+Among the many approaches to express (and reason in terms of) collective behaviour featuring inherent adaptivity we shall consider the \emph{field-based computing} approach~\cite{DBLP:journals/jlap/ViroliBDACP19},
+ for its suitability in addressing dynamic problems by fostering ``controlled self-organisation''.
+%
+In this approach, computations
+ leverage an execution model based on repeated computation
+ and asynchronous neighbour-based communication.
+%
+On top, complex collective behaviour is described in terms of
+ %a  functional abstraction, namely, by
+ functional manipulations of \emph{(computational) fields}, i.e.,
+ data structures evolving over time that map agents in a domain to computational values---sort of spatially distributed streams of values.
+%
+This is inspired by the common notion of fields found in physics (e.g., force or magnetic fields).
+%
+Notice, however, that in our viewpoint, the computational fields assign values to agents rather than to environment (space-time) positions as in e.g. \emph{artificial potential fields}~\cite{DBLP:conf/icra/Warren89},
+ though the approaches are similar and related.
+%
+We adopt this approach as it has shown to conveniently express
+ a variety of \rev{resilient} collective swarm-like behaviour including
+ self-healing distance estimation (\emph{gradient})~\cite{DBLP:conf/saso/AudritoCDV17},
+ self-stabilising leader election~\cite{DBLP:conf/saso/MoBD18},
+ distributed collection~\cite{audrito2021jcee-distributed-collection},
+ and team creation and coordination~\cite{DBLP:journals/eaai/CasadeiVAPD21}---and to scale with complexity up to high-level composite patterns~\cite{DBLP:journals/fgcs/PianiniCVN21}.
+
+Essentially, the core idea of our clustering approach is to make agents
+ in local \rev{minima (or maxima)} of the sensed value \rev{(depending on whether lowest or highest values are most significant)} spawn a spatial process of gathering for neighbour devices until finding the proper size of the cluster,
+ additionally managing interactions with other clusters when there are overlaps.
+%
+%\meta{BY MIRKO: I do not think we should discuss S and G here, the reader would simply not understand: we should provide a higher-level description of our proposal, and defer presentation of S+G at later on}
+%%
+%However, few solutions have been devised for effective creation of clusters,
+% often based on combining space-based leader election (\emph{S block}) and gradients (\emph{G block}): a gradient field is created with G by considering as sources the leaders given by S, and any given device in the system ``belongs'' to the cluster defined by the distance field pointing to the closest leader.
+%%
+%However, such a S+G solution is not very effective in general as state-of-the-art solutions for the S block are subject to various issues~\cite{DBLP:journals/jlap/ViroliBDACP19} and, most importantly, it does not address the sensing-driven clustering problem.
+%
+%Therefore, in this work we consider a field-based solution to clustering where the selection of candidate leaders is driven by sensor values---i.e., we address the sensing-based clustering problem using the field-based computing approach.
+
+In this manuscript we provide the following contributions:
+%
+\begin{itemize}
+\item we provide a precise definition of the
+ dynamic sensing-based mobile swarm clustering problem;
+\item we present a field-based approach to address the problem, and describe a novel configurable meta-algorithm for inducing self-organised clustering in a system of neighbouring-interacting robots;
+\item we provide a publicly available and reproducible simulation framework for evaluating the algorithm on a set of diverse environment configurations, from which  we observe that our solution can identify various cluster shapes and cope with a certain degree of node mobility and changes in sensed phenomena.
+\end{itemize}
+%
+Therefore, the contribution lies both in the general \rev{area} of swarm intelligence as well as in the specific thread of research in field-based computing.
+
+The paper is organised as follows.
+%
+\Cref{s:background} covers background, introducing the field-based computing paradigm and the swarm clustering problem.
+%
+\Cref{s:contrib} provides the novel technical contribution.
+%
+\Cref{s:eval} presents our evaluation of the approach.
+%
+\Cref{s:rw} covers related work.
+%
+Finally, \Cref{s:conc} provides a summary and discusses future research directions.
+
+
+%%===========================================================================================%%
+%% If you are submitting to one of the Nature Portfolio journals, using the eJP submission   %%
+%% system, please include the references within the manuscript file itself. You may do this  %%
+%% by copying the reference list from your .bbl file, paste it into the main manuscript .tex %%
+%% file, and delete the associated \verb+\bibliography+ commands.                            %%
+%%===========================================================================================%%
+
+
+\section{Background and Motivation}
+\label{s:background}
+
+%\meta{ASSIGNED TO: Roby / Ferruccio}
+%Swarms; related problems; motivation scenario
+%\meta{cross-disciplinary approaches $\to$ fields?}
+
+The background of this work
+ includes field-based computing (\Cref{s:background-fieldcomp})
+ and the problem of clustering in swarms (\Cref{s:background-clustering}).
+
+
+
+\subsection{Field-based Computing}
+\label{s:background-fieldcomp}
+
+\emph{Field-based computing}~\cite{DBLP:journals/jlap/ViroliBDACP19}
+ is an approach
+ where computation leverages
+ a notion of \emph{computational fields} (\emph{fields} for short)~\cite{DBLP:conf/icra/Warren89,DBLP:journals/pervasive/MameiZL04,DBLP:journals/jlap/ViroliBDACP19}, namely
+ distributed data structures evolving in time and associating locations with values.
+%
+The approach originates from previous work
+ like
+ Warren's \emph{artificial potential fields}~\cite{DBLP:conf/icra/Warren89}
+ and
+ \emph{co-fields} from Mamei et al.~\cite{DBLP:journals/pervasive/MameiZL04}.
+%
+In particular, in co-fields, computational fields represent contextual information, locally sensed by the agents and repeatedly distributed by the agents themselves or the infrastructure according to a propagation rule.
+%moreover, they are associated with a propagation rule that determines how they should change as they are distributed.
+
+In this work, by field-based computing we mean a specific programming and computational model,
+ also known as \emph{aggregate computing} in literature~\cite{DBLP:journals/computer/BealPV15},
+ which is surveyed in~\cite{DBLP:journals/jlap/ViroliBDACP19}.
+% and that we recap in the following.
+%%
+%In particular, we mean an approach
+%  where
+In this model,   collective and self-organising behaviour
+ is programmed through a composition
+ of functions operating on fields
+% \emph{computational fields}~\cite{DBLP:journals/jlap/ViroliBDACP19},
+% namely distributed data structures, evolving in time,
+ mapping a set of individual agents (rather than environment locations)
+ to computational values.
+%
+Therefore, fields can be used to associate a certain domain of agents
+ with what they sense, the information they process, and actuation instructions for operating on the environment.
+%
+Fields are computed locally to the agents
+ but are subject to a global viewpoint:
+ so, e.g., a field of velocity vectors can be seen as a movement command for an entire swarm, or
+ a field of reals can denote what an entire swarm perceives in a certain environment.
+%
+To understand field-based computing,
+ two essential parts have to be considered: the system model
+ and the programming model.
+ Their interplay is what allows the local actions of the agents
+ to yield emergent collective behaviour.
+
+\subsubsection{System Model}
+\label{ssec:background:sysmodel}
+
+We consider a network of computing and interacting \emph{agents} situated in some \emph{environment}.
+
+\subparagraph*{Structure.}
+%
+An \emph{agent} is an autonomous entity
+ equipped with \emph{sensors} and \emph{actuators}, which serve as the interface towards a logical or physical \emph{environment}.
+%
+By a logical point of view\footnote{Actually, such requirements may be relaxed by considering different execution strategies on available infrastructure~\cite{DBLP:journals/fi/CasadeiPPVW20}.}, it also has \emph{state}, a support for \emph{communicating} with other agents, and support for \emph{computing} simple programs.
+%
+An agent is connected with other \emph{neighbour} agents which collectively form its \emph{neighbourhood}.
+%
+The set of neighbours depends on a \emph{neighbouring relationship}, which is defined by designers according to the application at hand
+and is subject to the constraints exerted by the underlying physical network.
+%
+A typical neighbouring rule
+ is the one that mimics physical connectivity;
+ so, e.g., a robot is a neighbour of another robot if it manages to send a message to the latter over the wireless channel.
+%
+%\meta{FD: @MIRKO is this rule used later in the paper? If no, why we mention it here? RC: @FD this is a useful example to also explain the following rule, which is the one we adopt.}
+Another typical neighbouring rule is the one
+ based on spatial vicinity;
+ so, e.g., a robot is a neighbour of another robot if the infrastructure manages to deliver a message from the former to the latter (e.g., using other robots as relays)
+  and these two robots are at an estimated distance smaller than a certain threshold
+  (assuming a distance can be estimated through a proper technology).
+
+\subparagraph*{Interaction}
+%
+Interaction happens by sending messages
+ to neighbours, asynchronously.
+%
+Interaction can also happen in a stigmergic way, by perceiving and acting upon the environment through sensors and actuators.
+%
+The content of messages and when they are sent and received depend on the agent behaviour.
+%
+However, in general, as our goal is to model continuous collective behaviours, or self-organising systems,
+ we remark that interaction would typically be frequent (in relation to the problem and environment dynamics).
+
+\subparagraph{Behaviour}
+%
+As per the above consideration,
+ the behaviour of any individual agent is best understood
+ in terms of repeated enaction of \emph{execution rounds}, where each round consists of the following steps (though some flexibility exists especially in the actuation part):
+%
+\begin{enumerate}
+\item \emph{Context acquisition.} The agent gathers its context by considering its previous state as well as the most recent sensor readings and messages from neighbours.
+\item \emph{Computation.} The agent runs a computation against the acquired context, yielding (i) an \emph{output} describing potential actuations; and (ii) a \emph{coordination message} containing all the information to be sent to neighbours for the purpose of coordination at a collective level.
+\item \emph{Actuation \rev{and communication}.} The agent performs the actuations described by the program output and dispatches the coordination message to the entire neighbourhood.
+\end{enumerate}
+%
+\rev{
+By having every agent repeatedly
+ run these sense-compute-act rounds,
+ the whole system
+ fosters a self-organisation process
+ whereby
+ up-to-date information
+ (from the environment and from the agents)
+ is continuously incorporated
+ and processed,
+ typically in a self-stabilising manner~\cite{DBLP:books/mit/Dolev2000}.
+}
+
+This system model provides a basic machinery for collective adaptive behaviour, which however requires a proper description of the ``local computation step'': this is fostered by the \emph{field-based programming model} (discussed in \Cref{sec:field-based-programming-model}).
+%
+\rev{
+A \emph{field-based program}
+ steers the collective adaptive behaviour of a system,
+ which unfolds by having each agent in the system
+ evaluate that program
+ according to the discussed round-based execution model.
+%
+Notice that such a program
+ specifies both what local processing the agents
+ must perform
+ and what data they must share with neighbours;
+ also, notice that generally the program does not affect the round-based execution protocol---unless advanced forms of scheduling are desired~\cite{lmcs-timefluid}.
+%
+The distributed execution protocol
+ may be provided by a \emph{middleware},
+ which will ensure that
+ messages are exchanged
+ and rounds properly scheduled.
+%
+The reader can refer to
+ \cite{lmcs-timefluid}
+ and
+ \cite{casadei2022applsci}, respectively,
+for a more comprehensive discussion on
+ execution and deployment aspects.
+}
+
+
+\subsubsection{Field-based Programming Model}
+\label{sec:field-based-programming-model}
+
+Field-based programs can be encoded with field-based programming languages like ScaFi~\cite{DBLP:conf/isola/CasadeiVAD20}, \rev{which are implementations of \emph{field calculi}~\cite{DBLP:journals/jlap/ViroliBDACP19,scafi-lmcs}, i.e., functional core languages that provide the minimal set of constructs for programming with fields and enable formal analysis}.
+%
+ScaFi is a domain-specific language (DSL) embedded in Scala
+ which supports field-based constructs
+ and offers a library of reusable functions\rev{, some of which are covered in the following}.
+%
+
+
+A field-based expression or program (e.g., programmed in ScaFi) can be subject
+ to a local or global interpretation.
+%
+Locally, an integer value like \texttt{7} has the usual meaning;
+ globally, a \texttt{7} denotes a field where each agent is mapped to a local \texttt{7} (a uniform, constant field).
+%
+\rev{
+For instance, querying a local temperature sensor
+ would yield a \emph{field of temperature readings},
+ associating space-time events
+ (i.e., all the rounds of a network of agents)
+ to values denoting the temperatures
+ at those locations.
+}
+
+Locally, an integer expression \texttt{add(a,b)}, or \texttt{a+b}, has the usual meaning, given by the sum of \texttt{a} with \texttt{b};
+ globally, it denotes the application of a field of functions \texttt{add}, or \texttt{+},
+ on a field \texttt{a} and a field \texttt{b},
+ yielding a field given by the sum of \texttt{a} and \texttt{b}
+ in an agent-wise fashion (notice that \texttt{a} may be a non-uniform non-constant field having different local values for different agents over time).
+
+The programming model does not deal directly with global fields (which are essentially a denotational construct),
+ but it deals only with \emph{neighbouring fields},
+ which enable one agent to collect data from its neighbours.
+
+\rev{
+Generally, field calculi feature constructs to
+ (i) evolve values across time, by transforming a value computed at a previous round into a new value;
+ (ii) exchange data with neighbours, where received data is reified by neighbouring fields;
+ (iii) conditionally break a computation into parts,
+ defining distinct domains of collective computation.
+}
+%
+\rev{However,} in the following, we \rev{only} briefly present a subset of the field-based computing building blocks used for sensing-based clustering\rev{, as the details of field calculi are not required to understand the contribution of this manuscript}.
+%
+See~\cite{DBLP:journals/jlap/ViroliBDACP19} for more details on how these blocks are actually developed.
+
+Typically, in field-based computing applications, we are dealing with sharing and collecting information from/to a device.
+
+To do this, the \lstinline|gradient| is an essential construct~\cite{DBLP:conf/saso/AudritoCDV17}.
+%
+This block produces a numeric field that expresses the minimum distance from a source zone following a certain metric (e.g., Euclidean distance).
+%
+Hence, it maps a Boolean field (\lstinline|true| where a node is a source, \lstinline|false| otherwise) into a distance field from the closest source. The signature of the function is defined as\footnote{\rev{In Scala, keyword \lstinline|def| introduces a named function; after the name, it follows a list of parameters of the form \lstinline|name:Type|; after the parameter list, the return type of the function is specified.}}:
+%
+\begin{lstlisting}
+def gradient(source: Boolean, metric: Metric): Double
+\end{lstlisting}
+%
+\rev{This function is resilient to changes in the source field and metric field, self-stabilising to the correct field of minimum distances to the closest source once input fields stabilise.}
+%
+\rev{Gradients support \emph{information flows}, which are fundamental constructs for designing self-organising systems~\cite{DBLP:conf/saso/WolfH07}.}
+%
+\rev{Indeed, t}hrough this construct, it is possible to share generic data (a position, a temperature, etc.) towards this resulting distance field.
+%
+Such propagation of data from a source of a gradient outwards
+ is captured by a
+\lstinline|broadcast| function \rev{(generic in type parameter \lstinline|D)|}:
+\begin{lstlisting}
+def broadcast[D](source: Boolean, data: D): D
+\end{lstlisting}
+%
+%The information in these two previous operators flow from the source nodes to the others nodes.
+When we want to aggregate data in source agents, we use the block \lstinline|C| (collect) instead~\cite{audrito2021jcee-distributed-collection}:
+\begin{lstlisting}
+def C[V](p: Double, acc: (V, V) => V, local: V, null: V): V
+\end{lstlisting}
+%
+In this signature, \lstinline|p| is a potential field usually computed through \lstinline|gradient|; \lstinline|acc| is the logic that combines \rev{locally perceived data with that received from neighbours}; \lstinline|local| is the local data we want to collect at a point in space (e.g. a position); and \lstinline|null| is the null data for the \lstinline|acc| operation (e.g. if we collect a real value, the \lstinline|null| value could be 0).
+%
+This is also an essential operation for the definition of collective behaviours: it enables, e.g. computation of the average temperature in a certain zone covered by agents.
+
+\rev{
+As an example, consider a network of agents
+ where a sparse set of leaders have been elected.
+%
+Suppose that we want to break the system
+ into several regions, each one ruled by one leader,
+ and that we want every agent
+ to know how many members are in their region.
+%
+This can be coded as follows:
+}
+\begin{lstlisting}
+val leader: Boolean = // true on leader devices
+val potential: Double = gradient(leader, metric())
+val collect: Int = C[Int](potential, (sum,v)=>sum+v, 1, 0)
+val count: Int = broadcast[Int](leader, collect)
+\end{lstlisting}
+\rev{
+A region is indirectly defined by the corresponding leader; each agent has to simply descend the gradient to locate its leader (and hence its region).
+%
+Along the \lstinline|potential| towards leaders,
+ a contribution of \lstinline|1| is accumulated
+ for each agent.
+%
+To propagate the complete count on the whole region, it is then sufficient to \lstinline|broadcast| the \lstinline|leader|'s \lstinline|collect| value outwards.
+}
+
+\subsubsection{Field-based Concurrent Processes}
+
+Field-based concurrent processes, also called \emph{aggregate processes}~\cite{DBLP:conf/coordination/CasadeiVAPD19,DBLP:journals/eaai/CasadeiVAPD21},
+ are field-based computations
+ that exist dynamically:
+ they can be dynamically generated (usually by individual agents),
+ execute on a dynamic set of agents,
+ and disappear once all its members withdraw.
+%
+They have been formalised in \cite{DBLP:conf/coordination/CasadeiVAPD19}
+ and deeply covered in \cite{DBLP:journals/eaai/CasadeiVAPD21},
+ showing how they can support the design of intelligent collective behaviour by extending the practical expressiveness of field-based programming models~\cite{DBLP:journals/jlap/ViroliBDACP19}.
+%
+We provide a brief account of the details relevant for this manuscript in the following.
+
+Indeed, the aggregate process abstraction
+ is relevant in this work
+ since an aggregate process instance,
+ by running on a (evolving) subset of the agents,
+ can be used to denote a dynamic cluster.
+%
+Therefore, clustering algorithms
+ can be expressed in terms of how
+ aggregate processes are generated (candidate cluster formation)
+ and
+ merged/removed (cluster selection).
+
+Aggregate processes can be expressed as normal field-based functions and spawned through a \lstinline|spawn| construct
+ with the following signature:
+%
+\begin{lstlisting}
+// spawn is a generic function which accepts 3 parameters
+def spawn[K,A,R](process: K => A => (R,Boolean),
+                 newProcesses: Set[K],
+                 args: A): Map[K,R]
+\end{lstlisting}
+%
+The generic type \lstinline|K| instantiates to the type of a \emph{process key}, also called a \emph{process identifier (PID)}, which also works as construction parameter;
+ the generic type \lstinline|A| instantiates to the type of runtime parameters for the currently running process instances;
+ the generic type \lstinline|R| instantiates to the type of the output of the process.
+%
+A \emph{process definition} has curried type \lstinline|K => A => (R,Boolean)|, namely a function from a value of type \lstinline|K| and a value of type \lstinline|A| to a pair of a value of type \lstinline|R| and a Boolean.
+%
+The Boolean value, called the \emph{process status}, expresses if the device that has executed a given process instance
+ would like to participate into the process (\lstinline|true| status)
+ or not (\lstinline|false| status).
+%
+The crucial point is that every device that participates into a process with PID $\pi$ automatically propagates the process PID $\pi$ to all its neighbours, which will run a corresponding process instance when the \lstinline|spawn| function is evaluated.
+%
+So, the \lstinline|spawn| function accepts a function \lstinline|process| of a field-based behaviour,
+ a set \lstinline|newProcesses| of new process instances to be generated locally in the current round,
+ and a value of type \lstinline|A| for the runtime input of the instances currently running in the local round of a given device.
+%
+Notice that, though \lstinline|process| can be a field of functions, it is typically a constant field of the same function, which means that usually a \lstinline|spawn| expression enables running zero or more process instances of the same kind of process.
+%
+Evaluation of \lstinline|spawn| returns a \lstinline|Map[K,R]|
+ (i.e., a hashmap or dictionary) which a set of entries
+ mapping the PIDs of executed process instances (with status \lstinline|true|) to corresponding outputs of type \lstinline|R|.
+%
+
+As an example, consider building a separate gradient computation
+ for each distinct source agent, that will expand within a certain range $\rho$. This could be coded as follows in ScaFi:
+\begin{lstlisting}[mathescape]
+type DeviceId = Int
+// Process definition as a function
+val proc: DeviceId => Boolean => (Double, Boolean) = id => isSource => {
+  val output = gradient(id == deviceId())
+  val status = if(id == deviceId()) isSource
+               else output < $\rho$
+  (output, status)
+}
+// Set of processes to be generated locally
+val newProcesses: Set[DeviceId] =
+  if(isSource()) Set(deviceId()) else Set.empty
+// Expression for handling acquired and generated processes
+val gradients: Map[DeviceId,Double] =
+  spawn[DeviceId,Boolean,Double](process, newProcesses, isSource())
+\end{lstlisting}
+%
+\rev{In detail, the IDs of sources are used as PIDs; so, for instance, a gradient from agent 7 will become a process with PID 7. The process logic is defined through \lstinline|proc|, which is a function of the PID \lstinline|id| and Boolean argument \lstinline|isSource| denoting whether the running agent is a source, as provided by built-in sensor function \lstinline|isSource()|. In \lstinline|proc|, a gradient is built from the agent whose ID, provided by \lstinline|deviceId()|, matches the \lstinline|id| of the source corresponding to the current process instance. Then, \lstinline|status| is defined \lstinline|true| if the source for the process is still a source or, for non-source agents, if their gradient value is lower than threshold $\rho$. Notice that when the original source is not a source any more, the gradient \lstinline|output| will rise, eventually causing all the agents to leave that process.
+%
+Value \lstinline|newProcesses| will be a singleton set 
+ with the ID of the running device
+ when its \lstinline|isSource()| sensor returns true,
+ or the empty set otherwise.
+%
+In the former case, 
+ a corresponding process is spawned
+ if it did not already exist.
+%
+The evaluation of the \lstinline|spawn| call, then,
+ will run both new and existing processes
+ including those executed (and not quit) at the previous round,
+  as well as those acquired from neighbours.
+%
+The output of the \lstinline|spawn| expression
+ will be a map from the PIDs of the processes locally executed
+ to the value of the gradient (\lstinline|output|) locally computed in those process instances.
+}
+
+An example of the dynamics of such a program is provided in \Cref{fig:spawn-dynamics}.
+%
+In the picture: nodes are agents; labels on nodes are agent IDs; edges denote neighbouring links, over which messages are sent and received; the output of the \lstinline|spawn| expression is shown above the nodes, unless it is an empty map (not shown); the different sub-pictures are snapshots of a corresponding hypothetical system state trajectory that may result after multiple rounds of execution in multiple devices.
+%
+A more thorough introduction and description of aggregate processes together with more examples is available in \cite{DBLP:journals/eaai/CasadeiVAPD21}.
+
+\begin{figure}
+\centering
+\subfloat[Initial network.\label{fig:spawn-dynamics-a}]{\includegraphics[width=0.45\textwidth]{papers/swarm-intelligence2021/img/spawn-dynamics1.png}}\hfill
+%
+\subfloat[A process is generated on agent $1$.\label{fig:spawn-dynamics-b}]{\includegraphics[width=0.45\textwidth]{papers/swarm-intelligence2021/img/spawn-dynamics2.png}}\\
+%
+\subfloat[The process with PID $1$ propagates up to a certain range.\label{fig:spawn-dynamics-c}]{\includegraphics[width=0.45\textwidth]{papers/swarm-intelligence2021/img/spawn-dynamics3.png}}\hfill
+%
+\subfloat[The ``border'' of a process can change dynamically.\label{fig:spawn-dynamics-d}]{\includegraphics[width=0.45\textwidth]{papers/swarm-intelligence2021/img/spawn-dynamics4.png}}\\
+%
+\subfloat[Another process is spawned by source agent $3$.\label{fig:spawn-dynamics-e}]{\includegraphics[width=0.45\textwidth]{papers/swarm-intelligence2021/img/spawn-dynamics5.png}}\hfill
+%
+\subfloat[Processes can overlap. Agents $2$ and $6$ run the two processes with PID $1$ and $3$.\label{fig:spawn-dynamics-f}]{\includegraphics[width=0.45\textwidth]{papers/swarm-intelligence2021/img/spawn-dynamics6.png}}\\
+%
+\subfloat[Process $1$ ceases to exist.\label{fig:spawn-dynamics-g}]{\includegraphics[width=0.45\textwidth]{papers/swarm-intelligence2021/img/spawn-dynamics7.png}}
+%
+\caption{Examples of the dynamics of multiple concurrent gradient processes.}
+\label{fig:spawn-dynamics}
+\end{figure}
+
+
+\subsection{\rev{Resilient} Dynamic Cluster Formation in Swarms}
+\label{s:background-clustering}
+
+Different cluster models exist
+ and, for each cluster model, several algorithms can be devised~\cite{DBLP:journals/sigkdd/Estivill-Castro02}.
+%
+These are reviewed and compared with our cluster model in \Cref{s:rw}.
+
+In this paper, we focus on \emph{swarm clustering},
+ which involves associating each swarm member
+ to zero or more clusters.
+%
+So, this is a problem of \emph{cluster formation}~\cite{DBLP:journals/tie/GeHZ18},
+ more than a problem of \emph{cluster analysis} (which generally includes cluster formation followed by cluster evaluation).
+%
+A \emph{cluster}, in this setting,
+ is essentially a label (\emph{cluster ID}),
+ which can be associated to an agent,
+ and that can be used to determine its behaviour.
+%
+In field terms,
+ a clustering can be seen as a field
+ mapping each agent to
+ a set of cluster IDs---we call this a \emph{clustering field}.
+
+Essentially, a cluster can be used to determine, query, and control a group of agents.
+%
+Such a group could represent a team, used for cooperation or to solve a common goal,
+ or a space-time domain for a field computation.
+%
+Indeed, as the agents are situated in space,
+ they provide a means for extracting data
+ from their corresponding location,
+ which may be instrumental for environment monitoring,
+ data acquisition, etc.
+
+Moreover, we consider \emph{dynamic clustering}~\cite{DBLP:journals/pr/RoaTG19},
+ where the emphasis is not on identifying a single clustering
+ for a given system configuration,
+ but to update and evolve a clustering solution
+ as the system configuration evolves
+ (e.g., due to mobility, failure, or change in other clustering criteria).
+%
+The specific problem we tackle is \emph{dynamic sensing-based/space-based swarm clustering},
+ which involves associating each swarm member
+ to zero or more clusters, and to evolve such association by considering change in the environment (\emph{sensing-based}) and spatial location of the members (\emph{space-based}).
+%
+
+In summary, our goal is to define a distributed, decentralised, field-based
+ clustering algorithm,
+ for the system model described in \Cref{ssec:background:sysmodel},
+ able to create and dynamically maintain a clustering field\rev{, resiliently}.
+%
+\rev{
+Our focus on resilience 
+ make centralised approaches not appropriate 
+ since we cannot assume that some nodes 
+ are infallible or always available.
+}
+%
+%This model is different from other clustering models and algorithms as follows.
+%%
+%\begin{itemize}
+%\item Our model differs from \emph{connectivity-based clustering}
+% as the topology is already given (neighbourhood-based).
+%\end{itemize}
+%
+This work draws motivation
+ from
+ (i) the relevance of the problem for situated systems (e.g., in swarm robotics),
+ (ii) a scarcity of solutions to the problem of \emph{sensing-driven spatial clustering} in literature,
+ and
+ (iii) a general lack of effective field-based clustering solutions.
+%
+Refer to \Cref{s:rw} for a more detailed account on these research gaps.
+
+
+\section{Contribution}
+\label{s:contrib}
+
+%\meta{ASSIGNED TO: Giorgio (interacting with G. Aguzzi/Ferruccio)}
+
+\rev{
+In this section,
+ after describing a minimal set of \emph{assumptions}
+ underlying the approach (\Cref{ssec:assumptions}),
+ we define the \emph{problem} to be addressed (\Cref{ssec:problem-def}), in terms of inputs, outputs, and parameters,
+ describe a specific instantiation of the problem for centroid-based clustering on numeric values (\Cref{ssec:instantiation}),
+ and then present a meta-algorithm providing a solution to the stated problem (\Cref{ssec:meta-algo}).
+}
+
+
+\rev{
+\subsection{Assumptions}
+\label{ssec:assumptions}
+Before formally defining the problem of {\em Dynamic Sensing Based Swarm Clustering}, we summarise the assumptions about the swarm devices and the environment in which they act. Such assumptions justify both the way we define the problem, and some of the design choices we adopt for its solution.
+%
+\begin{enumerate}
+\item A {\em swarm} is composed by a set of possibly many relatively simple autonomous robots (e.g., ground, airborne, underwater).
+\item A {\em robot} can move within the environment, sense, and actuate.
+\item {\em Communication} is based on  peer-to-peer connection link, based on the proximity of robots, without relying on infrastructure (e.g., LTE network, WiFi network).
+\item {\em Reliability} of robots themselves and communications are not guaranteed and, in some scenarios, failures are  quite likely.
+\item The measures of the {\em environment}, as sensed by the robots, can change over time.
+\item The measures of interest of the {\em environment} at two points in space close to each other tend to be positively correlated.
+\end{enumerate}
+%
+The above  assumptions are rather weak and, therefore, quite challenging. They encompass scenarios where a swarm of robots explores an area where multiple natural phenomena are happening.
+
+The field-based clustering algorithm for solving the {\em Dynamic Sensing Based Swarm Clustering} problem will be discussed below. For now, we just want to point out that our assumptions justify a fully distributed approach in which robots exchange information with their neighbours.
+
+First, given the very nature of swarm systems, problems are usually better solved by distributed algorithms than centralised algorithms, e.g., \cite{hoshino:2013,DBLP:journals/asc/CruzNM17}. In particular, by our assumption that robots and communications can fail, and that there is no global communication infrastructure, a node in charge of all the computations (either a robot or a base station) would constitute a risky single-point of failure. Even if the swarm was able to recover from such failure by automatically choosing another central node, the switch would be cumbersome and potentially very costly, only to reach a again a situation with another single point of failure.
+
+Given robots whose connection links are established and lost based on the proximity with other robots, it may be possible to build an abstraction on top of that, whereby multi-hop communications are transparent and each robot has the illusion to be able to immediately communicate with any other robot in the swarm by specifying an appropriate ID (this is, e.g., the typical abstraction brought by the IP layer of the TCP/IP stack). While the cost of adding such additional layer may be acceptable in some situations, for the specific goal of clustering this would not bring any advantage: as we shall see in the sections below, clusters spring out, expand, and collapse following spatial vicinity---i.e., a new cluster expands first to the immediate neighbours of the robot that generated it, and then progressively spreads to further robots in an incremental way.
+}
+
+\subsection{Problem Definition}\label{ssec:problem-def}
+
+In this paper, we address the problem of situation awareness and recognition, where a value distributed in space (e.g., temperature as measured by sensors) has to be monitored,
+ by recognising compact clusters with similar values (e.g., spatial regions with a similar temperature).
+ This problem, called \emph{sensing-driven clustering} in literature, has been investigated largely in static scenarios \cite{DBLP:journals/jaihc/KucukBSK20,DBLP:journals/ijcomsys/PhamLPC10,DBLP:conf/ccnc/LinM07},
+ where data from a fixed sensor network has to be processed in order to obtain the relevant clusters.
+ However, solutions for such networks do not extend well to dynamic contexts, such as micro-drone swarms monitoring an environment:
+ in this scenario, mobility and proximity of communication are key,
+ and need to be handled by an algorithm that is resilient to changes in both values, network structure and placement in space.
+ To the best of our knowledge, this problem has never been previously considered in the literature.
+
+A sensing-driven clustering algorithm for mobile \rev{swarms} could be useful for several outcomes.
+ Clusters may provide a compressed summary of the value distribution in space,
+ to upload on the cloud and be graphically represented for human convenience.
+%
+Clusters may also be used to drive more complex situation recognition patterns:
+ algorithms to detect dangerous situations may be run in each cluster separately,
+ using information from that cluster to reach a verdict, without interference from information on neighbouring clusters.
+ Clusters may also be used to drive task assignment to the monitoring drones,
+ possibly guiding their placement in space, by directing more drones in clusters where the need arises.
+
+More formally, we consider the following problem:
+\begin{itemize}
+	\item \textbf{Input:} for each device, a unique identifier $i$ and a \emph{value} $v_i$ of type $T$ \rev{(possibly obtained through a sensor reading);}
+	\item \textbf{Output:} for each device, a list of clusters to which the device belongs, represented as a map from unique identifiers $l$ of cluster leaders to corresponding cluster summary values $w^l$ of type $S$.
+\end{itemize}
+In order to formally specify the output, we need some further details characterising what a \emph{cluster} is, how they should be selected, and what is their \emph{summary}. This is attained through the following problem parameters.
+\begin{itemize}
+	\item \textbf{Metric:} a data type $M$ with
+	\begin{itemize}
+		\item a \emph{null} value $0_M$;
+		\item a partial order\footnote{A partial order is a reflexive, transitive and anti-symmetric relation; with no requirement that either $x \leq y$ or $y \leq x$ for $x,y$ of type $M$.} $x \leq y$ defined for $x,y$ of type $M$;
+		\item an addition operator $x + y$ defined for $x,y$ of type $M$, such that $x + 0_M = x$ and $x + y > x$ if $y > 0_M$;
+		\item a positive function $d(i, j) > 0_M$ returning a value in $M$ representing a distance between a device $i$ and $j$ (depending on the devices' sensor states and possibly values $v_i$). \rev{This is intended to make use of spatial distance estimates as well as other factors (i.e., value distances).}
+	\end{itemize}
+	\item \textbf{Summary:} a data type $S$ with
+	\begin{itemize}
+		\item a value $s(i)$ of type $S$ in every device $i$ (depending on sensor state);
+		\item an associative and commutative function $f : (S,S) \to S$, used to aggregate values $s(i)$ for devices in a same cluster.
+	\end{itemize}
+	\item \textbf{Leader selection:}
+	\begin{itemize}
+		\item a candidate radius $r(i)$ in $M$ (depending on sensor state and values), so that only devices with a relative distance strictly lower than $r(i)$ can belong to a cluster whose leader is $i$;\footnote{Notice that $r(i) = 0_M$ implies that no device can be in a cluster whose leader is $i$.}
+		\item a commutative similarity predicate $p : (S,S) \to \{\top, \bot\}$, identifying similar clusters based on their summary.
+	\end{itemize}
+\end{itemize}
+According to this description, a candidate cluster $\mathcal{C}$ is a set of devices with a leader $i$,
+ such that every $j \in \mathcal{C}$ is within a distance of $r(i)$ from the leader $i$,
+ according to the metric given by $d$.
+ The summary $w_i$ of such cluster is the repeated aggregation through $f$ of the values $\{v_j : ~ j \in \mathcal{C}\}$.
+ Nearby clusters are merged if their summaries are similar according to predicate $p$,
+ and in such case, the lowest identifier is selected as the leader of the merged cluster.
+
+\rev{
+Leaders are used to regulate clusters via aggregate processes and to easily support consistent coordination and decision-making regarding the activity of a cluster.
+%
+Notice that agents 
+ may belong to multiple clusters:
+ this is important to support 
+ tracking phenomena that are spatially close to each other.
+%
+Indeed, if a node is in between two phenomena,
+ it could participate in the corresponding clusters 
+ at the same time to help to track
+ or handle both phenomena.
+}
+%
+
+
+We highlight that we aim to solve this problem by an \emph{adaptive} algorithm,
+ that is, a program that is able to handle changes in its input, by periodically and asynchronously updating its internal values.
+
+\subsection{Adaptive Centroid-based Clustering on Numeric Values} \label{ssec:instantiation}
+
+In the evaluation section, we consider a specific instantiation of the \rev{parameters just introduced,}
+ for centroid-based clustering on numeric values.
+ In this context, the metric is a simple distance on values, so that $d(i, j) = \lvert v_i - v_j \rvert$.
+ To prevent the creation of a candidate cluster for every device, the candidate radius $r(i)$ is set to zero whenever $i$ is not a local minimum
+ (i.e., has a neighbouring device $j$ such that $v_j < v_i$). If instead $i$ is a local minimum, $r(i)$ is set to a fixed difference value $\theta$.
+ The values $s(i)$ to be summarised are set to a tuple $[x_i, y_i, v_i, 1]$ of the devices' positions\footnote{We assume that a GPS-like sensor is available.} and values with the number 1,
+ with an aggregator function $f$ that is a component-wise sum, so that the overall aggregate of a cluster $\mathcal{C}$ is (eventually) equal to the tuple
+ $[\sum_{i \in \mathcal{C}} x_i, \sum_{i \in \mathcal{C}} y_i, \sum_{i \in \mathcal{C}} v_i, \#\mathcal{C}]$ (where $\#\mathcal{C}$ is the actual number of members of cluster $C$).
+ The similarity predicate $p$ then declares two clusters as similar if they have centroids within a radius of $\gamma$,
+ in a 3D space mixing spatial coordinates with a value coordinate:
+\[
+p([x, y, v, n], [x', y', v', n']) \quad\coloneqq\quad \lVert \frac{(x,y,v)}{n} - \frac{(x',y',v')}{n'} \rVert < \gamma
+\]
+where $(x,y,v)$ denotes a 3D vector and $\lVert \cdot \rVert$ denotes the norm of a vector.
+ By setting the problem parameters as described, the meta-algorithm can select clusters of similar value,
+ led by their minima, and merge overlapping clusters that are too close together and with a similar value.
+
+\subsection{Adaptive Clustering Meta-Algorithm}
+\label{ssec:meta-algo}
+
+We now describe \rev{the general} meta-algorithm for the stated problem through state equations.
+ The algorithm state is distributed, hence composed of variables $x_i$ depending on a device identifier $i$:
+ we assume that such a variable is stored in device $i$ and periodically updated by it through the state equations.
+%
+Each equation may involve inspecting the state of variables in neighbour devices $j$:
+ we assume that every device periodically shares its state with neighbours,
+ so that a (not necessarily updated) view of neighbours' state is available in each device,
+ and each state equation can be computed locally in the current device $i$, without remote memory accesses.
+%
+We use $\mathcal{N}(i)$ to denote the set of current neighbours of device $i$, i.e., the set of devices $j$ for which a view of their state is locally available in $i$ (not including $i$ itself).
+ The execution of state equations can be performed in asynchronous rounds, as described in \Cref{s:background-fieldcomp}.
+ %
+ \rev{In order to showcase the algorithm at work by examples, in the following we consider a network of three interconnected devices $i=0,1,2$, so that $\mathcal{N}(0) = \mathcal{N}(1) = \mathcal{N}(2) = \{0,1,2\}$. We assume that the devices are placed in positions $(x_0, y_0) = (0,0)$, $(x_1, y_1) = (1,1)$, $(x_2,y_2) = (2,0)$ and hold values $v_0 = 2$, $v_1 = 3$, $v_2 = 1$. We will also assume that the parameters are as described in Section \ref{ssec:instantiation}, with $\theta = \gamma = 3$.}
+
+\begin{table}
+\begin{tabular}{clcl}
+$i$ & current device &
+$\mathcal{N}(i)$ & neighbour set \\
+$\ell$ & candidate leader &
+$\mathcal{S}_i$ & candidate leader set \\
+$m^\ell_i$ & metric in $i$ from $\ell$ &
+$c^\ell_i$ & whether $i$ belongs to cluster $\ell$ \\
+$p^\ell_i$ & parent of $i$ in cluster $\ell$ &
+$t^\ell_i$ & partial summary in $i$ for cluster $\ell$ \\
+$u^\ell_i$ & candidate leader summary in $i$ for $\ell$ \\
+$l_i$ & selected leader for cluster $i$, if any &
+$w_i$ & selected summary for cluster $i$, if any \\
+$l^\ell_i$ & selected leader for cluster $\ell$ in $i$ &
+$w^\ell_i$ & selected summary for cluster $\ell$ in $i$
+\end{tabular}
+\caption{State variables used in the state equations.} \label{tab:variables}
+\end{table}
+
+\Cref{tab:variables} summarises the state variables used in state equations.
+ Every device maintains a candidate leader set $\mathcal{S}_i$, of possible clusters to which the device may belong. Every round, this set is updated as:
+\[
+\mathcal{S}_i ~=~ \{ \ell \in \mathcal{S}_j \text{ for } j \in \mathcal{N}(i) \text{ s.t. } c^\ell_j = \top \} \cup \begin{cases}
+	\emptyset & \text{if } r(i) = 0_M \\
+	\{ i \} & \text{otherwise}
+\end{cases}
+\]
+Thus, $\mathcal{S}_i$ includes $i$ provided that $r(i) > 0_M$, together with other candidate leaders $\ell$ considered by neighbours
+ (in their candidate leader set and which have computed to be within the cluster).
+ In field-based computing, this set is implicitly maintained by the \emph{spawn} construct,
+ given $c^\ell_i$ as process return status and $\{ i \}$ as new process key (if $r(i) > 0_M$).
+ %
+\rev{In our sample network, the initial value for $\mathcal{S}_i$ in each $i$ will only consider the current device, as information from neighbouring devices is not available yet. Thus, we will have $\mathcal{S}_0 = \{0\}, \mathcal{S}_1 = \{\}, \mathcal{S}_2 = \{2\}$. After convergence, each node will understand itself as possibly belonging to clusters 0 and 2, so that $\mathcal{S}_0 = \mathcal{S}_1 = \mathcal{S}_2 = \{0,2\}$.}
+
+Most of the meta-algorithm computation is repeated for each of the candidate leaders $\ell \in \mathcal{S}_i$. First, a metric $m^\ell_i$ of distance between $\ell$ and $i$ is computed,
+ through the following equation (called the \lstinline|gradient| block in field-based computing---cf. \Cref{s:background-fieldcomp}):
+\[
+m^\ell_i = \begin{cases}
+	0_M & \text{if } \ell = i \\
+	\min \{m^\ell_j + d(i,j) : ~ j \in \mathcal{N}(i) \} & \text{otherwise}
+\end{cases}
+\]
+\rev{In the sample network, we will have $m^0_0 = m^2_2 = 0$, $m^0_1 = 0 + \vert v_0 - v_1 \vert = 1$, $m^2_1 = 0 + \vert v_2 - v_1 \vert = 2$, $m^2_0 = m^0_2 = 0 + \vert v_0 - v_1 \vert + \vert v_2 - v_1 \vert = 3$. From $m^\ell_i$, we also decide the values $c^\ell_i$ as the truth predicates of whether $m^\ell_i \leq \theta$.}
+
+Then, an optional parent $p^\ell_i$ for $\ell \neq i$ is determined as the neighbour $j$ with minimal $m^\ell_j$ (resolving ties by the identifier $j$ itself):
+\[
+p^\ell_i = \begin{cases}
+	\arg\min_{j \in \mathcal{N}(i)} \{ (m^\ell_j, j) \} & \text{if } \ell \neq i \\
+	\text{None} & \text{otherwise}
+\end{cases}
+\]
+\rev{In our example, we have that $p^0_1 = 0$, $p^2_1 = 2$, $p^2_0 = p^0_2 = 1$ while $p^0_0$ and $p^2_2$ are undefined.}
+Through it, partial summaries $t^\ell_i$ can be computed (\lstinline|C| block in field-based computing---cf. \Cref{s:background-fieldcomp}):
+\[
+t^\ell_i = \text{reduce}(\{s(i)\} \cup \{t^\ell_j :~ j \in \mathcal{N}(i) \text{ and } p^\ell_j = i\}, f)
+\]
+where ``reduce'' is a function accumulating every element of a given set with the given binary function,
+ and thus aggregates with $f$ the value $s(i)$ together with the $t^\ell_j$ values of neighbours $j$ which chose the current device $i$ as their parent.
+%
+\rev{In the sample network, we will have that $t^2_0 = s(0) = (0,0,2,1)$, $t^0_2 = s(2) = (2,0,1,1)$, $t^0_1 = s(1)+s(2)$, $t^2_1 = s(1)+s(0)$, $t^0_0 = t^2_2 = s(0)+s(1)+s(2) = (3,1,6,3)$.}
+%
+The value of the partial summary in the leader is then propagated through the cluster by a broadcast function:
+\[
+u^\ell_i = \begin{cases}
+	t^\ell_i & \text{if } \ell = i \\
+	u^\ell_{p^\ell_i} & \text{otherwise}
+\end{cases}
+\]
+\rev{so that, in our example after convergence, each $u^\ell_i$ is $(3,1,6,3)$.}
+Every candidate leader $i$ with $r(i) > 0_M$ is now able to choose its selected leader $l_i$,
+ as the minimum candidate leader $j$ (possibly $i$ itself) with a summary similar to that of $i$ according to predicate $p$:
+\[
+(l_i, w_i) = \begin{cases}
+	\min \{(\ell, u^\ell_i) :~ \ell \in \mathcal{S}_i \text{ and } p(u^\ell_i, u^i_i)\} & \text{if } r(i) > 0_M \\
+	\text{None} & \text{otherwise}
+\end{cases}
+\]
+\rev{In the running example, we will have that $l_0 = l_2 = 0$, $w_0 = w_2 = (3,1,6,3)$, since the two clusters are fully overlapping hence $p$ is true.}
+The selected leader $l_i$ and corresponding summary $w_i$ is then propagated by broadcast through the cluster of $i$. For every $\ell \in \mathcal{S}_i$:
+\[
+(l^\ell_i, w^\ell_i) = \begin{cases}
+	(l_i, w_i) & \text{if } \ell = i \\
+	(l^\ell_{p^\ell_i}, w^\ell_{p^\ell_i}) & \text{otherwise}
+\end{cases}
+\]
+Finally, in every device $i$, the meta-algorithm output is the map:
+\[
+\{ l^\ell_i \mapsto w^\ell_i :~ \ell \in \mathcal{S}_i \}.
+\]
+
+\begin{figure}
+\begin{lstlisting}[escapechar=\%]
+// process starts when %$r(i)$% is positive
+val newProc = mux (%$r(i)$% > 0) { Set(mid) } { Set.empty }
+// collect map from %$\ell \in $% to %$(m^\ell_i, u^\ell_i)$%
+val clusters = spawn(%$\ell$% => _ => {
+  val %$m^\ell_i$% = gradient(mid == %$\ell$%, %$d$%) // distance estimation
+  val %$c^\ell_i$% = %$m^\ell_i$% < %$r(\ell)$% // whether device is in cluster
+  val %$t^\ell_i$% = C(%$m^\ell_i$%, %$f$%, %$s(i)$%) // summary collection
+  val %$u^\ell_i$% = broadcast(%$m^\ell_i$%, %$t^\ell_i$%) // summary broadcast
+  return ((%$m^\ell_i$%, %$u^\ell_i$%), %$c^\ell_i$%) // process result and status
+}, newProc, ())
+// selected leader
+val %$l_i$% = mux (%$r(i)$% > 0) {
+  clusters.filter(x => %$p$%(x._2, clusters(mid))).keys.min
+} { mid }
+// selected leader summary
+val %$w_i$% = mux (%$r(i)$% > 0) { clusters(%$l_i$%)._2 } { None }
+// propagate in process
+val result = spawn(%$\ell$% => _ => {
+  val %$m^\ell_i$% = clusters(%$\ell$%)._1 // recover distances
+  val %$c^\ell_i$% = %$m^\ell_i$% < %$r(\ell)$% // whether device is in cluster
+  val (%$l^\ell_i$%, %$w^\ell_i$%) = broadcast(%$m^\ell_i$%, (%$l_i$%, %$w_i$%)) // final broadcast
+  return ((%$l^\ell_i$%, %$w^\ell_i$%), %$c^\ell_i$%) // process result and status
+}, newProc, ())
+// build result map
+return result.map(x => { x._2._1 -> x._2._2 })
+\end{lstlisting}
+\caption{Scafi pseudo-code of the meta-algorithm.} \label{fig:pseudocode}
+\end{figure}
+
+This meta-algorithm is presented as ScaFi pseudo-code in \Cref{fig:pseudocode}, using ScaFi library functions \lstinline|gradient|, \lstinline|C|, and \lstinline|broadcast|---cf. \Cref{s:background-fieldcomp}.
+%
+\rev{Notice that since clusters are represented as aggregate processes, and aggregate processes define ``scopes'' for collective computations, the participation of an agent in an aggregate process has by itself the information about the cluster membership; so, collective tasks may be assigned to any cluster, and these will be inherently played by all the members of that cluster.
+}
+%
+ We also remark that although values $v_i$ are not directly used by the meta-algorithms, the parameters $r(i)$ and $d(i,j)$ are allowed to depend on them (and usually do),
+ so that values are indirectly used. An example of such behaviour is given in the next section.
+
+%figura della composizione blocchi?
+%vedi anche: https://github.com/metaphori/paper-2021-swarm-intelligence-si/blob/master/_Brainstorming/algorithm2.md
+
+\section{Evaluation}
+\label{s:eval}
+
+%\meta{ASSIGNED TO: G. Aguzzi / Roby}
+
+In this section, we evaluate the meta-algorithm proposed in \Cref{ssec:meta-algo}
+ in a case study of situation recognition within a synthetic environment \rev{(\Cref{s:scenario-description})}.
+%
+The goal \rev{(\Cref{s:eval-goal})} is to show how the algorithm
+ can cluster agents in a sensing-based fashion,
+ hence identifying various temperature cluster shapes.
+%
+Furthermore, we assess how the algorithm works in mobile settings,
+ where a swarm of agents moves across an environment---which can be representative for exploration scenarios.
+%
+\rev{After describing the scenario and goals,
+ in this section we describe the simulation framework (\Cref{s:eval:sim-framework}), 
+ the simulation configurations (\Cref{s:simulations}),
+ the results (\Cref{s:eval:results}),
+ and finally provide a discussion about the evaluation and the approach (\Cref{sec:eval-discussion}).
+}
+
+%would exemplify the need for the algorithm macro-steps to find good clusters and the algorithm reaction to mobility.
+
+\subsection{Scenario Description}\label{s:scenario-description}
+%
+A swarm group of robots is interested in identifying areas
+ where environmental data varies within a known range.
+%
+In particular, we assume that the robots are both
+ capable of sensing the environmental temperature,
+ perceiving their position in space (e.g., using GPS),
+ and exploring a limited area (i.e., a square with a side of \SI{1}{\kilo\metre}).
+%
+The temperature is just an arbitrary choice of
+ a sensible physical quantity
+ that should drive, together with the spatial distribution,
+ the clustering;
+ the idea is that a temperature can be indicative for
+ an environment situation that could require attention or intervention (cf. wildfires which can start and spread in hot, dry, and windy conditions).
+%
+The scenarios are plausible, but we are not interested in full realism: simplifications and generalisations are introduced to study the algorithm in diverse controlled situations.
+%
+Since the absence of central authority and the limited robot communication capability,
+ we suppose that the robots can only interact with their neighbours
+ (i.e., the devices with which a robot manages to establish a connection).
+In particular, we imagine that each robot is equipped with a LoRa module with
+ a connection range of \SI{100}{\metre}.
+%
+\rev{
+In this case, a node can potentially participate in several clusters
+ as it may be spatially close to two different phenomena.
+ Therefore, it must both partake in the collective perception
+ (i.e. perceive the local temperature)
+ and act to solve the cluster-identified problem.
+The choice of how and when a node should
+ act depends on the application but is typically
+ left to the leader,
+ since it has the cluster-side vision of phenomena and the nodes.}
+%
+Notice that these assumptions are coherent with the system model of \Cref{ssec:background:sysmodel}.
+
+In the experiments described in the following,
+ we are only interested in the clusters determined by the swarm cooperatively,
+ not in \emph{how} clusters are leveraged at the application level.
+\rev{
+However, even if we do not directly leverage the output of the clustering process,
+ we would underline that, in using the proposed algorithm,
+ we inherently exploit both the leader election process and the multi-cluster formation.
+The foster is necessary to create clusters since,
+ in our algorithm, each cluster is managed by \emph{one} leader.
+ The latter is essential to track the phenomena of interest.
+In fact, as phenomena can be spatially close and thus overlapping,
+ if a node could only participate in one cluster,
+ we would not be able to analyse the traced phenomenon correctly.}
+%
+%We intend to evaluate this aspect in future works.
+\rev{
+Finally, we would underline that this application description is general and
+ could be applied in several other concrete scenarios~\cite{DBLP:journals/firai/SchranzUSE20}, just mentioning: sea monitoring~\cite{Farinelli2017-ic} (aquaculture, pollution, water quality), smart agriculture~\cite{DBLP:conf/fsr/BallREPUFSWC13} (fertilisation, removal of weeds and insects), surveillance in military use cases, criminal activity tracking, and victim localisation in disaster situations~\cite{Saez-Pons2010-hh}.}
+
+\subsection{Evaluation Goals}\label{s:eval-goal}
+
+We set up these simulations to:
+\begin{enumerate}%[label=\textbf{G.\arabic*}]
+\item \label{goal:1} verify the capability of the algorithm to find different cluster shapes:
+  we want to check that our algorithm is robust enough
+  to correctly identify any kind of distribution,
+  whether Gaussian or not;
+ %even if we supposed that the phenomena
+ %observed by agents follow
+ %a Gaussian distribution, we would like to verify if the algorithm could be
+ %used even if the distribution has an arbitrary shape (also overlapped).
+\item \label{goal:2} examine how \rev{found clusters} can cope with drone movement \rev{and failures}:
+  once verified the algorithm results in stationary conditions,
+  we would examine how mobility \rev{and failures}  influences the clustering process
+  by controlling both clusters count, shape, and size;
+ %1. is already verified in related works but, to the best of our knowledge,
+ %they assume a fixed node disposition. Therefore, we would check the robustness of
+ %our proposed algorithm against node movements.
+ \item \label{goal:3} test the algorithm dynamics when the temperature distribution changes:
+ \rev{
+  in a swarm robotics context, the observed phenomena could change over time.
+  Therefore, the algorithm proposed should be robust against phenomena dynamisms.}
+\end{enumerate}
+%
+That is, these goals reflect
+ the design requirement of
+ supporting
+ sensing/spatial-based clustering
+ in static, mobile, and environment-dynamic scenarios.
+
+\subsection{Simulation Framework}\label{s:eval:sim-framework}
+
+We verify our sensing-driven clustering algorithm using simulations.
+The simulation experiments, resulting data, source code, and instructions for reproducibility are available at a public GitHub repository\footnote{\url{https://github.com/cric96/experiment-2021-swarm-intelligence-si}}.
+
+Among the many simulators available for swarm-like robots behaviours (e.g. ARGoS~\cite{Pinciroli:SI2012}),
+ we choose Alchemist~\cite{DBLP:journals/jos/PianiniMV13}, a meta-simulator for pervasive-computing like applications.
+%
+Alchemist is already used in similar scenarios~\cite{DBLP:journals/eaai/CasadeiVAPD21}
+ and it supports the ScaFi language~\cite{DBLP:conf/isola/CasadeiVAD20},
+ that has been chosen among other field-based languages~\cite{DBLP:journals/jlap/ViroliBDACP19} as it supports aggregate processes~\cite{DBLP:conf/coordination/CasadeiVAPD19},
+ which we consider essential in order to implement our clustering algorithm.
+
+%However, for real case scenarios, FCPP~\cite{DBLP:conf/acsos/Audrito20} would be more adequate since it was born for supporting low-end devices.
+% Indeed, it is developed using C++ and so it can easily target various low-end microcontrollers.
+
+\subsubsection{Parameters}
+
+To check the effectiveness of our solution, we evaluate the aggregate program behaviour
+ using different parameters, summarised in \Cref{table:parameters} and described in the following.
+
+One of the most important parameters is the \emph{in cluster threshold} ($\theta$).
+ It defines if a node is inside the cluster or outside;
+ so, it guides the \rev{aggregate} process expansion among the nodes.
+ If the value is too low, the programs take into consideration only a few nodes;
+ if it is too high, the cluster will be expanded to nodes that should not belong to that cluster.
+ This parameter is application-dependent, so developers should carefully choose the right
+ balance between node inclusion and boundedness, ultimately affecting the cluster shape.
+
+The \emph{same cluster threshold} ($\gamma$), instead, is used by the cluster leader to define when two clusters are similar (as shown in \Cref{ssec:meta-algo}).
+%
+This parameter plays a crucial role in finding the right cluster boundaries.
+ Indeed, if $\gamma$ is too high, two clusters could be merged even if they are different.
+ On the other hand, if $\gamma$ is too low, multiple overlapped clusters remain even if they could be merged.
+
+A clustering process starts when a node becomes a candidate.
+ \emph{waiting candidate time} ($\beta$) rules the rounds needed by a node to spawn a process after it has become a candidate.
+ This helps in avoiding the excessive process spawn due to small local temperature variations.
+
+We are interested in the robustness of the clustering process against the node movement. Therefore, we tested our
+ solution varying the drone \emph{speed} ($\omega$) and the \emph{exploration range} ($\zeta$).
+ We expect that the higher the movement speed, the greater the instability of the identified clusters.
+ $\omega$ does not affect candidate nodes, they will stand still until they stay candidates.
+
+We check also how the output changes varying the \emph{density} ($\alpha$) of drones.
+ Theoretically, we expect a better result with high-density swarms.
+ \rev{From $\alpha$ we compute the total number of drones as:}
+$
+ N = (10 / \alpha) ^ 2
+$,
+e.g. with $\alpha = 0.5, N = 400$ and with $\alpha = 0.75, N = 173$.
+
+\rev{
+Finally, $\xi$ (\emph{failure frequency}) and $\tau$ (\emph{spawn frequency})
+ are used to verify how our algorithm
+ could handle failures during the clustering process.
+ The foster rules the frequency in which
+ a random node disappears from the system.
+The latter controls the rate of spawning nodes
+ that will participate in the aggregate program evaluation.
+This is useful to avoid complete node isolation after frequent node failures.
+ Even if the movement is already a good estimation of how the system responds
+ to dynamisms, we want to add another disruptive change.
+Indeed, movements are typically relative,
+ and therefore the changes in the neighbourhood are limited.
+}
+\begin{table}[t]
+  \centering
+  \resizebox{\textwidth}{!}{
+    \begin{tabular}{|p{0.30\linewidth}|p{0.05\linewidth}|p{0.35\linewidth}|p{0.15\linewidth}|}
+      \hline
+      Parameter                          & Unit & Description                                                                                                                     & Values                \\ \hline
+      In Cluster Threshold   -- $\theta$ & \unit{\celsius}                                  & A real value used to verify if the temperature perceived in a certain node could be considered as a part of the current cluster & {[} 0.5, 1.0, 1.5 {]} \\ \hline
+      Same Cluster Threshold -- $\gamma$ &  n.a                                             & A real value used to verify if two clusters could be considered as the same                                                     & {[} 0.1, 0.3, 0.7 {]} \\ \hline
+      Speed                  -- $\omega$ & \unit[per-mode = symbol]{\kilo\metre\per\second} & The constant velocity used by drone to explore the areas                                                                        & {[} 7, 10, 14 {]}     \\ \hline
+      Exploration range      -- $\zeta$  & \unit{\kilo\meter}                               & The maximum range area in which drones could move                                                                               & {[} 0.5, 0.6 {]}      \\ \hline
+      Density                -- $\alpha$ &  n.a                                             & A parameter used to define how many nodes will be placed in the environment                                                     & {[} 0.5, 0.75 {]}     \\ \hline
+      Waiting candidate time -- $\beta$  &  n.a                                             & Rounds needed to mark a node as candidate                                                                                       & {[} 3, 5, 7 {]}       \\ \hline
+      Failure frequency      -- $\xi$    &  \unit{\hertz}                                   & Failure frequency of random nodes that participate in the system                                                                                       & {[} 0.5, 0.1, 0 {]}    \\ \hline
+      Spawn frequency        -- $\tau$   &  \unit{\hertz}                                   & Spawn frequency of a node in a random position within the environment                                                                           & {[} 0.5, 0.1, 0 {]}    \\ \hline
+    \end{tabular}
+  }
+  \caption{A summary of the parameters used in simulations}
+  \label{table:parameters}
+\end{table}
+
+\subsubsection{Metrics}
+
+The clustering results are verified using different metrics. First of all,
+ we extract the number of total unique clusters found by the collective
+ to check if the program produces the correct partitioning.
+%
+This value gives a quick overview of the clustering result. Along with this value, we
+ evaluate the total number of unique merged clusters.
+ The latter should be as near as possible to the correct cluster number.
+
+However, neither the number of total unique clusters nor the total number of unique merged clusters
+ tells us anything about the shape of the clusters.
+ To this aim, we compute several metrics:
+ \begin{itemize}
+   \item the number of nodes for each cluster, stating the overall device partitions;
+   \item the Silhouette~\cite{ROUSSEEUW198753} and Dunn~\cite{dunn1974well} indexes, used as internal
+    evaluation schemes;
+  \item the error rate, observable only when we know the ground truth.
+ \end{itemize}
+By observing the value of the Silhouette index, we can understand if the clusters extracted are overlapped.
+ Indeed, if the Silhouette tends to be 0, it means that the clusters are overlapped.
+ Instead, if it tends to 1, the clusters found are disjointed.
+ The Dunn index, instead, is used as a control value.
+ When we have a Silhouette that tends to be 1, we expect to have a higher Dunn index value.
+
+The error rate metric measures the misclassified nodes:
+ if a node is associated with a cluster but it is far
+ from all the targets in the systems (false positive)
+ or should be associated with a cluster but the algorithm identifies it as an external node.
+ The error rate is computed as:
+ $$
+  E = \frac{FP + FN}{TP + TN}
+ $$
+ Where TP stand for \emph{true positive} (i.e., number of nodes classified within a cluster and they are placed near to a temperature distribution) and
+ TN stands for \emph{true negative} (i.e., number of nodes classified as external and far from all the temperature distribution)\rev{.}
+ This value is used to understand how well the algorithm
+ performs when the drone explores the areas.
+
+\subsection{Simulations}\label{s:simulations}
+\input{papers/swarm-intelligence2021/scenario-descriptions.tex}
+\input{papers/swarm-intelligence2021/simulation-snapshot.tex}
+
+We evaluate the behaviour of our algorithm in several experiments. %(explained below and illustrated in \Cref{fig:field-phenomena-distribution}).
+ The simulations have in common
+ \begin{enumerate*}%[i)]
+  \item the environment area (a square with a side of 1km),
+  \item the communication radius (\SI{100}{\metre}), and
+  \item the average evaluation frequency of aggregate programs (\SI{1}{\hertz}).
+\end{enumerate*}
+The drones are uniformly placed to cover the entire zone.
+We run the simulations in a modern machine equipped with two AMD EPYC 7301 with \SI{128}{\giga\byte} RAM.
+ The results are reproducible in any modern machine, but consider that it might take a long time to finish
+ (in our configuration, the simulations end after \SI{8}{\hour}).
+%
+Each scenario is executed 20 times with different random seeds
+ for a total of 100 simulated seconds (some simulations lasts \SI{150}{\second} to reach convergence).
+%
+\rev{
+The choice of scenarios that we show below
+ was guided to test
+  i) the effectiveness of our algorithm, and
+  ii) verify that it fulfilled all the goals described above.
+In particular, most temperature distributions follow a normal distribution.
+ We made this choice as natural phenomena usually follow this distribution.
+Thus, if our solution was capable of detecting clusters of this form,
+ it will probably work for all other scenarios in which
+ one is interested in monitoring a certain natural phenomenon. Having said this, we also verified that the algorithm is also capable of finding non-Gaussian shapes - (scenario 3, 4, 5).
+Finally, the last scenarios serve to verify how the system can handle changes,
+ both at the system level (movement and failures)
+ and at the environment level (distribution changing over time).}
+The data generated by the simulator is handled using NumPy~\cite{harris2020array} and plotted using matplotlib~\cite{Hunter:2007}.
+%
+The plotted results consist of the average (lines)
+ and the standard deviation (area behind lines)
+ of the values of interest in different episodes.
+%
+In \Cref{fig:simulation-snapshot} there is a graphical representation of a run of our algorithm.
+
+\paragraph{Scenario 1: Gaussian patterns (\Cref{fig:standard})}
+\subparagraph{Description}
+In this scenario, the drones are stationary (i.e., they stand still).
+ There are five zones with a Gaussian distribution, and there is no overlap between distributions.
+ Given the stationary situation, the number of candidate nodes is equal to the number of zones of interest.
+
+\subparagraph{Why} Used to verify \ref{goal:1}, particularly
+ we expect that the algorithm finds clusters without making any errors and that they will be stable over time.
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Scenario 2: Stretched Gaussian patterns (\Cref{fig:stretched})}
+\label{scenario-2}
+\subparagraph{Description}
+These simulations are similar to the previous one, but in this case, the Gaussian distributions have an ellipse-like shape.
+\subparagraph{Why}
+With these experiments, we would check that the shape does not make such a difference in the clustering process.
+ Indeed, we expect a result similar to the one in the previous example (\ref{goal:1}).
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Scenario 3: One direction temperature field (\Cref{fig:one-direction,,fig:one-direction-one-candidate})}
+\subparagraph{Description} In this case, we imagine that only one cluster is present
+ (fixing $\theta$ to \SI{1}{\celsius} and putting a total variation of temperature equal to \SI{1}{\celsius}).
+ Temperatures grow from left to right in a constant fashion. \rev{Namely, in \Cref{fig:one-direction} the temperature varies in one dimension (horizontally), whereas in \Cref{fig:one-direction-one-candidate} the temperature varies in two dimensions (diagonally)}.
+\rev{In the scenario depicted in \Cref{fig:one-direction}} we are interested to see what happens when multiple candidates are elected.
+ In this case, there are several relative minima (the set of nodes that are leftmost with minimum id in their neighbourhood).
+ But, eventually, the processes will expand them in the same way.
+ Thus, we expect that the merging policy tends to create only one cluster.
+ We use the scenario shown in \Cref{fig:one-direction-one-candidate} as a reference.
+Indeed, there will be only one candidate (located in the bottom left corner),
+and hence the algorithm should result in one cluster.
+\subparagraph{Why} We devise these experiments to test the effectiveness of the merging policy and to verify the goal \ref{goal:1}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Scenario 4: Gaussian overlapped patterns (\Cref{fig:overlapped})}
+\subparagraph{Description}
+In this case, we have several Gaussian patterns that could be overlapped. We imagine that the $\theta$ value is essential here:
+ if the value is too high, the system will recognise the set of overlapping clusters as one;
+ otherwise, it will consider disjointed.
+\subparagraph{Why}
+This experiment serves to emphasize that $\theta$ is a domain-dependent choice.
+ Moreover, it will show that the algorithm could be used also to find overlapped situations (\ref{goal:1}).
+\paragraph{Scenario 5: Non convex patterns (\Cref{fig:non-convex})}
+\subparagraph{Description}
+ In this case, there are two zones, one with a non-convex shape with a lower temperature than the outer zone.
+ Here we expect that, eventually, the system will identify the presence of only two clusters.
+ The program might identify several candidates in the transitory phases (cf. one for each edge).
+ Hence, the merging policy should fix this issue by producing only two clusters.
+ \subparagraph{Why} With this scenario, we want to point out that the program can cope with zones of arbitrary shape.
+\paragraph{Scenario 6: Gaussian patterns with movement}
+\subparagraph{Description}
+We test the result using four Gaussian distributions (arranged similarly to \Cref{fig:standard}) combined with movement.
+ Here, both merging policy, and \emph{waiting candidate time} ($\beta$) will be essential.
+ In particular, $\beta$ helps to avoid false positives since it waits before spawning a new clustering process when encounters small local temperature variations.
+ In general, we imagine that high values of $\omega$ and $\zeta$ will make the algorithm more unstable.
+\subparagraph{Why} We are interested in seeing how movement affects the result of the clustering process (\ref{goal:2}).
+
+\paragraph{Scenario 7: Variable size Gaussian pattern}
+\subparagraph{Description}
+In this experiment, the temperature distributions are placed similarly as \Cref{fig:standard},
+ but then the size of areas evolves in time.
+ We expand the areas until a time T and then contract them to their initial size.
+ The starting area range is \SI{100}{\metre}, and the maximum area expansion is \SI{1}{\kilo\metre}.
+ Here we expect that the cluster area follows the underlying temperature distribution.
+\subparagraph{Why} In this experiment, we verify the algorithm's robustness against temperature changes (\ref{goal:3}).
+\rev{
+\paragraph{Scenario 8: Random Failures}
+\subparagraph{Description}
+ The temperature distribution of choice follows the \Cref{fig:standard}.
+Nodes could disappear randomly with a rate specified by \emph{failure frequency}.
+ This could be harmful when: i) the failure happens in a leader node,
+  and therefore the cluster formed should be destroyed and, ii) the failures are so frequent that
+  certain nodes became isolated.
+  The second case is avoided using \emph{spawn frequency}, which forces the system to insert a new node
+  with the specified rate.
+In this case, we expect robust performance with high-density system (i.e., $\alpha$ = 0.5) since
+ spurious failure does not change the overall topology.
+\subparagraph{Why} In this last scenario, we check how the system handles node failures during the clustering process (\ref{goal:3}).
+}
+\subsection{Results}\label{s:eval:results}
+\input{papers/swarm-intelligence2021/result-overview.tex}
+\input{papers/swarm-intelligence2021/good-simulation-result.tex}
+
+\input{papers/swarm-intelligence2021/bad-result.tex}
+The simulations underline that the algorithm can find good subdivisions into clusters.
+%
+Indeed, \Cref{fig:overview-results} shows that our algorithm can eventually produce the correct number of clusters after a certain settling period.
+%
+In the following, we present the result focussing on the evaluation goals stated in \Cref{s:eval-goal}.
+
+\paragraph{Goal 1 (\ref{goal:1}): static sensing/spatial-based clustering}
+Running the simulations of scenarios 1-5 we verified how much the clusters extracted follow the underlying temperature distribution in the static context.
+ \Cref{fig:overview-results} shows that the algorithm correctly extracts the cluster number -- with the optimal parameters configuration.
+ Furthermore, observing \Cref{fig:good-simulation-results}, we can deduce that the cluster shape is correct too.
+ Indeed, the Silhouette index tends to be 1 when the clusters are disjointed, and the error rate is negligible.
+
+Here, $\theta$ plays a key role. Observing the behaviour of scenario 4 in \Cref{fig:bad-simulation-results},
+ we see that with too low $\theta$ we overestimate the cluster numbers and,
+ with a high level of $\theta$, we underestimate the cluster number.
+ But this was the expected behaviour, as it depends directly on the trend of the target distributions.
+
+Finally, Another important aspect is the density ($\alpha$) of the system.
+ With a small number of nodes, candidate nodes may be positioned far from the cluster centre, thus identifying wider areas than expected.
+\paragraph{Goal 2 (\ref{goal:2}): robustness against node mobility \emph{and failures}}
+When nodes have a low mobility and exploration range, the system is robust to node movements (\Cref{fig:good-simulation-results}).
+ The exploring policy introduces errors, but the results are comparable to solutions where the nodes are stationary.
+Moreover, even in case of failures, the clustering process is practically not affected at all.
+However, in the worst case, mobility and failures lead to false positives (\Cref{fig:bad-simulation-results}).
+ Indeed, some processes start in areas where the temperature is almost constant.
+ Therefore, that process approximately covers the whole area (and hence produces a high error rate).
+\rev{Scenario 8 is mainly influenced by the low-density situation.
+ Indeed, in that case, removing nodes lead to not covering the whole system. }
+\paragraph{Goal 3 (\ref{goal:3}): robustness against temperature changes}
+The result of scenario 7 is comparable to the static scenario.
+ Indeed, \Cref{fig:good-simulation-results} shows that the cluster number is correct, and \Cref{fig:good-simulation-results} shows that the error rate is low and the shape is accurate.
+ The solution suffers from low-density values and wrong $\theta$ values as scenarios 1-5 (\Cref{fig:bad-simulation-results}).
+
+\subsection{Discussion}
+\label{sec:eval-discussion}
+
+\rev{\subsubsection{Simulations} \label{sec:eval-discussion-simulations}}
+Ultimately, our algorithm can support a certain degree of movement, \rev{sporadic failures},
+ find various cluster shapes, and cope with temperature changes in the optimal condition:
+ high density ($\alpha$), limited exploration range ($\zeta$), and an appropriate value for in cluster threshold ($\theta$) value.
+
+However, when drones move randomly, the algorithm starts to produce sub-optimal cluster divisions since the nodes do not care about the cluster found,
+ and they continue to explore the area.
+ But this could lead to becoming a false candidate and then starting an unwanted clustering process.
+ Furthermore, it could be argued that uniform zones are part of a cluster that is not identified as there are no relative minima.
+ For this reason, when a node starts the process in a non-correct zone, the cluster identification will expand in the nearly whole system.
+ This problem could be reduced by changing $\omega$ and $\zeta$ when the nodes belong to a cluster.
+
+It is worth noting that with a low value of $\alpha$ the algorithm starts to produce bad cluster divisions---\rev{particularly clear in case of failures}.
+This behaviour is unavoidable since we base our algorithm on the presence of a centroid that starts the clustering process.
+Indeed, with a low $\alpha$ value, it is more probable that the node that starts the process is far from the real cluster centroid,
+and hence the process expansion can escape from the underlying distribution,
+misclassifying a large population of nodes.
+
+\rev{
+  \subsubsection{Hardware Deployment}
+  \label{sec:eval-discussion-deployment}
+  While we have not performed experiments with the clustering algorithm on a physical system, some observations can be drawn from the physical deployment of FCPP \cite{DBLP:conf/acsos/Audrito20},
+  a C++ library offering an internal DSL for field-based programming.
+  The deployment has been made in the context of applying field-based programming to an Industrial Internet of Things (IIoT) scenario \cite{testa:pmcj:2022}.
+  The physical boards adopted for the deployment are DWM1001C modules produced by Decawave, which are highly-constrained in terms of resources: 64MHz ARM Cortex-M4 CPU, 512 KB flash memory and 64 KB RAM. Despite such constraints, the porting of FCPP has been successful, and on top of it, it has been possible to run a field-based program with dynamic processes of complexity comparable to that of the clustering algorithm presented here \cite{testa:pmcj:2022}.
+  The communication capabilities of the DWM1001C modules include BLE (Bluetooth Low Energy) and UWB (Ultra Wide Band) transceivers. In the IIoT scenario, we have exploited BLE for exchanging messages with neighbours, and UWB for estimating the distance from neighbours. The distance estimation from neighbours could be useful in the clustering algorithm presented here in order to estimate multi-hop distances through the \lstinline|gradient| function.
+
+  While the experience with the physical deployment described above has certainly been positive, and makes us optimistic about the possibility of a similar deployment of the clustering algorithm, some differences between the two scenarios should be further explored and checked with experiments. First of all, the largest experiment in the IIoT scenario included 20 nodes, which may not be enough to properly evaluate the clustering algorithm; secondly, the area covered by the experiment was quite limited (a portion of an indoor lab); finally, most of the nodes in the IIoT experiment were generally static (representing pallets) and moved only when loaded and carried by a forklift.
+}
+
+
+
+\section{Related Work}
+\label{s:rw}
+
+%\meta{ASSIGNED TO: G. Torta}
+
+This section covers related work.
+%
+Coverage of related work is organised to separately cover\rev{:
+ related swarm-based environment monitoring approaches (\Cref{s:rw:related-env-monitoring}),}
+ related clustering models and problems (\Cref{s:rw:related-problems}),
+ research work related to the sensing-based clustering problem we address (\Cref{s:rw:related-sensingbased-clustering}),
+ research work related to field-based computing (\Cref{s:rw:related-approaches}),
+ and related field-based algorithms (\Cref{s:rw:related-ac-algorithms}).
+
+\rev{
+\subsection{Swarm-based Environment Monitoring}
+\label{s:rw:related-env-monitoring}
+%
+The approach proposed in this paper
+ can be used
+ to dynamically cluster a swarm,
+ e.g.,
+ to monitor an environment
+ in a decentralised way.
+%
+Literature on swarm-based environment monitoring
+ is ample~\cite{DBLP:journals/ram/DunbabinM12}.
+%
+In particular, various works leverage mobility and sparse sampling~\cite{DBLP:conf/rss/GargA14,DBLP:journals/arobots/BestFF18,DBLP:journals/ijrr/BestCPMF19,casadei2022coord-space-fluid,DBLP:conf/icra/KemnaRNYS17}.
+
+In \cite{DBLP:conf/rss/GargA14},
+ a persistent monitoring approach
+ of environment phenomena
+ with discontinuous dynamics
+ is proposed.
+%
+It is
+ based on optimally
+ adapting a sparse set of
+ sensing locations
+ according to an evolving stochastic model of the environment.
+%
+In~\cite{DBLP:journals/arobots/BestFF18,DBLP:journals/ijrr/BestCPMF19},
+ decentralised planning is used to support multi-robot active perception,
+  which leverages movement to improve the quality of information gathering through effective choice of ``viewpoints'' in space and time.
+%
+In~\cite{DBLP:conf/icra/KemnaRNYS17},
+ the authors focus on multi-robot coordination for informative adaptive sampling in unknown, communication-constrained environments (like lakes or oceans).
+%
+Their approach is based on dynamic, decentralised Voronoi partitioning over a set of sampling locations, which are recalculated at synchronisation points initiated through requests for surfacing events.
+%
+Though the approach of this paper could also be used to support \emph{sparse sampling}~\cite{casadei2022coord-space-fluid},
+ it also aims at supporting the formation of spatially cohesive clusters for coordinated processing and/or action.
+%
+Moreover, we do not aim at moving robots to appropriate sampling locations,
+ but rather leave the robots to move autonomously (e.g., according to exploration policies)
+ while having the collective clustering
+ reflect the underlying phenomenon
+ to support decision-making possibly beyond pure environmental sampling.
+%
+The use of Voronoi partitions in \cite{DBLP:conf/icra/KemnaRNYS17} differs from our clustering
+ in that they leverage regions to limit
+ the prospective sampling locations
+ to be visited by each vehicle,
+ while we actually want to define \emph{groups} of coordinating robots.
+}
+
+\subsection{Related Clustering Models and Problems}
+\label{s:rw:related-problems}
+
+%\meta{RC: @GT In my opinion, here we should cite surveys on ``general clustering'', and then immediately focus on the most related clustering models (e.g., graph-based, agent-based..)}
+
+Clustering is a well-known problem in data analysis and machine learning, and has been widely studied in the literature~\cite{Jain:1999,DBLP:journals/sigkdd/Estivill-Castro02,Jain:2010}.
+ In a classical setting, the data to be clustered is stored in a single dataset, and a single algorithm (or agent) is in charge of finding the ``best'' clusters according to some optimisation criteria.
+ Each data point in the input data set is described by the values of a fixed set of {\em features}; the number of such features constitutes the dimensionality of the data set and, typically, high dimensional data is harder to cluster meaningfully.
+
+A characteristic of the clustering tasks considered in the present paper (and in general, of sensing-based methods, see the next section), is that besides the sensed data,
+ a main source of information is the spatial distance between the agents. In~\cite{Thrun:2021}, the authors consider high-dimensional data sets that exhibit {\em natural clusters}, characterised by distances and/or density-based structures.
+ They propose a semi-automated method whereby the clusters are automatically proposed and manually selected starting from a topographic visualisation of the high-dimensional data.
+ Notably, they use swarm intelligence for computing the topographic map, while other techniques are adopted for the interactive process of clusters computation.
+
+There are, however, several works that address swarm-based clustering, using swarm intelligence for the clustering task itself~\cite{Martens:2011}.
+ It is important to note that such methods (both those based on particle swarm optimisation (PSO), and those based on ant colony systems (ACS)) exploit swarms just as a computational means for finding clusters in a data set.
+ Their goal is not to cluster the elements of the swarm itself, as it is the case for the present work, but to simulate a virtual swarm to find good quality clusters.
+
+Some works directly address the clustering of swarms. In~\cite{DBLP:journals/trob/HuBJAL21}, the clustering of a team of special robots (i.e., aerial drones) is part of a larger process that,
+ after cluster formation, also involves formation tracking (i.e., tracking a target through a suitable formation), and containment control (i.e., surround ground robots cooperating in the mission).
+ The method proposed to form clusters is based on a game-theoretic framework named GRAPE. A significant difference w.r.t. the present work is that the number (and nature) of clusters is determined by a given set of targets,
+ while we do not assume such a priori knowledge.
+Another significant work with similar goals is~\cite{DBLP:journals/tie/GeHZ18}, where a team of robots must be partitioned into clusters organised as suitable {\em formations} (i.e., geometric spatial patterns).
+ The proposed solution inter-mixes the determination of clusters and their formation (based, among other things, on the agents dynamics), assuming that the number and nature of such formations is known a priori.
+
+Since we consider clustering over a given topology (network), the problem can be related to graph-based clustering \cite{Zheng:2010}.
+Graph-based clustering, however, assumes that the given graph can be partitioned into densely connected subgraphs that are sparsely connected to each other; i.e.,
+it assumes that all the similarity information is expressed by the presence of edges between nodes (and, possibly, by their weights).
+This is not necessarily the case with the networks formed by our swarms, where connections are just determined by spatial distance, and the clustering is strongly influenced by the sensed data.
+Also, community detection methods can be viewed as clustering of the nodes of a graph representing a network of relations (e.g. a social network)~\cite{DBLP:journals/jnca/JavedYLQB18}.
+Interestingly, unlike in generic graph-based clustering, communities can easily overlap, since a node (e.g., user) may belong to several communities at once.
+
+\subsection{Related Work on Sensing-based Clustering}
+\label{s:rw:related-sensingbased-clustering}
+
+Sensing-based clustering typically applies to sensor networks that are distributed on a geographical area and exploit clustering mainly to reduce the communication bandwidth and/or energy consumption of the net.
+ The role played by sensing a (possibly dynamic) geographic environment makes such problem and the proposed approaches to solve it relevant to the present work,
+ although the agents considered here are themselves dynamic entities moving and acting across the space.
+
+In \cite{DBLP:conf/ccnc/LinM07}, the goal is to partition sensors for indoor monitoring and control. The cluster heads are predetermined (based on the sources to be monitored and controlled),
+ while cluster formation is periodically scheduled in order to adapt to changes in the sensed data.
+%
+In our work, instead, the cluster heads are not a priori given:
+ they are determined according to the sensed data
+ (e.g., the agents perceiving local minima)
+ and can change dynamically
+ (e.g., because a candidate withdraws and joins a different cluster).
+
+The goal of \cite{DBLP:journals/tpds/GedikLY07} is, instead, to obtain energy savings in data collection from a wireless sensor network (WSN) by receiving values from only a subset of selected representatives and predicting the other valuer through automatically generated statistical models.
+ Cluster heads are chosen (probabilistically) based on the amount of energy they have. Cluster formation is periodically scheduled, and the assignment of a sensor to a cluster is based on the distance from the head and the similarity of the sensed value with the head's value.
+%
+A work with similar goals is~\cite{DBLP:journals/ijdsn/CaiZ18}, where again energy savings in a WSN is the primary motivation. Here, the cluster heads are chosen based on residual energy level and data gradient.
+ Moreover, an autoregressive prediction model for sensory data is maintained by each head to self-adjust temporal sampling intervals within the cluster.
+% SKIP similar to previous two
+%maybe also \cite{DBLP:journals/ijcomsys/PhamLPC10}}
+
+A sensing-based clustering problem is also studied in~\cite{DBLP:journals/jaihc/KucukBSK20} where, however, instead of being a high energy-constrained WSN, the deployed system involves sensorised units and mobile phones able to upload all the relevant data to the cloud, through cellular and Wi-Fi connections. In a disaster scenario, the mobile phones data is used to centrally compute density-based clusters that can inform the SAR (Search and Rescue) teams about the location of people in the area.
+
+The {\em DyClee} approach described in~\cite{DBLP:journals/pr/RoaTG19} is also centralised. The authors assume that streams of sensors observations (e.g. in an Industrial IoT) are continually tracked by their system, and are classified (e.g., as healthy or faulty) based on a set of clusters that capture the patterns corresponding to different states. The main focus is on the novelty detection problem, or concept drift, which implies the ability to update the clusters as new behaviour is learned, while ignoring noise and occasional outliers. The online clustering algorithm consists of two stages based, respectively, on distance and density, and is {\em fully dynamic} in that it is able to create, eliminate, drift, merge, and split clusters as data is processed.
+
+
+
+\subsection{Related Approaches and Programming Models}
+\label{s:rw:related-approaches}
+
+Programming swarms of agents is a difficult task, because of the need of coordinating their local behaviours to achieve global, swarm-level goals.
+%
+In this work, we adopt the field-based computing and programming approach~\cite{DBLP:journals/jlap/ViroliBDACP19}
+ for expressing self-organising, collective behaviour of swarms.
+%
+Our focus is on decentralised behaviour-based approaches (rather than automatic design methods like e.g. reinforcement learning),
+ as surveyed e.g. in~\cite{DBLP:journals/swarm/BrambillaFBD13,DBLP:journals/jlap/ViroliBDACP19}
+ and briefly in the following.
+
+%
+An approach to the problem that has proven to be quite effective is generative communication through tuple-based coordination models, as offered, e.g., in the Linda language~\cite{linda} and its descendants; essentially, several processes running on the same system can synchronise by writing and retrieving information in a shared (tuple-)space.
+A derived idea is that of allowing programmability of the tuple space itself, so that the coordination logic of processes can be embedded in the communication medium--see, e.g.,~\cite{respect-scico2001}.
+An obvious limitation of the mentioned approaches for the task of swarm programming is that they assume a central memory accessible by all the agents/processes. However, the idea of tuple-spaces has been extended also to distributed systems, e.g., in the IBM TSpaces framework~\cite{Wyckoff:1998}.
+
+An important feature of swarm systems is their adaptivity achieved through self-organisation.
+%
+A support to build such kind of systems is offered by frameworks inspired by other sciences such as biology~\cite{tolksdorf2003using} and chemistry~\cite{DBLP:journals/alife/Sayama09}.
+%
+The field-based computing approach adopted in the present paper is based, instead, on the concept of {\em field}, borrowed from physics.
+%
+The related idea of a {\em field of tuples} has been implemented in the TOTA middleware~\cite{tota}.
+
+As seen in this paper, the field-based approach is particularly well suited to mobile, spatially situated agents.
+%
+A related (and precursor) thread of research of that of {\em spatial computing},
+ where space is both an abstraction and a means for computation.
+%
+Spatial computing approaches have been largely surveyed in~\cite{SpatialIGI2013}.
+%and particularly to the space-time computing model implemented in the Proto language~\cite{proto06a}, which can be seen as a direct ancestor of FC.
+%
+They are also related to \emph{macro-programming}~\cite{DBLP:conf/ipsn/NewtonMW07},
+ where distributed systems as wholes are programmed by a centralised perspective.
+%
+For instance, a prominent related macro approach to swarm programming
+ is Buzz~\cite{DBLP:journals/software/PinciroliB16},
+ where swarms are first-class collection-like abstractions.
+
+\subsection{Related Field-based Algorithms}
+\label{s:rw:related-ac-algorithms}
+
+%\meta{Essentially, S, SCR, and other algorithmic combinations}
+
+The field-based computing approach adopted in this paper has been applied for
+ programming several swarm intelligence algorithms
+ such as robust distance estimation (\emph{gradient})~\cite{DBLP:conf/saso/AudritoCDV17},
+ leader election~\cite{DBLP:conf/saso/MoBD18},
+ distributed data collection~\cite{audrito2021jcee-distributed-collection},
+ and team formation and coordination~\cite{DBLP:journals/eaai/CasadeiVAPD21}.
+
+Field-based computing has the peculiar ability to capture collective behaviours as functions operating on fields
+and to compose them together as ``building blocks'' to address problems of increasing complexity~\cite{DBLP:journals/jlap/ViroliBDACP19}.
+%
+Of particular relevance for the present discussion is the implementation of the \emph{SCR (Self-Organising Coordination Regions)} pattern in~\cite{DBLP:journals/fgcs/PianiniCVN21}, where three building blocks are composed to support control and monitoring of a distributed system: the sparse-choice \emph{S block} (used for leader election); the generalised gradient \emph{G block} (for information broadcasting along gradient fields); and the information collection \emph{C block}.
+%
+Most specifically, the SCR pattern can be denoted as a feedback chain S-G-C-G: leaders are elected (S); then, a gradient from leaders builds the communication structure (G); then, data from members (indirectly defined by the information path towards a leader) is collected towards leaders (C); then, data from leaders is propagated back to the members of the regions (G).
+%
+However, the SCR pattern is not limited to clustering (S-G part), but also regulates interactions within regions (C-G part).
+%
+Roughly, the sensing-based clustering algorithm
+ covered in this paper could replace the initial C-G composition
+ that determines the system regions.
+
+Similarly to a clustering algorithm, the S block~\cite{DBLP:conf/saso/MoBD18} provides a distributed mechanism to elect leaders from a set of candidates, and to assign each remaining {\em user} node to a leader, thus partitioning the system into regions. The approach presented here is different in several respects: first of all, the candidate leaders are determined by a characteristic of a sensed measure (e.g., local minimum); second, each candidate cluster head spawns an aggregate process to recruit other nodes within the cluster; finally, the other nodes can join more than one cluster, based on the similarity of their sensed values with the ones sensed by leaders.
+
+
+%% However, few solutions have been devised for effective creation of clusters,
+%%  often based on combining space-based  and : a gradient field is created with G by considering as sources the leaders given by S, and any given device in the system ``belongs'' to the cluster defined by the distance field pointing to the closest leader.
+%% %
+%% However, such a S+G solution is not very effective in general as state-of-the-art solutions for the S block are subject to various issues~\cite{DBLP:journals/jlap/ViroliBDACP19} and, most importantly, it does not address the sensing-driven clustering problem.
+
+\section{Conclusion and Future Work}
+\label{s:conc}
+
+%\meta{ASSIGNED TO: Ferruccio / Mirko}
+
+In this paper, we precisely define and address
+ the dynamic sensing-based mobile swarm clustering problem.
+%
+Most specifically,
+ we use the field-based paradigm
+ to develop a novel configurable meta-algorithm
+ promoting self-organised clustering in a swarm
+ of neighbouring-interacting robots.
+%
+The algorithm is evaluated on a set of synthetic environment configurations.
+%
+In particular, we show that a swarm can autonomously
+ create clusters reflecting the underlying dynamics of the  perceptible target phenomenon in the environment,
+ and is able to deal with a certain degree of change in the swarm topology and environment.
+%
+In order to perform the evaluation, we have implemented our algorithms using the ScaFi Scala framework for field-based computing.
+
+Future work could be devised in multiple directions.
+%
+First of all, it could be interesting to stress and possibly refine
+the algorithm on more extreme environmental conditions,
+ or to investigate it under different assumptions (e.g., a more constrained or rich system model).
+%
+Secondly, it could be interesting to compare (or combine) the meta-algorithm against (with)
+ automated swarm behaviour design methods
+ like multi-agent reinforcement learning.
+%
+Last but not least, we would like to evaluate our algorithms on real use cases, e.g. in smart logistics and precision agriculture scenarios, by implementing them %using the FCPP field-based computing language and deploying them
+on actual drones or robots.
+
+
+%######################################################
+%COSI'-FERUCCIO-RIESCE -A -ESEGUIRE-BITEX--togliere nella-versione-finale
+%\bibliographystyle{plain}
+%%######################################################
+
+\printbibliography

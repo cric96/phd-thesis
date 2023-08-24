@@ -1,0 +1,79 @@
+https://www.springer.com/journal/11721/updates/19386682
+
+// Devised by Ferruccio Gianluca T. on 27/11/2021
+
+DESCRIZIONE DEL PROBLEMA
+
+Vogliamo trovare regioni uniformi rispetto ad 
+una misura calcolata dalla funzione 
+
+    int m()
+ 
+il cui valore dipende dallo stato del firing device.
+
+Due device d1 e d2 possono stare nella stessa regione se 
+
+    abs(d1.m() - d2.m()) <= w
+
+dove:
+abs(x) e` il valore assoluto di x; 
+d1.m() e d2.m() sono i valori di m() su d1 e d2; e 
+w e' un intero >= 0.
+
+ASSUNZIONI E TERMINOLOGIA
+
+Assumiamo che ogni device ha un identificatore unico, 
+un intero id() >= 0.
+
+Diciamo che un device d e` un minimo relativo se, per ogni vicino d',
+
+   d.m() < d'.m()  OR  ( d.m() = d'.m() AND d.id() < d'.id() )
+
+===
+
+ALGORITMO (Versione 1)
+
+Questo algoritmo si basa su questa assunzione:
+
+AX1) La relazione di vicinato e` simmetrica
+
+---
+
+Ogni minimo relativo d fa partire una spawn che costruisce:
+ 
+(*) un albero T_d dei cammini minimi hop-cout verso d, 
+che si espande solo sui nodi d' con  
+
+     0 <= d'.m() - d.m() <= w  
+
+
+Ogni nodo d' di T_d contiene (almeno):
+- d.id()
+- d.m()
+- d'.dist(d): la distanza hop-count di d' da d nell'albero T_d 
+
+===  
+
+LEMMA. Se un nodo si trova in n >= 2 alberi T_d_i (1 <= i <= n), 
+   allora (per costruzione):
+   
+   max {d_i.m() | 1 <= i <= n } - mix {d_i.m() | 1 <= i <= n } <= w
+
+--- 
+
+TODO: 
+
+1) Decidere come fare emergere un campo unico che descrive il partizionamento 
+dell'insieme dei device che si trovano in almeno un albero.
+
+2) Decidere se far fare qualcosa ai device d_0 che:
+- non sono in nessun albero, e 
+- hanno dei vicini che sono in almeno un albero.
+Ad esempio -- sia S la sottorete dei device he non sono in
+nessunalbro -- se un device è un minimo relativo in S, allora fa partire una spawn che costruicce in S un albero come quello descritto sopra in (*).
+
+3) Decidere quali altre informazioni sul cluster rendere disponibili a ogni device del cluster:
+- distanza (in metri) dalla radice
+- raggio/diametro minimo e massimo dell'area 
+- etc.
+ 

@@ -1,0 +1,554 @@
+\documentclass{article} 
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{hyperref}
+\usepackage[usenames]{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{nameref}
+
+\RequirePackage[sort&compress,sectionbib,numbers]{natbib}
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\usepackage{xr}
+\externaldocument[main:]{../paper-22-acsos-ac-rl-round}
+\usepackage{xr-hyper}
+
+
+\newcounter{reviewer}
+\newcounter{comment}[reviewer]
+
+\setcounter{reviewer}{0} % start with zero
+\newcommand{\reviewer}{
+	\subsection*{\refstepcounter{reviewer}Reviewer \arabic{reviewer}}
+}
+\newcommand{\reviewerl}[1]{
+	\subsection*{\refstepcounter{reviewer}\label{#1}Reviewer \arabic{reviewer}}
+}
+\newcommand{\reviewerlt}[2]{
+\pagebreak
+	\subsection*{\refstepcounter{reviewer}\label{#1}#2}
+}
+\newcommand{\comment}[1]{
+	\subsubsection*{\refstepcounter{comment}Reviewer comment \arabic{comment}} %\arabic{reviewer}.
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{\setlength{\parskip}{0.5\baselineskip}%
+ #1 }}
+}
+\newcommand{\rcref}[2]{\ref{#1}.\ref{#2}}
+\newcommand{\commref}[1]{\ref{#1}}
+\newcommand{\commentl}[2]{
+	\subsubsection*{\refstepcounter{comment}\label{#1}Comment \arabic{reviewer}.\arabic{comment}} %\arabic{reviewer}.
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{ #2 }}
+}
+\newcommand{\edcomment}[1]{
+	\subsubsection*{Comment}
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{ #1 }}
+}
+\newcommand{\reply}[1]{	\\[2pt]
+	\textbf{Author response:} 	
+	#1
+}
+\newcommand{\related}[1]{	\\[2pt]
+	\textbf{Related comments:} 	
+	\ref{#1}
+}
+\newcommand{\commentAu}[2]{	\\[2pt]
+	\meta{\textbf{#1 comment:} 	
+	#2}
+}
+\newcommand{\action}[1]{	\\[2pt]
+	\textbf{Action to address the comment:} 
+	#1
+}
+\newcommand{\corrstart}{\color{red}}
+\newcommand{\corrend}{\color{black}}
+\newcommand{\correction}[1]{\corrstart #1\corrend{}}
+\newcommand{\checkstart}{\color{violet}}
+\newcommand{\tocheck}[1]{\checkstart{}#1\corrend{}}
+
+\newcommand{\qst}[1]{\textbf{\emph{#1}}}
+
+\makeatletter
+\renewcommand\p@comment{\thereviewer.}
+\makeatother
+
+\newcommand{\meta}[1]{{\color{blue}#1}}
+\newcommand{\assigned}[1]{{\color{purple}ASSIGNED TO: \textbf{#1}}}
+
+\newcommand{\say}[3]{
+\noindent\fcolorbox{black}{cyan!20!white}{
+\begin{minipage}{\textwidth}
+\textbf{{#1}} \textbf{({@}#2)}: #3
+\end{minipage}
+}
+}
+
+
+\usepackage{cleveref}
+
+
+\begin{document}
+\title{{\Large Revision Letter for} ``Addressing Collective Computations Efficiency: Towards a Platform-level Reinforcement Learning Approach''}
+\author{
+Gianluca Aguzzi
+\and
+Roberto Casadei
+\and
+Mirko Viroli
+}
+
+\maketitle
+
+Dear ACSOS'22 PC chairs and shepherd, \newline
+
+Thank you very much for the suggestions for revising our paper.
+%
+We have taken into account all the questions and comments from the Reviewers and the shepherd to implement corresponding revisions to our manuscript.
+%
+Our replies and corrective actions are detailed below.
+%
+We hope that you will be satisfied with the revised version of our paper and consider it suitable for acceptance at the conference. \newline
+
+\noindent Sincerely yours,
+
+
+Gianluca Aguzzi, Roberto Casadei, Mirko Viroli
+
+
+\raggedbottom
+\pagebreak
+
+\reviewerlt{r0}{PC's Comments}
+%\section*{Comment and replies}
+\edcomment{
+	Main concerns from reviewers:
+(1) Please consider extending the related work along the lines provided by Reviewer 1.
+}
+\reply{
+Done. Please see the response to Comment~\ref{r1-related}.
+}
+\edcomment{
+	(2) Please provide a more extensive discussion on why Q-learning has been selected. 
+}
+\reply{
+Done. Please see the response to Comment~\ref{r1-q-learning}.
+}
+\edcomment{
+	(3) Please explain how your contribution directly relates to self-organization and autonomic computing aspects. 
+}
+\reply{
+%\meta{@ALL this was pointed out by the previous reviewer 2, we still need to consider this??}	
+This comment referred to a spurious review. We believe the connection to self-organisation is evident.
+
+We have considered instead and handled the comments of the right review, reported in the section for Reviewer 2.
+}
+\edcomment{
+	(4) Please address the technical questions raised by Reviewer 3. 
+}
+\reply{
+%\meta{TODO}
+	
+Done. Please see the responses to Comments~\ref{r3-power-considerations}, \ref{r3-observation-space}, \ref{r3-other-scenarios}.
+}
+\edcomment{
+	(5) Please provide some more examples (not necessarily extra experimental evaluation) to better substantiate the generality of your proposal (see comments by Reviewer 4). 
+}
+\reply{
+%\meta{TODO}	
+Done. Please see the response to Comment~\ref{r4-lack-of-examples}.
+}
+\edcomment{
+	(6) Please consider toning down the expectations made by the broad claims early in the paper. 
+}
+\reply{
+%\meta{TODO}	
+Done. Please see the response to Comment~\ref{r4-broad-claims}.
+}
+
+\setcounter{reviewer}{0} 
+
+\pagebreak
+
+\reviewerl{r1}
+
+\commentl{r1-summary}{
+	This paper presents an approach, based on RL, to optimize objectives of aggregate computing applications, demonstrated through a case of study of optimization of energy efficiency. The approach is well motivated and novel.
+
+I have some suggestions for authors to consider when preparing camera-ready version and for their future work. 
+}
+\reply{
+We thank the Reviewer for the appreciation and for the suggestions.
+}
+
+\commentl{r1-related}{
+	The main substantial change would be to include more structured related work review. From my understanding of the papers goal, 2 areas that are relevant are RL for multi-objective optimization (as overarching goal is optimize simultaneously functional and non-functional requirements), and RL for scheduling/energy use optimization, as relevant for the case study. The latter is mentioned briefly (several words and 2 references on wsn scheduling) far in the paper, but it should be extracted in a (sub)section in its own right - having this up front would strengthen the case for using RL in this scenario, as evidence that it is suitable and previously applied successfully to this problem would be presented. 
+}
+\reply{
+	%\meta{ASSIGNED TO GIANLUCA}\\
+	%\meta{ACTION: improve the discussion on related works}
+	We thank the author for giving us this advice. 
+	We agree with him that moving the discussion earlier 
+	in the paper could increase the quality of the contribution.
+}
+\action{we have moved the discussion on related work in \Cref{main:s:related-and-motivation:rl} in which we discuss multi-objective optimisation and applications where RL has already been used for the balance between functional and non-functional goals}
+\commentl{r1-q-learning}{
+	Another main comment is related to use of Q-learning. While widely used and being a default "go to" algorithm, given the characteristics of the problem and the presented solution, I wonder would a multi-objective algorithm be more suitable, to enable more fine-grained balancing between the objectives, or A3C, given that implementation of Q-learning in the paper follows conceptual principles of A3C anyway (multiple instances simultaneously updating a single network).
+}
+\reply{
+%The observation is very pertinent.
+%%
+%Our focus was more on the overall \emph{approach} combining aggregate computing \emph{and} RL, rather than on the learning algorithm itself.
+%%
+%Therefore, we opted for a simple and well-known algorithm
+% (as the Reviewer says, a default ``go to'' algorithm) that has traditionally been used in similar scenarios.
+%%
+We agree with the Reviewer that other, 
+	 more modern approaches could achieve better performance 
+	 and/or were better suited for this particular problem. 
+	 However, we would like to stress that this is the first step 
+	 in the integration of Machine Learning to optimise 
+	 aggregate/self-organising computation. 
+	 Therefore, we achieve a first result that could serve as a baseline for future work, 
+	 focusing more on the combination of aggregate computation and RL than 
+	 on the RL algorithm itself. 
+	 For this, we chose a simple and well-known algorithm that 
+	 has traditionally been used in similar scenarios.
+}
+\action{We underline future directions (multi-objectives RL and A3C algorithm) 
+that could improve the current presented solution in \Cref{main:sec:conclusion}}
+
+\commentl{r1-application-specific}{
+	One smaller point is to clarify to what extent is both this work and previous work authors refer to "application-specific" - downside of the work in references 27 and 28 is identified that they're application-specific, but then later when describing own approach, it is stated that reward function is application-specific - what is the difference then? (I don't think there is nothing wrong with being application-specific, but if it is brought up as downside/difference for another work, then should be clarified)
+}
+\reply{
+	%\meta{ASSIGNED to GIANLUCA}\\
+	%\meta{@ALL probably we should rephrase the part in which we discuss that the reward function is application-specific. Indeed the point is that our solution works for several kinds of aggregate programs (the ones that reach eventually reach a stable condition). In the part in which we discuss reward functions, is a matter of considering more complex reward to reach more robust solutions.}
+ %\meta{RC: yes, this is easy to handle; we just need to clarify what we meant.. please go on Gianluca and let me check}
+ We thank the Reviewer for the comment that allows us to clarify. 
+ %
+Indeed, term ``application-specific'' were used to mean different things in the first part of \Cref{main:sec:contribution} and \Cref{main:sec:learning-setting}. 
+%
+Indeed, in \Cref{main:sec:contribution} the term ``application-specific'' refers to high-level behaviour (e.g., crowd steering, peer-to-peer chats, ...). 
+%
+In \Cref{main:sec:learning-setting} instead, we discuss about non-functional requirement reward functions (e.g., for reducing power consumption, increasing convergence time, ...). 
+%
+And this is what differentiates our contribution from the other approach: the same reward function used for addressing some non-functional goal could be used for several different application use cases.
+}
+\action{
+	We have clarified the different meanings of ``application-specific'' by rephrasing \Cref{main:sec:learning-setting} using a different term.
+}
+\commentl{r1-grammar-tweaks}{
+	Minor comments: make sure use of acronyms is consistent - once you introduce "RL", use it rather than mix between acronym and full version; proof-read for some casual language use (e.g., sentences starting with "so, ", use of "definitely")
+}
+\reply{
+	Thank you for underlining these points. We have proof-read the paper and fixed these issues.
+}
+
+\pagebreak
+
+\reviewerl{r2}
+
+\commentl{r2-summary}{
+	This paper presents a new approach to combine Reinforcement Learning and Aggregate Computing to optimize aspects of collective computation such as power consumption.
+
+This paper is very well written. It addresses a very challenging problem and proposes an exciting approach.}
+\reply{
+We thank the Reviewer for the appreciation.
+}
+
+\commentl{r2-reality-gap}{
+	How could this system work in practice? What are the practical implications and considerations when applying this approach on a real setup?
+}
+\reply{
+%\meta{@ALL we had to explain better the execution model? Or is linked learning is taken into account in real settings? We could discuss about the need of simulations of way to collect experience "globally"}
+%
+%\meta{RC: yes, it seems a fuzzy/general question that might refer to practical applicability; i.e. what assumptions, when the approach can be used, what are the actual benefits, maybe also what happens if real system differs from simulated one etc.}
+%
+%\meta{GA: It makes sense to add a paragraph on the Discussion and Results (e.g., reality gap?). Or it should be better to add a discussion in "Learning Setting"?}
+%
+%\meta{RC: both locations are good. Maybe it depends on what we actually write at the end about it. Would you draft a small tentative paragraph?}
+%
+The system we have presented has mainly two constraints to be considered in a real context:
+\begin{itemize}
+	\item[a)] the system must support the aggregate computing execution model (e.g., through a middleware); 
+	\item[b)] at training time, the Q table must be shared and 
+	updated synchronously by the system.
+\end{itemize}
+Concerning point a), the aggregate computing framework 
+ embraces a fluid computation approach, 
+ making it flexible to different types of applications. 
+ In fact, the execution model implementation depends mainly on the context 
+ (e.g. available network infrastructure, chosen communication protocols, ...) 
+ and the functional goals of the application.
+At the logical level, the constraints imposed by the framework are:
+i) nodes should follow the round structure;
+ii) odes should devise a neighbourhood relationship.
+These can be mapped to different physical architectures (i.e., context)-see the work on pulverisation~\cite{DBLP:journals/fi/CasadeiPPVW20}.
+Furthermore, depending on the functional goal, 
+ ad-hoc neighbourhood relations (e.g., proximity-based vs connectivity-based) 
+ could be defined that may lead to different emergent behaviour.
+
+%\meta{
+%Qui non ho capito cosa intendi. Ci sarebbe da dire che il modo con cui il modello d'esecuzione è implementato, sia in modo astratto sia tecnologicamente mediante protocolli di rete etc., è soggetto a flessibilità che dipendono però dal contesto e dagli obiettivi funzionali.
+% }
+%
+%Indeed, the node should follow the round structure (see \Cref{main:s:background:ac}) and should connect to other nodes according to a neighbourhood relationship (e.g., proximity-based or communication-based)~\cite{DBLP:journals/fi/CasadeiPPVW20}.
+%
+For b) on the other hand, in this case, we consider an offline learning approach 
+ where agents share the Q table with the system interior in a simulated environment. 
+ At runtime this means that in the middleware of the aggregate system, the found policy will be exploited to schedule the next round---further details on the practical applicability of the solution can be found in \Cref{main:s:reality-check}.
+ %\meta{Valuterei di sostituire terminologia ``reality check'' e ``reality gap'' con un più semplice ``on practical applicability''}
+}
+\action{We have added a new section, \Cref{main:s:reality-check}, where we discuss the practical applicability of the proposed solution compared to a real system.}
+
+
+\commentl{r2-evaluation-problems}{
+	Isn't it 100 nodes rather small for modern distributed computing scenarios? How would your system perform in larger more realistic setups?
+}
+\reply{We agree that 100 nodes is not a lot for modern distributed computing scenarios.
+%
+We kept that number (relatively) low
+ mainly because we had to perform a large number of simulation runs.
+%
+We were not very much concerned with larger-scale setups 
+ also because aggregate computing is essentially
+ decentralised and, unless algorithms need to use global information like e.g. an estimation of the network diameter, scalability is typically guaranteed---cf. \cite{DBLP:journals/fgcs/PianiniCVN21}.
+%
+Moreover, the AC 
+ execution model does not depend on the network size and node count. 
+For this reason, we decide to use a minimal small network that shows 
+ interesting dynamics while maintaining a low training time. 
+However, to showcase the generalisation of the found policy, 
+ we try to use the same policy in several deployments. 
+Particularly \Cref{main:fig:check-scale} shows that the policy can generalise in other scenarios.   Unfortunately, we cannot run training with a bigger network for time reasons -- 
+ we would check the behaviour of the algorithm by varying the size for future works
+\action{We perform other simulations with a fixed policy and we add discussion and plots about the behaviours found in \Cref{main:s:discussion:ac}}
+}
+
+\commentl{r2-more-example}{
+	It would be interesting to see other working scenarios. Perhaps spend less time in Section II and provide an additional working scenario.
+}
+\reply{
+	%\meta{{@ALL the PC suggest considering other examples even without performing simulations. Probably we could expand III.B?}}
+%\meta{RC: do you mean II.B where we describe reference examples? yes..}
+We thank the reviewer to underline this concern. 
+ We agree with the reviewer that another example could help in understanding the paper's contribution
+}
+\action {we create \Cref{main:s:related-and-motivation:rl} in which we discuss examples related to non-functional requirements (e.g., crowd management), and we discuss two possible directions in combining AC and RL, e.g., round frequency management (paper main contribution) and neighbourhood policy management.}
+
+\pagebreak
+
+\reviewerl{r3}
+
+\commentl{r3-summary}{
+	In aggregate computing environments, where collective behaviors are
+expressed as a "macro-program," the platform execution middleware has
+many tunable parameters, and wide flexibility in those parameters that
+preserve its ability to achieve coherent functional goals.  This paper
+presents an approach to optimizing non-functional attributes of
+aggregate computing execution through Reinforcement Learning (RL).  The
+authors claim that Q-Learning techniques can reduce overall power
+consumption without modifying the aggregate program and justify those
+claims using publicly-available open-source experiments in simulation.
+The results of the experiments show that, when variability is introduced
+into the execution context through the "Swap" and "MultiSwap" scenarios,
+the Multi-Agent Reinforcement Learning (MARL) technique applied was
+capable of achieving 40-60\% power savings through reduced compution
+intervals
+
+	The paper is well-written and has clear descriptions of the research
+problem and novel solution including source code and an online execution
+environment for verifying results and making modifications.  The authors
+do an admirable job of explaining complex distributed systems and RL concepts
+and describing a complicated formulation for applying field calculus to
+aggregate computation.  Overall the paper's contributions address the
+research question and are justified through extensive experimental
+analysis
+}
+\reply{
+We thank the Reviewer for the appreciation. The paper summary is also very accurate.
+}
+
+\commentl{r3-background-improvement}{
+	The paper could benefit from a more extensive
+	analysis/discussion of related work, however, it is highly likely that
+	this paper presents a siginificant contribution to the state-of-the-art
+	in Self-* systems and cannot conceivably reduce the amount of
+	background/context information.
+}
+\reply{
+A more extensive discussion of related work is provided---see the responses to Comment~\ref{r1-related} and Comment~\ref{r1-q-learning} for details.
+}
+
+\commentl{r3-power-considerations}{
+	Addressing some specific questions could also potentially improve the
+paper.  For instance, how much does decreasing the computation interval
+actually save power consumption in an example execution environment when
+compared to frequent re-evaluation of compute period?  That is, is
+the compute period that strongly correlated to power consumption and
+is the RL overhead still substantiated? 
+}
+\reply{%\meta{@ALL As discussed previously, in related work the main concern is typically related to communications (it typically consumes more). But, anyway, here we could add an estimation of consumption per clock? And for what concerns the RL part, it is a fair point but is mainly related to the online part (if we perform learning at simulation time, the cost at runtime is negligible.)
+%
+%\meta{RC: well, actually ``computation interval'' is ``round interval'', namely, we consider together computation+communication, don't we?}
+%
+%\meta{GA: Absolutely! But, since we don't enforce a particular communication protocol, it could be that we do lead to distributed scheduling that is not optimal according to the messages sent (e.g., due to package collision in WSN scenarios).}
+%
+%\meta{RC: so let's say that (1) for ``computation interval'' we mean ``round interval'' (and adjust the paper accordingly), (2) motivate that RL overhead is negligible, and (3) say that tests on real-world systems are future work (I also observe that in general our round-based model would deserve technological tests... maybe UNITO knows more about that)}
+Notice that when we speak about ``reducing round frequency'', 
+ we do not consider only the computation part. 
+Indeed, a round evaluation involves communication too (see \Cref{main:s:background:ac}), 
+ which is typically the most costly operation power consumption side. 
+The cost of RL, in this case, could be negligible, 
+ since it is performed offline -- in simulation. 
+At runtime, the cost of using the policy does not infer 
+ the overall power consumption since it is basically  a lookup in the Q-table.
+However, we would underline that for precise measurement of how much 
+ this approach reduces the power consumption we need to perform 
+ real-world systems evaluation -- which we will consider in future work.
+}
+\action{
+	We clarified that a round is more than only computation and we added a discussion about the cost of RL in \Cref{main:acrl-energy-goal}.
+}
+
+\commentl{r3-observation-space}{
+	Also, what information is
+included in the agent's observation space?  How is the observation space
+formatted for the policy?  How difficult is it to update the agent if the
+aggregate program changes (i.e., is it automatic or does it require
+manual changes)?
+}
+\reply{
+
+\qst{What information is
+included in the agent's observation space?} 
+The agent observation space is built from the aggregate computing context (C). 
+	Therefore the observation value, from this context, is typically a function from C $\rightarrow$ O. 
+	In this case, we built the observation space considering only the program output history 
+	(i.e., the trajectory). Particularly we consider a general program that produces a numeric field 
+	that eventually stabilises as expressed in \Cref{main:acrl-energy-goal}. 
+	This means that, our approach works for any aggregate program that returns numeric data, 
+	so there is no intervention in the learning process if the return type is the same.
+	
+\qst{How is the observation space
+formatted for the policy?}
+The observation space is mainly a vector composed of the last $w$--i.e., 
+ how many outputs should I consider--output collected
+ by each node individually (as pointed out in \Cref{main:acrl-energy-goal}) 
+ indeed, $s_t$ could be resumed as [$\delta_t$, \dots, $\delta_{t-k}$] 
+ where $\delta_t$ is the information extracted 
+ from the numeric output produced by the aggregate program
+
+\qst{How difficult is it to update the agent if the
+aggregate program changes (i.e., is it automatic or does it require
+manual changes)?}
+The RL agent does not change if the program output type remains a numeric type (as pointed out at the end of \Cref{main:acrl-energy-goal}).  
+ In this case, the only change that will 
+ be performed consists of the aggregate program evaluation change. 
+ In the other cases, we cannot use this setup---
+ we plan to consider other data types for future works.
+}
+\action{We clarify the content of agent observation space in \Cref{main:acrl-energy-goal}.
+%\meta{todo consider to add a description in the reality check}
+}
+
+\commentl{r3-other-scenarios}{
+	Could you present the scenario slightly
+differently such that the non-functional learning would result in a
+significant performance improvement (e.g., faster convergence time)?
+}
+%\related{r4-lack-of-examples}
+\reply{
+%\meta{ASSIGNED to ROBY}\\
+%\meta{We could discuss about the gradient problem? Referencing the coord work too}
+We have clarified in \Cref{main:acrl-energy-goal}
+ that saving energy is dual to saving time using the same energy amount.
+%\meta{TODO: add a comment on how this applies to the example}
+Particularly, in our example, it means that a fixed scheduler 
+ with average ticks per second as of our policy will bring to 
+ the overall system a larger error than our solution.
+}
+
+\commentl{r3-dynamic-topology}{
+	In your experiments, are the node arrangements and topology kept
+	constant or varied across episodes?}
+\reply{We kept the topology of the network fixed, for the sake of simplicity. However, in future work, we aim at considering dynamic scenarios in which the network could change over time (e.g., failures or node joining in the system.) 
+%\meta{@metaphori is it ok? }
+}
+
+\commentl{r3-partial-observability}{
+	Finally, how does partial
+observability at inference time affect the assumption that a shared
+Q-table will match global execution state?
+}
+\reply{The point is that in this case the Q-Table is mainly based on local information 
+(i.e. the local output history of the nodes). 
+Therefore, we use a global q table to have a place where nodes could share information globally. 
+In this way, we create a table that owns the experience of several 
+agents even if it works for local computation.
+However, we are aware that this could lead to an oscillatory behaviour in Q-table refined 
+(for instance, if two zones of the system perceive opposing rewards). 
+Therefore, in future work we plan to consider more complex approaches 
+in which partial observability is tackled (e.g., neural network with memory).}
+\action{We add the discussion about partial observability and how we could 
+tackle the problem in \Cref{main:sec:conclusion}.
+}
+
+\commentl{r3-final-remarks}{
+	With respect to ACSOS's soundness and significance criteria, the use of
+RL to optimize non-functional aspects of aggregate computing is
+compelling, novel, and of interest to the research community.  The cited
+online environment for exploring ScaFi is extraordinarily helpful and
+refreshingly transparent.  The authors identify several promising
+follow-on research problems, including modifying the agent's action and
+observation spaces.  Overall, this paper is a valuable contribution to
+our community.
+}
+\reply{
+We thank the Reviewer for the appreciation.
+}
+
+\pagebreak
+
+\reviewerl{r4}
+
+\commentl{r4-summary}{
+	This paper explores the possibility of applying reinforcement learning to optimize non functional aspects of an aggregate computing application/platform. Specifically, the authirs illustrate this in the context of  synthetic experiments of data propagation and collection, where they show how Q-Learning can reduce the power consumption of aggregate computations.
+
+	Thank you for submitting your work to ACSOS. This paper is well written, and easy to read and aims to tackle an interesting problem. the presented formulations and results seem to be sound.
+}
+\reply{We thank the Reviewer for the appreciation.}
+
+\commentl{r4-lack-of-examples}{
+	A major issue with this paper is the lack of examples and illustrations. The paper aims to demonstrate that reinforcement learning can be used to learn and improve non functional aspects of aggregate computations. However, much of the paper is spent introducing RL and aggregate computation, but without concrete examples. Only one scenario is described (that of reducing power consumption). 
+}
+\reply{
+This comment is related to Comment~\ref{r2-more-example}.
+%\meta{TODO -- We have to introduce other examples as it is requested by reviewer 2}
+}
+
+\commentl{r4-broad-claims}{While that is useful, the paper does not contain the evidence to justify its broad claims (one of which are quoted below)
+\\
+``The contribution goes towards a vision in which the designer could mainly focus on functionality and key non-functional aspects (e.g., resiliency) during the design time while the platform learns how to optimise less critical but still highly desired non-functional aspects.''
+
+It is unclear how many other non functional aspects can be learned in this manner and whether Q-Learning is the best technique to do so. the paper has no discussion on this. Given that the paper contains early work on the problem, it might be better suited for a workshop.
+}
+\reply{
+%\meta{ASSIGNED to ROBY}
+%\meta{@ALL As suggested by the PC we could reduce the tone.}
+%
+It is the vision that is broad, not the claim. It is indeed a vision that requires a research roadmap and not a single contribution---as discussed in the accepted workshop paper \cite{aguzzi2022roadmap-ac-rl}, but also mentioned in works like~\cite{casadei2022applsci-digitaltwins} (which focuses on adaptive deployment of virtual nodes in aggregate systems).
+
+Regarding the discussion of other techniques, please see the response to Comment~\ref{r1-q-learning}.
+}
+\action{
+We have clarified how the contribution fits the vision in \Cref{main:sec:conclusion}, also lightening the claim on the contribution per se.
+}
+
+\bibliographystyle{elsarticle-num}
+\bibliography{../biblio}
+
+\end{document}

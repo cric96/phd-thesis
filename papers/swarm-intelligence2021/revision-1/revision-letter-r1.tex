@@ -1,0 +1,506 @@
+\documentclass{article}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{hyperref}
+\usepackage[usenames]{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{nameref}
+
+\RequirePackage[sort&compress,sectionbib,numbers]{natbib}
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\usepackage{xr}
+\externaldocument[main:]{../paper-2021-swarm-intelligence-si}
+\usepackage{xr-hyper}
+
+
+\newcounter{reviewer}
+\newcounter{comment}[reviewer]
+
+\setcounter{reviewer}{0} % start with zero
+\newcommand{\reviewer}{
+	\subsection*{\refstepcounter{reviewer}Reviewer \arabic{reviewer}}
+}
+\newcommand{\reviewerl}[1]{
+	\subsection*{\refstepcounter{reviewer}\label{#1}Reviewer \arabic{reviewer}}
+}
+\newcommand{\reviewerlt}[2]{
+\pagebreak
+	\subsection*{\refstepcounter{reviewer}\label{#1}#2}
+}
+\newcommand{\comment}[1]{
+	\subsubsection*{\refstepcounter{comment}Reviewer comment \arabic{comment}} %\arabic{reviewer}.
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{\setlength{\parskip}{0.5\baselineskip}%
+ #1 }}
+}
+\newcommand{\rcref}[2]{\ref{#1}.\ref{#2}}
+\newcommand{\commref}[1]{\ref{#1}}
+\newcommand{\commentl}[2]{
+	\subsubsection*{\refstepcounter{comment}\label{#1}Comment \arabic{reviewer}.\arabic{comment}} %\arabic{reviewer}.
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{ #2 }}
+}
+\newcommand{\edcomment}[1]{
+	\subsubsection*{Comment}
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{ #1 }}
+}
+\newcommand{\reply}[1]{	\\[2pt]
+	\textbf{Author response:}
+	#1
+}
+\newcommand{\related}[1]{	\\[2pt]
+	\textbf{Related comments:}
+	\ref{#1}
+}
+\newcommand{\commentAu}[2]{	\\[2pt]
+	\meta{\textbf{#1 comment:}
+	#2}
+}
+\newcommand{\action}[1]{	\\[2pt]
+	\textbf{Action to address the comment:}
+	#1
+}
+\newcommand{\corrstart}{\color{red}}
+\newcommand{\corrend}{\color{black}}
+\newcommand{\correction}[1]{\corrstart #1\corrend{}}
+\newcommand{\checkstart}{\color{violet}}
+\newcommand{\tocheck}[1]{\checkstart{}#1\corrend{}}
+
+\makeatletter
+\renewcommand\p@comment{\thereviewer.}
+\makeatother
+
+\newcommand{\meta}[1]{{\color{blue}#1}}
+\newcommand{\assigned}[1]{{\color{purple}ASSIGNED TO: \textbf{#1}}}
+
+\newcommand{\say}[3]{
+\noindent\fcolorbox{black}{cyan!20!white}{
+\begin{minipage}{\textwidth}
+\textbf{{#1}} \textbf{({@}#2)}: #3
+\end{minipage}
+}
+}
+
+
+\usepackage{cleveref}
+
+
+\begin{document}
+\title{{\Large Revision Letter for} ``A Field-based Computing Approach to Sensing-driven Clustering in Robot Swarms''}
+\author{
+Gianluca Aguzzi
+\and
+Giorgio Audrito
+\and
+Roberto Casadei
+\and
+Ferruccio Damiani
+\and
+Gianluca Torta
+\and
+Mirko Viroli
+}
+
+\maketitle
+
+Dear Editors and Reviewers, \newline
+
+Thank you very much for your time and valuable feedback.
+%
+We have taken into account all your questions and suggestions and implemented corresponding revisions to our manuscript.
+%
+Our replies and corrective actions for your comments are detailed below.
+%
+Based on your comments, we have implemented the following main revisions:
+%
+\begin{itemize}
+\item we have provided more examples (cf. Comments~\ref{r1-examples}, \ref{r3-needs-examples});
+\item we have clarified motivation, significance, and applicability (cf. Comments~\ref{r1-applicability}, \ref{r2-applicability}, \ref{c24});
+\item we have extended and clarified the background (cf. Comments~\ref{c21}, \ref{c41});
+\item we have applied several clarifications to address doubts and questions from the Reviewers (cf. Comments~\ref{c24}, \ref{multicluster}, \ref{c43});
+\item we have extended coverage of related work on environmental monitoring (cf. Comment~\ref{c44});
+\item we have fixed minor issues and typos to further improve the overall quality of the manuscript.
+\end{itemize}
+%
+The changes implemented in this revision are {\color{red}marked in RED} in the submitted manuscript.
+
+We hope that you will be satisfied with the revised version of our paper and consider it now suitable for publication.
+\\ ~ \\
+
+\noindent Sincerely yours,
+
+Gianluca Aguzzi, Giorgio Audrito, Roberto Casadei, Ferruccio Damiani, Gianluca Torta, Mirko Viroli
+
+
+\raggedbottom
+
+%\section*{Comment and replies}
+
+%\reviewerlt{r0}{Editor's Comments}
+%\edcomment{
+%}
+%\reply{
+%}
+
+% REVIEWER 1
+\reviewerlt{r1}{Reviewer 1}
+
+\commentl{c10}{
+The paper presents a fields-based method to clustering robot swarms according to some perceived environmental measure.
+The paper is clear and well-written.
+}
+\reply{
+We thank the Reviewer for the appreciation.
+}
+
+\commentl{r1-examples}{I well understood Section 1,2,4,
+while I was not able to follow thoroughly the algorithm in Section 3,
+maybe a simplified example could help the reader.}
+\related{r3-needs-examples}
+\reply{
+See also Comment \ref{r3-needs-examples}. We anticipated former Section 3.4 (new Section 3.3), swapping it with former Section 3.3 (new Section 3.4), to provide an example setting earlier on. Furthermore, we added a simple running example throughout new Section 3.4 (former Section 3.3).
+}
+
+
+\commentl{r1-applicability}{
+	My main concern about this paper is about its significance/applicability: does it make sense to cluster a robot swarm using this approach?
+
+	one of the main motivation for using multi-hop gradients is about the peer-to-peer connectivity between nodes.
+	This is explicit in Section 4.1, while Section 2.1.1 is more general with this regard.
+ My suspicion is that if robots can generally communicate with any other robot directly or maybe with a central station, there are much more efficient ways of doing clustering.
+
+	Also in this case of peer-to-peer connectivity,
+	maybe robots can send information to central sink and compute there the clustering.
+	I suspect that this approach is actually more scalable than the fully distributed solution,
+	as the number information being sent is much more limited.
+}
+%\related{r2-applicability}
+\reply{
+  We have added \Cref{main:ssec:assumptions} about the assumptions that we make to justify the application of our proposal.
+  This is an important point, since in some real-world scenarios, different  assumptions might hold, making our proposal  a sub-optimal choice.
+  In particular, we assume that robots themselves are not reliable (can fail), and a reliable global communication network infrastructure is not available.
+  We point out that in such scenarios, a fully distributed solution (as proposed also by other authors) is more reliable than a centralized solution, where either a node is in charge of all the computations (e.g., a base station), or a robot is dynamically chosen as ``the central node''.
+  Indeed, we now also clarify in the Introduction that we seek for \emph{resilient} solutions.
+  Furthermore, we point out that, at least for clustering, communication between robots is inherently proximity-based. Indeed, for the clustering task, it is almost useless to be able to communicate with {\em any} robot in the swarm, while it is essential to communicate with the neighboring robots.
+%% \meta{
+%% Address via: (1) resilience; (2) direct comm to immediate neighbours most general; (3) in case of partitions, we run the computation in the two partitions; (4) communication overhead is still large with relay to central node, and computation is continuous, so we still have to use multiple info flows
+%% (see also War and tech (and ACM) on resilience).
+%% SO: let's emphasise resilience! we don't want to compare with centralised approaches since they are not resilient (also for addressing the following comments)
+%% }
+}
+
+%% \meta{FD: we should explain that we address situations where  a central station is not available and robots cannot generally communicate with any other robot directly -- and provide examples (e,g., monitorare il fronte di incendi, a  ISoLA 2021 c'erano articoli che parlavano di questi scenari), oppure emergengy response, and more in general to have resilient infrastructures).}
+%% \commentAu{GT}{I think that here the reviewer mixes gradients (that are just an assumption in our use case) with P2P (which is a stronger assumption of AP). The robustness of P2P has the usual, solid motivations, e.g., the ``gossip'' is more robust than structured communication, e.g., A Survey of Distributed Data Aggregation Algorithms:
+
+%%   \texttt{https://ieeexplore.ieee.org/abstract/document/6894544}
+
+%% \noindent And I don't think that a complete connectivity is a good idea since we assume spatial distance is important to determine clustering.
+%% }
+%% \commentAu{GT}{
+%%   I think that there are the usual solid reasons to adopt a fully distributed approach VS centralized approach, as outlined by some of us elsewhere. See e.g. this paper
+%%     Robust distributed spatial clustering for swarm robotic based systems: \\
+%%     \texttt{https://www.sciencedirect.com/science/article/pii/S1568494616302678}
+%% }
+%% \meta{GA I think that both the argumentations are valid. Furthermore it makes sense that in certain scenario a central sink does not exists, isn't it? }
+%% }
+
+\commentl{r1-related-boundary}{
+	I think it wuold be very useful to have experiments adressing clustering with a different approach -
+	different than gradients - and (hopefully) show that your appraoch is better is some circumstances.
+
+	In general I would recommend better specifying the domain of application
+	of your idea amd show that in that domain this approach is effective (not only that it just works)
+}
+\related{c23}
+\reply{
+Gradients are a fundamental and common mechanism
+ for self-organising systems~\cite{DBLP:conf/saso/WolfH07} that support various activities including
+ information flows, data propagation and collection, regional formation, and more.
+%
+We use them as our focus is on collective computation 
+ with resilience and decentralisation in mind.
+%
+It is cumbersome to compare these solutions
+ with more traditional approaches, since those may not support resilience and decentralization, or make other assumptions than \Cref{main:ssec:background:sysmodel}.
+%
+
+To address this comment, we have better specified the target domain of application: see the end of \Cref{main:s:background-clustering}, the reply to Comment~\ref{r1-applicability} that emphasises the fact that we look at resilient solutions, and the assumptions explicited in \Cref{main:ssec:assumptions}.
+%
+%\assigned{Aguzzi/UNIBO (example where the algorithm performs badly)}
+%%
+%\commentAu{GT}{Again, maybe I'm wrong, but I've the impression that the reviewer thinks gradients are essential to our approach, while they are just the simplest way we could find to setup sensible experiments. In any case, it would be good to have some experiments that do not use ``simple'' gradients to setup the environment.
+%}
+%
+%\meta{
+%GA Here the review requests a comparison with other clustering algorithms, right? Or does it discusses the environment phenomena distribution?
+%If it is the case of the first point,
+%we could consider other clustering algorithms and then compare them with our solution?
+%Did you have any suggestion on what algorithm should we consider??
+%}
+%
+%\meta{GA: We could add a case where the algorithm does not produce a good cluster division (e.g. with high mobility or with a distribution that does not follow the temperature threshold). In part, I should have already said this in the discussion section anyway... Maybe it should be made explicit...
+%}
+}
+
+\reviewerlt{r2}{Reviewer 2}
+
+\commentl{c20}{
+The work shows how the problem of sensing-based clustering can be solved in a fully decentralised
+approach by using field-based computing paradigm.
+The problem, which born in the context of IoT devices, consists in splitting the swarm in groups
+of individuals called clusters. The idea, when a cluster is formed a task is assigned to its members as a collective.
+
+The proposed solution is "sense-based" since clusters are built by taking into account the physical location
+and the surrounding of each member: a cluster will be composed by individuals that have similar perceptions
+of their context. A simulation framework is used to validate the proposed  solution.
+
+Even if the paper is well motivated, and the considered problem is interesting, the paper presents some weaknesses.
+}
+\reply{
+We thank the Reviewer for pointing out aspects to be improved.
+}
+
+\commentl{c21}{
+	First of all the paper looks hard to be read by a someone that is not familiar with aggregate computing.
+	I believe that the content of section 2.1 is not enough and few more details should be provided
+	to understand the approach.
+ }
+\reply{
+More details have been provided in \Cref{main:s:background-fieldcomp},
+ especially regarding the execution model,
+ field-based programs,
+ the programming model,
+ and the multi-gradient example.
+}
+
+\commentl{r2-applicability}{
+	The authors should clarify the real applicability of the proposed algorithm.
+	Indeed, one could expect that after a cluster is formed "a task can be executed"
+	thanks to the cooperation of its members.
+	However, it is not clear how a single robot can be informed that a cluster  is formed.
+	Note that, this is somehow related with the classical leader
+	election problem in asynchronous distributed problem.
+ }
+\related{r1-applicability}
+\reply{
+% \meta{RC (ALL): comment similar to those of R1. Our answer should be like: ``Once we have a clustering of robots that takes into account sensing data as well as distance, we can...''. Any ideas? For instance, we can
+% (1) sample a phenomenon (cf. space-fluid at COORD'22) by considering only one device in each cluster (but it would a bit subtle to motivate with ``avoiding sending too much data'', since the clustering itself is bandwidth consuming.. unless maybe we consider [a] uploads to cloud; [b] data collection through storage assuming little storage);
+% (2) for uniform control policies (concrete examples?) }
+%\meta{GA: This indeed is a non-trivial point to manage... Since it seems that the reviers points out the problem of *when* a cluster could be consider as formed right? This, however, is not easy to define in our framework... }
+Since clusters are represented as aggregate processes, and aggregate processes define ``scopes'' for collective computations, the participation of an agent in an aggregate process has by itself the information about the cluster membership; so, collective tasks may be assigned to any cluster, and these will be inherently played by all the members of that cluster.
+We clarify this concept at the end of \Cref{main:ssec:meta-algo}.
+}
+
+\commentl{c23}{
+	The authors should also clarify why the considered scenarios reported
+	in Fig. 3 of the paper are relevant (note that case (c) and (d) look identical).
+ }
+ \related{r1-related-boundary}
+\reply{
+%\assigned{Aguzzi/UNIBO}
+We thank the review to underline this problem,
+ we realised that we could better specify why we have chosen this configuration.
+ We have improved the discussion about the choice
+ of the scenarios in \ref{main:s:scenario-description},
+ and the structure of the scenario description,
+ and we have clarified the meaning of (c) and (d) in \ref{main:s:simulations}.
+
+%\meta{RC (ALL/Gianluca): better motivate this; btw (c) varies in one dimension (horizontally), whereas (d) varies in two dimensions (diagonally), right?}
+
+%\meta{GA: Ok, I try to expand the discussion (In each subsection? It makes sense?). For (c) and (d), Yes you are right! I add the description directly in the subsection.}
+}
+\commentl{c24}{
+	Finally, the authors should answer to the last question:
+	what have we learnt? The results are presented via a simulator.
+	Can one deploy the presented algorithm on real devices?
+	Which are the needed assumptions on the underlying infrastructure?
+	Does exist such devices?
+}
+\reply{
+We have added a new section, \Cref{main:ssec:assumptions}, covering assumptions.
+%
+ Moreover, we have split the discussion of the experiments (\Cref{main:sec:eval-discussion}) in two sub-sections: the first one (\Cref{main:sec:eval-discussion-simulations}), about the simulations, is taken from the submitted manuscript.
+  The second one (\Cref{main:sec:eval-discussion-deployment}) has been written completely anew, and discusses our experience with the deployment of a field-based programming system on physical boards, pointing out
+  the lessons that can very likely be reused for a physical deployment of the clustering algorithm, as well as the issues that should be further investigated.
+%
+%	\meta{RC: keyword here is \emph{needed assumptions}, namely, what must hold otherwise the approach ceases to work? related to other reviewers' comments..
+%	We could (and should) extend Section 4.6 Discussion, possibly structuring it into subsubsections, one of which will be ``Applicability''.}
+%
+%	\meta{GA: I agree with RC -- even if the applicability seems to be mainly applied on the ``hardware" side, isn't? He does not argue about the general applicability of the algorithm right? }
+
+Finally, we would like to add that the suitability of our approach is of course strongly affected by technological considerations: however, from this article we learn how the important clustering problem can be performed in a fully distributed and decentralised way, which we believe has merits per se.
+}
+
+\commentl{c25}{
+ I believe that the paper can be eventually accepted if the authors tackle the points outlined above.
+}
+\reply{
+We are glad the Reviewer found merits in our work.
+We also thank the Reviewer for the very pertinent comments.
+}
+
+\refstepcounter{reviewer}
+\reviewerlt{r4}{Reviewer 4}
+
+\commentl{c40}{
+The paper describes a new algorithm for clustering of a swarm using a field-based programming approach. The algorithm is validated in simulations to monitor environmental changes (such as temperatures).
+
+The paper is well written and motivated, however a few things should be improved:
+}
+\reply{
+We thank the Reviewer for the appreciation
+ and for the suggestions for improving our work.
+}
+
+\commentl{c41}{
+	1.) The provided background on field-based programming is not sufficient.
+	Section 2.1.2 would benefit from a concrete example (also with type instantiations).
+	The pseudo code itself uses notation that is not clear (perhaps too closely related to Scala,
+	rather than actual pseudo code).
+	Finally, the example in 2.1.3 should be explained in words (especially since the pseudo code notation is unclear),
+	and not only with a sequence of images.
+ }
+\reply{
+The background on field-based programming has been expanded and clarified.
+The provided code is not pseudocode but actual ScaFi (and hence pure Scala) code: notation has been described to clarify those snippets. Another example has been included in \Cref{main:sec:field-based-programming-model}, showing (also with type instantiations) how the blocks can be composed to build some more complex behaviour.
+The code of the multi-gradient example has been explained in detail in words.
+}
+
+
+\commentl{r3-needs-examples}{
+	2.) The problem definition in Section 3 is very generic and could use some examples earlier on.
+}
+\reply{
+See also Comment \ref{r1-examples}. We anticipated former Section 3.4 (new Section 3.3), swapping it with former Section 3.3 (new Section 3.4), to provide an example setting earlier on. Furthermore, we added a simple running example throughout new Section 3.4 (former Section 3.3).
+}
+
+\commentl{multicluster}{
+	Furthermore, please specify why a leader is needed and what are example use-cases where
+	a single agent might be assigned to multiple clusters
+	(a case that doesn't seem to be used in the evaluation section).
+}
+\reply{
+ In our algorithm, leader election is used to identify clusters.
+ Indeed, leaders keep the aggregate processes corresponding to clusters alive,
+ and update their information, i.e., the {\em summary} that characterizes the cluster.
+ More generally, leaders are used to easily support consistent coordination and decision-making regarding the activity of a cluster.
+
+The possibility of agents 
+ to belong to multiple clusters is key 
+ to track phenomena that are spatially
+ close to each other.
+This way, if a node is in between two phenomena,
+ it could participate in two clusters to help tracking
+ or handling both phenomena.
+%
+
+We have clarified these aspects near the end of  \Cref{main:ssec:problem-def}.
+
+% \meta{TODO: handle the question about belonging to multiple clusters \emph{within the same clustering}}
+
+% \meta{TODO: have we clarified these points in the paper?}
+%%% NB: the following does not answer the actual question. The point is that a node may belong to multiple clusters in the same clustering (!!!)
+%%A single agent might be assigned to multiple clusters, for instance, if it has different capabilities, such as different sensors (e.g., for temperature, humidity, light, wind, pollution etc.), that may serve different clusterings.
+%%%
+%%For example, one clustering may be devoted to detecting wildfires, whereas another clustering may serve aggregating data about crops in agricultural scenarios.
+%%%
+%%Notice that the shapes, sizes, and centres of clusters may differ depending on various aspects like e.g. the desired granularity for analysis and intervention of the different phenomena to be dealt with.
+%
+%\meta{Think of APPLICATION EXAMPLES of when those features make sense}
+}
+
+\commentl{c43}{
+	3.) Environment monitoring as an example seems a bit contrived
+	and doesn't use all the features of the proposed approach (e.g., leaders, multi-clusters).
+}
+\reply{
+%\assigned{Aguzzi/UNIBO}
+About our selected application:
+ we would underline that the presented use case
+ is more a meta-application than a specific application.
+ Indeed, the scenario proposed is general by purpose
+ and could be adopted in other env-like monitoring applications.
+
+About the features used: since the application uses our algorithm,
+ all the features expressed will be used.
+ Indeed, regarding the leader election,
+ in our algorithm it is necessary to identify clusters.
+ Indeed, leaders maintain clusters alive
+ and update their information.
+The multi clusters feature is crucial
+ to track phenomena that are spatially
+ near each other.
+ So in this way, if a node is in between two phenomena,
+ it could participate in two clusters to help tracking
+ or handling both phenomena.
+
+ We have clarified how the features are used
+ in the proposed application and discussed
+ other concrete applications in which this algorithm
+ could be deployed in \Cref{main:s:scenario-description}.
+%\meta{$\to$ Let's insist on env monitoring.. and motivate how it is a meta-application which has many instantiations (let's use refs); since our notion of env monitoring is quite general}
+
+ % \meta{RC ($\to$ Gianluca): isn't it?}
+
+ % \meta{GA: Uhm, I probably should point out this point better, but yes (e.g. in Discussion \& Evaluation intro?),
+  %	in the case study, I use the API crafted for the problem and therefore it uses all the features described...
+ % 	On the contrivity: should we add a more realistic scenario? For instance, using some data acquired from smart city sensors??
+%	}
+
+%\meta{
+%RC: yes, we use leaders, but do we also assign a single robot to multiple clusters?
+%}
+
+%\meta{
+%GA: yes, indeed the result is a map to Key (process Id) and Data (the result of the aggregation performed inside a cluster). Is it ok?
+%}
+
+%\meta{
+%RC: then, let's explain in a paragraph how the example uses all the features
+%}
+}
+
+\commentl{c44}{
+	Moreover, there is literature in the robotics community on that topic,
+	that is not mentioned nor compared to (see references below).
+	The proposed work should be set into relationship of those existing works on environmental monitoring.
+\\
+
+[1] Garg, Sahil, and Nora Ayanian. "Persistent Monitoring of Stochastic Spatio-temporal Phenomena with a Small Team of Robots.". RSS 2018
+
+[2] Best, G., Faigl, J. \& Fitch, R. Online planning for multi-robot active perception with self-organising maps. Auton Robot 42, 715-738 (2018). https://doi.org/10.1007/s10514-017-9691-4
+
+[3] Best, G., Cliff, O. M., Patten, T., Mettu, R. R., \& Fitch, R. (2019). Dec-MCTS: Decentralized planning for multi-robot active perception. The International Journal of Robotics Research, 38(2-3), 316-337. https://doi.org/10.1177/0278364918755924
+
+[4] S. Kemna, J. G. Rogers, C. Nieto-Granda, S. Young and G. S. Sukhatme, "Multi-robot coordination through dynamic Voronoi partitioning for informative adaptive sampling in communication-constrained environments," 2017 IEEE International Conference on Robotics and Automation (ICRA), 2017, pp. 2124-2130, doi: 10.1109/ICRA.2017.7989245.
+}
+\reply{
+%  \meta{RC: please let's all take a look at them. Me and GT could then properly refer to them in Section~5 (Related Work).}
+We thank the Reviewer for the hint.
+%
+We have addressed this comment by introducing a new subsection, \Cref{main:s:rw:related-env-monitoring}, covering such works on swarm-based environment monitoring.
+%
+%\meta{RC: done, pls check (ALL)}
+%
+%\meta{FD: in questa nuova sezione potremmo: (i) (ri-)elencare quelle che sono le nostre assunzioni; (ii) dire che non siamo a conoscenza di approcci che abbiano solo quest (o memo di queste assunzioni); e (iii) per ogni articolo competitor che citiamo dire quali assunzioni in più richiede rispetto a noi.}
+%
+%\meta{RC: imho we cannot make explicit our assumptions only at the end of the paper.. these should be explicited in Section 2.2 ``Dynamic Cluster Formation in Swarms'' or Section 3 ``Problem formulation''}
+}
+
+\commentl{c45}{
+	To demonstrate the versatility of the approach, the authors are also encouraged to include another example/use-case
+	for the proposed clustering algorithm.
+}
+\reply{
+ We have described other concrete applications in which our algorithm
+ could be deployed in \Cref{main:s:scenario-description}.
+% \meta{RC: any ideas where sensing-driven spatial clustering could help besides environmental monitoring?}
+}
+
+\bibliographystyle{elsarticle-num}
+\bibliography{../biblio}
+
+\end{document}

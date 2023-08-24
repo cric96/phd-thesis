@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="198.94899mm"
+   height="42.850002mm"
+   viewBox="0 0 198.94898 42.850002"
+   version="1.1"
+   id="svg1277"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
+   sodipodi:docname="c.svg"
+   inkscape:export-filename="/home/gianluca/Desktop/c.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1279"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="1.5345653"
+     inkscape:cx="366.28126"
+     inkscape:cy="35.973889"
+     inkscape:window-width="1920"
+     inkscape:window-height="1134"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:rotation="-26">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3037"
+       originx="-12.973422"
+       originy="-2.3849069" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1274">
+    <marker
+       style="overflow:visible"
+       id="Arrow1Sstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2927" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Send"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2930" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker972"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path970" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Sstart-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2927-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Sstart-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2927-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Send-7"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2930-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker2482"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2480" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Sstart-6-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2927-5-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Send-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2930-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Send-6-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2930-3-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Send-6-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2930-3-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Send-6-6-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2930-3-7-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Send-6-6-3-7"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Send"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2930-3-7-6-5" />
+    </marker>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2"
+     transform="translate(1.6375778,2.993917)">
+    <rect
+       style="opacity:0.696;fill:#c29b44;fill-opacity:0.145449;stroke:#000000;stroke-width:0.521853;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers fill stroke"
+       id="rect4133"
+       width="198.42714"
+       height="42.328148"
+       x="-1.3766513"
+       y="-2.7329905" />
+  </g>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-12.973426,-2.3849073)">
+    <circle
+       style="opacity:0.696;fill:#f9ee1c;fill-opacity:1;stroke:#c94040;stroke-width:0.665587;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.33117, 0.665587;stroke-dashoffset:0;stroke-opacity:0.537255;paint-order:markers fill stroke"
+       id="path950-3-7-4-4-0"
+       cx="36.700237"
+       cy="20.732222"
+       r="3.0187218" />
+    <circle
+       style="opacity:0.696;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.666;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path1756-7-8-7-4-3"
+       cx="53.823986"
+       cy="23.224501"
+       r="2.5156016" />
+    <circle
+       style="opacity:0.696;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.666;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path1756-9-5-4-6-3-0"
+       cx="65.967392"
+       cy="12.281218"
+       r="2.5156016" />
+    <circle
+       style="opacity:0.696;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.666;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path1756-3-9-5-5-0-4"
+       cx="40.442669"
+       cy="37.282272"
+       r="2.5156016" />
+    <circle
+       style="opacity:0.696;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.666;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path1756-3-6-2-0-6-7-4"
+       cx="19.1182"
+       cy="17.216459"
+       r="2.5156016" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.636446;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.636446, 0.636446;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 21.584969,17.709645 12.155255,2.43022"
+       id="path2175-2-3-9-8-4"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#path1756-3-6-2-0-6-7-4"
+       inkscape:connection-end="#path950-3-7-4-4-0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.636446;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.636446, 0.636446;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 37.368214,23.676077 39.888226,34.82855"
+       id="path2177-8-6-3-6-4"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-end="#path1756-3-9-5-5-0-4"
+       inkscape:connection-start="#path950-3-7-4-4-0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.636446;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.636446, 0.636446;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 39.687493,21.166668 11.647161,1.695463"
+       id="path2179-9-1-7-8-7"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-end="#path1756-7-8-7-4-3"
+       inkscape:connection-start="#path950-3-7-4-4-0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.636446;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.636446, 0.636446;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 55.692705,21.540466 8.405968,-7.575214"
+       id="path2181-7-0-4-8-6"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-end="#path1756-9-5-4-6-3-0"
+       inkscape:connection-start="#path1756-7-8-7-4-3" />
+    <circle
+       style="opacity:0.696;fill:#f9ee1c;fill-opacity:1;stroke:#c94040;stroke-width:0.665587;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.33117, 0.665587;stroke-dashoffset:0;stroke-opacity:0.537255;paint-order:markers fill stroke"
+       id="path950-3-7-4-4-0-1"
+       cx="108.13774"
+       cy="20.732222"
+       r="3.0187218" />
+    <circle
+       style="opacity:0.696;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.666;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path1756-7-8-7-4-3-7"
+       cx="125.2615"
+       cy="23.224501"
+       r="2.5156016" />
+    <circle
+       style="opacity:0.696;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.666;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path1756-9-5-4-6-3-0-8"
+       cx="137.40491"
+       cy="12.28121"
+       r="2.5156016" />
+    <circle
+       style="opacity:0.696;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.666;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path1756-3-9-5-5-0-4-5"
+       cx="111.88017"
+       cy="37.282257"
+       r="2.5156016" />
+    <circle
+       style="opacity:0.696;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.666;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path1756-3-6-2-0-6-7-4-7"
+       cx="90.555702"
+       cy="17.216459"
+       r="2.5156016" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.636446;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.636446, 0.636446;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 93.022471,17.709644 12.155259,2.430221"
+       id="path2175-2-3-9-8-4-4"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#path1756-3-6-2-0-6-7-4-7"
+       inkscape:connection-end="#path950-3-7-4-4-0-1" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.636446;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.636446, 0.636446;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 108.80572,23.676077 2.52001,11.152458"
+       id="path2177-8-6-3-6-4-1"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-end="#path1756-3-9-5-5-0-4-5"
+       inkscape:connection-start="#path950-3-7-4-4-0-1" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.636446;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.636446, 0.636446;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 111.125,21.166668 11.64716,1.695464"
+       id="path2179-9-1-7-8-7-8"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-end="#path1756-7-8-7-4-3-7"
+       inkscape:connection-start="#path950-3-7-4-4-0-1" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.636446;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.636446, 0.636446;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#Arrow1Sstart-3)"
+       d="m 127.13022,21.540466 8.40597,-7.575221"
+       id="path2181-7-0-4-8-6-5"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-end="#path1756-9-5-4-6-3-0-8"
+       inkscape:connection-start="#path1756-7-8-7-4-3-7" />
+    <circle
+       style="opacity:0.696;fill:#f9ee1c;fill-opacity:1;stroke:#c94040;stroke-width:0.665587;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.33117, 0.665587;stroke-dashoffset:0;stroke-opacity:0.537255;paint-order:markers fill stroke"
+       id="path950-3-7-4-4-0-8"
+       cx="176.92941"
+       cy="20.732222"
+       r="3.0187218" />
+    <circle
+       style="opacity:0.696;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.666;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path1756-7-8-7-4-3-3"
+       cx="194.05315"
+       cy="23.224501"
+       r="2.5156016" />
+    <circle
+       style="opacity:0.696;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.666;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path1756-9-5-4-6-3-0-1"
+       cx="206.19656"
+       cy="12.281218"
+       r="2.5156016" />
+    <circle
+       style="opacity:0.696;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.666;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path1756-3-9-5-5-0-4-8"
+       cx="180.67183"
+       cy="37.282257"
+       r="2.5156016" />
+    <circle
+       style="opacity:0.696;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.666;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path1756-3-6-2-0-6-7-4-9"
+       cx="159.34738"
+       cy="17.216459"
+       r="2.5156016" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.636446;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.636446, 0.636446;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow1Send-7)"
+       d="m 161.81415,17.709645 12.15525,2.43022"
+       id="path2175-2-3-9-8-4-6"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#path1756-3-6-2-0-6-7-4-9"
+       inkscape:connection-end="#path950-3-7-4-4-0-8" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.636446;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.636446, 0.636446;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#Arrow1Sstart-3)"
+       d="m 177.59739,23.676077 2.52,11.152458"
+       id="path2177-8-6-3-6-4-4"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-end="#path1756-3-9-5-5-0-4-8"
+       inkscape:connection-start="#path950-3-7-4-4-0-8" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.636446;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.636446, 0.636446;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#Arrow1Sstart-6-3)"
+       d="m 179.91667,21.166668 11.64714,1.695463"
+       id="path2179-9-1-7-8-7-3"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-end="#path1756-7-8-7-4-3-3"
+       inkscape:connection-start="#path950-3-7-4-4-0-8" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.636446;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.636446, 0.636446;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 195.92187,21.540467 8.40597,-7.575216"
+       id="path2181-7-0-4-8-6-3"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#path1756-7-8-7-4-3-3"
+       inkscape:connection-end="#path1756-9-5-4-6-3-0-1" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send-6-6-3)"
+       d="m 68.791674,27.78125 h 13.22916"
+       id="path950-5" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send-6-6-3-7)"
+       d="m 138.90625,27.78125 h 13.22917"
+       id="path950-5-3" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="66.942444"
+       y="8.6601305"
+       id="text6897-88"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="66.942444"
+         y="8.6601305">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="54.701206"
+       y="19.606728"
+       id="text6897-88-3"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="54.701206"
+         y="19.606728">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="42.00906"
+       y="43.313904"
+       id="text6897-88-7"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="42.00906"
+         y="43.313904">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="37.568581"
+       y="17.219563"
+       id="text6897-88-7-2"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-7"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="37.568581"
+         y="17.219563">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="19.883211"
+       y="13.496965"
+       id="text6897-88-35"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-62"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="19.883211"
+         y="13.496965">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="61.257484"
+       y="8.653307"
+       id="text6897-88-36"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-0"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="61.257484"
+         y="8.653307">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="49.016254"
+       y="19.599903"
+       id="text6897-88-3-6"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-6-26"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="49.016254"
+         y="19.599903">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="36.324108"
+       y="43.307079"
+       id="text6897-88-7-1"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-8"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="36.324108"
+         y="43.307079">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';opacity:1;fill:#040905;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="31.883627"
+       y="17.212738"
+       id="text6897-88-7-2-7"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-7-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#040905;fill-opacity:1;stroke-width:0.264583"
+         x="31.883627"
+         y="17.212738">T</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="14.198254"
+       y="13.490143"
+       id="text6897-88-35-20"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-62-2"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="14.198254"
+         y="13.490143">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="139.08316"
+       y="8.6838818"
+       id="text6897-88-6"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="139.08316"
+         y="8.6838818">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="207.7247"
+       y="8.9176607"
+       id="text6897-88-6-3"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-1-0"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="207.7247"
+         y="8.9176607">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="195.48347"
+       y="19.864256"
+       id="text6897-88-3-2-7"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-6-9-8"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="195.48347"
+         y="19.864256">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="182.40445"
+       y="43.515327"
+       id="text6897-88-7-31-6"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-9-8"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="182.40445"
+         y="43.515327">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="178.35085"
+       y="17.477091"
+       id="text6897-88-7-2-4-8"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-7-7-4"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="178.35085"
+         y="17.477091">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="160.66548"
+       y="13.754496"
+       id="text6897-88-35-8-3"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-62-4-1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="160.66548"
+         y="13.754496">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="202.03975"
+       y="8.9108372"
+       id="text6897-88-36-5-4"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-0-0-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="202.03975"
+         y="8.9108372">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="189.79851"
+       y="19.857431"
+       id="text6897-88-3-6-3-2"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-6-26-6-0"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="189.79851"
+         y="19.857431">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="176.7195"
+       y="43.508503"
+       id="text6897-88-7-1-1-6"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-8-0-8"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="176.7195"
+         y="43.508503">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#040905;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="172.66589"
+       y="17.470266"
+       id="text6897-88-7-2-7-6-9"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-7-9-3-2"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#040905;fill-opacity:1;stroke-width:0.264583"
+         x="172.66589"
+         y="17.470266">T</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="154.98051"
+       y="13.747673"
+       id="text6897-88-35-20-2-6"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-62-2-0-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="154.98051"
+         y="13.747673">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="126.84193"
+       y="19.630478"
+       id="text6897-88-3-2"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-6-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="126.84193"
+         y="19.630478">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="113.2486"
+       y="43.666168"
+       id="text6897-88-7-31"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="113.2486"
+         y="43.666168">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="109.7093"
+       y="17.243313"
+       id="text6897-88-7-2-4"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-7-7"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="109.7093"
+         y="17.243313">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="92.023933"
+       y="13.520717"
+       id="text6897-88-35-8"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-62-4"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="92.023933"
+         y="13.520717">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="133.39821"
+       y="8.6770582"
+       id="text6897-88-36-5"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-0-0"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="133.39821"
+         y="8.6770582">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="121.15697"
+       y="19.623653"
+       id="text6897-88-3-6-3"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-6-26-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="121.15697"
+         y="19.623653">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="107.56365"
+       y="43.659344"
+       id="text6897-88-7-1-1"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-8-0"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="107.56365"
+         y="43.659344">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#040905;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="104.02435"
+       y="17.236488"
+       id="text6897-88-7-2-7-6"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-7-9-3"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#040905;fill-opacity:1;stroke-width:0.264583"
+         x="104.02435"
+         y="17.236488">T</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="86.338974"
+       y="13.513894"
+       id="text6897-88-35-20-2"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-62-2-0"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="86.338974"
+         y="13.513894">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="135.96436"
+       y="13.912767"
+       id="text6897-88-0"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="135.96436"
+         y="13.912767">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="123.94949"
+       y="24.859365"
+       id="text6897-88-3-3"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-6-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="123.94949"
+         y="24.859365">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="110.55479"
+       y="38.780174"
+       id="text6897-88-7-0"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="110.55479"
+         y="38.780174">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="106.81687"
+       y="22.4722"
+       id="text6897-88-7-2-2"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-7-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="106.81687"
+         y="22.4722">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="89.1315"
+       y="18.749601"
+       id="text6897-88-35-1"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-62-8"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="89.1315"
+         y="18.749601">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="64.443832"
+       y="13.821176"
+       id="text6897-88-0-3"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-9-7"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="64.443832"
+         y="13.821176">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="52.375248"
+       y="24.740232"
+       id="text6897-88-3-3-5"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-6-6-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="52.375248"
+         y="24.740232">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="38.97855"
+       y="38.721382"
+       id="text6897-88-7-0-2"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-6-2"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="38.97855"
+         y="38.721382">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="35.415043"
+       y="22.353067"
+       id="text6897-88-7-2-2-8"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-7-6-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="35.415043"
+         y="22.353067">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="17.729671"
+       y="18.630468"
+       id="text6897-88-35-1-7"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-62-8-3"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="17.729671"
+         y="18.630468">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="204.78316"
+       y="13.840168"
+       id="text6897-88-79"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-2"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="204.78316"
+         y="13.840168">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="192.6783"
+       y="24.782228"
+       id="text6897-88-3-0"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-6-2"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="192.6783"
+         y="24.782228">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="179.23659"
+       y="38.919071"
+       id="text6897-88-7-3"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-75"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="179.23659"
+         y="38.919071">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="175.62456"
+       y="22.685431"
+       id="text6897-88-7-2-9"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-5-7-2"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="175.62456"
+         y="22.685431">5</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;line-height:1.25;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="157.95433"
+       y="18.80373"
+       id="text6897-88-35-2"><tspan
+         sodipodi:role="line"
+         id="tspan6895-9-62-89"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.58611px;font-family:'Noto Looped Lao';-inkscape-font-specification:'Noto Looped Lao';stroke-width:0.264583"
+         x="157.95433"
+         y="18.80373">1</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+%!TeX root = paper22-coord-ac-rl.tex
+
+\begin{lstlisting}[
+  mathescape,
+  %float=tp,
+  floatplacement=tbp,
+  frame=single,
+  label={lst:general-schema},
+  caption={
+    ScaFi-like pseudocode description (implemented in the simulation) for value-based \ac{rl} algorithm applied \ac{ac}.
+    %
+    \texttt{state}, \texttt{update}, \texttt{reward} are block specific. 
+    %The learn branch use \texttt{simulation}, a global object in which agents access to a shared Q.
+  },
+  captionpos=b
+]
+def optBlock($o_{t-1}$) { // learning as a field that evolves in time
+  rep(($s_0, a_0$, $o_0$)) { // $s_0$, $a_0$ context dependent 
+    case ($s_{t-1}, a_{t-1}$, _) => {
+      val Q = sense("Q") // global during training, local during execution
+      val $o_{t}$ = update($o_{t-1}$, $a_{t-1}$) // local action
+      // state from the neighbourhood field program output
+      val $s_{t}$ = state(nbr($o_{t}$))
+      val $a_{t}$ = branch(learn) { // actions depends on learn condition
+        val $r_{t-1}$ = reward($o_{t}$, simulation) // simulation is a global object
+        simulation.updateQ(Q, $s_{t-1}$, $a_{t-1}$, $r_{t-1}$, $s_{t}$) // Q update
+        $\sim$ $\pi_{behavioural}^Q$($s_{t}$) // sample from a probabilistic distribution
+      } {
+        $\pi_{target}^Q$($s_t$) // greedy policy, no sampling is needed
+      }
+    }
+    ($s_{t}$, $a_{t}$, $o_{t}$) 
+  }._3 // select the output from the tuple
+}
+  \end{lstlisting}
+  %\caption{\scafi{}-like pseudocode description for value-based \ac{rl} algorithm applied \ac{ac}. \texttt{state}, \texttt{update}, \texttt{reward} are block specific. The learn branch use \texttt{simulation}, a global object in which agents access to a shared Q. 
+  %$\sim$ stands for sampling a value from a probabilistic distribution.}
+  %\label{lst:general-schema}
+%\end{figure}

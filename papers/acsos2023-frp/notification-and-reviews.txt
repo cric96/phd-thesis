@@ -1,0 +1,119 @@
+TODO for Camera Ready:
+
+- [X] @All?: (R1) "the cognitive complexity of the small examples shown in the paper seems to be quite hight so I am a bit sceptical about the language's practicality"
+    * RC: NON GESTIREI
+- [X] @Roby: (R1) "there are many key elements of the language that are not simple and would deserve  being further explained. The section about implementation could be omitted as the discussed aspects are not relevant" -- "As mentioned before, the main abstraction and language primitives would deserve a more rigorous and detailed explanation.  For instance, it is not clear what is the difference between the semantics of mux and branch (according to Fig 3 they even take the same input and output types). "
+    * RC: **non** toglierei la sezione dell'implementazione per spiegare meglio i costrutti
+    * RC: per gestire questo ho solo spiegato la differenza tra branch e mux: "branch(c,t,e) [...] enables a form of distributed branching, where devices that happen to execute t will not interact with those that executed e (and vice versa)—unlike mux in which a device “contributes” to both t and e." 
+- [ ] @Gianlu: (R1) "In the evaluation section, the characteristics of the scenario are not explicitly stated. For the example at hand, a scenario with frequent changes in neighbour relations would not be also interesting? 
+- [ ] @Gianlu: (R1) "Still in the evaluation, the equations that are presented that use integrals are not correct. The messages sent are enumerable as are the number of times the programs that been evaluated by a node. This means that they are null sets and their integral is zero."
+- [ ] @Gianlu/@Dani: (R2) It is not clear how FRASP could be used practically for a concrete case of (real, physical, distributed) swarm robots
+- (R4) "the convergance to the same result does not seem to me as a strong evidence of the overall correctness and that the results for efficiency/reactivity were not compared with other solutions in the field"
+    * NON GESTIREI
+- (R2) "a thorough empirical evaluation would be a very important next step"
+    * NON GESTIBILE QUI
+
+-------------
+
+Dear Roberto Casadei,
+
+Thank you for your submission to the IEEE ACSOS 2023 conference. We are pleased to inform you that your paper entitled
+
+Self-Organisation Programming: A Functional Reactive Macro Approach, authored by Roberto Casadei, Francesco Dente, Gianluca Aguzzi, Danilo Pianini, Mirko Viroli.
+
+has been selected for inclusion in the ACSOS 2023 programme. Your paper has been selected as a *Full Paper* which allows for 10 pages in the proceedings (including all figures, references and appendices).
+
+We require that at least one author from each accepted paper registers as a full registrant for the ACSOS 2023 conference and attends to present the work in-person. Failure to do so will result in the paper being removed from the proceedings. Information about registration will be available at https://2023.acsos.org. 
+
+For the next steps, we ask that you prepare the camera ready version of your paper by carefully considering the reviews, and submit it using the link at [1] by ** August 5th **, at the very latest. The paper must be formatted in US-LETTER page size, must use the two-column IEEE conference proceedings format, and must be prepared in PDF format. Microsoft Word and LaTeX templates are available at the author kit website [1]. Please do not forget to upload your “Signed Copyright Release Form”.
+
+We would also like to draw your attention to the fact that ACSOS 2023 organises an Artifact Evaluation Program for accepted submissions, to highlight the reproducibility of results and usefulness of produced artifacts. If you wish, you are invited to submit an artifact associated with your accepted paper until July 14th via Easychair. Participation in the Artifact Evaluation Program is entirely optional. The participants whose artifact passes the repeatability check will be entitled to include, in the camera-ready version of their paper and in the presentation slides, an IEEE AE seal. For more detail please refer to https://2023.acsos.org/track/acsos-2023-artifacts#Submission
+
+We are looking forward to meeting you at ACSOS 2023 in Toronto, and we look forward to your presentation. Once again congratulations on your excellent work and the acceptance for the conference!
+
+Best regards,
+Barry Porter and Ivana Dusparic,
+ACSOS 2023 PC Chairs
+
+[1] https://2023.acsos.org/track/acsos-2023-papers#Camera-Ready-Submission-for-Main-Track-Proceedings
+
+SUBMISSION: 7958
+TITLE: Self-Organisation Programming: A Functional Reactive Macro Approach
+
+-------------------------  METAREVIEW  ------------------------
+All reviewers like the paper but see weaknesses, too. The main concerns among the reviewers were an insufficiently detailed language design / description or at least a missing design rationale and an evaluation lacking thoroughness.
+
+
+
+----------------------- REVIEW 1 ---------------------
+SUBMISSION: 7958
+TITLE: Self-Organisation Programming: A Functional Reactive Macro Approach
+AUTHORS: Roberto Casadei, Francesco Dente, Gianluca Aguzzi, Danilo Pianini and Mirko Viroli
+
+----------- Overall evaluation -----------
+SCORE: 1 (weak accept)
+----- TEXT:
+***Summary***
+The paper proposes a new language, FRASP, inspired by functional reactive programming, for programming the collective behaviour of systems of devices. All devices in a system are assumed to be equipped with the same sensors and a single program defines the computations performed by all devices. The program makes use of data local to the device (namely, the data gathered by its sensors) and  data computed by its neighbours. 
+The paper introduces the language primitives by example and briefly discusses a language's implementation.  An experimental evaluation of the language is also presented, comparing its performance with a reference solution based on round-based computation. This evaluation considers a scenario where the goal is that a system of devices collectively compute the shortest path from a source to a destination device and the changes of neighbour relations are seldom. 
+
+***Evaluation***
+Soundness. In general terms the proposal makes sense. However, since the language is only briefly introduced through examples there is not much that can be said about its soundness.   
+
+Significance and Novelty. The idea of bringing the ideas of functional reactive programming to aggregate programming is novel and interesting. The fact that the language has an implementation that is publicly available makes it, in principle, applicable in practise. The evaluation shows that, at least in some scenarios, its reactivity brings benefits in terms of performance (convergence and messages exchanged). Although the authors mention that their goal was to devise an expressive and practical language, none of those characteristics was evaluated. In fact, the cognitive complexity of the small examples shown in the paper seems to be quite hight so I am a bit sceptical about the language's practicality.  Also, no real example of application of FRASP to self-organizing systems seems to have been developed.
+
+Verifiability and Transparency. The language implementation and the results of the evaluation experiment are available in two github repositories that are publicly available.
+
+Presentation. The paper reads well and the main ideas come across with clarity. However, there are many key elements of the language that are not simple and would deserve  being further explained. The section about implementation could be omitted as the discussed aspects are not relevant.
+
+Other details
+*************
+As mentioned before, the main abstraction and language primitives would deserve a more rigorous and detailed explanation.  For instance, it is not clear what is the difference between the semantics of mux and branch (according to Fig 3 they even take the same input and output types). 
+
+In the evaluation section, the characteristics of the scenario are not explicitly stated. For the example at hand, a scenario with frequent changes in neighbour relations would not be also interesting? 
+
+Still in the evaluation, the equations that are presented that use integrals are not correct. The messages sent are enumerable as are the number of times the programs that been evaluated by a node. This means that they are null sets and their integral is zero.
+----------- Best paper/best student paper award -----------
+SELECTION: no
+
+
+
+----------------------- REVIEW 2 ---------------------
+SUBMISSION: 7958
+TITLE: Self-Organisation Programming: A Functional Reactive Macro Approach
+AUTHORS: Roberto Casadei, Francesco Dente, Gianluca Aguzzi, Danilo Pianini and Mirko Viroli
+
+----------- Overall evaluation -----------
+SCORE: 2 (accept)
+----- TEXT:
+This paper presents a so-called 'functional reactive macro programming model' for specifying and executing self-organizing systems. After an overview of state-of-the-art and motivating the work, the authors provide more information on the FRASP approach and provide 2 basic examples. Both examples are used for illustrating the benefits of the approach.
+
+Some remarks (which can be considered suggestions for clarifications):
+- It is not clear how FRASP could be used practically for a concrete case of (real, physical, distributed) swarm robots. The examples and expose mainly seem to refer to simulations of artificial self-organizing behaviour?
+- A thorough empirical evaluation would be a very important next step, imho. By that I mean that the language should be evaluated on its merits for supporting the programming, ease of use for developers, programming performanc, etc. This fits the broad interest in 'empirical software engineering', which is complementary to the experiments reported in the paper.
+- A thorough evaluation could be an interesting next step.
+
+Other than that, a clear and well-written paper, possibly sparking interesting discussions at the conference.
+----------- Best paper/best student paper award -----------
+SELECTION: yes
+
+
+
+----------------------- REVIEW 4 ---------------------
+SUBMISSION: 7958
+TITLE: Self-Organisation Programming: A Functional Reactive Macro Approach
+AUTHORS: Roberto Casadei, Francesco Dente, Gianluca Aguzzi, Danilo Pianini and Mirko Viroli
+
+----------- Overall evaluation -----------
+SCORE: 1 (weak accept)
+----- TEXT:
+The paper presents FRASP, a Scala-based DSL exploting functional reactive macroprogramming model, suitable for expressing self-organizing behaviour in systems. FRASP is explained from the user perspective: showing the general model, abstractions and promitives supported by the multiple examples. The paper also provides the evaluation of several common scenarious based on the Alchemist simulator with the aim to evaluate the algorithm correctness and the program efficiency/reactivity. 	
+
+I don't have much to say on the language design as the many things in it could be a design choice, soundness of which could be proved/disproved by the evaluation. But I am a bit worried about the evaluaton results, as the convergance to the same result does not seem to me as a strong evidence of the overall correctness and that the results for efficiency/reactivity were not compared with other solutions in the field.
+
+Despite that, I find the paper to be well-written, the language concepts to be well-explained, and in general to be of the scope of the conference and interest of the audience. Thus I would recommend it for the acceptance.
+----------- Best paper/best student paper award -----------
+SELECTION: no
+
+
+

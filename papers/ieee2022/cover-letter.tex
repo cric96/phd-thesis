@@ -1,0 +1,86 @@
+\documentclass{article} 
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage[usenames]{xcolor}
+
+\newcommand{\meta}[1]{\textcolor{blue}{#1}}
+
+\newcommand{\theTitle}{Dynamic Decentralization Domains for the Internet of Things}
+\newcommand{\thePublisher}{IEEE}
+\newcommand{\theJournal}{Internet Computing}
+\newcommand{\theSI}{Decentralized Systems}
+
+\title{Cover Letter for the Article\\
+\textbf{``\theTitle''}
+\\
+submitted to
+\\
+\textbf{\thePublisher{} \theJournal{}\\ Special Issue on \theSI{}}}
+\author{Gianluca Aguzzi \and Roberto Casadei \and Danilo Pianini \and Mirko Viroli}
+
+\bibliographystyle{elsarticle-num}
+
+\sloppypar
+
+\begin{document}
+\maketitle
+
+Dear \emph{Editors},
+
+we would like to submit our manuscript entitled ``\theTitle{}''
+to the \thePublisher{} \theJournal{} Magazine.
+
+We believe this work makes for a significant contribution to the journal. 
+%
+Indeed,
+ in this manuscript 
+ we propose a high-level programming model
+ for decentralized situation recognition and action.
+%
+The idea consists 
+ in exploiting a small number of 
+ design abstractions,
+ inspired by the state of the art~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/fgcs/PianiniCVN21,DBLP:journals/eaai/CasadeiVAPD21,DBLP:journals/tetc/ScekicSVRTMD20,DBLP:journals/computer/BuresPKTH16,DBLP:journals/csur/MottolaP11}
+ and integrated in order to express the global-level logic
+ of self-organizing ecosystems, such that it can be executed in a fully decentralized way.
+%
+Specifically, we propose to combine concurrent collective tasks
+ and decentralization domains
+ to structure 
+ the behaviour
+ of systems
+ e.g. for 
+ monitoring and controlling
+ large-scale environmental phenomena.
+%
+We implement the programming model 
+ through a Scala API
+ and evaluate it by simulation
+ through a case study 
+ of a large-scale flood warning system.
+%
+The results show the validity of the contribution for 
+ designers and programmers
+ of complex adaptive systems
+ like those found e.g. in the Internet of Things and related scenarios.
+
+Given the relevance to the journal's audience, 
+ the significance of the contribution,
+ and the vision we provide on emerging IoT scenarios,
+ we believe this manuscript
+ well fits this venue.
+
+We also hereby declare that:
+%
+\begin{itemize}
+\item This manuscript is the authors' original work and has not been published nor has it been submitted simultaneously elsewhere.
+\item All authors have checked the manuscript and have agreed to the submission. 
+\end{itemize}
+
+Sincerely yours,\\
+Gianluca Aguzzi, Roberto Casadei, Danilo Pianini, and Mirko Viroli.
+
+
+\bibliography{bibliography}
+
+\end{document}
