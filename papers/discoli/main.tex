@@ -5,21 +5,7 @@
 \newcommand{\suggestions}[1]{\todo[inline, color=yellow]{#1}}    
 \newcommand{\hybridaggregate}[0]{AC+ML}
 
-\acrodef{ac}[AC]{Aggregate Computing}
-\acrodef{acml}[AC+ML]{Aggregate Computing + Machine Learning}
-\acrodef{cas}[CAS]{Collective Adaptive System}
-\acrodef{ctde}[CTDE]{Centralised Traning Decentralised Execution}
-\acrodef{ml}[ML]{Machine Learning}
-\acrodef{rl}[RL]{Reinforcement Learning}
-\acrodef{hql}[HQL]{Hysteretic Q-Learning}
-\acrodef{marl}[MARL]{Multi-Agent Reinforcement Learning}
-\acrodef{fc}[FC]{Field Calculus}
-\acrodef{mdp}[MDP]{Markov Decision Process}
-\acrodef{qos}[QoS]{Quality of Service}
-\acrodef{cps}[CPS]{Cyber-Physical System}
-\acrodef{dsl}[DSL]{Domain-Specific Language}
-\acrodef{ict}[ICT]{Information-Communication Technology}
-\acrodef{ci}[CI]{Collective Intelligence}
+
 \sloppypar    
 \chapter{Machine Learning for Aggregate Computing}
 
@@ -41,7 +27,7 @@ For collective adaptive behaviour to unfold,
  the full program has to be played by all the agents
  of the system
  through asynchronous \emph{sense-compute-act} rounds,
- hence somewhat mimicking self-organisation processes in natural systems~\cite{yates2012selforg}.
+ hence somewhat mimicking self-organization processes in natural systems~\cite{yates2012selforg}.
 %
 For actual execution,
  a proper \ac{ac} middleware or platform
@@ -75,7 +61,7 @@ Traditionally,
  created by developers
  and tailored to specific contexts and goals,
  leading to, e.g.,
- self-organisation algorithms 
+ self-organization algorithms 
  that are very reactive under certain network assumptions~\cite{DBLP:journals/cee/AudritoCDPV21},
  or round execution frequencies tailored to the velocity of change of underlying environment phenomena~\cite{danilo2021lmcs}.
 %
@@ -106,7 +92,7 @@ Accordingly, in this paper,
 \begin{figure}[h]
 \centering
   \includegraphics[width=0.8\linewidth]{papers/discoli/img/ac-rl.pdf}
-  \caption{The entire Aggregate Computing stack. 
+  \caption[The aggregate computing stack]{The entire Aggregate Computing stack. 
   The application level (composed of API, algorithms and programs) needs to be supported by an execution platform/middleware, 
   to decouple the application from systems structures. 
   Then, this execution platform should be deployed in a particular architecture. 
@@ -117,7 +103,7 @@ Accordingly, in this paper,
 
 \begin{figure}[h]
   \includegraphics[width=\linewidth]{papers/discoli/img/roadmap.pdf}
-  \caption{Overview of the research roadmap aiming at efficient and effective aggregate computations. 
+  \caption[Overview of the research roadmap for combined aggregate computing with machine learning]{Overview of the research roadmap aiming at efficient and effective aggregate computations. 
   The starting point is current research, based on hand-crafted solutions.
   The goal is addressed through application of \ac{ml} at the program/execution/deployment levels.}
   \label{fig:roadmap}
@@ -126,7 +112,7 @@ Accordingly, in this paper,
 \section{Machine Learning for Aggregate Computing: a Research Roadmap}\label{s:roadmap}
 
 This section details motivation and direction for \ac{acml} research,
- also summarised in \Cref{fig:roadmap}.
+ also summarized in \Cref{fig:roadmap}.
 %
 For a comprehensive introduction to \ac{ac},
  the reader can refer to~\cite{DBLP:journals/jlap/ViroliBDACP19}.
@@ -199,10 +185,10 @@ The field calculus, then, provides a set of operators
  (which can be reified through \emph{neighbouring fields}).
 %
 %
-The field calculus is implemented by so-called \emph{aggregate programming languages} such as ScaFi, a Scala internal \ac{dsl}.
+The field calculus is implemented by so-called \emph{aggregate programming languages} such as \scafi{}, a Scala internal \ac{dsl}.
 %
 So, in \ac{ac}, a collective adaptive behaviour
- is the result of an algorithm (a function from fields to fields) expressed e.g. in ScaFi
+ is the result of an algorithm (a function from fields to fields) expressed e.g. in \scafi{}
  and the concrete execution of the algorithm
  in a system of devices.
 %
@@ -229,7 +215,7 @@ Indeed, they may:
 
 Designing efficient and versatile \ac{ac} algorithms can be complex~\cite{DBLP:journals/cee/AudritoCDPV21,DBLP:conf/saso/AudritoCDV17}: therefore, 
  it is interesting to explore
- whether algorithms can be learnt or synthesised
+ whether algorithms can be learnt or synthesized
  given high-level functional goals.
 %
 To this purpose,
@@ -293,7 +279,7 @@ Indeed, true adaptiveness
  changing for the better.
 %
 The emphasis on improving efficiency
- by optimising execution 
+ by optimizing execution 
  of aggregate systems,
  hence promoting sustainability
  of collective computations,
@@ -312,7 +298,7 @@ A logical \ac{ac} system
 It is the \emph{collective digital twin}~\cite{casadei2022applsci}
  of a target set of application-level physical devices (e.g., robots of a swarm, or workers in a computing ecosystem).
 %
-As shown in recent work on \emph{pulverised architectures}~\cite{DBLP:journals/fi/CasadeiPPVW20},
+As shown in recent work on \emph{pulverized architectures}~\cite{DBLP:journals/fi/CasadeiPPVW20},
  it turns out that different application partitioning schemas and implementations of the \emph{digital thread} associated with the aggregate system are possible,
  as well as different deployments
  of application components
@@ -356,7 +342,7 @@ Additionally,
  that changing the logical structure of an aggregate system at runtime
  (e.g., by injecting \emph{virtual} devices)
  could be a further means 
- for steering self-organisation processes,
+ for steering self-organization processes,
  namely to improve the collective behaviour of a system (cf. \cite{DBLP:journals/jnca/LiS11}).
 %
 In this respect,
@@ -423,10 +409,10 @@ The significance of the problem
 \subsection*{Technical Challenges}
 
 Applying learning through the \ac{ac} stack (\Cref{fig:architectures}) poses several challenges,
- many of which are implied by the 
+ many of which are implied by 
  the nature of aggregate systems---cf.
  distribution, 
- decentralisation, 
+ decentralization, 
  partial observability,
  many-agents coordination, and
  the eventual nature of collective computations,
@@ -439,7 +425,7 @@ Indeed, extending the learning from one agent to many agents exponentially enlar
 %
 Moreover, the neighbouring-based system structure is not strict and could evolve in time, leading to time- and space-varying input spaces.
 %
-Furthermore, it is not appropriate to use a centralised controller that orchestrates the system as a whole, due to the typical large scale and resilience requirements.
+Furthermore, it is not appropriate to use a centralized controller that orchestrates the system as a whole, due to the typical large scale and resilience requirements.
 %
 However, using only a local vision of the system could lead to the problem of \emph{non-stationarity}, since each agent concurrently learns and modifies the environment in the eye of the other agents~\cite{DBLP:journals/aim/TuylsW12}.
 %

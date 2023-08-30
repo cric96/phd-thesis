@@ -18,15 +18,6 @@
 %\chapter{\MacroSwarm{} Swarm Programming Framework}
 \chapter{\MacroSwarm{}}
 
-% If the paper title is too long for the running head, you can set
-% an abbreviated paper title here
-%
-\author{Gianluca Aguzzi%\inst{1}
-\orcidID{0000-0002-1553-4561} \and
-Roberto Casadei%\inst{1}
-\orcidID{0000-0001-9149-949X} \and
-Mirko Viroli%\inst{1}
-\orcidID{0000-0003-2702-5702}}
 %
 \section{Introduction}
 
@@ -44,7 +35,7 @@ In these domains,
  the emergence of desired global-level outcomes %(or the accomplishment of joint goals) 
  with inherent robustness and resiliency to changes and faults in the swarm or the environment.
 %
-Complex patterns can emerge through the interaction of simple agents~\cite{bonabeau1999swarmintelligence-book}, and centralised approaches %of decision-making 
+Complex patterns can emerge through the interaction of simple agents~\cite{bonabeau1999swarmintelligence-book}, and centralized approaches %of decision-making 
  can suffer from scalability and dependability issues: as such,  
  we seek for an approach based on %adopting 
  suitable distributed coordination models and languages to steer the micro-level activity of a possibly large set of agents.
@@ -76,7 +67,7 @@ Additionally, most of existing approaches tend to be pragmatic, not formally-fou
  enable construction of certain types of swarm applications
  but with limited support for analysis and principled design of complex applications (e.g.~\cite{lima2018dolphin,paros,DBLP:conf/iros/PinciroliB16,DBLP:conf/icra/CarrollNS21}).
 %
-Exceptions that provide a formal approach exist but they are typically overly abstract, requiring additional effort to actually code and execute swarm control programs~\cite{DBLP:journals/csur/LuckcuckFDDF19}.
+Exceptions that provide a formal approach exist, but they are typically overly abstract, requiring additional effort to actually code and execute swarm control programs~\cite{DBLP:journals/csur/LuckcuckFDDF19}.
 
 The goal of this work is 
  to introduce a formally-grounded \ac{api},
@@ -94,7 +85,7 @@ Accordingly, we present \MacroSwarm{}, a \scafi{}-based framework to help progra
 To evaluate \MacroSwarm{}, we show a use case that leverage our \ac{api} 
  in a simulated environment based on the Alchemist multi-agent system simulator~\cite{DBLP:journals/jos/PianiniMV13}.
 
-The remainder of this paper is organised as follows.
+The remainder of this paper is organized as follows.
 %
 \Cref{sec:context} provides context and motivation.
 %
@@ -121,21 +112,21 @@ Two main kinds of design methods can be identified~\cite{DBLP:journals/swarm/Bra
 Our focus is on the latter category of methods and especially on \acp{dsl} for expressing swarm behaviour (which are reviewed in \Cref{sec:rw}).
 %
 
-Another main distinction is between \emph{centralised} (\emph{orchestration-based}) and \emph{decentralised} (\emph{choreographical}) approaches.
+Another main distinction is between \emph{centralized} (\emph{orchestration-based}) and \emph{decentralized} (\emph{choreographical}) approaches.
 %
 In the former category,
  programs generally specify tasks and relationships between tasks, % (cf. PARoS~\cite{paros} and Maple-Swarm~\cite{DBLP:conf/isola/KosakHBWHR20}),
- and these descriptions are used by a centralised entity
+ and these descriptions are used by a centralized entity
  to command the behaviour of the individual entities of the swarm.
 %
 By contrast,
- decentralised approaches
- do not rely on any centralised entity:
+ decentralized approaches
+ do not rely on any centralized entity:
  each robot is driven by a control program 
- and the resulting execution is decentralised
+ and the resulting execution is decentralized
  (e.g., based on interaction with neighbours, like in Meld~\cite{Meld2007}).
 %
-In this work, we focus on \emph{decentralised} solutions, for they support resilience and scalability by avoiding single-points-of-failure and bottlenecks.
+In this work, we focus on \emph{decentralized} solutions, for they support resilience and scalability by avoiding single-points-of-failure and bottlenecks.
 
 
 In the general context of behaviour-based swarm design,
@@ -143,7 +134,7 @@ In the general context of behaviour-based swarm design,
  like a general lack
  of \emph{top-down} design methods of collective behaviours
  %(which is scientifically related to the core macroprogramming problem~\cite{Casadei2023}---also referred to as 
- (cf. the scientific issue of ``emergence programming''~\cite{varenne2015programming-emergence} and  ``self-organisation steering''~\cite{DBLP:journals/alife/GershensonTWS20}),
+ (cf. the scientific issue of ``emergence programming''~\cite{varenne2015programming-emergence} and  ``self-organization steering''~\cite{DBLP:journals/alife/GershensonTWS20}),
  the problem of formal verification and validation~\cite{DBLP:journals/csur/LuckcuckFDDF19},
  heterogeneity, 
  and operational/maintenance issues
@@ -187,13 +178,13 @@ Finally, we observe in the literature
  that are more usable.
 %
 In a recent survey on formal specification methods for swarm robotics~\cite{DBLP:journals/csur/LuckcuckFDDF19}
- it is reported that a major limitation lies in (i) the tooling and (i) the formalisation of the ``last step'' of passing from a formal model to program code.
+ it is reported that a major limitation lies in (i) the tooling and (i) the formalization of the ``last step'' of passing from a formal model to program code.
 %
-Hence, we seek seek here for an approach that combines the benefits of formal methods and the pragmatism of concrete \acp{dsl}.
+Hence, we seek here for an approach that combines the benefits of formal methods and the pragmatism of concrete \acp{dsl}.
 
 In summary,
  this work is motivated by the need of an
- approach for \emph{formal-yet-practical top-down behaviour-based design of decentralised swarm behaviour}.
+ approach for \emph{formal-yet-practical top-down behaviour-based design of decentralized swarm behaviour}.
 
 \section{Background: Aggregate Computing}\label{sec:background} %% or background? 
 
@@ -232,7 +223,7 @@ The approach is generally used to program long-running control tasks that need s
 Accordingly, the execution model 
  is based on (or can be understood as) a repeated execution,
  by each device,
- of asynchronous sense--compute--interact \emph{rounds}---fundamentally mimicking self-organisation in biological systems~\cite{bonabeau1999swarmintelligence-book}.
+ of asynchronous sense--compute--interact \emph{rounds}---fundamentally mimicking self-organization in biological systems~\cite{bonabeau1999swarmintelligence-book}.
 %
 For simplicity, we can consider each round to atomically consist of three steps:
 %
@@ -262,7 +253,7 @@ For instance,
  query their temperature sensor
  would yield a field of real numbers denoting temperature readings,
  whereas a field of speed vectors 
- could be use to denote the desired actuations
+ could be used to denote the desired actuations
  to make a swarm move.
 %
 
@@ -341,7 +332,7 @@ It is possible to identify some general higher-level operators to account for co
 \item \emph{\textbf{G}radient-cast (distributed propagation)~\cite{DBLP:journals/tomacs/ViroliABDP18}.}
 Block \lstinline|G[T](source:Boolean,value:T,acc:T=>T):T| is used to propagate \lstinline|value| from \lstinline|source| devices outwards along the gradient~\cite{DBLP:journals/tomacs/ViroliABDP18} of increasing distances from them, transforming the value through \lstinline|acc| along the way.
 
-\item \emph{\textbf{C}ollect-cast (distributed collection)~\cite{DBLP:journals/cee/AudritoCDPV21}.} Block \lstinline|C[T](sink:Boolean,value:T,acc(T,T)=>T):T| is used to summarise distributed information into \lstinline|sink| devices, the \lstinline|value|s provided by devices around the system, while aggregating information through \lstinline|acc| along the gradient directed towards the sinks.
+\item \emph{\textbf{C}ollect-cast (distributed collection)~\cite{DBLP:journals/cee/AudritoCDPV21}.} Block \lstinline|C[T](sink:Boolean,value:T,acc(T,T)=>T):T| is used to summarize distributed information into \lstinline|sink| devices, the \lstinline|value|s provided by devices around the system, while aggregating information through \lstinline|acc| along the gradient directed towards the sinks.
 \end{itemize}
 %
 Examples further showing the compositionality of the approach are in \Cref{sec:contrib}.
@@ -358,9 +349,9 @@ To motivate why aggregate computing appears to be a good match for swarm program
 %
 \begin{itemize}
 \item \emph{Top-down behaviour-based design.} It is promoted by the \emph{compositionality} and \emph{collective stance} of aggregate computing, supported by the functional paradigm and the field abstraction~\cite{AVDPB-TOCL2019,DBLP:conf/ecoop/AudritoCDSV22}.
-\item \emph{Scalability.} Since execution is fully decentralised and asynchronous, the approach is scalable to hundreds, thousands, and even more devices~\cite{DBLP:journals/eaai/CasadeiVAPD21}.
+\item \emph{Scalability.} Since execution is fully decentralized and asynchronous, the approach is scalable to hundreds, thousands, and even more devices~\cite{DBLP:journals/eaai/CasadeiVAPD21}.
 \item \emph{Formal approach.} Aggregate computing and \scafi{} are based on the field calculus~\cite{ACDV-LMCS2023,AVDPB-TOCL2019}, which enables formal analysis of programs and proofs of interesting properties like self-stabilisation~\cite{DBLP:journals/tomacs/ViroliABDP18}, universality~\cite{DBLP:conf/coordination/AudritoBDV18}, and others~\cite{DBLP:journals/jlap/ViroliBDACP19}.
-\item \emph{Pragmatism.} Promoted by layers of abstractions, this is witnessed by open-source, maintained, concrete software artefacts like the \scafi{} \ac{dsl}~\cite{DBLP:journals/softx/CasadeiVAP22},  simulation platforms like Alchemist~\cite{DBLP:journals/jos/PianiniMV13} and {\sc{}ScaFi-Web}~\cite{DBLP:conf/coordination/AguzziCMPV21}\footnote{\url{https://scafi.github.io/web/}}, and the possibility to devise libraries of high-level functions~\cite{DBLP:journals/eaai/CasadeiVAPD21}.
+\item \emph{Pragmatism.} Promoted by layers of abstractions, this is witnessed by open-source, maintained, concrete software artefacts like the \scafi{} \ac{dsl}~\cite{DBLP:journals/softx/CasadeiVAP22},  simulation platforms like Alchemist~\cite{DBLP:journals/jos/PianiniMV13} and {\sc{}\scafi{} Web}~\cite{DBLP:conf/coordination/AguzziCMPV21}\footnote{\url{https://scafi.github.io/web/}}, and the possibility to devise libraries of high-level functions~\cite{DBLP:journals/eaai/CasadeiVAPD21}.
 \item \emph{Operational flexibility.} Concrete aggregate computing systems can be deployed and operated using different architectural styles~\cite{DBLP:journals/fi/CasadeiPPVW20} and execution policies~\cite{DBLP:journals/lmcs/PianiniCVMZ21}, supporting different technological and resource requirements.
 \end{itemize}
 %
@@ -461,7 +452,7 @@ To motivate why aggregate computing appears to be a good match for swarm program
 % \subsection{API Design}\label{sec:api}
 \begin{figure}[t]
   \includegraphics[width=\textwidth]{papers/coordination2023-macro/images/architecture.drawio.pdf}
-  \caption{\MacroSwarm{}: architecture overview. 
+  \caption[\MacroSwarm{}: architecture overview.]{\MacroSwarm{}: architecture overview. 
   The black boxes contained in the green rectangle 
   represent the main modules of the library.
   }\label{fig:architecture}
@@ -470,7 +461,7 @@ To motivate why aggregate computing appears to be a good match for swarm program
 This section presents the \MacroSwarm{} approach and \ac{api}.
 %
 In particular, we describe its overall architecture, and the main blocks exposed by the \ac{api}
- (summarised in \Cref{fig:architecture}), 
+ (summarized in \Cref{fig:architecture}), 
  which support the specification of a wide range of high-level swarm behaviours. 
 %
 The key idea in the design of \MacroSwarm{}  
@@ -478,7 +469,7 @@ The key idea in the design of \MacroSwarm{}
  as a function mapping sensing and parameter fields 
  to actuation fields (often, velocity vectors).
 %
-We have organised the \ac{api}
+We have organized the \ac{api}
  into multiple \emph{modules},
  capturing logically related sets of behaviours,
  and
@@ -661,7 +652,7 @@ rep(Point2D.Zero) {
 \subsubsection{Leader-based blocks}\label{subsec:leader}
 These blocks allow agents to follow a designated leader.
 The idea behind leadership in swarm systems is that a leader 
- can act as a coordinator, influencing the followers that recognise it as such. 
+ can act as a coordinator, influencing the followers that recognize it as such. 
 % 
 In the context of aggregate computing, 
  leaders are typically defined as Boolean fields holding \lstinline|true| for leaders 
@@ -812,7 +803,7 @@ In \MacroSwarm{} some of the most idiomatic spatial structures are available.
 % have been implemented to show how they can be easily integrated into this framework. 
 %
 
-The implementation is as follows. First of all, the formation of structures is based on the presence of a leader that
+The implementation is as follows. First, the formation of structures is based on the presence of a leader that
  %it is not a must since there are other approaches in which this is done in a distributed way,
  %but for simplicity, we chose to use a leader to perform this coordination task.  
 collects the hop-by-hop distances 
@@ -873,7 +864,7 @@ Note that there is no coordination between agents in the above code,
  but you can enforce it using lower-level blocks (e.g., flocking or team-based behaviours).
 %
 For example, \MacroSwarm{} enables describing a swarm behaviour where:
-(i) a group of nodes gather around a leader,
+(i) a group of nodes gathers around a leader,
 (ii) the leader brings the entire group towards the \lstinline|goalOne|,
 (iii) the leader brings the entire group towards the \lstinline|goalTwo|.
 %
@@ -952,7 +943,7 @@ The node should form teams of at least one healer and several explorers, maintai
   \caption{Explore}
   \label{fig:explore}
 \end{subfigure}
-\caption{The first phases of the scenario described in \Cref{sec:eval}. 
+\caption[\MacroSwarm{} graphical simulations example]{The first phases of the scenario described in \Cref{sec:eval}. 
  At the beginning, the system is split into teams; 
  afterwards, the teams assume a spatial formation (circular, in this case);
  finally, the teams start exploring the overall area.}\label{fig:scenario}
@@ -971,7 +962,7 @@ To structure the desired swarm behaviour,
 \end{enumerate}
 %
 We now describe the implementation of each part, leveraging the \MacroSwarm{} API. % and \scafi{} for the aggregate programming basic blocks.
-First of all, for creating teams, we can use the \textbf{Team Formation} blocks:
+First, for creating teams, we can use the \textbf{Team Formation} blocks:
 \begin{lstlisting}
 val teamFormedLogic = 
   (leader: ID) => isTeamFormed(leader, minimumDistance + confidence)
@@ -1014,7 +1005,7 @@ The second step is the exploration phase,
  the movement logic of the healer (leader) to the block.
 Exploration will go on until someone finds a danger node, 
  denoted by predicate \lstinline|dangerFound|.
-This internally uses \lstinline|C| and \lstinline|G| to collect the danger nodes' psitions
+This internally uses \lstinline|C| and \lstinline|G| to collect the danger nodes' positions
  and share them within the team:
 \begin{lstlisting}
 def dangerFound(healer: Boolean): Boolean = {
@@ -1093,7 +1084,7 @@ The results (\Cref{fig:results}) show that the system can achieve the expected o
   \caption{}
   \label{fig:danger}
 \end{subfigure}
-\caption{
+\caption[Quantitative plots of the simulated scenario in \MacroSwarm{}.]{
   Quantitative plots of the simulated scenario. 
   \Cref{fig:distance} shows the average team distance in the first two minutes. 
   \Cref{fig:min_distance} shows the minimum distance between nodes. 
@@ -1147,7 +1138,7 @@ Related programming approaches for swarms
 % and those based on centralised task orchestration.
 %
 In the following, we review the works that are more related to \MacroSwarm{},
- which are those for expressing \emph{decentralised} behaviours.
+ which are those for expressing \emph{decentralized} behaviours.
  
 %\subsubsection*{Decentralised approaches.}
 
@@ -1185,7 +1176,7 @@ By contrast, \MacroSwarm{} uses few general and expressive primitives,
 Additionally, \MacroSwarm{} can leverage theoretical results from field calculi~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/tomacs/ViroliABDP18}, making programs amenable for formal analysis.
 
 
-Voltron~\cite{Mottola2014voltron} is a programming model for team-level design of drone systems. It represents a group of individual drones through a \emph{team abstraction}, which is responsible for the overall task. The details of individual drone actions and their timing are delegated to the platform system during runtime. The programmer issues \emph{action commands} to the drone team, along with \emph{spatiotemporal constraints}. The tasks in Voltron are associated with spatial locations, and the team self-organises to populate \emph{multisets of future values} that represent the task's eventual result at a specific location. 
+Voltron~\cite{Mottola2014voltron} is a programming model for team-level design of drone systems. It represents a group of individual drones through a \emph{team abstraction}, which is responsible for the overall task. The details of individual drone actions and their timing are delegated to the platform system during runtime. The programmer issues \emph{action commands} to the drone team, along with \emph{spatio-temporal constraints}. The tasks in Voltron are associated with spatial locations, and the team self-organises to populate \emph{multisets of future values} that represent the task's eventual result at a specific location. 
 %
 However, Voltron is imperative in nature, limiting the compositionality of team-level behaviours.
 
@@ -1198,7 +1189,7 @@ for systems where communication is limited to immediate neighbours.
 It leverages 
 \emph{facts with side-effects} to handle actuation, 
 \emph{production rules} to generate new facts from existing facts, 
-and \emph{aggregate rules} to combine multiple facts into one fact by folding (e.g., maximisation or summation).
+and \emph{aggregate rules} to combine multiple facts into one fact by folding (e.g., maximization or summation).
 %
 The runtime deals with communication of facts and removal of invalidated facts.
 %
@@ -1213,7 +1204,7 @@ Finally, we mention another category of related works, which are \emph{task orch
  Maple-Swarm~\cite{DBLP:conf/isola/KosakHBWHR20}, 
  PARoS~\cite{paros},
  Resh~\cite{DBLP:conf/icra/CarrollNS21}, 
- and \cite{DBLP:conf/iros/YiDLD0WY20}): they adopt quite a different approach that leverages centralised entities to control the activity of the swarm members based on the provided task descriptions.
+ and \cite{DBLP:conf/iros/YiDLD0WY20}): they adopt quite a different approach that leverages centralized entities to control the activity of the swarm members based on the provided task descriptions.
 %
 
  
@@ -1296,7 +1287,7 @@ We presented \MacroSwarm{},
  a framework 
  for top-down swarm programming
  that provides composable blocks 
- capturing common decentralised swarm behaviours.
+ capturing common decentralized swarm behaviours.
 %
 It builds on aggregate computing,
  a formally-grounded field-based coordination paradigm,
@@ -1309,8 +1300,8 @@ As future work,
  we plan to make the \ac{api} more comprehensive,
  by covering all the main patterns from notable taxonomies of swarm behaviour~\cite{DBLP:journals/swarm/BrambillaFBD13}.
 %
-Additionally, it would be interesting to investigate approaches for synthesising compositions of \MacroSwarm{} blocks, e.g., by following the reinforcement learning-based approach of~\cite{DBLP:conf/coordination/AguzziCV22}.
+Additionally, it would be interesting to investigate approaches for synthesizing compositions of \MacroSwarm{} blocks, e.g., by following the reinforcement learning-based approach of~\cite{DBLP:conf/coordination/AguzziCV22}.
 %
-Last but not least, we would like to deploy and test the framework on real testbeds.
+Last but not least, we would like to deploy and test the framework on real test beds.
 
 \printbibliography

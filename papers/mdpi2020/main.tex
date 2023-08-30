@@ -448,7 +448,7 @@ In this article, we build on this perspective, and rather focus on the notion of
 \begin{figure}
 \centering
 \includegraphics[width=0.7\textwidth]{papers/mdpi2020/imgs/aggregate-agent-control-architecture.pdf}
-\caption{Agent control architecture in aggregate programming.\\ 
+\caption[Agent control architecture in aggregate programming.]{Agent control architecture in aggregate programming.\\ 
 Notation: square boxes denote components; rounded boxes denote activities; dashed rounded boxes denote agents; solid arrows denote control passing; dashed arrows denote data passing.}
 \label{fig:aggregate-control-arch}
 \end{figure}
@@ -585,7 +585,7 @@ We remark that,
 \begin{figure}
 \begin{minipage}{0.37\textwidth}\centering
 \includegraphics[width=\textwidth]{papers/mdpi2020/imgs/crowd-example.png}
-\subcaption{\label{fig:crowd-snapshot}A simulation snapshot of the crowd detection and steering example. Red nodes are devices in an overcrowded area;
+\subcaption[A simulation snapshot of the crowd detection and steering example.]{\label{fig:crowd-snapshot}A simulation snapshot of the crowd detection and steering example. Red nodes are devices in an overcrowded area;
  cyan nodes are nodes at risk since close to overcrowded devices;
  black nodes are in a safe location. Solid lines denote connectivity links (the longer links are those between infrastructural nodes).}
 \end{minipage}\hfill\begin{minipage}{0.62\textwidth}
@@ -1198,7 +1198,7 @@ With ScaFi, this behaviour can be synthesised as described in \Cref{fig:wildlife
 \begin{subfigure}[b]{\textwidth}
 \centering
 \includegraphics[width=0.7\textwidth]{papers/mdpi2020/imgs/wildlife-program-diagram.pdf}
-\caption{\label{fig:eval:diagram}\revision{Diagram corresponding to the code below. This figure uses the same notation of \Cref{fig:crowd-diagram}. In addition, we use a same colour to denote multiple references to the same functional block.}}
+\caption[High-level diagram expressing the implemented scenario]{\label{fig:eval:diagram}\revision{Diagram corresponding to the code below. This figure uses the same notation of \Cref{fig:crowd-diagram}. In addition, we use a same colour to denote multiple references to the same functional block.}}
 \end{subfigure}
 %%%%%
 \par\bigskip % force a bit of vertical whitespace
@@ -1340,7 +1340,7 @@ We test the application varying these parameters:
 \centering
 \includegraphics[width=\textwidth]{papers/mdpi2020/imgs/alchemist-v2.png}
 
-\caption{Wildlife monitoring simulation screenshot. 
+\caption[Wildlife monitoring simulation screenshot]{Wildlife monitoring simulation screenshot. 
  The "wi-fi" like symbol represents a \emph{Station} node. 
  Each \emph{Station} has an influence area (displayed with a coloured circle). 
  Mobile nodes are represented with a triangle.
@@ -1478,7 +1478,7 @@ It is because all agents must adapt to the aggregate protocol, losing some of th
 \par\bigskip % force a bit of vertical whitespace
 %%%%%
 %
-\caption{Experiment results.
+\caption[Experiment results regarding collective autonomy.]{Experiment results.
 \revision{In each plot, the colour identifies the \emph{p} parameter. 
 The first column shows how many animals are rescued during the simulation.
 The plots in the second column show the average distance from the leader.
@@ -1489,7 +1489,7 @@ The plots in the last column point out how many zones have not enough healers to
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=\textwidth]{papers/mdpi2020/imgs/box-plot.pdf}
-\caption{\revision{Average error (RMSE) for each combination of \emph{p} and \emph{healer count}.
+\caption[Simulations result of the wild-life scenario]{\revision{Average error (RMSE) for each combination of \emph{p} and \emph{healer count}.
  Horizontal lines mark the performance of \emph{p} = 1.0. }}
 \label{fig:stack-plot-error}
 \end{figure}

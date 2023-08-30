@@ -63,9 +63,9 @@ Automatic design can overcome these limitations by learning from data and experi
 %
 
 In this paper, we propose a novel hybrid approach that combines manual and automatic design of distributed controllers.
-This follows a novel trend in which high-level declarative programming languages are mixed with machine learning techniques in order to synthesise robust collective controllers~\cite{DBLP:conf/acsos/Aguzzi21,DBLP:conf/icdcs/AguzziCV22,DBLP:conf/coordination/AguzziCV22}.
-Specifically, we propose a solution called \ac{FIRL} that utilises aggregate computing~\cite{Beal2015Computer} together with a \ac{GNN}~\cite{Zhou2020AIOpen} in combination with a reinforcement learning approach, namely \ac{DQN}~\cite{mnih2015human}. 
-% First, aggregate computing is utilised to collect information from neighbours and create a local knowledge base for each agent. Second, we utilise a \ac{GNN} within the \ac{DQN}. 
+This follows a novel trend in which high-level declarative programming languages are mixed with machine learning techniques in order to synthesize robust collective controllers~\cite{DBLP:conf/acsos/Aguzzi21,DBLP:conf/icdcs/AguzziCV22,DBLP:conf/coordination/AguzziCV22}.
+Specifically, we propose a solution called \ac{FIRL} that utilizes aggregate computing~\cite{Beal2015Computer} together with a \ac{GNN}~\cite{Zhou2020AIOpen} in combination with a reinforcement learning approach, namely \ac{DQN}~\cite{mnih2015human}. 
+% First, aggregate computing is utilized to collect information from neighbours and create a local knowledge base for each agent. Second, we utilize a \ac{GNN} within the \ac{DQN}. 
  Here the \ac{GNN} is trained on field-information from aggregate computing and provides so-called node embeddings for each agent, serving as input for the \ac{DQN}. 
  The \ac{DQN} provides then the appropriate actions for the agent to achieve their tasks.
 %We further combine this with reinforcement learning techniques to respond to changing conditions in the environment. 
@@ -95,7 +95,7 @@ We employ this approach in a swarm-like system setting where agents are tasked t
 		\caption{After 200 steps}
 		\label{fig:end}
 	\end{subfigure}
-	\caption{Agents (coloured dots) are deployed in an area and have to coordinate to cover the phenomenon. The phenomenon can have varying areas of importance. Over time, the phenomenon will be covered sufficiently without any central controller.
+	\caption[Phenomenon covering overview]{Agents (coloured dots) are deployed in an area and have to coordinate to cover the phenomenon. The phenomenon can have varying areas of importance. Over time, the phenomenon will be covered sufficiently without any central controller.
 %		
 %		Qualitative test results of the proposed approach. 
 %		The agents go towards the phenomenon and try to cover it without collapsing into a single point.
@@ -105,7 +105,7 @@ We employ this approach in a swarm-like system setting where agents are tasked t
 \end{figure}
 
 %Specifically, 
-% our approach utilises aggregate computing to disseminate information by manipulating a computational field, 
+% our approach utilizes aggregate computing to disseminate information by manipulating a computational field, 
 % which is a distributed data structure that maps devices to information. 
 % This field functions as a dynamic environment in which information is continuously updated and diffused throughout the system. 
 % By leveraging this layer, we can build collective distributed intelligence using \ac{GNN},
@@ -136,7 +136,7 @@ This article studies intelligent \emph{collective behaviours} within the context
 Each agent
  executes a \emph{local} control loop. 
  In each iteration of this loop, the agent can access the information available within its own \emph{context}. 
- This context is comprised of information acquired by the agent directly through its sensors and the information received from its neighbours. 
+ This context comprises information acquired by the agent directly through its sensors and the information received from its neighbours. 
 %
 At the end of each control loop iteration, 
  the agent can send messages to its neighbourhood. 
@@ -152,18 +152,18 @@ Our goal is to find a \emph{homogeneous} distributed controller $\pi$, namely th
  such as spatial area coverage, phenomena tracking, and robot aggregation~\cite{DBLP:journals/firai/SchranzUSE20}.
 %
 The homogeneity of the controller is a key requirement to ensure the \emph{scalability} of the approach, 
- as it allows us to avoid the need for a centralised controller that would be a bottleneck for the system,
+ as it allows us to avoid the need for a centralized controller that would be a bottleneck for the system,
  and it is the typical choice in swarm-like systems~\cite{brambilla2013swarm,yang2021many,pmlr-v80-yang18d,DBLP:conf/aaai/ZhengYCZZWY18}.
 %
 \subsection{Field-based Coordination}
 %\ga{discussion about field used as a coordination mechanism in multi-agent systems. Introduction to AC}
-The field-based coordination approaches utilise a concept of \emph{computational fields} 
+The field-based coordination approaches utilize a concept of \emph{computational fields} 
  (or simply \emph{fields}), 
  which are \emph{distributed} data structures that associate each location with a computational value that evolves over time. 
 %
 \emph{Aggregate computing}~\cite{Beal2015Computer}, a modern field-coordination approach, is rooted in earlier work on \emph{artificial potential fields}~\cite{DBLP:conf/icra/Warren89} and \emph{co-fields}~\cite{DBLP:journals/pervasive/MameiZL04}. 
 % 
-This \emph{macro-programming}~\cite{DBLP:journals/corr/abs-2201-03473} paradigm can be realised to devise collective and self-organizing behaviour through a composition of functions operating on fields. 
+This \emph{macro-programming}~\cite{DBLP:journals/corr/abs-2201-03473} paradigm can be realized to devise collective and self-organizing behaviour through a composition of functions operating on fields. 
 %
 The fields map a set of individual agents to computational values, 
  allowing them to associate what they sense, process, and actuate. 
@@ -205,7 +205,7 @@ This operator generates a numerical field that represents the minimum distance f
 %
 In other words, it maps a Boolean field (where ``true'' indicates the presence of a source agent and ``false'' indicates its absence) to a distance field that indicates the proximity to the nearest source. 
 %
-In the ScaFi~\cite{casadei2022scafi} implementation of field calculus is defined by function:
+In the \scafi{}~\cite{casadei2022scafi} implementation of field calculus is defined by function:
 \begin{lstlisting}
 def gradient(source: Boolean): Double
 \end{lstlisting}
@@ -243,7 +243,7 @@ For the sake of simplicity,
 %
 Given $f_v$, %a feature vector associated with each node $v \in V$, 
  the goal of a \ac{GNN} is to learn the node embedding $h_v$ for each node $v \in V$. 
- The node embedding $h_v$ describes the node in the network and summarises the geometric properties of the graph in this location, allowing for comparison of various nodes in the graph.
+ The node embedding $h_v$ describes the node in the network and summarizes the geometric properties of the graph in this location, allowing for comparison of various nodes in the graph.
 %
 In modern \acp{GNN}, the node embedding $h_v$ is computed by aggregating information from the node's neighbours $\mathcal{N}_G(v)$,
  and then combining it with the node's current embedding $h_v$ in a process called \emph{message passing}~\cite{DBLP:conf/icml/GilmerSRVD17}.
@@ -297,12 +297,12 @@ This formulation allows \acp{GNN} to effectively process and extract features fr
 % 
 In \ac{RL}, an \emph{agent} (i.e., a smart entity capable of making decisions) 
  performs \emph{actions} in an \emph{environment} (i.e., everything outside the agent) according to a \emph{policy}, 
- to maximise long-term \emph{reward signal}. %(or minimise a \emph{regret}).
+ to maximize long-term \emph{reward signal}. %(or minimize a \emph{regret}).
 
 One interesting application of \ac{RL} is when there are multiple learning agents involved. 
  Such scenarios are referred to as multi-agent reinforcement learning (MARL)~\cite{zhang2019marl}. 
 %
-In particular, in this work, we consider \emph{homogenous \ac{MAARL}}~\cite{yang2021many}, 
+In particular, in this work, we consider \emph{homogeneous \ac{MAARL}}~\cite{yang2021many}, 
  where the set of agents is large ($N \gg 2$) and each agent is \emph{interchangeable} and \emph{indistinguishable}.
 %
 This research area is relevant in the context of large-scale systems 
@@ -338,12 +338,12 @@ Some known approaches using mean-field reinforcement learning include Q-mean,
  and actor-critic mean-field~\cite{frikha2023actor}, which combines actor-critic algorithms with mean-field approximations. 
 %
 These approaches have shown promising results in various domains, such as multi-agent coordination 
- and decentralised control, and are actively being researched and developed for further applications.
-\subsection{Problem formalisation}
+ and decentralized control, and are actively being researched and developed for further applications.
+\subsection{Problem formalization}
 Given the homogeneity, large system scale, and the \emph{locality} (i,e., each agent can only observe its neighbours), 
  the problem can be modelled through the SwarMDP model~\cite{DBLP:conf/atal/SosicKZK17}---an extension of the \ac{DecPOMDP}~\cite{Decpomdp2000} model for swarm-like systems.
 % 
-A SwarMDP is characterised by a \emph{swarming agent} ($\mathbb{A}$) and the dynamics of the environment ($\mathbb{E}$).
+A SwarMDP is characterized by a \emph{swarming agent} ($\mathbb{A}$) and the dynamics of the environment ($\mathbb{E}$).
 Specifically, $\mathbb{A}$ is a tuple ($\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, \pi$) where:
 \begin{itemize}
   \item $\mathcal{S, O, A}$ are the set of local states, observations (or features), and actions, respectively;
@@ -391,7 +391,7 @@ Compared to earlier works on field-based coordination,
  our approach builds on the concept of co-fields~\cite{DBLP:journals/pervasive/MameiZL04}, 
  where agents construct and exploit the field as a ``digital sign'' \cite{DBLP:journals/ijaci/CastelfranchiPT10} to receive system-wide information and apply reasoning to this data.
 %  
-We present a subsequent approach where agent intelligence is synthesised through \ac{MAARL} and \ac{GNN} is used to learn a local representation from the neighbourhood.
+We present a subsequent approach where agent intelligence is synthesized through \ac{MAARL} and \ac{GNN} is used to learn a local representation from the neighbourhood.
 %
 By learning a smart policy directly in the environment, the agent becomes capable of adapting its behaviour to new situations.
 
@@ -411,7 +411,7 @@ However, in these works, communication was left entirely to the neural network,
 	\centering
   \includegraphics[width=.98\linewidth]{papers/acsos2023/imgs/architecture.pdf}
 
-  \caption{High-level description of \ac{FIRL} approach. 
+  \caption[High-level description of \ac{FIRL} approach.]{ High-level description of \ac{FIRL} approach. 
   For each time step $t$, a graph is constructed from the environment, and it will associate each node with a local feature $o^v_t$ (hexagons in the picture). 
   Using this feature, an aggregate program computes spatio-temporal information that enhances the feature set of each agent producing $f_v$, depicted as colours in the middle graph. 
   Finally, utilizing the GNN, actions are computed for each agent in the system to be performed against the environment, enabling advancement in the simulations according to swarMDP rules.
@@ -419,13 +419,13 @@ However, in these works, communication was left entirely to the neural network,
   %\lukas{also, i think we can have the AC and GNN box a bit smaller but increase the size of the networks slightly - and put it on column width ot save space}
 }  \label{fig:architecture}
 \end{figure}
-In this section, we discuss the components involved in our proposed solution (i.e., architecture) and how these components interact with each other to bring the system to perform the collective behaviour (i.e., dynamics). Finally, we will detail the learning algorithm designed and used to synthesise the policy.
+In this section, we discuss the components involved in our proposed solution (i.e., architecture) and how these components interact with each other to bring the system to perform the collective behaviour (i.e., dynamics). Finally, we will detail the learning algorithm designed and used to synthesize the policy.
 \subsection{Architecture, fields and aggregate dynamics}
 %\ga{Plan: 
 %  discussion about the typical AC evaluation model, specifying how GNN (with 1-hop information diffusion)
 %  can be easily integrated with this distributed model
 %}
-The proposed solution, summarised in \Cref{fig:architecture}, consists mainly of two parts, 
+The proposed solution, summarized in \Cref{fig:architecture}, consists mainly of two parts, 
 \emph{i)} the aggregate program used to create part of the observation and 
 \emph{ii)} the policy $\pi_{gnn}$ learned through \ac{GNN}-based approach. 
 %
@@ -453,7 +453,7 @@ The individual agents only combine information from their local neighbourhood.
 In fact, the program $\Gamma$ is proactively executed at every agent, 
 and the \ac{GNN} can be locally evaluated using only neighbourhood information. 
 %
-We want to emphasise that, in this case, the \acp{GNN} must be 1-hop; 
+We want to emphasize that, in this case, the \acp{GNN} must be 1-hop; 
 otherwise, they could not have a local interpretation for each agent, according to our system model.
 \subsection{Learning algorithm}
 %\ga{
@@ -478,7 +478,7 @@ Since we consider swarm-like systems, which are an example of many-agent systems
 %
 Specifically, we leveraged the property of \ac{GNN}s to have a dual interpretation, 
 i.e., to function globally over the entire graph and locally only over the neighbourhood. 
-Importantly, each agent only has local information from itself and its neighbourhood to utilise in the \ac{GNN}.
+Importantly, each agent only has local information from itself and its neighbourhood to utilize in the \ac{GNN}.
 % \lukas{Global information is not available to the agent, right? The agent only provide locally aggregated information (resulting from the AC part)?}
 %
 As value-based algorithm we relied on \ac{DQN}~\cite{mnih2015playing} %\ga{to introduce in many rl??} 
@@ -497,7 +497,7 @@ This also influences how we create a batch of experiences to train the network.
 %
 For the second point,
  the use of \acp{GNN} allows us to define policies on a variable neighbourhood, which is essential in such systems as this can change due to the applied neighbourhood policy.
- It is known that \acp{GNN} have a certain ability to generalise to new structures and scale with different agents~\cite{DBLP:journals/aiopen/ZhouCHZYLWLS20,DBLP:conf/nips/KnyazevTA19}. 
+ It is known that \acp{GNN} have a certain ability to generalize to new structures and scale with different agents~\cite{DBLP:journals/aiopen/ZhouCHZYLWLS20,DBLP:conf/nips/KnyazevTA19}. 
 % 
 Additionally, 
  using the overall graph compared to local experiences makes learning more stable as it reduces the non-stationarity of the environment perceived by each node.
@@ -511,9 +511,9 @@ This is because, even though the actions are produced using only local and neigh
   \KwIn{Environment $\mathbb{E}$, graph replay buffer $\mathcal{D}$, target network $\theta^{-}$, current network $\theta$, exploration strategy $\epsilon$}
   \KwOut{Trained DQN model $\theta$}
 
-  Initialise $\mathcal{D}$ with random initial transitions;
+  Initialize $\mathcal{D}$ with random initial transitions;
 
-  Initialise $\theta$ with random weights;
+  Initialize $\theta$ with random weights;
 
   Set $\theta^{-} \leftarrow \theta$;
 
@@ -574,7 +574,7 @@ This is because, even though the actions are produced using only local and neigh
 
   %\includegraphics[width=0.3\textwidth]{papers/acsos2023/imgs/example.png}
  
-  \caption{Simulations of the case study scenario in Alchemist. 
+  \caption[Simulations of the case study scenario in Alchemist for \ac{FIRL}.]{Simulations of the case study scenario in Alchemist. 
   The dots represent the agent, 
   the circle area on represents the phenomenon to be monitored.
   \Cref{fig:static} represents the scenario used during training \review{as well as during test}. 
@@ -592,17 +592,17 @@ To test the effectiveness of the proposed approach,
 Initially, 
   we perform the training phase using a stationary phenomenon before expanding towards a moving phenomenon in the test phase. 
   %Additionally, the phenomenon can change its shape during runtime. 
-  Finally, the phenomenon may have varying areas of interest, defined by an underlying distribution function. This underlying distribution is utilised in the feature set of each agent's observation and guides the agents to rally over the phenomenon. While we only use Guassian distributions but we can use any other distribution and shape. 
+  Finally, the phenomenon may have varying areas of interest, defined by an underlying distribution function. This underlying distribution is utilized in the feature set of each agent's observation and guides the agents to rally over the phenomenon. While we only use Guassian distributions but we can use any other distribution and shape. 
 As a simulation environment, we use Alchemist~\cite{alchemist}, 
  a simulator for multi-agent systems that allows us to simulate the swarm behaviour of the agents 
  and the phenomenon of interest.
 For the \ac{GNN}, we use the implementation provided by PyTorch Geometric~\cite{Fey/Lenssen/2019}, 
  which is a library for deep learning on graphs built on top of PyTorch~\cite{torch}.
-Finally, we use ScaFi~\cite{casadei2022scafi} as the aggregate programming language to support our field-informed approach.
+Finally, we use \scafi{}~\cite{casadei2022scafi} as the aggregate programming language to support our field-informed approach.
 The evaluation is performed in two stages, first the neural networks are trained in an explicit training phase before being extensively evaluated in the testing stage.
 \footnote{The simulations are publicly available at \url{https://github.com/AggregateComputing/experiment-2023-acsos-field-informed-rl}.}
 \subsection{Scenario}
-\Cref{fig:scenarios} presents the three different types of scenarios utilised within the evaluation. The first type of experiments considers a single phenomenon at a static location (i.e., \emph{Zone Fixed}), the second type of experiment considers two phenomena in two independent but static locations (i.e., \emph{Two Zones}), and the third type of experiment considers a moving phenomenon (i.e., \emph{Moving}). All phenomena are modelled as a Gaussian distribution. Importantly, only the left scenario illustrated in Figure~\ref{fig:static} was used for training the neural networks. 
+\Cref{fig:scenarios} presents the three different types of scenarios utilized within the evaluation. The first type of experiments considers a single phenomenon at a static location (i.e., \emph{Zone Fixed}), the second type of experiment considers two phenomena in two independent but static locations (i.e., \emph{Two Zones}), and the third type of experiment considers a moving phenomenon (i.e., \emph{Moving}). All phenomena are modelled as a Gaussian distribution. Importantly, only the left scenario illustrated in Figure~\ref{fig:static} was used for training the neural networks. 
 Furthermore, all three types of scenarios contain a set of $\mathcal{P} = 25$ agents placed in a 2D grid large 1000x1000 meters. % and a single, stationary phenomenon with a  
 Each agent can perceive the presence
  of the phenomenon of interest through an installed sensor $\zeta_v$ with $v \in \mathbb{V}$. 
@@ -628,7 +628,7 @@ For the aggregated information, each agent will produce a computation field with
 %
 %The specific program in question is a simple application of block G, where the source is the maximum value of the neighbourhood. 
 The program $\Gamma$ in question is a simple application of block \lstinline|G|, where the source is the maximum value of the neighbourhood. 
-This can be expressed in ScaFi as follows:
+This can be expressed in \scafi{} as follows:
 \begin{lstlisting}[mathescape=true]
 val source = maxHood(nbr(sense($\zeta$))) == sense($\zeta$)
 G(source, Point3D.Zero, _ + nbrVector())
@@ -646,9 +646,9 @@ This value will then be fed into the $\pi_{GNN}$ to compute the action to be per
 \subsection{Goal}
  The objective of this scenario is threefold:
 \begin{enumerate}
-\item maximise the number of agents within the phenomena;
-\item minimise the number of agents without neighbours;
-\item maximise the coverage of the system.
+\item maximize the number of agents within the phenomena;
+\item minimize the number of agents without neighbours;
+\item maximize the coverage of the system.
 \end{enumerate}
  
 As we are modelling a reinforcement learning system, 
@@ -674,9 +674,9 @@ The second element in the objective function ensures cohesion among the agents.
 R^{\mathcal{N}}_{v} = 1 \text{ if } |\mathcal{N}| > 0 \text{ else } 0
 \end{equation*}
 
-Finally, to maximise the coverage, 
+Finally, to maximize the coverage, 
   we define a reward function that favours the maximum distance between the agents
-  equal to the coverage range $\omega$. This will minimise multiple agents covering a common area.
+  equal to the coverage range $\omega$. This will minimize multiple agents covering a common area.
 %
 This means that the average distance will tend towards the one expressed by the viewing range of each agent:
 % 
@@ -730,7 +730,7 @@ As the reward function is defined as a regret,
 % \end{cases}
 %\end{equation*}
 %where $\delta$ is a hyperparameter that determines the threshold between the two loss functions (fixed to 1 in our experiemnt) and $y$ and $\hat{y}$ are the target and predicted values, respectively.
-This function is used to penalise the agent if the action taken is too far from the optimal action. 
+This function is used to penalize the agent if the action taken is too far from the optimal action. 
 %\lukas{what is the value of $\delta$ in the training?}
 %\lukas{also: $\delta$ is used as a function and as a value?}
 %
@@ -750,7 +750,7 @@ For the evaluation,
 %In all three types of scenarios, the shape and underlying distribution are initially unknown to the agents but remain constant for the entire duration of the simulation. 
 %
 We generated 64 random scenarios for each type of experiment. 
- Additionally, the placement of the agents was randomised as it has been done during training.
+ Additionally, the placement of the agents was randomized as it has been done during training.
 For the first type, consider a single static phenomenon randomly placed in the environment. 
 This is in contrast to the training where the phenomena were always placed in the same location.  
 For the second type, we placed two distinct phenomena within the area. 
@@ -768,7 +768,7 @@ Examples of all three types of experiments are shown in~\Cref{fig:scenarios}. %\
 %\lukas{I would move this up into IV.A --> emphasise that we only used a single static phenomena in the training therefore this section is improtant!}
 
 \subsection{Baselines}
-We compare our \ac{FIRL} approach against baseline approaches where the \ac{DQN} utilises a \ac{MLP} as well as an approach only relying on \acp{GNN}, without additional field information. 
+We compare our \ac{FIRL} approach against baseline approaches where the \ac{DQN} utilizes a \ac{MLP} as well as an approach only relying on \acp{GNN}, without additional field information. 
 %
 In all approaches, the underlying neural network (i.e., the \ac{MLP} and the \ac{GNN}) are trained %with the same parameters of the proposed approach 
 with a single, stationary phenomenon.
@@ -784,7 +784,7 @@ The \ac{GNN} alone, without using the field information, apply the position of a
 %
 These baselines are used to verify the effectiveness of the components used in the FIRL. 
 %
-Indeed the \ac{MLP} baseline is used to verify the effectiveness of the \ac{GNN} in the proposed approach, while the \ac{GNN} baseline is used to verify the effectiveness of the field information in the proposed approach.
+Indeed, the \ac{MLP} baseline is used to verify the effectiveness of the \ac{GNN} in the proposed approach, while the \ac{GNN} baseline is used to verify the effectiveness of the field information in the proposed approach.
 \subsection{Metrics}
 We evaluate the performance of the different approaches by measuring the coverage of the phenomenon over time.
 %
@@ -849,7 +849,7 @@ Indeed, observing the \Cref{fig:resCoverage}, we notice that the informed versio
 In contrast, the uninformed version also maintains a fair division but with significantly different coverage between the two parts, 
  indicating a wrong placement among the agents in one of the zones.
 %
-This is a consequence of the uninformed version's inability to encode the necessary information to divide the agents into two zones, therefore it is not able to generalise.
+This is a consequence of the uninformed version's inability to encode the necessary information to divide the agents into two zones, therefore it is not able to generalize.
 %
 Finally, the \emph{Moving} experiment emphasizes how the informed version generates a more robust policy for new scenarios. 
  Indeed, we observe that our approach using \ac{FIRL} maintains higher coverage and a greater number of agents on the target phenomenon compared to the other two solutions.
@@ -880,8 +880,8 @@ Nevertheless, we acknowledge the crucial role of \acp{GNN}.
     \caption{Reward during training}
     \label{fig:reward}
   \end{subfigure}
-  \caption{Training results of FIRL.
-  It can cover the phenomenon better than the baselines and it reaches a higher reward. 
+  \caption[Training results of \ac{FIRL}.]{Training results of \ac{FIRL}.
+  It can cover the phenomenon better than the baselines, and it reaches a higher reward. 
   }
   \label{fig:training}
 \end{figure}
@@ -893,7 +893,7 @@ Nevertheless, we acknowledge the crucial role of \acp{GNN}.
   \centering
   \begin{subfigure}[b]{0.9\linewidth}
     \includegraphics[width=\linewidth]{papers/acsos2023/imgs/coverage-test.pdf}
-    \caption{Ratio of coverage of the phenomena. Our \ac{FIRL} approach can outperform other approaches lacking field information.}
+    \caption[Ratio of coverage of the phenomena in \ac{FIRL}]{Ratio of coverage of the phenomena. Our \ac{FIRL} approach can outperform other approaches lacking field information.}
     \label{fig:coverage-test}
   \end{subfigure}
   \begin{subfigure}[b]{0.9\linewidth}
@@ -901,7 +901,7 @@ Nevertheless, we acknowledge the crucial role of \acp{GNN}.
     \caption{Number of agents inside the phenomenon in the three types of experiments}
     \label{fig:inside-test}
   \end{subfigure}
-	\caption{Quantitative test results.
+	\caption[Quantitative test results of \ac{FIRL}]{Quantitative test results.
 	 	The proposed approach can cover and track the phenomenon better than the baselines.
 	}
 	\label{fig:test}

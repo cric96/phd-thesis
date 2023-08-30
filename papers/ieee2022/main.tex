@@ -118,7 +118,7 @@ Hence, \acp{dcp}
  distributed sensing and actuation;
 eventually, they may vanish once the activity is done.
  
-In this paper, we address the problem of capturing the right abstractions for modeling \acp{dcp},
+In this paper, we address the problem of capturing the right abstractions for modelling \acp{dcp},
 abstracting from the specific communication technologies, %taking inspiration from the analogous 
 %approach taken in map-reduce frameworks for big data, where the declarative concept of \emph{stream} is adopted.
 %
@@ -194,20 +194,20 @@ may not be available.
 Typical examples %are systems that deal with
 include 
 crowd tracking and steering,
-environmental (landslides, floodings, fires) monitoring and response,
+environmental (landslides, flooding, fires) monitoring and response,
 resource allocation in open systems,
 and coordination of robot swarms. %of dynamically-formed groups of unmanned mobile robots. 
 %
 Our \emph{target system model} is a \emph{network} of computing and communicating \emph{devices}.
 %
 Every device %, at some time, 
- may interact with a limited subset of other devices (its \emph{neighbors}).
+ may interact with a limited subset of other devices (its \emph{neighbours}).
 %
 % We are mainly interested in tasks and activities that last in time (transient or ongoing),
 %  namely, that require \emph{multiple computation and communication steps} by the devices---for instance, coordination, management, and self-organization processes.
 
 % In particular,
-We target the idea of programming the overall behavior
+We target the idea of programming the overall behaviour
 of such systems 
 by expressing a high-level goal---e.g.,
 monitoring the safety of an environment by integrating recent data from static and mobile sensors,
@@ -390,7 +390,7 @@ Notice that \acp{cct} may
 \paragraph{\reqlabel{req-flexible-dec}{R2} Flexible and adaptive decentralization.} 
 %
 \casename{}
-is centered on organizing distributed sensing and actuation
+is centred on organizing distributed sensing and actuation
 according to both the environment structure and the current rainfall.
 %
 Generally speaking, 
@@ -487,10 +487,10 @@ which may trigger actions
 \begin{figure*}
   \centering
   \includegraphics[width=\linewidth]{papers/ieee2022/img/approach-images/action-with-multilayer.pdf}
-  \caption{
+  \caption[Overview of the dynamic decentralization domains approach]{
     Overview of the proposed approach.
     The projected squares represent environments,
-    with colors denoting environmental phenomena. % in terms e.g. of measured data or computed data associated to spatial locations.
+    with colours denoting environmental phenomena. % in terms e.g. of measured data or computed data associated to spatial locations.
     %Elements in gray boxes are software components,
     %whereas those outside denote real-world phenomena.
     Time flows left to right.
@@ -527,7 +527,7 @@ The rationale of the above requirements %, %in a nutshell,
 The
 % declarative and macro-level
 stance
- by which the behavior of a whole system
+ by which the behaviour of a whole system
  is expressed as a single program
  is shared by paradigms
  like
@@ -612,7 +612,7 @@ an entire system of devices.
 %
 So, we aim at a \emph{macro}-programming model~\cite{DBLP:journals/corr/abs-2201-03473},
  where a single program
- defines the behavior of the whole system
+ defines the behaviour of the whole system
  by a global perspective.
 %
 %Following recent trends in \emph{collective adaptive systems} engineering~\cite{DBLP:journals/sttt/NicolaJW20},
@@ -623,12 +623,12 @@ In particular, we assume
 distributed execution protocol
  consisting of \emph{repeated} rounds of
 %  (in the sense of frequent)
-\emph{sensing, processing, and neighbor-based communication},
+\emph{sensing, processing, and neighbour-based communication},
 and let the program specify what data has to be sensed and exchanged and what processing has to be applied to it.
 %
 We also want the \ac{api} to be \emph{declarative},
  characterizing the rules
- promoting the behavior of the abstractions
+ promoting the behaviour of the abstractions
  identified in the previous section,
  and abstracting from low-level details
  like the details of scheduling, networking, or deployment.
@@ -653,9 +653,9 @@ supporting the decentralized computation we need:
 \item concerning \acp{cct} (cf. \ref{req-concurrency})
 	\begin{itemize}
     \item we use a \ac{cct} to model a collective sensing task partitioned into multiple \emph{sensing domains} (i.e. \acp{dd}),
-    where each sensing domain has a \emph{center} and an \emph{extension} in space;
+    where each sensing domain has a \emph{centre} and an \emph{extension} in space;
 %    \meta{a CC model a DD? should improve on the relationship between the two}
-    \item both the extension in space and the center can change dynamically to improve the way the underlying phenomenon is being tracked,
+    \item both the extension in space and the centre can change dynamically to improve the way the underlying phenomenon is being tracked,
     through selection of an appropriate leading node,
     definition of a metric (which can be other than the spatial distance),
     and definition of a granularity.
@@ -669,7 +669,7 @@ supporting the decentralized computation we need:
 %    \meta{a small comment on why?}
     \item inside a single sensing domain, a strategy is defined to collect the sensor readings;
     \item the decentralized sensing will output the collectively-sensed result and
-      the identifier of the device closer to the area center;
+      the identifier of the device closer to the area centre;
     \item the set of actions/actuations to perform may vary depending on the overall sensing results,
     could require a collective plan for coordination,
     and may require fine-grained information about all the results of the sensing phase.
@@ -757,7 +757,7 @@ decentralizedRecognitionAndResponse(
 \subcaption{Example use of the API for the case study}
 \label{code:example}
 \end{subfigure}
-\caption{
+\caption[Scala implementation of the dynamic decentralization domains API]{
   Scala implementation of the proposed API,
   showing the abstractions (a)
   and their exemplary use (b).
@@ -822,7 +822,7 @@ The application logic, leveraging our \ac{api}, is %captured by the code
 %
 As detailed in \cite{DBLP:conf/isola/CasadeiVAD20,DBLP:journals/eaai/CasadeiVAPD21},
 this specification is also the ``script'' that each device executes repeatedly in asynchronous \emph{sense--compute--interact} rounds,  %(cf. aggregate execution model),
-progressively building the intended global behavior.
+progressively building the intended global behaviour.
 
 \section{Evaluation}\label{sec:eval}
 
@@ -831,7 +831,7 @@ In this section,
  we consider the \casename{} case study,
  and show that our \ac{api}
  can successfully be used in a challenging scenario
- to program a system behavior that responds as expected to
+ to program a system behaviour that responds as expected to
  the underlying environmental phenomena.
 %
 %Metrics are used to gain evidence of the adaptation and 
@@ -896,13 +896,13 @@ and permanently archived~\cite{simulation-doi}. %for future reference
     \centering
     \includegraphics[width=\linewidth]{papers/ieee2022/img/snapshots/step-6.png-low.png}
   \end{subfigure}
-  \caption{
+  \caption[\casename{} simulation snapshots]{
     Subsequent simulation snapshots (left-to-right, top-to-bottom) of \casename{}.
     Darker shadows indicate heavier rain.
     Black squares with a small red dot are unalerted fire stations,
     when at least an alert reaches them, their dot changes to a large red square.
     Circles represent gauges;
-    their colors map the \acp{dd} they are subject to when measuring rainfall intensity.
+    their colours map the \acp{dd} they are subject to when measuring rainfall intensity.
     A video of a complete simulation run is available at \url{https://bit.ly/3zysMOV}.
   }
   \label{fig:simulation-plots}
@@ -968,7 +968,7 @@ the focus of this article is on programming abstractions for decentralized syste
     \centering
     \includegraphics[width=\linewidth]{papers/ieee2022/img/charts/danger-evolution.pdf}
   \end{subfigure}
-  \caption{
+  \caption[\casename{} simulation]{
     Simulation results, showing, with time, the average rainfall intensity (dotted black line),
     the number of operator stations receiving alerts (left)
     and the breakdown by number of alerts received per station (right).
@@ -1002,13 +1002,13 @@ the focus of this article is on programming abstractions for decentralized syste
   % \begin{subfigure}[c]{\linewidth}
   %   \includegraphics[width=\linewidth]{papers/ieee2022/img/charts/risk-oracle.pdf}    
   % \end{subfigure}
-  \caption{
+  \caption[\casename{} risk evolution]{
     \revise{
       Ability to track the risk spatially.
-      Charts show risk (the darker, the higher) as estimated in realtime by an oracle using altitude and rainfall intensity.
+      Charts show risk (the darker, the higher) as estimated in real-time by an oracle using altitude and rainfall intensity.
       Stations are depicted with a red circle, and those alerted are filled in white.
       Solid black areas are non-land.
-      Alerted stations are indeed those closest to the zones of highest risk.
+      Alerted stations are indeed those closest to the zones of the highest risk.
   }}
   \label{fig:risk-evolution}
 \end{figure*}
@@ -1061,10 +1061,10 @@ This work focused on designing and programming
 %
 We believe that this level of control 
  is instrumental for properly structuring
- collective adaptive behavior
+ collective adaptive behaviour
  to steer desired emergents.
 %
-Yet, contributions on patterns and programming abstractions
+Yet, contributions to patterns and programming abstractions
  for this class of systems
  are still quite fragmented.
 %

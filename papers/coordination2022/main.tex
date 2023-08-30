@@ -46,13 +46,13 @@ The pervasiveness of computing and networking
 Combined with the \emph{autonomic computing} vision ~\cite{DBLP:journals/computer/KephartC03}, which promotes autonomy and self-* capabilities in engineered systems,
  there is an increasing trend towards \acp{cas} and their engineering~\cite{DBLP:journals/sttt/NicolaJW20,DBLP:journals/tasm/BucchiaroneDPCS20}.
 %
-\acp{cas} are characterised 
+\acp{cas} are characterized 
  by a multitude of agents  
  that can produce globally coherent results (\emph{emergents}~\cite{DBLP:conf/atal/WolfH04}),
  and collective-level adaptivity to environment change
- via local decision-making and decentralised interaction.
+ via local decision-making and decentralized interaction.
 %
-The \emph{engineering of \acp{cas}} is an open research problem~\cite{DBLP:journals/sttt/NicolaJW20,DBLP:journals/corr/abs-1108-5643} of significance, tightly linked with the problems of ``steering'' self-organisation and ``controlling'' emergence to promote desired while avoiding undesired emergents~\cite{DBLP:books/sp/08/Muller-SchloerS08}.
+The \emph{engineering of \acp{cas}} is an open research problem~\cite{DBLP:journals/sttt/NicolaJW20,DBLP:journals/corr/abs-1108-5643} of significance, tightly linked with the problems of ``steering'' self-organization and ``controlling'' emergence to promote desired while avoiding undesired emergents~\cite{DBLP:books/sp/08/Muller-SchloerS08}.
 %
 In general, when dealing with \acp{cas},
  there are two distinct problems:
@@ -95,7 +95,7 @@ Besides the programming model and its implications,
  electing leaders~\cite{DBLP:conf/saso/MoBD18},
  or %collecting data %on spanning trees 
  %for 
- distributed summarisation~\cite{DBLP:journals/cee/AudritoCDPV21}.
+ distributed summarization~\cite{DBLP:journals/cee/AudritoCDPV21}.
 %
 However, devising self-organising coordination algorithms is not easy; especially difficult is identifying solutions
  that are efficient across environment assumptions, configurations, and perturbations.
@@ -111,7 +111,7 @@ In this work, we start what we consider a key future research thread of field-ba
  to improve existing \ac{ac} coordination algorithms.
 %
 Specifically, we adopt a \emph{\ac{rl}-based approach}---where an agent learns from experience
- how to behave in order to maximise delayed cumulative rewards~\cite{sutton2018reinforcement-learning}.
+ how to behave in order to maximize delayed cumulative rewards~\cite{sutton2018reinforcement-learning}.
 %
 We devise a general methodology that somewhat resembles the notion of \emph{sketching} in program synthesis~\cite{solar2008program-synthesis-sketching}:
  a template program is given and \emph{holes} are filled with actions determined through search.
@@ -129,7 +129,7 @@ In the rest of the paper:
 %
 \Cref{s:eval} provides an experimental evaluation of the proposed approach;
 %
-\Cref{s:conc} summarises results and future research.
+\Cref{s:conc} summarizes results and future research.
 
 
 \section{Background}\label{s:background}
@@ -224,7 +224,7 @@ The approach has proven effective to implement various kinds of coordination ser
 
 %\ac{ac} is studied in various simulated scenarios ranging from smart cities to crowd management~\cite{DBLP:journals/jlap/ViroliBDACP19}, thanks to Alchemist~\cite{DBLP:journals/jos/PianiniMV13} (a meta-simulator for pervasive systems) and programming languages and tools that support this paradigm~\cite{DBLP:journals/jlap/ViroliBDACP19}, such as the \scafi{} aggregate programming language~\cite{DBLP:conf/isola/CasadeiVAD20}.
 
-In the following, we summarise the computation model and the \ac{fc}/\scafi{} language, which are essential to understand the contribution and case study.
+In the following, we summarize the computation model and the \ac{fc}/\scafi{} language, which are essential to understand the contribution and case study.
 
 \subsubsection{System Model}
 
@@ -315,16 +315,16 @@ A repeated evaluation of this program will self-stabilise to the field of minimu
 %
 %The last problem instead, is associated with flickering output. Indeed, small changes produced at the gradient level could produce a miss coordination problem to high-level API.
 
-Though working and self-stabilising,
+Though working and self-stabilizing,
  this algorithm suffers some problems~\cite{DBLP:conf/saso/AudritoCDV17}.
 %
-One is the \emph{rising value problem} (also known as \emph{count to infinity}): due to the repeated minimisation of all the contributions, the system handles well the situations when the output needs to drop (e.g. a new source enters the system) but it instead reacts slowly when the output needs to rise (e.g. a source node turns off). 
+One is the \emph{rising value problem} (also known as \emph{count to infinity}): due to the repeated minimization of all the contributions, the system handles well the situations when the output needs to drop (e.g. a new source enters the system) but it instead reacts slowly when the output needs to rise (e.g. a source node turns off). 
 % 
 In literature, several heuristics are proposed to tackle the problems of the classical gradient~\cite{DBLP:conf/saso/AudritoCDV17}.
 %
 %FLEX~\cite{DBLP:conf/sac/Beal09} aims to increase the \emph{smoothness} by introducing a filtering function in order to maintain at the same time the output stable against local variation and the system-wide error under an $\epsilon$ value. 
 %
-One of them is CRF (Constraint and Restoring Force)~\cite{DBLP:conf/sac/BealBVT08}. Its goal is to deal with the problem by enforcing a constant rising speed when nodes recognise a local slow rising of the gradient field. 
+One of them is CRF (Constraint and Restoring Force)~\cite{DBLP:conf/sac/BealBVT08}. Its goal is to deal with the problem by enforcing a constant rising speed when nodes recognize a local slow rising of the gradient field. 
 %
 To this end, each node is affected by a set of constraints (i.e. nodes that have a lower gradient value). 
 %
@@ -354,7 +354,7 @@ At each discrete time step $t$, an agent observes the current environment \emph{
 Partly as a consequence of its action, at the next time step $t+1$ the agent finds itself in state $s_{t+1}$ and receives a \emph{reward} $r_{t+1}$, 
  i.e. a scalar signal quantifying how good the action was against the given environment configuration. 
 %
-The goal of \ac{rl} is to \emph{learn} a policy \emph{$\pi^*$} that maximises the long-term return $G$ (i.e. the cumulative reward) through a \emph{trial-and-error} process. 
+The goal of \ac{rl} is to \emph{learn} a policy \emph{$\pi^*$} that maximizes the long-term return $G$ (i.e. the cumulative reward) through a \emph{trial-and-error} process. 
 %
 Different problems can be devised in these settings, like video games~\cite{DBLP:journals/spm/ArulkumaranDBB17}, robotics~\cite{DBLP:journals/ijrr/KoberBP13}, routing~\cite{DBLP:journals/comsur/LuongHGNWLK19}, etc.
 
@@ -380,7 +380,7 @@ G_{t} = r_t + \gamma r_{t + 1} + \gamma^2 r_{t + 2} + \dots + \gamma^T r_{t + T}
 %%
 Where $0 \leq \gamma \leq 1$ is the \emph{discount factor}, that is how much the future reward impacts the long-term return.
 %%
-Finally, the \ac{rl} goal can be expressed as the maximisation of the \emph{expected} long-term return following a policy $\pi$:
+Finally, the \ac{rl} goal can be expressed as the maximization of the \emph{expected} long-term return following a policy $\pi$:
 %%
 \begin{equation}
 J = \mathbb{E_\pi}\Big[ G_t \Big] = \RE_\pi \Big[ \sum_{k = t}^T \gamma^{t-k} r_k \Big] 
@@ -400,7 +400,7 @@ It is defined as:
 V(s)^\pi = \RE_\pi \Big[ G_t | s_t = s \Big]
 \end{equation}
 %%
-$Q^\pi$ is the corresponding value fuction that evaluates \emph{state-action} pairs:
+$Q^\pi$ is the corresponding value function that evaluates \emph{state-action} pairs:
 %%
 \begin{equation}
 Q(s, a)^\pi = \RE_\pi \Big[ G_t | s_t = s, a_t = a \Big]
@@ -454,7 +454,7 @@ Therefore, different algorithms are proposed to handle those issues in IL settin
 %
 \Ac{hql} aims at managing the stochasticity problems exploiting an \emph{optimistic} heuristic. 
 %
-The idea is to give more importance to good actions than bad actions -- more frequent due to the concurrent learning -- reducing the policies oscillation during the learning.
+The idea is to give more importance to good actions than bad actions -- more frequent due to the concurrent learning -- reducing the policies' oscillation during the learning.
 %
 To this aim, \ac{hql} introduces two learning rates ($\alpha$ and $\beta$) to weigh the increase and decrease of Q values. The update equation becomes:
 
@@ -479,7 +479,7 @@ The learning problem thus becomes a single agent one in which the agent consists
 %
 However, this solution cannot be applied to \acp{cas}, due to the many-agent settings, openness, and the lack of a central entity.
 %
-Novel approaches are structured in between independent learners and centralised learners techniques---the so-called \ac{ctde}~\cite{DBLP:phd/ethos/Foerster18}.
+Novel approaches are structured in between independent learners and centralized learners techniques---the so-called \ac{ctde}~\cite{DBLP:phd/ethos/Foerster18}.
 %\input{cdte-figure.tex} For now, I had removed that figure. I think that it does not give so much info @RC what do you think?
 In \ac{ctde}, a central agent performs the learning process and generates distributed controllers, one for each agent. 
 %
@@ -545,14 +545,14 @@ As a learning framework,
 % 
 From a local viewpoint, an \ac{ac} device is an agent acting based on the local context it perceives (sensor readings, device state, and messages from neighbours), and this matches the \ac{rl} execution model very well.
 
-So, our long-term goal is to integrate \ac{rl} into the \ac{ac} ``stack'' (i.e., across the platform, language, and library levels) to improve the collective behaviour defined by \scafi{} aggregate programs in terms of \emph{efficiency} (i.e., reducing the resource usage maintaining the same functional interface), \emph{efficacy} (i.e., synthesising more stable and faster converging behaviours) and \emph{adaptability} (i.e., the same program works against different environments).
+So, our long-term goal is to integrate \ac{rl} into the \ac{ac} ``stack'' (i.e., across the platform, language, and library levels) to improve the collective behaviour defined by \scafi{} aggregate programs in terms of \emph{efficiency} (i.e., reducing the resource usage maintaining the same functional interface), \emph{efficacy} (i.e., synthesizing more stable and faster converging behaviours) and \emph{adaptability} (i.e., the same program works against different environments).
 %
 
-As a first contribution, summarised in \Cref{fig:ac-and-rl}, in this work we integrate \ac{rl} within the \ac{ac} control architecture in order to support learning of good collective behaviour sketched by a given aggregate program.
+As a first contribution, summarized in \Cref{fig:ac-and-rl}, in this work we integrate \ac{rl} within the \ac{ac} control architecture in order to support learning of good collective behaviour sketched by a given aggregate program.
 %
 Specifically, we focus on improving \ac{ac} building blocks (such as the gradient algorithm covered in \Cref{sec:gradient}) through learning, leading toward a so-called \emph{Reinforcement Learning-based Aggregate Computing}. 
 %
-Learning, thus, does not replace the \ac{ac} methodology for defining the programs but it is best understood as a technique that supports and improves the \ac{ac} algorithm design process. %, especially for handling critical situations (e.g. unpredictable environment dynamics, opportunistic deployments, etc.).
+Learning, thus, does not replace the \ac{ac} methodology for defining the programs, but it is best understood as a technique that supports and improves the \ac{ac} algorithm design process. %, especially for handling critical situations (e.g. unpredictable environment dynamics, opportunistic deployments, etc.).
 %
 %In such a new paradigm, we combine the advantages of \ac{ac}, hence compositionality and self-organisation, with those of \ac{rl}, such as goal-oriented and adaptable behaviours.
 
@@ -603,7 +603,7 @@ This policy could be a feedback loop, hysteresis, or custom logic to solve a spe
 %
 We aim at structuring the learning of refinement policies through \ac{rl}~\cite{DBLP:conf/acsos/Aguzzi21}.
 %
-Our idea is that it should not be the designer who codes a particular block to be used, but that it is the learning algorithm that understands, given a global policy to be optimised following a utility function, what actions need to be activated.
+Our idea is that it should not be the designer who codes a particular block to be used, but that it is the learning algorithm that understands, given a global policy to be optimized following a utility function, what actions need to be activated.
 % to optimise the collective good of the system.
 
 \input{papers/coordination2022/general-learning-schema.tex}
@@ -675,13 +675,13 @@ Though we could have extracted the learning process from the \ac{ac} program, %p
 %}
 
 %\meta{@GA to @All: another way to generalise G?}
-The gradient block (cf. \Cref{sec:gradient}) could be generalised as follows:
+The gradient block (cf. \Cref{sec:gradient}) could be generalized as follows:
 \begin{lstlisting}
 def gradientOpt(source, metric, opt) {
   rep(infinity) { g => mux(source) { 0 } { opt(g, metric)) } }
 }
 \end{lstlisting}
-where \lstinline|opt| is a function that determines how to evolve the gradient based on the field of current gradient values \lstinline|g| and current \lstinline|metric| (estimation of distances to neighbours). 
+where \lstinline|opt| is a function that determines how to evolve the gradient based on the field of current gradient values \lstinline|g| and current \lstinline|metric| (estimation of distances to neighbour). 
 %In this way, the correction factor applied to the gradient could be composed, creating a gradient block that handles several scenarios.
 In this article, we consider \lstinline|opt| as a \emph{hole} that a \ac{rl} algorithm will fill through raw experience
  with actions aiming at incrementally constructing a gradient field, hopefully mitigating the \emph{rising-value} issue (cf. \Cref{sec:gradient}).
@@ -692,9 +692,9 @@ The \lstinline|state| function must hold enough information to know when agents 
 %
 In this case, we encode the state as the difference between the output perceived by a node and the minimum and maximum gradient received by its neighbours: $s_t = (|min_t - o_t|, |max_t - o_t|)$. 
 %
-These data have to be discretised; otherwise, the search space would be too big and the solution could suffer from overfitting. 
+These data have to be discretized; otherwise, the search space would be too big and the solution could suffer from overfitting. 
 %
-The discretisation is ruled by two variables, $maxBound$ and $buckets$. 
+The discretization is ruled by two variables, $maxBound$ and $buckets$. 
 %
 The former constrains the output to be between $ - radius * maxBound$ and $ radius * maxBound $ (where $radius$ is the maximum communication range of the nodes). 
 %
@@ -705,13 +705,13 @@ Finally, we stack two time steps in order to encode history inside the agent sta
 $h_t = [(s_{t - 1}, s_t)]$. $h_t$ is used as the state function for our \ac{rl} algorithm.
 Hence, the cardinality of the state space of $|s_t| * |s_t| = buckets^4$. 
 %
-The action space is divided into two action types: \texttt{ConsiderNeighborhood} is the action that will produce the classic gradient evaluation, while 
+The action space is divided into two action types: \texttt{ConsiderNeighbourhood} is the action that will produce the classic gradient evaluation, while 
  \texttt{Ignore(velocity)} ignores the neighbour data and increases the gradient at a given \texttt{velocity}. So, the \texttt{update} function is defined as:
 \begin{lstlisting}[mathescape]
 def update($o_{t-1}$, $a_{t-1}$, metric) { // $o_{t-1}$ is the previous gradient output
   val $g_{classic}$ = minHoodPlus(nbr($o_{t-1}$) + metric())
   match $a_{t-1}$ { // scala-like pattern matching
-    case ConsiderNeighborhood => $g_{classic}$
+    case ConsiderNeighbourhood => $g_{classic}$
     case Ignore(velocity) => $o_t$ + velocity * deltaTime() 
   }
 }
@@ -786,7 +786,7 @@ The leftmost and the rightmost agents are marked as source nodes.
 %
 Each simulated episode lasts \SI{85}{\second} ($T$).
 %
-For simulating the slow rising problem, we drop the left source at \SI{35}{\second} ($C_s$), and so the left part of the system starts to rise until eventually stabilising to the correct computational field.
+For simulating the slow rising problem, we drop the left source at \SI{35}{\second} ($C_s$), and so the left part of the system starts to rise until eventually stabilizing to the correct computational field.
 %
 An entire simulation lasts $N_E = 1200$ episodes, in which in the first $N_L = 1000$ the system uses \ac{rl} to improve a shared Q table, and then in the last $N_T = 200$, the system deploys the Q table found in each agent. 
 %
@@ -796,11 +796,11 @@ As learning algorithm, we used Hysteretic Q-Learning (cf. \Cref{s:background:rl}
 %
 As behavioural policy, we use an $\epsilon$-greedy with an exponential decay to balance the exploration-exploitation.
 %
-We make this choice because without using the decay the policy found tends to be not optimised (i.e. the exploration is preferred w.r.t exploitation).
+We make this choice because without using the decay the policy found tends to be not optimized (i.e. the exploration is preferred w.r.t exploitation).
 %
 At each episode $i$, the $\epsilon$ value is updated as $\epsilon_i = \epsilon_0 \cdot e^{{i} / \theta}$.
 
-Several variables are used, summarised in \Cref{table:parameters}, so we perform a grid search to find the optimal combination.
+Several variables are used, summarized in \Cref{table:parameters}, so we perform a grid search to find the optimal combination.
 %
 To evaluate a particular configuration, we verified the total error performed in the last $N_T$ episodes.
 %
@@ -845,7 +845,7 @@ In particular, this means that the agents learn the moment when they should igno
 
 This intuition is enforced by \Cref{subfig:error-few,subfig:error-many,subfig:output-few,subfig:output-many}.
 % 
-In particular, in \Cref{subfig:error-few,subfig:output-few} the behaviour is more evident due to the reduced number of agents: when the error is maximised (due to the source that disappears), the error decreased faster than the naive gradient (and, consequently, the output is faster growing).
+In particular, in \Cref{subfig:error-few,subfig:output-few} the behaviour is more evident due to the reduced number of agents: when the error is maximized (due to the source that disappears), the error decreased faster than the naive gradient (and, consequently, the output is faster growing).
 %
 Furthermore, we can also observe that the overall algorithm behaviour is comparable with the CRF handcrafted solution for the rising problem. 
 %
@@ -879,7 +879,7 @@ This work is the first effort towards Reinforcement Learning-based Aggregate Com
 %
 In fact, there are still many aspects that need to be analysed in detail both at the conceptual and practical levels.
 %
-First of all, the approach could be tuned to learn gradient strategies for smoothness or maximal reactivity in highly variable scenarios, and compared with state-of-the-art algorithms like BIS and ULT~\cite{DBLP:conf/saso/AudritoCDV17}. 
+First, the approach could be tuned to learn gradient strategies for smoothness or maximal reactivity in highly variable scenarios, and compared with state-of-the-art algorithms like BIS and ULT~\cite{DBLP:conf/saso/AudritoCDV17}. 
 %
 Secondly, the approach could be systematically applied to other building blocks as well~\cite{DBLP:journals/jlap/ViroliBDACP19}.
 %

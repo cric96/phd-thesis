@@ -62,7 +62,7 @@ To start addressing these problems, in this work we present \scarlib{}, a framew
 With \scafi{}, in particular, \scarlib{} is provided with a high-level language for distributed computing that provides a declarative
  and compositional ways of expressing complex coordination tasks. 
 
-The remainder of this paper is organized as follows: \Cref{background} provides key background in the context of learning and the Alchemist/Scafi toolchain, \Cref{contribution} presents the \scarlib{} tool, \Cref{experiments} presents demos of \scarlib{}, \Cref{sec:related} discuss some state-of-the-art solutions, and finally \Cref{conclusion} concludes and presents future works.
+The remainder of this paper is organized as follows: \Cref{background} provides key background in the context of learning and the Alchemist/\scafi{} toolchain, \Cref{contribution} presents the \scarlib{} tool, \Cref{experiments} presents demos of \scarlib{}, \Cref{sec:related} discuss some state-of-the-art solutions, and finally \Cref{conclusion} concludes and presents future works.
 %
 %% TODO probably here we should add a discussion about why the DSL is important, or in general why this framework is better w.r.t. the others
 %% Here we should add the outline of the paper
@@ -89,7 +89,7 @@ The remainder of this paper is organized as follows: \Cref{background} provides 
 %     \label{fig:rl}
 %\end{figure}
 In order for \ac{rl} to be effective, two conditions are fundamental: \emph(i) all is meant by \emph{goals/purposes/success} can be well thought of as the maximization of the expected 
-    value of the cumulative sum of the reward (i.e., a scalar signal) -- called \emph{the reward hypothesys}; and \emph{(ii)} the environment state should summarize the past compactly, so that future states only depend on the current state (and not on past states) -- 
+    value of the cumulative sum of the reward (i.e., a scalar signal) -- called \emph{the reward hypothesis}; and \emph{(ii)} the environment state should summarize the past compactly, so that future states only depend on the current state (and not on past states) -- 
     \emph{the markov property}.
 
 In literature, several algorithms can be used to solve \ac{rl} problems.
@@ -157,8 +157,8 @@ Based on the reward function used by the agents, MARL can be divided into two ca
  ii) \emph{heterogeneous}, where each agent may have its own policy, in this case, each agent 
     tries to maximize the local policy following the global shared goal.   
 
-In this work, we focus on a subset of MARL, namely: \emph{Many Agent Reinforcement Learning}~\cite{yang2021many}. 
- The only difference between the two approaches is in the number of agents involved. Typically, in Many Agent Reinforcement Learning the number of agents
+In this work, we focus on a subset of MARL, namely: \emph{many-agent reinforcement learning}~\cite{yang2021many}. 
+ The only difference between the two approaches is in the number of agents involved. Typically, in many-agent reinforcement learning the number of agents
  may range from a hundred to one or two thousands whereas, in Multi Agent Reinforcement Learning, there are only a few tens~\cite{smac,marl-curricula}.
  %(i.e., $N \gg 2$, typically less than one or two thousands ~\cite{smac,marl-curricula}).
  Moreover, we focus on cooperative homogeneous and heterogeneous learning.
@@ -203,10 +203,10 @@ The \scafi{} incarnation supports the \scafi{} Scala DSL
 
 Alchemist offers an effortless method for loading simulations. 
  The process requires a YAML file that includes essential parameters, 
- such as the incarnation type, neighbor connection model, and node deployment. 
+ such as the incarnation type, neighbour connection model, and node deployment. 
  In \Cref{fig:alchemist}, we have provided an example YAML file 
  that creates a simulation using the \scafi{} incarnation (first row). 
- It also defines the neighborhood relationship based on fixed distances (0.5 in this case), 
+ It also defines the neighbourhood relationship based on fixed distances (0.5 in this case), 
  placing nodes in a fixed grid of size 10x10 starting at -(5,5) and ending at (5,5), 
  with a node-to-node distance of 0.25. 
  Finally, it loads the \scafi{} program called ``program'', 
@@ -239,7 +239,7 @@ deployments:
     \centering
     \includegraphics[width=\textwidth]{papers/coordination2023/imgs/alchemist.png}
 \end{subfigure}
-\caption{An Alchemist simulation example. 
+\caption[An Alchemist simulation example]{An Alchemist simulation example. 
     The simulation result on the right is obtained 
     by running the simulation described on the left.
     }
@@ -249,7 +249,7 @@ deployments:
 \subsection{ScaFi}\label{scafi}
 
 \scafi{} (Scala Fields \footnote{\url{https://scafi.github.io/}})~\cite{Casadei2022} 
- is a scala framework for developing large-scale 
+ is a Scala framework for developing large-scale 
  distributed applications and simulating systems of networked agents.
 %
 \scafi{} is designed for Aggregate Programming~\cite{Beal2015}, 
@@ -263,14 +263,14 @@ One of the unique features of aggregate computing
  that can adapt to changes in the environment and 
  maintain their functionality without requiring centralized control.
 
-In ScaFi, agents are represented as nodes in a logical network, 
+In \scafi{}, agents are represented as nodes in a logical network, 
  and the interactions between agents are modelled 
  as the exchange of messages over edges in the graph.
 %
-ScaFi provides a set of primitives for expressing distributed
+\scafi{} provides a set of primitives for expressing distributed
 algorithms, 
  which can all be interpreted as field-based coordination policies, namely, 
- distributed compuations of maps from nodes to values (i.e. \emph{fields}).
+ distributed computations of maps from nodes to values (i.e. \emph{fields}).
  
   These primitives are designed to be composable and reusable, 
  allowing programmers to build complex distributed algorithms from simple building blocks.
@@ -312,7 +312,7 @@ Basically, \scarlib{} is composed of three main modules (\Cref{fig:modules}), na
     i) \texttt{scarlib-core} that implements the main abstractions over the CMARL domain,
     ii) \texttt{dsl-core} that provides a high-level language to specify the system, and
     iii) \texttt{alchemist-scafi} that provides bindings between \scarlib{} and the two tools Alchemist and \scafi{}.
-    It is important to note that \scarlib{} is not limited to the Alchemist-Scafi combination, that module is 
+    It is important to note that \scarlib{} is not limited to the Alchemist-\scafi{} combination, that module is 
     already implemented due to the actual need, however, it is possible to implement other bindings to other tools
     (e.g., by replacing Alchemist with some other simulator, for example, FLAME GPU~\cite{flame}).
 \begin{figure}[t]
@@ -346,7 +346,7 @@ Only by using this module,
     \label{fig:arc}
 \end{figure} %% TODO increase the font in this figure
 
-To better understand the dynamics of the system it is useful to explain some of the internals.
+To better understand the dynamics of the system it is useful to explain some internals.
 %
 Both systems utilize a training process that consists of multiple \emph{epochs}, 
  with each epoch comprising a set of \emph{episodes}. 
@@ -357,7 +357,7 @@ This collective action causes
  the environment to move to the next state, 
  advancing the simulation to the next episode.
 At the end of an epoch, 
- the environment is reset and the agents are trained using the collected experience.
+ the environment is reset, and the agents are trained using the collected experience.
 
 Most specifically,
  if the chosen system is a \texttt{CTDESystem} (\Cref{fig:ctde}) the agents are trained in a centralized way, 
@@ -379,7 +379,7 @@ The \texttt{DTDESystem} (\Cref{fig:dtde}) works similarly,
 % and allows the end-user to train the models both on CPUs and GPUs.
 
 Regarding the training process,
- since the tool amis to support neural-network-based RL algorithms (like DQN),
+ since the tool aims to support neural-network-based RL algorithms (like DQN),
  we chose to use the current de facto standard framework 
  for building neural networks, which is PyTorch---alternatives include DL4J~\footnote{\url{https://deeplearning4j.konduit.ai/}}, which could be subject of future investigation.
  
@@ -412,7 +412,7 @@ In this case, we have isolated everything in DQN, which is therefore the entry p
         \caption{DTDE System}
         \label{fig:dtde}
     \end{subfigure}
-\caption{Examples of developed System dynamics. 
+\caption[Examples of developed System dynamics in \scarlib{}]{Examples of developed System dynamics. 
 On the left, there is the centralized system, 
 where a learner with a global view of the system 
 updates the policy shared with all agents. 
@@ -421,20 +421,20 @@ On the right, there is a decentralized system,
 where each agent has a local policy and a local policy.}
 \end{figure*}
 
-\paragraph{ScaFi-Alchemist integration:} in addition to the core, we have implemented another module called \texttt{alchemist-scafi} (\Cref{fig:alchemist-arc}) 
+\paragraph{\scafi{}-Alchemist integration:} in addition to the core, we have implemented another module called \texttt{alchemist-scafi} (\Cref{fig:alchemist-arc}) 
  in which there is the integration with the two tools: 
  Alchemist \cite{DBLP:journals/jos/PianiniMV13} and \scafi{} \cite{Casadei2022}.
 %
 Such integration enables the possibility to run the learning process 
  in an aggregate computing context.
 This is a key part of this contribution. 
- In fact, although Alchemist has been used for \ac{cmarl} with ScaFi in the past~\cite{Aguzzi2022,DBLP:conf/acsos/AguzziCV22}, 
+ In fact, although Alchemist has been used for \ac{cmarl} with \scafi{} in the past~\cite{Aguzzi2022,DBLP:conf/acsos/AguzziCV22}, 
  ad-hoc solutions were always created that were difficult to \emph{reuse}, 
  \emph{rigid}, \emph{untested}, and had \emph{interoperability issues} between Alchemist 
  and the chosen native libraries.
 With this integration, 
  we want to provide a usable system once and for all, 
- so as to bring the Many-agent RL community closer 
+ to bring the Many-agent RL community closer 
  to the use of this simulator and this paradigm, 
  which has proven flexible in describing the most diverse environments -- 
  from robotic swarms~\cite{Casadei2021} to data centres.
@@ -457,7 +457,7 @@ In particular,
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{papers/coordination2023/imgs/alchemist-scafi-arc.pdf}
-    \caption{\scarlib{} \texttt{alchemist-scafi} architecture. 
+    \caption[\scarlib{} \texttt{alchemist-scafi} architecture]{\scarlib{} \texttt{alchemist-scafi} architecture. 
     A \texttt{ScafiProgram} should be passed to the \texttt{AlchemistEnvironment}
     in order to start the learning process. 
     }
@@ -599,24 +599,24 @@ To test ScarLib's functionality,
 % 
 We aim to create a flock of drones 
  that moves to avoid collisions with each others, by learning a policy by which each 
- agents decide how to move based on neighbors relative position.
+ agents decide how to move based on neighbours relative position.
 % 
 This is a well-known problem, and various models and algorithms exist which we draw upon \cite{DBLP:conf/siggraph/Reynolds87,inverserl}. %% todo add citations
 % and learning processes exist. % I'd try not to say this... or just discuss it in related works
 %
 In this case, %%
  we assumed that agents position themselves in an unlimited 2D environment 
- with a fixed neighborhood (the closest five, in our experiments, though this is a simulation parameter)
+ with a fixed neighbourhood (the closest five, in our experiments, though this is a simulation parameter)
  and have the ability to perform movement steps in the 8 directions of a square grid (horizontally, vertically, or diagonally).
 %
-The environment state, as perceived by the single agent, is the relative distance to the closest neighbors.
+The environment state, as perceived by the single agent, is the relative distance to the closest neighbours.
 %
-Particularly, it was expressed through ScaFi as:
+Particularly, it was expressed through \scafi{} as:
 \begin{lstlisting}
 val state = foldhoodPlus(Seq.empty)(_ ++ _)(Set(nbrVector))
 \end{lstlisting}
-where \texttt{nbrVector} is the vector representing the relative position of the neighbor.
-\lstinline|foldhoodPlus| is a ScaFi function that allows to fold over the neighborhood 
+where \texttt{nbrVector} is the vector representing the relative position of the neighbour.
+\lstinline|foldhoodPlus| is a \scafi{} function that allows to fold over the neighbourhood 
  and \lstinline|++| is the concatenation operator for sequences.
 
 The crucial point for this task is
@@ -644,7 +644,7 @@ In this way, when the negative factor is taken into account:
 However, if only this factor were used, 
  the system would be disorganized. 
  This is where the cohesion factor comes in. 
- Given the neighbor with the maximum distance $D$, 
+ Given the neighbour with the maximum distance $D$, 
  it linearly adjusts the distance relative to the node being evaluated by function:
 \begin{equation}
     \text{cohesion} = \begin{cases}
@@ -658,7 +658,7 @@ The overall reward function is defined as the sum of these two factors ($cohesio
  \begin{figure}[t]
     \centering
     \includegraphics[width=0.6\textwidth]{papers/coordination2023/imgs/ccreward.pdf}
-    \caption{Cohesion-Collision reward function: the red vertical line represents the target distance $d$.
+    \caption[cohesion collision reward function]{Cohesion-Collision reward function: the red vertical line represents the target distance $d$.
         The portion of the graph to the right of the red line represents the influence of the cohesion term,
         while the left one represents the influence of the collision term.
     }
@@ -696,13 +696,13 @@ Given the flexibility of \scarlib{},
  capable of solving the described task in both cases. 
 % 
 With the homogeneous policies found (i.e., the one extracted from the CTDE process), 
- we verified that the system's behavior 
+ we verified that the system's behaviour 
  was consistent with what was learned by varying the initial seed 
  in 16 simulations
 %
 With the CDTE policy, 
  since we considered the system homogeneous, 
- we also verified the behavior as the number of nodes varied,
+ we also verified the behaviour as the number of nodes varied,
  expecting similar performance as the nodes increased.
 
 The graphs shown in \Cref{fig:cc-results} 
@@ -726,7 +726,7 @@ During the testing phase
  both in the CDTE and DTDE cases. 
  Most specifically, 
  we note that the homogeneous policy is generally 
- a winning choice for homogeneous CMARL tasks. 
+ a winning choice for homogeneous \ac{cmarl} tasks. 
 %
 Increasing the number of agents (from 50 to 200), 
  we can observe that collective performances are similar to those with few agents (\Cref{fig:test}).
@@ -773,7 +773,7 @@ Increasing the number of agents (from 50 to 200),
         \caption{Average cohesion factor}
         \label{fig:cohesion-dcc}
     \end{subfigure}
-\caption{Cohesion and collision experiment results. The y-axis represents the reward value.
+\caption[Cohesion and collision experiment results]{Cohesion and collision experiment results. The y-axis represents the reward value.
 The x-axis represents the total number of episodes.
 The first three graphs show the results of the CDTE learning process, while the last three show the results of the DTDE learning process.}
 \label{fig:cc-results}
@@ -818,7 +818,7 @@ The first three graphs show the results of the CDTE learning process, while the 
         \caption{}
         \label{fig:sim3}
     \end{subfigure}
-\caption{Snapshots of the learned policy, the time flow is from left to right. 
+\caption[Snapshots of the learned policy in \scarlib{}]{Snapshots of the learned policy, the time flow is from left to right. 
 In the first row, there are 50 agents, whereas in the second row, there are 200 agents.
 In the last step of the simulation, the agents converged to a distance of approximately $\delta$.}
 \label{fig:simulation-snapshots}
@@ -843,7 +843,7 @@ In the last step of the simulation, the agents converged to a distance of approx
         \includegraphics[width=\textwidth]{papers/coordination2023/imgs/data-200.pdf}
         \caption{200 agents}
     \end{subfigure}
-\caption{The performance of the learned policy. 
+\caption[The performance of the learned policy in \scarlib{}]{The performance of the learned policy. 
 The y-axis represents the distance between the agents.
 The x-axis represents the time.
 The green line is equal to $\delta$.
@@ -897,10 +897,10 @@ Vectorized Multi-agent Simulator~\cite{bettini2022vmas} is another promising sol
  as it is optimized for collective tasks through GPU computation, 
  and it can be extended with additional environments.
 %
-While ScarLib is not directly linked to any simulator, 
+While \scarlib is not directly linked to any simulator, 
  its main abstraction can be potentially linked 
  to both JVM-based simulators and gym-based Python environments. 
- Our choice of Alchemist was mainly due to its ability to express CMARL settings easily, but potentially it can be used with any of the above-described solutions.
+ Our choice of Alchemist was mainly due to its ability to express \ac{cmarl} settings easily, but potentially it can be used with any of the above-described solutions.
 \subsubsection{Multi-Agent Deep RL libraries:}
 since the importance of multi-agent settings several libraries have been developed in recent years. 
 Ray~\cite{ray} is one of the most comprehensive frameworks, 
@@ -917,16 +917,16 @@ PyMARL~\cite{samvelyan19smac} is one of the first solutions in Python for MARL,
 \scarlib{} is more similar to the first framework, 
  even though it is primarily designed for cooperative applications. 
 %
-However, since it was developed specifically for CMARL, 
+However, since it was developed specifically for \ac{cmarl}, 
  it includes some abstractions and configurations that are not present in Ray, 
  such as the concept of a collective reward function and the configuration for CTDE. 
 %
-This reduces the time required to use ScarLib compared to Ray. 
- Additionally, ScarLib has a simple DSL that is easier to use than Ray's configuration system and is aided by the type system.
+This reduces the time required to use \scarlib{} compared to Ray. 
+ Additionally, \scarlib{} has a simple DSL that is easier to use than Ray's configuration system and is aided by the type system.
 
-Finally, some innovative approaches aim to scale solutions to large populations of cooperative agents, such as mean-field RL. However, only a few implementations currently exist, and they are not considered to be general-purpose. ScarLib, on the other hand, offers a practical, simple implementation that can be leveraged in CMARL settings.
+Finally, some innovative approaches aim to scale solutions to large populations of cooperative agents, such as mean-field RL. However, only a few implementations currently exist, and they are not considered to be general-purpose. \scarlib{}, on the other hand, offers a practical, simple implementation that can be leveraged in \ac{cmarl} settings.
 
-Overall, CMARL is a high-level framework that reduces the effort required for developers and practitioners to define and implement CMARL problems when compared to current state-of-the-art solutions.
+Overall, \ac{cmarl} is a high-level framework that reduces the effort required for developers and practitioners to define and implement \ac{cmarl} problems when compared to current state-of-the-art solutions.
 
 \subsubsection{Many-Agent Proof of Concept:}
 the above RL library solutions are mainly created for multi-agent systems, 
@@ -935,11 +935,11 @@ the above RL library solutions are mainly created for multi-agent systems,
 In particular, mean-field RL~\cite{meanfield} is probably one of the 
  most interesting solutions in this context, 
  as it abstracts over the entire agent population 
- by considering only the average response of the neighborhood. 
+ by considering only the average response of the neighbourhood. 
 %
 Currently, however, only a few implementations 
  exist~\footnote{\url{https://github.com/mlii/mfrl}} and they are not considered to be general-purpose. 
- \scarlib{} instead is practical and already provides a simple implementation that can be leveraged in CMARL settings. 
+ \scarlib{} instead is practical and already provides a simple implementation that can be leveraged in \ac{cmarl} settings. 
 \section{Conclusion and Future work}\label{conclusion}
 In this paper, we presented \scarlib{}: 
  a collaborative many-agent deep reinforcement learning framework that integrates the functionalities of \scafi{} and Alchemist.
@@ -947,9 +947,9 @@ In this paper, we presented \scarlib{}:
  The framework enables the definition of simulations of large-scale distributed scenarios 
  and the creation of complex scenarios with ease through its exposed DSL. 
 % 
-With ScaRlib, developers can effectively and efficiently simulate and experiment with different reinforcement learning algorithms, 
+With \scarlib{}, developers can effectively and efficiently simulate and experiment with different reinforcement learning algorithms, 
  thereby providing a valuable tool for the advancement of coordination and multi-agent systems research.
-Looking forward, ScaRLib presents a promising solution 
+Looking forward, \scarlib{} presents a promising solution 
  for expressing collaborative multi-agent reinforcement learning applications -- like hybrid aggregate computing solutions~\cite{Aguzzi2021,Aguzzi2022,Aguzzi2022-Roadmap,DBLP:conf/acsos/AguzziCV22}.
  However, further development and integration is necessary for it to be more easily adopted by non-expert users. 
  One area of improvement would be to integrate additional learning algorithms such as MAPPO~\cite{mappo} and mean field reinforcement learning~\cite{meanfield}, 
@@ -961,7 +961,7 @@ To address this, we propose integrating a new environment, FLAME GPU~\cite{flame
 which has the ability to run entirely on GPU, 
 thus providing faster learning and reducing the computational load. 
 %
-This integration would further enhance the capabilities of ScaRLib and make it a more practical and efficient tool for \ac{cmarl} research.
+This integration would further enhance the capabilities of \scarlib{} and make it a more practical and efficient tool for \ac{cmarl} research.
 
 %\subsubsection{Acknowledgements} Please place your acknowledgments at
 %the end of the paper, preceded by an unnumbered run-in heading (i.e.

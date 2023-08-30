@@ -62,8 +62,8 @@ Building \emph{artificial self-organising systems}
 %
 A central problem lies in \emph{driving the (emergence of) self-organising behaviour
 of a collection of agents or devices}---a goal also referred to through terms like
-``guided self-organisation''~\cite{prokopenko2009guided-selforg},
-``controlled self-organisation''~\cite{DBLP:journals/taas/SchmeckMCMR10}, and
+``guided self-organization''~\cite{prokopenko2009guided-selforg},
+``controlled self-organization''~\cite{DBLP:journals/taas/SchmeckMCMR10}, and
 ``emergence steering''~\cite{Varenne2015morpho,DBLP:conf/sysose/Giammarco17a}.
 %
 This problem can be reduced to the definition of the control program
@@ -80,7 +80,7 @@ information flows and control loops~\cite{DBLP:conf/saso/WolfH07}.
 Hybrid approaches are also possible where (parts of) programs
 are generated or improved through learning~\cite{DBLP:conf/coordination/AguzziCV22}.
 
-In this work, we focus on the \emph{programming language-based} approach to self-organisation,
+In this work, we focus on the \emph{programming language-based} approach to self-organization,
  where the developer writes the self-organising control program
  using a suitable \emph{macroprogramming language}~\cite{casadei2023macro,DBLP:journals/jisa/JuniorSBP21} (i.e., one aiming at expressing the macro-level behaviour of a system), be it general-purpose or domain-specific (e.g., explicitly tailored to robotic swarms~\cite{DBLP:journals/swarm/BrambillaFBD13} or wireless sensor networks~\cite{DBLP:journals/csur/MottolaP11}).
 %
@@ -103,7 +103,7 @@ This approach is simple to reason about but
 %
 Motivated by this, and inspired by the functional reactive paradigm,
  in this work 
- \emph{we propose a reactive self-organisation programming language
+ \emph{we propose a reactive self-organization programming language
  that enables the decoupling of program logic from its scheduling}.
 % 
 In particular, as a contribution, we:
@@ -111,12 +111,12 @@ In particular, as a contribution, we:
 \item propose a novel programming model and language, called \emph{\ac{langname}};
 \item provide an open-source implementation as a Scala \ac{dsl}\footnote{\label{footnote:dsl}\url{https://github.com/cric96/distributed-frp}},
  leveraging the functional reactive library Sodium and 
- inspiration from the ScaFi aggregate programming \ac{dsl}~\cite{DBLP:journals/softx/CasadeiVAP22,DBLP:journals/lmcs/AudritoCDV23};
+ inspiration from the \scafi{} aggregate programming \ac{dsl}~\cite{DBLP:journals/softx/CasadeiVAP22,DBLP:journals/lmcs/AudritoCDV23};
 \item experimentally evaluate the benefits of reactivity and resource usage
 through an open-source, permanently available artefact with reproducible simulations\footnote{\label{footnote:eval}\url{https://github.com/AggregateComputing/experiment-2023-acsos-distributed-frp}}.
 \end{itemize}
 %
-The result is a functional reactive self-organisation programming model, 
+The result is a functional reactive self-organization programming model, 
  relying on functional composition of behaviours,
 and whereby each sub-expression is amenable to independent scheduling:
  overall, we maintain the same expressiveness and benefits of aggregate programming~\cite{bpv:aggregate:programming,vbdacp:ac:survey:jlamp}
@@ -151,9 +151,9 @@ and whereby each sub-expression is amenable to independent scheduling:
 % which means that all the possible source of changes are continuously considered,
 % and it is not possible to perform fine-grained scheduling of parts of the control program---which would be desirable to make collective computations more time- and energy-efficient.
 
-The rest of the article is organised as follows.
+The rest of the article is organized as follows.
 %
-\Cref{sec:background} covers background on self-organisation programming and the functional reactive paradigm.
+\Cref{sec:background} covers background on self-organization programming and the functional reactive paradigm.
 %
 \Cref{sec:contrib} presents the \ac{langname} programming model.
 %
@@ -170,7 +170,7 @@ The rest of the article is organised as follows.
 %}
 
 In this section,
- we review approaches for self-organisation engineering (\Cref{sec:background:selforg}),
+ we review approaches for self-organization engineering (\Cref{sec:background:selforg}),
  and set the goal of combining the benefits of reactive approaches
 with those of compositional macroprogramming models like aggregate computing.
 %
@@ -179,20 +179,20 @@ Then, we provide background on \ac{frp} (\Cref{sec:background:frp}),
  for its benefits in declarativity and
  automatic, configurable management of change.
 
-\subsection{Self-organisation Engineering Approaches}
+\subsection{Self-organization Engineering Approaches}
 \label{sec:background:selforg}
 
 %\section{Related Work}
 
 %\meta{Plan: we may briefly recall the kinds of approaches as per the Intro. And then cover a few approaches for programming self-org, such as: TOTA as representative for reactive models, and AC as representative for proactive models?}
 
-The first distinction in approaches for self-organisation engineering
+The first distinction in approaches for self-organization engineering
  is between automatic 
  and manual approaches.
 %
 In the former category, 
  the control logic of the agents
- is learned, synthesised, or evolved automatically---as e.g., in multi-agent reinforcement learning~\cite{DBLP:journals/corr/abs-1911-10635},
+ is learned, synthesized, or evolved automatically---as e.g., in multi-agent reinforcement learning~\cite{DBLP:journals/corr/abs-1911-10635},
  Collective Intelligence~\cite{tumer2004collectives,casadei2023artl-ci-survey},
  and evolutionary swarm robotics~\cite{trianni2008evolutionary-swarm}.
 %
@@ -205,7 +205,7 @@ The latter category, instead,
 The rest of the section covers prominent approaches in this category (i.e.\ programming models)---distinguishing between reactive and round-based ones.
 
 Among reactive approaches is \emph{Tuples On The Air (TOTA)}~\cite{tota},
- a programming model for decentralised peer-to-peer networks of mobile nodes or agents.
+ a programming model for decentralized peer-to-peer networks of mobile nodes or agents.
 %
 It uses \emph{tuples} to represent context information 
  and mediate interactions between agents.
@@ -241,7 +241,7 @@ is one such approach,
 %
 Indeed, it emerged as 
  a prominent approach for programming
- self-organisation~\cite{vbdacp:ac:survey:jlamp},
+ self-organization~\cite{vbdacp:ac:survey:jlamp},
  with the benefits of formality,
  abstraction, compositionality, and pragmatism.
 %
@@ -487,7 +487,7 @@ This section presents the \ac{langname} programming model from a user perspectiv
 %
 First, we explain the system and execution model (\Cref{sec:sys-model});
  then, we present the language abstractions and primitives (\Cref{programming-constructs});
- finally, we show how paradigmatic examples of self-organisation can be expressed in \ac{langname} (\Cref{paradigmatic-examples}).
+ finally, we show how paradigmatic examples of self-organization can be expressed in \ac{langname} (\Cref{paradigmatic-examples}).
 
 \subsection{System Model and (Reactive) Execution Model}
 \label{sec:sys-model}
@@ -561,7 +561,7 @@ Furthermore,
 This idea will be shown in \Cref{ex:channel} and \Cref{fig:channel:graph}.
 
 Notice that the model is logical 
- and may be implemented using different approaches and optimisations---e.g., a device may send a heartbeat to notify that it is still a neighbour and its data has not changed,
+ and may be implemented using different approaches and optimizations---e.g., a device may send a heartbeat to notify that it is still a neighbour and its data has not changed,
  it may send a message with only data that has changed, and so on.
 %
 Also, inbound and outbound reactivity can be regulated by throttling, i.e.,
@@ -714,7 +714,7 @@ def nbrRange(): Flow[NeighborField[Double]] =
   nbrSensor("nbrRange")
 \end{lstlisting}
 provides the neighbouring field of (estimated) distances to neighbours
-(how such a sensor works is an implementation detail---e.g., it may use GPS traces or WiFi signal strength).
+(how such a sensor works is an implementation detail---e.g., it may use GPS traces or Wi-Fi signal strength).
 %
 %\begin{figure}
 %    \centering
@@ -767,7 +767,7 @@ neighbours that run the other sub-computation
 %
 This concept is called \emph{alignment} and is well-discussed, e.g., in~\cite{DBLP:journals/lmcs/AudritoCDV23}.
 % 
-Notice that, upon a change in the value sensed by \texttt{color},
+Notice that, upon a change in the value sensed by \texttt{colour},
  a device may dynamically switch branch and hence sub-computation domain and ``aligned'' neighbour set.
  
 %With this semantics, any sub-computation under \texttt{t} or \texttt{e} will not align with any neighbor executing the opposite branch. %, due to the fact that their paths will differ at the \texttt{Then}/\texttt{Else} slot.
@@ -901,7 +901,7 @@ In this section, we cover two fundamental self-organising behaviours
 that will be exercised in the evaluation in \Cref{sec:eval}.
 %
 Firstly, we introduce the \emph{gradient}~\cite{DBLP:conf/ipsn/NagpalSB03,audrito2017ULT}, a versatile
- self-organisation pattern
+ self-organization pattern
  that supports a wide range of more complex self-organising behaviours.
 %
 
@@ -1042,7 +1042,7 @@ For a graphical view of the local and distributed dependency graph, see \Cref{fi
     \caption{Distributed view (with neighbour dependencies).}
     \label{fig:interactions}
   \end{subfigure}
-  \caption{
+  \caption[The reactive dataflow graph corresponding to the channel example.]{
       The reactive dataflow graph corresponding to \Cref{ex:channel}.
       %
       \Cref{fig:channel-graphical} provides the local view of the computation for a single node
@@ -1072,7 +1072,7 @@ Even though a complete description of the implementation is beyond the aims of t
  this section is meant to illustrate that 
  the prototype is technically sound,
  that we followed modern software engineering practices,
- and to provide general guidance for understanding the code organisation of the provided artefact (see \Cref{footnote:dsl}).
+ and to provide general guidance for understanding the code organization of the provided artefact (see \Cref{footnote:dsl}).
 
 \subsection{Goals}
 \label{sec:impl:goals}
@@ -1082,7 +1082,7 @@ that is expressive enough to allow developers
 to declaratively describe \textit{self-organising} collective computations
 while decoupling and providing fine-grained control over their scheduling details.
 %
-This vision can be summarised with the term \textit{functional reactive self-organisation}.
+This vision can be summarized with the term \textit{functional reactive self-organization}.
 %
 Considering the system model introduced in \Cref{sec:sys-model},
  there are three main objectives to be pursued in order to accomplish the goal:
@@ -1191,7 +1191,7 @@ To evaluate the proposed approach,
 In particular, 
  we released \ac{langname}\footnote{\url{https://central.sonatype.com/artifact/io.github.cric96/distributed-frp_3/0.1.3}} and integrated it into Alchemist.
 %
-The choice of Alchemist allowed us to leverage the already integrated \emph{ScaFi} aggregate programming language~\cite{DBLP:journals/softx/CasadeiVAP22}
+The choice of Alchemist allowed us to leverage the already integrated \emph{\scafi{}} aggregate programming language~\cite{DBLP:journals/softx/CasadeiVAP22}
 as a reference for round-based computations (cf. \Cref{sec:background:selforg}).
 
 \subsection{Goals}\label{eval:goals}
@@ -1229,7 +1229,7 @@ In particular, we expect the reactive version of the algorithm to be \emph{more 
         \caption{Scenario C: channel.}
         \label{fig:scenario-c}
     \end{subfigure}
-    \caption{
+    \caption[Evaluation scenarios implemented with \ac{langname}]{
       Evaluation scenarios.
       The output of the program being evaluated is depicted in the inner circle. 
       On the left, the hue varies depending on the gradient output, with redder colours indicating lower values. 
@@ -1252,7 +1252,7 @@ Each node has a mean distance to its neighbours of 5 meters
 Messages sent by the nodes may be subject to a communication delay
  regulated by the parameter $\tau$, which describes an exponential probabilistic function.
 %
-Each simulation is characterised by the mode of execution of the aggregate program,
+Each simulation is characterized by the mode of execution of the aggregate program,
  which can be 
  (i) \emph{purely reactive}, 
  (ii) \emph{reactive with throttling}, or 
@@ -1265,7 +1265,7 @@ at the price of a significant overhead in the number of exchanged messages.
 % 
 The ``reactive with throttling'' policy
  is %a reactive policy
- parametrised on the throttling frequency $\gamma$
+ parametrized on the throttling frequency $\gamma$
 (i.e.,  the inverse of the period in which all events received in this interval are accumulated before emission).
 %
 Compared to the purely reactive policy,
@@ -1341,7 +1341,7 @@ The metrics extracted for this study are:
 \subsubsection{Baselines}
 
 To establish baselines, 
- we implemented round-based solution programs for the self-healing gradient (scenario G) and channel (scenario C) in ScaFi---see~\cite{DBLP:journals/softx/CasadeiVAP22}. 
+ we implemented round-based solution programs for the self-healing gradient (scenario G) and channel (scenario C) in \scafi{}---see~\cite{DBLP:journals/softx/CasadeiVAP22}. 
 % The syntax of the two domain-specific languages is similar, as evidenced by the gradient expressed in this framework:
 %\begin{lstlisting}
 %def gradient(source: Boolean): Double = {
@@ -1365,7 +1365,7 @@ In this section, we will present the results obtained from the simulations,
  highlighting how the proposed model satisfies the goals elicited in \Cref{eval:goals}.
 %
 We run a total of 768 simulations
-by running 64 randomised instances
+by running 64 randomized instances
 (varying the random seed and the position of the nodes in the environment)
 for each one of the $12$ \emph{simulation configurations} obtained by a different combination of
 \textit{(i)} execution mode,
@@ -1527,7 +1527,7 @@ Also, this execution occurs only where needed,
       \caption{Gradient: output.}
       \label{fig:gradient-output-rel}
   \end{subfigure}
-  \caption{
+  \caption[Simulation results of \ac{langname} simulations]{
     Simulation data.
     %
     The output value (lines 2 and 4)
@@ -1574,7 +1574,7 @@ Also, this execution occurs only where needed,
     \centering
     \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/message_count.pdf}
   \end{subfigure}
-  \caption{
+  \caption[behaviour of the channel in response to changes in a destination]{
   The behaviour of the channel in response to changes in a destination is shown through a sequence of snapshots in the first line (using the same graphical notation as \Cref{fig:scenario-screenshots} where, additionally, the grey shadows denote nodes where computation is taking place). 
   It is observed that the computation ``moves'' to different portions of the system until it reaches a stable situation. 
   However, the computation only results in the re-computation of the destination gradient, as seen in the bottom plot.
@@ -1592,7 +1592,7 @@ This paper proposes \ac{langname},
 The language is designed by taking inspiration 
  from the aggregate programming approach,
  which is based on a proactive execution model,
- and reactive approaches to self-organisation like TOTA,
+ and reactive approaches to self-organization like TOTA,
  and adopting \ac{frp} as a reference paradigm for its design and implementation.
 %
 As experimentally verified,
@@ -1607,10 +1607,10 @@ Indeed, in \ac{langname},
  depending on whether their context has changed.
 
 In future work,
- we would like to formalise a core calculus capturing behaviour and properties of \ac{langname} (similarly to field calculi and related formal languages \cite{vbdacp:ac:survey:jlamp,DBLP:conf/ecoop/AudritoCDSV22,DBLP:journals/lmcs/AudritoCDV23}),
+ we would like to formalize a core calculus capturing behaviour and properties of \ac{langname} (similarly to field calculi and related formal languages \cite{vbdacp:ac:survey:jlamp,DBLP:conf/ecoop/AudritoCDSV22,DBLP:journals/lmcs/AudritoCDV23}),
  and explore how to support flexibility in actuation models (cf. swarm robotics).
 Also, it would be interesting 
-  to study the deployment of \ac{langname} applications, e.g.\ by considering how reactive dynamics and consumption profiles may interact with application partitioning strategies like the pulverisation model~\cite{CPPVW-FI2020} and deployment options.
+  to study the deployment of \ac{langname} applications, e.g.\ by considering how reactive dynamics and consumption profiles may interact with application partitioning strategies like the pulverization model~\cite{CPPVW-FI2020} and deployment options.
 
 
 \printbibliography
