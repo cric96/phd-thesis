@@ -1,0 +1,71 @@
+
+\chapter{Cyber-Physical Swarms}\label{chap:cpsw}
+The goal of this section is to clarify what I mean by \textit{Cyber-Physical Swarms}, what systems are similar to our definition, and which research areas have to deal with similar problems.
+This term is used to describe many computational nodes that collaborate to solve collective problems, similarly to what we observe in natural ``swarm'' systems.
+%
+These systems have a large population of networked nodes (hundreds -- thousands), and they are typically \textit{open} (i.e. we cannot know the total node number apriori). 
+%
+Consequently, the collective behaviour should be \textit{scale-independent} (i.e. the same program must work in small networks as well as in very large networks).
+%
+Besides, nodes are associated with a \textit{physical} asset through sensors and could change the environment using actuators. 
+%
+Namely, they have an \emph{embodiment} in the world -- so the name of cyber-physical. 
+%
+The nodes could be heterogeneous, but with a \emph{homogenous} local behaviour (i.e., each node should execute the same local logic). 
+%
+Furthermore, nodes act collaboratively, and they are not selfish -- they always operate for the global collective good.
+%
+I suppose that the overall system could not use a central entity -- so I need to deal with a distributed control. 
+%
+Even if modern architectures could be used (e.g cloud/edge infrastructures), in general, the system needs to react to local problems quickly. 
+%
+Hence, moving this decision far from the physical assets could be dangerous (since they are a kind of \emph{critical systems}).
+%
+As a concluding note, I want to consider their behaviour at the \textit{macro-level}, not at the \text{micro-level}. 
+%
+Hence, I intend to describe the collective not by emergence, but by defining a global wanted structure.
+
+\acp{cpsw} are kind of Complex Adaptive systems~\cite{holland1992complex}, but our vision enforces properties that are not necessarily present in standard complex systems' definition, like the large agents' number and the collaborative agents' nature.
+%%
+Collective Adaptive Systems~\cite{DBLP:journals/corr/abs-1108-5643} are near to our \acp{cpsw} description but in our definition agents pursue \emph{collective} (not individual) goals, and they have a homogenous behaviour.
+
+\section{Swarm Intelligence}
+
+Swarm Intelligence tries to apply the tactics observed in social animals in Swarm Robotics. 
+%
+The behaviours are derived in a bottom-up fashion, hence designers have tried to achieve collective behaviours through emergence observing individual animal behaviours.
+%
+For instance, artificial stigmergy~\cite{DBLP:journals/fgcs/DorigoBT00} derives from those studies.
+%
+However, nowadays, Swarm Intelligence is more focused on algorithms.
+% 
+Indeed, the collective behaviours observed in nature are leveraged to perform \textit{optimization} strategies or to directly solve problems by searching in the solution space.
+%%
+There are several examples of Swarm Intelligence optimisation algorithms, such as Ant Colony Optimisation (ACO)~\cite{DBLP:journals/tsmc/DorigoMC96}, Particle Swarm Optimisation (PSO)~\cite{DBLP:conf/icnn/KennedyE95} and Flock of Starling Optimisation (FSO)~\cite{DBLP:series/sci/FulgineiS11}.
+
+Even if they are important approaches, I am not directly interested in using them. 
+%
+Indeed, I draw \textit{inspiration} from swarms but only to achieve similar behaviour in the artificial swarm using self-organization. 
+%
+I do not want to \textit{mimic} nature but I aim to exploit the same mechanisms to build robust collective systems.
+
+\section{Swarm Robotics}
+
+Historically, Swarm Robotics derives from the first Swarm Intelligence approaches. 
+%
+Then, it has emerged as the \textit{engineering} part of that branch. 
+%
+Indeed, the general goal of \emph{swarm engineering} is \emph{to define systematic and well-founded procedures for modelling, designing, realising, verifying, validating, operating, and maintaining a swarm robotics system}~\cite{DBLP:journals/swarm/BrambillaFBD13}.
+
+In Swarm Robotics, the focus is mainly on \textit{robots} that are \emph{autonomous}, \emph{situated}, and with \emph{no central control}. 
+%
+I aim to expand this vision also to other ``swarm-like'' systems, such as a crowd of people, large-scale IoT and smart cities where I do not have robots. 
+%
+In particular, the novel branch of \textit{automatic design}~\cite{DBLP:journals/firai/FrancescaB16} is very appealing to be used in \acp{cpsw}. 
+%
+In autonomic design approaches, the controller is derived through \textit{genetic algorithms} or \textit{Multi-agent Reinforcement Learning} following a \textit{global} utility function. 
+\subsection{Multi-Agent Systems}
+A \ac{cpsw} could be seen as a Multi-Agent System -- in particular a \emph{many}-agent system -- where a group of autonomous entities are programmed to achieve collective behaviours through \emph{repeated} sensing, computation, communication, and actuation.
+
+Due to the high stochasticity of the environment, it is almost impossible to know and program in advance the optimal behaviour for all agents.
+%

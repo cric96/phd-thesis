@@ -38,30 +38,23 @@ Curiositas mater scientiae.
 
 \begin{acknowledgements} % this is optional
 \end{acknowledgements}
-
+\dominitoc
 %----------------------------------------------------------------------------------------
 \tableofcontents   
 \listoffigures     % (optional) comment if empty
 \lstlistoflistings % (optional) comment if empty
 %----------------------------------------------------------------------------------------
 
+\input{acronyms.tex}
+
 \mainmatter
 
-%----------------------------------------------------------------------------------------
-\chapter{\introductionname}
-\label{chap:introduction}
-%----------------------------------------------------------------------------------------
-
-Write introduction here.
+\begin{refsection}\input{chapters/introduction.tex}\end{refsection}
 \part{Background}
-\chapter{Cyber-Physical Swarms} % or Background
-\label{chap:cpsw}
-%----------------------------------------------------------------------------------------
-\chapter{Macro-programming} % possible chapter for Projects
-\label{chap:macro-programming}
-\chapter{Many-Agent Reinforcement Learning}
-\label{chap:marl}
-\input{acronyms.tex}
+\begin{refsection}\input{chapters/cyber-physical-swarms.tex}\end{refsection}
+\begin{refsection}\input{chapters/macro-programming.tex}\end{refsection}
+\begin{refsection}\input{chapters/many-agent-rl.tex}\end{refsection}
+
 \part{Learning in Cyber-Physical Swarms}
 \begin{refsection}\input{papers/discoli/main.tex}\end{refsection}
 \begin{refsection}\input{papers/acsos2022/main.tex}\end{refsection}

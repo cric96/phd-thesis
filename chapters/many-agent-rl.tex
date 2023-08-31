@@ -1,0 +1,106 @@
+\chapter{Reinforcement Learning}\label{chap:marl}
+\newcommand{\RS}{\mathcal{S}}
+\newcommand{\RA}{\mathcal{A}}
+\newcommand{\RP}{\mathcal{P}}
+\newcommand{\RR}{\mathcal{R}}
+\newcommand{\RE}{\mathbb{E}}
+
+\section{Single-agent}
+acl{rl}~\cite{sutton2018reinforcement-learning} is a generic framework 
+ %-- inspired by how humans learn -- 
+ used to structure \emph{control problems}. 
+%
+The focus is on \emph{sequential} interactions between \emph{agents}
+ (i.e. entity able to act) and an \emph{environment} 
+ (i.e. anything outside the control of agents). 
+%
+At each discrete time step $t$, an agent observes the current environment \emph{state} $s_t$ 
+ (i.e. the information perceivable by an agent) and selects an \emph{action} $a_t$ through a \emph{policy} $\pi$ (i.e. a probabilistic mapping between state and action). 
+%
+Partly as a consequence of its action, at the next time step $t+1$ the agent finds itself in state $s_{t+1}$ and receives a \emph{reward} $r_{t+1}$, 
+ i.e. a scalar signal quantifying how good the action was against the given environment configuration. 
+%
+The goal of \ac{rl} is to \emph{learn} a policy \emph{$\pi^*$} that maximizes the long-term return $G$ (i.e. the cumulative reward) through a \emph{trial-and-error} process. 
+%
+Different problems can be devised in these settings, like video games~\cite{DBLP:journals/spm/ArulkumaranDBB17}, robotics~\cite{DBLP:journals/ijrr/KoberBP13}, routing~\cite{DBLP:journals/comsur/LuongHGNWLK19}, etc.
+
+This general framework is supported by \ac{mdp}, 
+ a mathematical model that describes the environment evolution in sequential decision problems. 
+%
+A \ac{mdp} consists of a tuple $<\RS, \RA, \RP, \RR>$ in which:
+\begin{itemize}
+  \item $\RS$ denotes the set of states;
+  \item $\RA$ is the set of actions;
+  \item $\RP(s_{t + 1} | s_t, a_t)$ define the probability to reach some state $s_{t + 1}$ starting from $s_t$ and performing $a_t$ (i.e. transition probability function);
+  \item $\RR(s_t, a_t, s_{t+1})$ devise a probabilistic reward function.
+\end{itemize}
+In \ac{mdp}, $\RR$ is memory-less, namely the next environment state depends only on the current state. 
+%%
+Typically, in RL problems, agents do not have access to $\RR$ or $\RP$ but they can rely only on the experience $(s_t, a_t, r_t)$ sampled at a time step. 
+%%
+Therefore, $G$ is defined as the discounted sum of reward a possible future trajectory $\tau$ (i.e. a sequence of time steps):
+%%
+\begin{equation}
+G_{t} = r_t + \gamma r_{t + 1} + \gamma^2 r_{t + 2} + \dots + \gamma^T r_{t + T} = \sum_{k = t}^T \gamma^{k-t} r_k
+\end{equation}
+%%
+Where $0 \leq \gamma \leq 1$ is the \emph{discount factor}, that is how much the future reward impacts the long-term return.
+%%
+Finally, the \ac{rl} goal can be expressed as the maximization of the \emph{expected} long-term return following a policy $\pi$:
+%%
+\begin{equation}
+J = \mathbb{E_\pi}\Big[ G_t \Big] = \RE_\pi \Big[ \sum_{k = t}^T \gamma^{t-k} r_k \Big] 
+\end{equation}
+
+The \ac{rl} algorithms classification depends on how we derive the $\pi^*$ (i.e. the optimal policy) according to $J$.
+%
+%\emph{Policy-gradient} methods aim at directly learning the policy through gradient descents algorithms. 
+%
+In particular, \emph{value-based} methods learn one further function ($Q^\pi$ or $V^\pi$) to derive $\pi^*$.
+%
+$V^\pi$ is the value function that evaluates how good (or bad) a \emph{state} is according to the long-term return following the policy $\pi$ (\emph{expected value}).
+% 
+It is defined as:
+%%
+\begin{equation}
+V(s)^\pi = \RE_\pi \Big[ G_t | s_t = s \Big]
+\end{equation}
+%%
+$Q^\pi$ is the corresponding value function that evaluates \emph{state-action} pairs:
+%%
+\begin{equation}
+Q(s, a)^\pi = \RE_\pi \Big[ G_t | s_t = s, a_t = a \Big]
+\end{equation}
+Policies could be defined through value functions. In particular, a greedy policy based on $Q$ function is the one that always chooses the action with the highest value in a certain state:
+\begin{equation}
+\pi(s) = \arg \max_{a}(Q(s, a))
+\end{equation}
+%The objective in value-based methods is to find the best value function (whether $Q$ or $V$), defined as:
+%\begin{iequation}
+%Q^* = \arg \max_{\pi}(Q^\pi(s, a)) \; \text{or} \; V^* = \arg \max_{\pi}(V^\pi(s))
+%\end{iequation}
+%Consequently, when we have found $Q^*$, an optimal policy is straightforwardly defined:
+%\begin{equation}
+%\pi^*(s) = \underset{a}{\text{argmax}}(Q^*(s, a))
+%\end{equation}
+
+Q-Learning~\cite{DBLP:journals/ml/WatkinsD92} is one of the most famous value-based algorithms. 
+ It aims at finding the $Q^*$ (i.e. the $Q$ function associated with $\pi^*$) by incrementally refining a $Q$ table directly sampling from an unknown environment.
+%
+Particularly, this is done through a temporal difference update performed at each time step:
+\begin{equation}
+Q(s_t, a_t) = Q(s_t, a_t) + \alpha *  [r_t + \gamma * \arg \max_{a}(Q(s_{t+1}, a)) - Q(s_t, a_t)]
+\end{equation}
+Where $\alpha$ is the learning rate (i.e. how much new information will influence the learned $Q$ at each update). 
+%
+The agent typically follows a $\epsilon$-greedy policy (\emph{behavioural} policy, the function chooses a random action with a $\epsilon$ probability) to balance the \emph{exploitation} and \emph{exploration} trade-off. 
+
+%This algorithm is proven to eventually learn $Q^*$ under the assumption of a \emph{stationary} environment (i.e. the internal dynamics does not change over time).
+%
+Using $Q^*$ we could extract the $\pi^*$ greedy policy (\emph{target} policy).
+
+Nowadays, Q-Learning is applied in various fields, ranging from robotics to wireless sensor networks and smart grids~\cite{DBLP:journals/access/JangKHK19}.
+%
+However, one of the most challenging settings in which Q-Learning could be applied is when the learning process has to deal with multiple concurrent learners, namely a multi-agent system.
+\section{Multi-agent}
+\section{Many-agent}
