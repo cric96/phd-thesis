@@ -1,2 +1,37 @@
 \chapter{\introductionname}\label{chap:introduction}
-Write introduction here.
+The recent evolution of IT technologies fosters a vision in which computation is \textit{everywhere}. 
+%
+Several modern paradigms advance that vision, like ubiquitous~\cite{DBLP:journals/sigmobile/Weiser99}, pervasive~\cite{DBLP:journals/computer/SahaM03}, collective~\cite{DBLP:journals/computer/Abowd16}, and automatic computing~\cite{DBLP:journals/computer/KephartC03}.
+%
+These paradigms take into account systems (typically \emph{cyber physical}) where a large number (hundreds - thousands - millions) of simple interacting devices collectively perform complicated tasks in a decentralised manner, acting and sensing through a shared environment. 
+%
+Thus, they can be conceived as \textit{complex} systems like the ones observed in nature.
+%--  by means that we cannot understand the behaviour of the whole looking only at the parts.
+%
+Speaking about \textit{natural} complex systems, social animals, like a swarm of insects, exhibit fault-tolerant, effective, and efficient collective behaviours leveraging self-organisation.
+
+Consequently, I want to promote Cyber-Physical Systems with the properties observed in swarms, thus I came to define \acfi{cpsw}: a collection of (simple) computational entities linked with the physical world via perception and actuation that reach collective goals through self-organising behaviours.
+%
+Swarm robotics, ``swarms” of people (crowds) or, in general, ``swarms” of IoT devices are clearly defined instances of \acp{cpsw}.
+%
+Traditional design methodologies (device-level) are inadequate for \acp{cpsw} engineering, due to local-to-global mapping problems, distributed control, complex IT infrastructures, and scalability concerns.
+%
+To overcome these issues, the goal of my research PhD thesis is to find a systematic methodology (models, techniques and algorithms) to synthesise and deploy self-organising behaviours with predictable outcomes for \acp{cpsw}.
+
+This is not the first effort that wants to tackle these kinds of problems. 
+%
+Traditionally, designers have been guided by natural phenomena observation that was then transposed into computer systems -- a so-called bottom-up approach. 
+%
+However, this methodology led to specific solutions that hardly scale up with application complexity.
+%
+Novel techniques -- and the one that I follow in this work -- consist of top-down global-to-local approaches where designers define the system outcome directly at the collective level.
+%
+Among the many (like Buzz~\cite{DBLP:journals/software/PinciroliB16}, TOTA~\cite{DBLP:conf/icdcsw/MameiZL03}) in this thesis, I will take into consideration \acfi{ac}~\cite{DBLP:journals/computer/BealPV15} since it enables the definition of self-organising collective behaviours that can be functionally composed. 
+%
+In this way, the \textit{aggregate} programs (i.e. programs written using \ac{ac}) can be reused in different domains and can scale with application complexity. 
+
+Even if \ac{ac} is already applied in different scenarios like crowds of people~\cite{DBLP:journals/computer/BealPV15}, smart cities~\cite{DBLP:journals/isci/CasadeiFPRSV19}, and large-scale IoT~\cite{DBLP:journals/fgcs/CasadeiFPRSV19}, it currently lacks a software architecture (middleware), systematic program definition, abstraction layers (API) and foundational aspects.
+%
+Consequently, my thesis aims to investigate and critically analyse \ac{ac} techniques in the field of \acp{cpsw}.
+%
+This investigation will cover multiple directions like distributed intelligence, flexible middlewares, and ad-hoc building blocks, possibly leading to contributions both at a foundational (i.e., building blocks, \ac{ac} language, API) and architectural level (middleware, message passing architecture, ...).

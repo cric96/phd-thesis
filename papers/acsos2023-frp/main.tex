@@ -107,11 +107,11 @@ Motivated by this, and inspired by the functional reactive paradigm,
 In particular, as a contribution, we:
 \begin{itemize}
 \item propose a novel programming model and language, called \emph{\ac{langname}};
-\item provide an open-source implementation as a Scala \ac{dsl}\footnote{\label{footnote:dsl}\url{https://github.com/cric96/distributed-frp}},
+\item provide an open-source implementation as a Scala \ac{dsl}\footnote{\label{acsos2023-frp:footnote:dsl}\url{https://github.com/cric96/distributed-frp}},
  leveraging the functional reactive library Sodium and 
  inspiration from the \scafi{} aggregate programming \ac{dsl}~\cite{DBLP:journals/softx/CasadeiVAP22,DBLP:journals/lmcs/AudritoCDV23};
 \item experimentally evaluate the benefits of reactivity and resource usage
-through an open-source, permanently available artefact with reproducible simulations\footnote{\label{footnote:eval}\url{https://github.com/AggregateComputing/experiment-2023-acsos-distributed-frp}}.
+through an open-source, permanently available artefact with reproducible simulations\footnote{\label{acsos2023-frp:footnote:eval}\url{https://github.com/AggregateComputing/experiment-2023-acsos-distributed-frp}}.
 \end{itemize}
 %
 The result is a functional reactive self-organization programming model, 
@@ -151,34 +151,34 @@ and whereby each sub-expression is amenable to independent scheduling:
 
 The rest of the article is organized as follows.
 %
-\Cref{sec:background} covers background on self-organization programming and the functional reactive paradigm.
+\Cref{acsos2023-frp:sec:background} covers background on self-organization programming and the functional reactive paradigm.
 %
-\Cref{sec:contrib} presents the \ac{langname} programming model.
+\Cref{acsos2023-frp:sec:contrib} presents the \ac{langname} programming model.
 %
-\Cref{sec:impl} details the implementation.
+\Cref{acsos2023-frp:sec:impl} details the implementation.
 %
-\Cref{sec:eval} describes the experimental setup and results.
+\Cref{acsos2023-frp:sec:eval} describes the experimental setup and results.
 %
-\Cref{sec:conc} draws conclusions and future research work.
+\Cref{acsos2023-frp:sec:conc} draws conclusions and future research work.
  
-\section{Background and Motivation}\label{sec:background}
+\section{Background and Motivation}\label{acsos2023-frp:sec:background}
 
 %\meta{
 %budget: 1 pages
 %}
 
 In this section,
- we review approaches for self-organization engineering (\Cref{sec:background:selforg}),
+ we review approaches for self-organization engineering (\Cref{acsos2023-frp:sec:background:selforg}),
  and set the goal of combining the benefits of reactive approaches
 with those of compositional macroprogramming models like aggregate computing.
 %
-Then, we provide background on \ac{frp} (\Cref{sec:background:frp}),
+Then, we provide background on \ac{frp} (\Cref{acsos2023-frp:sec:background:frp}),
  the paradigm we choose for our programming model,
  for its benefits in declarativity and
  automatic, configurable management of change.
 
 \subsection{Self-organization Engineering Approaches}
-\label{sec:background:selforg}
+\label{acsos2023-frp:sec:background:selforg}
 
 %\section{Related Work}
 
@@ -270,7 +270,7 @@ Indeed,
 the round-based approach seems to be a legacy of imperative languages or solutions featuring limited compositionality.
 Instead, more compositional languages like, e.g., aggregate computing languages~\cite{vbdacp:ac:survey:jlamp,DBLP:journals/nca/BachrachBM10,DBLP:conf/ecoop/AudritoCDSV22} and Buzz~\cite{DBLP:conf/iros/PinciroliB16},
  allow building complex self-organising behaviour
- by composing \emph{blocks} of simpler self-organising behaviours---see \Cref{paradigmatic-examples} for examples.
+ by composing \emph{blocks} of simpler self-organising behaviours---see \Cref{acsos2023-frp:paradigmatic-examples} for examples.
 % reactivity also makes sense for self-organisation,
 % because the idea is to steer behaviour
 % as a response to (local) change.
@@ -294,7 +294,7 @@ The most suitable programming approach for this
 %\meta{MV: possibly, not strictly needed I feel}
 
 \subsection{Functional Reactive Programming}
-\label{sec:background:frp}
+\label{acsos2023-frp:sec:background:frp}
 
 \emph{Reactive programming}~\cite{DBLP:journals/csur/BainomugishaCCMM13} is a paradigm suitable for developing event-driven applications,
  leveraging abstractions to express (relationships between) time-varying values and 
@@ -335,11 +335,11 @@ Then, \ac{frp} libraries %languages
 An example of such a library %  language 
  is Sodium~\cite{blackheath2016frp-sodium},
  the Java library for \ac{frp}
- which we leveraged to implement \ac{langname} as described in \Cref{sec:impl}.
+ which we leveraged to implement \ac{langname} as described in \Cref{acsos2023-frp:sec:impl}.
   
 %To more practically introduce \ac{frp}, in the following we briefly recap the essential elements of Sodium~\cite{blackheath2016frp-sodium},
 % a Java library for \ac{frp}
-% which we leveraged for the implementation of \ac{langname} as described in \Cref{sec:impl}.
+% which we leveraged for the implementation of \ac{langname} as described in \Cref{acsos2023-frp:sec:impl}.
 
  
 
@@ -392,7 +392,7 @@ Two streams of the same type can be merged into a single stream via the \texttt{
  where a mapping function \texttt{f} can be used to combine \emph{simultaneous events}. 
 %, returning a stream that emits events from either input.
 %
-%Since Sodium supports \textit{simultaneous events} (see \Cref{sec:transactions} for more details), if both input streams happen to emit at the same time the given combining function will be used to produce the final output event.
+%Since Sodium supports \textit{simultaneous events} (see \Cref{acsos2023-frp:sec:transactions} for more details), if both input streams happen to emit at the same time the given combining function will be used to produce the final output event.
 %
 \begin{lstlisting}[frame=single, language=java]
 Stream<Integer> left = ...;
@@ -473,7 +473,7 @@ External interfacing with \ac{frp} graphs
  (ii) \emph{listening to changes in streams and cells}, through method \texttt{listen(h)} attaching handler \texttt{h}.
  
 \section{The \ac{langname} Programming Model}
-\label{sec:contrib}
+\label{acsos2023-frp:sec:contrib}
 
 %\meta{
 %budget: 2,5/3 pages
@@ -483,12 +483,12 @@ External interfacing with \ac{frp} graphs
 
 This section presents the \ac{langname} programming model from a user perspective.
 %
-First, we explain the system and execution model (\Cref{sec:sys-model});
- then, we present the language abstractions and primitives (\Cref{programming-constructs});
- finally, we show how paradigmatic examples of self-organization can be expressed in \ac{langname} (\Cref{paradigmatic-examples}).
+First, we explain the system and execution model (\Cref{acsos2023-frp:sec:sys-model});
+ then, we present the language abstractions and primitives (\Cref{acsos2023-frp:programming-constructs});
+ finally, we show how paradigmatic examples of self-organization can be expressed in \ac{langname} (\Cref{acsos2023-frp:paradigmatic-examples}).
 
 \subsection{System Model and (Reactive) Execution Model}
-\label{sec:sys-model}
+\label{acsos2023-frp:sec:sys-model}
 
 %\meta{devices, sensors, actuators, neighborhoods
 %
@@ -556,7 +556,7 @@ Furthermore,
  by allowing individual \emph{expressions} (i.e., portions of programs)
  to be re-evaluated when their context and inputs (e.g., dependencies on other expressions) change---thanks to the \ac{frp} approach.
 %
-This idea will be shown in \Cref{ex:channel} and \Cref{fig:channel:graph}.
+This idea will be shown in \Cref{acsos2023-frp:ex:channel} and \Cref{acsos2023-frp:fig:channel:graph}.
 
 Notice that the model is logical 
  and may be implemented using different approaches and optimizations---e.g., a device may send a heartbeat to notify that it is still a neighbour and its data has not changed,
@@ -571,7 +571,7 @@ Also, inbound and outbound reactivity can be regulated by throttling, i.e.,
 %\meta{RC: can we provide a picture of the idea?}
 
 \subsection{Programming Abstractions and Primitives}
-\label{programming-constructs}
+\label{acsos2023-frp:programming-constructs}
 
 %\meta{rep/LOOP, nbr, branch-- introduced through simple examples (see e.g. the progression of examples from~\cite{DBLP:journals/lmcs/AudritoCDV23}: counting rounds (here, we should provide a frequency explicitly), counting the number of neighbours or getting the mean of a value from neighbourhood}
 
@@ -612,7 +612,7 @@ We call each sub-computation a \emph{flow}
  and represent it programmatically through type \lstinline|Flow[T]|\footnote{Notation: we highlight types in {\color{brown!50!black}\texttt{brown}}, primitives in {\color{red}\texttt{red}}, derived/library constructs in {\color{purple}\texttt{purple}}, and Scala (host language) keywords in {\color{blue}\textbf{\texttt{blue}}}.}, where \lstinline|T| is the type of the output of the wrapped computation.
 %
 A \lstinline|Flow| is essentially a function that takes %a path and 
-a \lstinline|Context| and returns a \emph{cell} of \lstinline|Export|s, possibly depending on the exports of other \lstinline|Flow|s, recursively---see \Cref{sec:impl:impl} for details.
+a \lstinline|Context| and returns a \emph{cell} of \lstinline|Export|s, possibly depending on the exports of other \lstinline|Flow|s, recursively---see \Cref{acsos2023-frp:sec:impl:impl} for details.
 %
 With abuse of terminology,
  we will refer to a flow 
@@ -646,7 +646,7 @@ will yield the string \lstinline|"hot"|
 in the devices where the local temperature sensor yields a value below the given threshold
 and the string \lstinline|"normal"| otherwise.
 
-%(\Cref{fig:semantics-mux}) is an alternative to \texttt{branch} that introduces conditional behaviour without resulting in partitions in the device network.
+%(\Cref{acsos2023-frp:fig:semantics-mux}) is an alternative to \texttt{branch} that introduces conditional behaviour without resulting in partitions in the device network.
 %
 %That is, devices running sub-computations in \texttt{t} or \texttt{e} will always align with each other since both exports will be included in the final one, respectively under the \texttt{Then} and \texttt{Else} slots.
 
@@ -657,16 +657,16 @@ and the string \lstinline|"normal"| otherwise.
 %        \centering
 %        \includegraphics[width=\textwidth]{figures/semantics/mux-true.pdf}
 %        \caption{\texttt{true} condition.}
-%        \label{fig:semantics-mux-true}
+%        \label{acsos2023-frp:fig:semantics-mux-true}
 %    \end{subfigure}
 %    \begin{subfigure}[b]{0.47\textwidth}
 %        \centering
 %        \includegraphics[width=\textwidth]{figures/semantics/mux-false.pdf}
 %        \caption{\texttt{false} condition.}
-%        \label{fig:semantics-mux-false}
+%        \label{acsos2023-frp:fig:semantics-mux-false}
 %    \end{subfigure}
 %    \caption{Semantics of \texttt{mux(c, t, e)}.}
-%    \label{fig:semantics-mux}
+%    \label{acsos2023-frp:fig:semantics-mux}
 %\end{figure}
 
 \subsubsection{Interaction with neighbours}
@@ -687,7 +687,7 @@ nbr(mid()) // or nbr(mid()).withoutSelf to exclude "self"
 %
 returns, in any device, the IDs of all its neighbours (including the device itself).
 %
-%Neighbouring constructs, i.e., \texttt{nbr} and \texttt{nbrSensor}, require knowing which neighbours are aligned when they get evaluated. %, as shown in \Cref{fig:semantics-neighboring}.
+%Neighbouring constructs, i.e., \texttt{nbr} and \texttt{nbrSensor}, require knowing which neighbours are aligned when they get evaluated. %, as shown in \Cref{acsos2023-frp:fig:semantics-neighboring}.
 %
 %This means that, if this constructs are used at a certain path \texttt{p}, the engine should filter out all neighbours whose known export does not contain \texttt{p}.
 %%
@@ -697,7 +697,7 @@ returns, in any device, the IDs of all its neighbours (including the device itse
 %
 %Since every device is a neighbour of itself, this process should also take care of replacing the value produced by the previous evaluation with the new value coming from \texttt{a}.
 %
-%This is shown in \Cref{fig:semantics-nbr} by the isolated arrow going from \texttt{r(a)} in the current device to the root of the export.
+%This is shown in \Cref{acsos2023-frp:fig:semantics-nbr} by the isolated arrow going from \texttt{r(a)} in the current device to the root of the export.
 %
 %For what concerns \texttt{nbrSensor}, the engine just uses the current \texttt{NeighborState} of each aligned neighbour to evaluate the sensor with the specified identifier.
 
@@ -720,17 +720,17 @@ provides the neighbouring field of (estimated) distances to neighbours
 %        \centering
 %        \includegraphics[width=\textwidth]{figures/semantics/nbr.pdf}
 %        \caption{\texttt{nbr(a)}}
-%        \label{fig:semantics-nbr}
+%        \label{acsos2023-frp:fig:semantics-nbr}
 %    \end{subfigure}
 %    \hfill
 %    \begin{subfigure}[b]{0.47\textwidth}
 %        \centering
 %        \includegraphics[width=\textwidth]{figures/semantics/nbrSensor.pdf}
 %        \caption{\texttt{nbrSensor(s)}}
-%        \label{fig:semantics-nbrsensor}
+%        \label{acsos2023-frp:fig:semantics-nbrsensor}
 %    \end{subfigure}
 %    \caption{Semantics of neighboring constructs.}
-%    \label{fig:semantics-neighboring}
+%    \label{acsos2023-frp:fig:semantics-neighboring}
 %\end{figure}
 
 
@@ -776,16 +776,16 @@ Notice that, upon a change in the value sensed by \texttt{colour},
 %        \centering
 %        \includegraphics[width=\textwidth]{figures/semantics/branch-true.pdf}
 %        \caption{\texttt{true} condition.}
-%        \label{fig:semantics-branch-true}
+%        \label{acsos2023-frp:fig:semantics-branch-true}
 %    \end{subfigure}
 %    \begin{subfigure}[b]{0.40\textwidth}
 %        \centering
 %        \includegraphics[width=\textwidth]{figures/semantics/branch-false.pdf}
 %        \caption{\texttt{false} condition.}
-%        \label{fig:semantics-branch-false}
+%        \label{acsos2023-frp:fig:semantics-branch-false}
 %    \end{subfigure}
 %    \caption{Semantics of \texttt{branch(c, t, e)}.}
-%    \label{fig:semantics-branch}
+%    \label{acsos2023-frp:fig:semantics-branch}
 %\end{figure}
 
 
@@ -796,13 +796,13 @@ Notice that, upon a change in the value sensed by \texttt{colour},
 %%
 %In this case, the wrapper type is the \texttt{Flow} type, and lifting a function to the \texttt{Flow} world means producing another \texttt{Flow} obtained by applying that function to the roots of those flows, and having the original exports as children of the resulting one.
 %
-%This is shown in \Cref{fig:semantics-lift}, which depicts the case where \texttt{f} is a binary function (the generalization to n-ary functions is in fact trivial).
+%This is shown in \Cref{acsos2023-frp:fig:semantics-lift}, which depicts the case where \texttt{f} is a binary function (the generalization to n-ary functions is in fact trivial).
 %
 %\begin{figure}
 %    \centering
 %    \includegraphics[width=0.4\textwidth]{figures/semantics/lift.pdf}
 %    \caption{Semantics of \texttt{lift(a, b, f)}.}
-%    \label{fig:semantics-lift}
+%    \label{acsos2023-frp:fig:semantics-lift}
 %\end{figure}
 %As a side note, the specification also defines a \texttt{lift} operation on instances of \texttt{NeighborField}s.
 %%
@@ -861,9 +861,9 @@ explicitly dictating the pace of the stateful computation
 %%
 %These \texttt{Flow}s shall be interpreted as the input always being \quotes{one step behind} the output.
 %%
-%The specification states that the \quotes{off-by-one} \texttt{Flow} should be constructed by aligning with the previous state of the same device, which can be read from the context leveraging the fact that every device is a neighbor of itself. % (\Cref{fig:semantics-loop-next}).
+%The specification states that the \quotes{off-by-one} \texttt{Flow} should be constructed by aligning with the previous state of the same device, which can be read from the context leveraging the fact that every device is a neighbor of itself. % (\Cref{acsos2023-frp:fig:semantics-loop-next}).
 %%
-%In cases where alignment is not possible (i.e., on the first evaluation or after a switch of branch), the first argument of loop should be used to construct a new export. % (\Cref{fig:semantics-loop-init}).
+%In cases where alignment is not possible (i.e., on the first evaluation or after a switch of branch), the first argument of loop should be used to construct a new export. % (\Cref{acsos2023-frp:fig:semantics-loop-init}).
 %%
 %The implementation should take care of the following caveats arising from the intrinsic self-dependency of \texttt{loop}:
 %%
@@ -878,32 +878,32 @@ explicitly dictating the pace of the stateful computation
 %        \centering
 %        \includegraphics[width=\textwidth]{figures/semantics/loop-init.pdf}
 %        \caption{Not aligned with previous state}
-%        \label{fig:semantics-loop-init}
+%        \label{acsos2023-frp:fig:semantics-loop-init}
 %    \end{subfigure}
 %    \hfill
 %    \begin{subfigure}[b]{0.47\textwidth}
 %        \centering
 %        \includegraphics[width=\textwidth]{figures/semantics/loop-next.pdf}
 %        \caption{Aligned with previous state}
-%        \label{fig:semantics-loop-next}
+%        \label{acsos2023-frp:fig:semantics-loop-next}
 %    \end{subfigure}
 %    \caption{Semantics of \texttt{loop(i, f)}.}
-%    \label{fig:semantics-loop}
+%    \label{acsos2023-frp:fig:semantics-loop}
 %\end{figure}
 
 
 \subsection{Paradigmatic Examples: Self-Healing Gradient \& Channel}
-\label{paradigmatic-examples}
+\label{acsos2023-frp:paradigmatic-examples}
 
 In this section, we cover two fundamental self-organising behaviours
-that will be exercised in the evaluation in \Cref{sec:eval}.
+that will be exercised in the evaluation in \Cref{acsos2023-frp:sec:eval}.
 %
 Firstly, we introduce the \emph{gradient}~\cite{DBLP:conf/ipsn/NagpalSB03,audrito2017ULT}, a versatile
  self-organization pattern
  that supports a wide range of more complex self-organising behaviours.
 %
 
-\begin{example}[Self-Healing Gradient]\label{ex:g}
+\begin{example}[Self-Healing Gradient]\label{acsos2023-frp:ex:g}
 %
 A \emph{(self-healing) gradient} is a distributed behaviour 
  that \emph{self-stabilises}~\cite{dolev}, in each device  of the distributed system, 
@@ -919,7 +919,7 @@ By following the neighbours of maximum decrease (resp. increase) of the gradient
 %%
 %A \emph{self-healing} gradient can correct the collective output after a change in its inputs (i.e., the source set and the distances).
 %
-\Cref{fig:scenario-g} provides a representation of a gradient.
+\Cref{acsos2023-frp:fig:scenario-g} provides a representation of a gradient.
  
 Multiple gradient computation algorithms exist~\cite{audrito2017ULT}. A basic algorithm can be implemented in \ac{langname} as follows.
 
@@ -956,7 +956,7 @@ The following example showcases the \emph{compositionality} of the programming m
  of combining multiple self-organising behaviours
  to build a more complex self-organising behaviour.
 
-\begin{example}[Self-Healing Channel]\label{ex:channel}
+\begin{example}[Self-Healing Channel]\label{acsos2023-frp:ex:channel}
 %
 A \emph{channel} computation aims to build the shortest path
 from a \emph{source} node to a \emph{destination} node.
@@ -1003,26 +1003,26 @@ def channel(
   destination: Flow[Boolean],
   width: Double,
 ): Flow[Boolean] = lift(
-  gradient(source), %\label{chan:g:src}%
-  gradient(destination), %\label{chan:g:dest}%
-  distanceBetween(source, destination) %\label{chan:distbetw}%
+  gradient(source), %\label{acsos2023-frp:chan:g:src}%
+  gradient(destination), %\label{acsos2023-frp:chan:g:dest}%
+  distanceBetween(source, destination) %\label{acsos2023-frp:chan:distbetw}%
 ){
   (distSource, distDest, distBetween) =>
-    distSource + distDest <= distBetween + width%\label{src:chan:expr}%
+    distSource + distDest <= distBetween + width%\label{acsos2023-frp:src:chan:expr}%
 }
 \end{lstlisting}
 % NB: it should actually be liftTwice(distances, nbrRange(), values)(_ + _)
 \end{minipage}
 %
-This self-organising data structure can be implemented by leveraging two \lstinline|gradient|s (one from the source and one from the destination---cf. \Cref{chan:g:src,chan:g:dest})
+This self-organising data structure can be implemented by leveraging two \lstinline|gradient|s (one from the source and one from the destination---cf. \Cref{acsos2023-frp:chan:g:src,acsos2023-frp:chan:g:dest})
  and a \lstinline|broadcast(v,s)| (which is a way to propagate a value \texttt{v} hop-by-hop from a source \texttt{s} outwards along the  minimum paths of its gradient---indeed,
-a structure similar to the \lstinline|gradient| implementation in \Cref{ex:g}) that supports the computation of \lstinline|distanceBetween|.
+a structure similar to the \lstinline|gradient| implementation in \Cref{acsos2023-frp:ex:g}) that supports the computation of \lstinline|distanceBetween|.
 %
 The \lstinline|channel| depends on these three flows: i.e.,
-the expression at \Cref{src:chan:expr}
+the expression at \Cref{acsos2023-frp:src:chan:expr}
 will be re-evaluated only upon a change of the output of (one of) these three sub-computations.
 %
-For a graphical view of the local and distributed dependency graph, see \Cref{fig:channel:graph}: the key idea is that, e.g., a local change in sensor \lstinline|source| will not cause a re-computation of \lstinline|gradient(destination)|.
+For a graphical view of the local and distributed dependency graph, see \Cref{acsos2023-frp:fig:channel:graph}: the key idea is that, e.g., a local change in sensor \lstinline|source| will not cause a re-computation of \lstinline|gradient(destination)|.
 
 \begin{figure}[t]
   \centering%
@@ -1031,49 +1031,49 @@ For a graphical view of the local and distributed dependency graph, see \Cref{fi
     \centering%
     \includegraphics[width=\columnwidth]{papers/acsos2023-frp/imgs/channel-graphical}
     \caption{Node view.}
-    \label{fig:channel-graphical}
+    \label{acsos2023-frp:fig:channel-graphical}
   \end{subfigure}
   % subfigure
   \begin{subfigure}[b]{\columnwidth}
     \centering%
     \includegraphics[width=\columnwidth]{papers/acsos2023-frp/imgs/interactions}
     \caption{Distributed view (with neighbour dependencies).}
-    \label{fig:interactions}
+    \label{acsos2023-frp:fig:interactions}
   \end{subfigure}
   \caption[The reactive dataflow graph corresponding to the channel example.]{
-      The reactive dataflow graph corresponding to \Cref{ex:channel}.
+      The reactive dataflow graph corresponding to \Cref{acsos2023-frp:ex:channel}.
       %
-      \Cref{fig:channel-graphical} provides the local view of the computation for a single node
+      \Cref{acsos2023-frp:fig:channel-graphical} provides the local view of the computation for a single node
       (where the layers denote different semantic kinds of dependencies),
-      whereas \Cref{fig:interactions} shows the \emph{distributed} dependency graph.
+      whereas \Cref{acsos2023-frp:fig:interactions} shows the \emph{distributed} dependency graph.
       %
       The arrows denote dependencies.
       %
       The dashed arrows denote dependencies based on platform-level scheduling and node interaction---e.g.,
       a red block depends on changes corresponding to neighbours' red blocks and communicated via message passing.
   }
-  \label{fig:channel:graph}
+  \label{acsos2023-frp:fig:channel:graph}
 \end{figure}
 
 \end{example}
 
 \section{Implementation}
-\label{sec:impl}
+\label{acsos2023-frp:sec:impl}
 
 %\meta{
 %budget: 1 pages
 %}
 
-This section briefly provides the implementation goals (\Cref{sec:impl:goals}), architectural design (\Cref{sec:impl:arch}), and implementation details (\Cref{sec:impl:impl}) of \ac{langname}.
+This section briefly provides the implementation goals (\Cref{acsos2023-frp:sec:impl:goals}), architectural design (\Cref{acsos2023-frp:sec:impl:arch}), and implementation details (\Cref{acsos2023-frp:sec:impl:impl}) of \ac{langname}.
 %
 Even though a complete description of the implementation is beyond the aims of this paper,
  this section is meant to illustrate that 
  the prototype is technically sound,
  that we followed modern software engineering practices,
- and to provide general guidance for understanding the code organization of the provided artefact (see \Cref{footnote:dsl}).
+ and to provide general guidance for understanding the code organization of the provided artefact (see \Cref{acsos2023-frp:footnote:dsl}).
 
 \subsection{Goals}
-\label{sec:impl:goals}
+\label{acsos2023-frp:sec:impl:goals}
 
 The high-level goal of this work is to provide a programming model
 that is expressive enough to allow developers
@@ -1082,7 +1082,7 @@ while decoupling and providing fine-grained control over their scheduling detail
 %
 This vision can be summarized with the term \textit{functional reactive self-organization}.
 %
-Considering the system model introduced in \Cref{sec:sys-model},
+Considering the system model introduced in \Cref{acsos2023-frp:sec:sys-model},
  there are three main objectives to be pursued in order to accomplish the goal:
 %
 \begin{itemize}
@@ -1092,9 +1092,9 @@ Considering the system model introduced in \Cref{sec:sys-model},
 \end{itemize}
 
 \subsection{Architecture}
-\label{sec:impl:arch}
+\label{acsos2023-frp:sec:impl:arch}
 
-The architecture of the prototype is shown in \Cref{fig:arch}.
+The architecture of the prototype is shown in \Cref{acsos2023-frp:fig:arch}.
 %
 The design is organised into three packages:
     \texttt{core},
@@ -1109,17 +1109,17 @@ The design is organised into three packages:
         as well as extensions (\texttt{FrpExtensions}) useful for the definition of \ac{langname} constructs;
     and \texttt{simulation},
         which provides basic simulation support
-        (for more advanced support, we also integrated \ac{langname} into Alchemist~\cite{PianiniJOS2013}---see \Cref{sec:eval}).
+        (for more advanced support, we also integrated \ac{langname} into Alchemist~\cite{PianiniJOS2013}---see \Cref{acsos2023-frp:sec:eval}).
 
 \begin{figure}
 \includegraphics[width=\columnwidth]{papers/acsos2023-frp/imgs/architecture.pdf}
 \caption{Architecture of \ac{langname}.}
-\label{fig:arch}
+\label{acsos2023-frp:fig:arch}
 \end{figure}
 
 
 \subsection{Implementation details}
-\label{sec:impl:impl}
+\label{acsos2023-frp:sec:impl:impl}
 
 \ac{langname} has been implemented in Scala,
  using Sodium as \ac{frp} library~\cite{blackheath2016frp-sodium}.
@@ -1129,9 +1129,9 @@ Scala is well-known for its suitability
 and for aggregate computing embeddings as well~\cite{DBLP:journals/lmcs/AudritoCDV23}. %DBLP:journals/infsof/KosarBM16,
 %
 The design of the \ac{langname} \ac{dsl}
- is detailed in \Cref{fig:dsl-design}.
+ is detailed in \Cref{acsos2023-frp:fig:dsl-design}.
 
-Following the system/execution model described in \Cref{sec:sys-model},
+Following the system/execution model described in \Cref{acsos2023-frp:sec:sys-model},
   we model the input and output 
   of a (sub-)program 
   through an interface \texttt{Context},
@@ -1153,28 +1153,28 @@ where \texttt{S1} depends on \texttt{S2} which depends in turn on \texttt{S3}
  of a reactive \mbox{(sub-)computation},
  which takes a \texttt{Context} (providing its inputs),
  a \texttt{Seq[Slot]} as path (indicating its position in the export tree),
- and returns \texttt{Cell} (i.e. a time-varying value---cf. \Cref{sec:background:frp}) of \texttt{Export}.
+ and returns \texttt{Cell} (i.e. a time-varying value---cf. \Cref{acsos2023-frp:sec:background:frp}) of \texttt{Export}.
 %
 Each \texttt{Language} construct
  returns a \texttt{Flow}:
  therefore, the constructs do \emph{not} immediately run upon evaluation,
  but rather an executable, reactive object
  denoting a computation graph
- whose nodes will execute as a response to change (cf. \Cref{fig:channel:graph}).
+ whose nodes will execute as a response to change (cf. \Cref{acsos2023-frp:fig:channel:graph}).
 %
 Access to neighbour-related data is mediated by a \texttt{NeighborField} abstraction,
  which is the same provided by constructs
  supporting interaction with neighbours, i.e., \texttt{nbr} and \texttt{nbrSensor}
-(cf. \Cref{programming-constructs}).
+(cf. \Cref{acsos2023-frp:programming-constructs}).
 
 \begin{figure}
 \includegraphics[width=\columnwidth]{papers/acsos2023-frp/imgs/specification.pdf}
 \caption{Design of \ac{langname} \ac{dsl}.}
-\label{fig:dsl-design}
+\label{acsos2023-frp:fig:dsl-design}
 \end{figure}
 
 \section{Evaluation}
-\label{sec:eval}
+\label{acsos2023-frp:sec:eval}
 
 %\meta{
 %budget: 2,5 pages
@@ -1184,15 +1184,15 @@ Access to neighbour-related data is mediated by a \texttt{NeighborField} abstrac
 
 To evaluate the proposed approach, 
  we prepared several publicly available and reproducible simulations
-(see \Cref{footnote:eval}) using the \emph{Alchemist} simulator for large-scale pervasive systems\footnote{\url{https://alchemistsimulator.github.io/}}~\cite{PianiniJOS2013}.
+(see \Cref{acsos2023-frp:footnote:eval}) using the \emph{Alchemist} simulator for large-scale pervasive systems\footnote{\url{https://alchemistsimulator.github.io/}}~\cite{PianiniJOS2013}.
 %
 In particular, 
  we released \ac{langname}\footnote{\url{https://central.sonatype.com/artifact/io.github.cric96/distributed-frp_3/0.1.3}} and integrated it into Alchemist.
 %
 The choice of Alchemist allowed us to leverage the already integrated \emph{\scafi{}} aggregate programming language~\cite{DBLP:journals/softx/CasadeiVAP22}
-as a reference for round-based computations (cf. \Cref{sec:background:selforg}).
+as a reference for round-based computations (cf. \Cref{acsos2023-frp:sec:background:selforg}).
 
-\subsection{Goals}\label{eval:goals}
+\subsection{Goals}\label{acsos2023-frp:eval:goals}
 %
 The simulations are designed to evaluate the following:
 %
@@ -1206,7 +1206,7 @@ The simulations are designed to evaluate the following:
 \end{enumerate}
 In particular, we expect the reactive version of the algorithm to be \emph{more efficient} than the round-based one.
 \item[G.3)] \emph{Reactivity}: the programs should react to various sources of change
- (e.g., network topology, sensor data, dependent computations---cf. \Cref{sec:sys-model}),
+ (e.g., network topology, sensor data, dependent computations---cf. \Cref{acsos2023-frp:sec:sys-model}),
   avoiding re-evaluations when inputs do not change.
 %(e.g., change in the network topology, change in source set, etc.).
 \end{enumerate}
@@ -1219,13 +1219,13 @@ In particular, we expect the reactive version of the algorithm to be \emph{more 
         \centering
         \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/gradient.png}
        \caption{Scenario G: gradient.}
-        \label{fig:scenario-g}
+        \label{acsos2023-frp:fig:scenario-g}
     \end{subfigure}
     \begin{subfigure}[b]{0.49\linewidth}
         \centering
         \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/channel.png}
         \caption{Scenario C: channel.}
-        \label{fig:scenario-c}
+        \label{acsos2023-frp:fig:scenario-c}
     \end{subfigure}
     \caption[Evaluation scenarios implemented with \ac{langname}]{
       Evaluation scenarios.
@@ -1235,7 +1235,7 @@ In particular, we expect the reactive version of the algorithm to be \emph{more 
 %      The outer circle represents sensor information, with yellow nodes indicating the presence of a source and green nodes indicating the presence of a destination. 
       The grey nodes denote obstacles. % that the program must navigate around to reach the destination.
     }
-    \label{fig:scenario-screenshots}
+    \label{acsos2023-frp:fig:scenario-screenshots}
 \end{figure}
 
 \subsubsection{Common setup and parameters}
@@ -1274,8 +1274,8 @@ Finally, the round-based policy is driven by a $\gamma$ parameter
 
 \subsubsection{Scenarios}
 
-In the above setup, the two programs introduced in \Cref{sec:contrib},
- i.e., the self-healing gradient (\emph{scenario G}---cf. \Cref{fig:scenario-g}) and channel (\emph{scenario C}---cf.~\Cref{fig:scenario-c}),
+In the above setup, the two programs introduced in \Cref{acsos2023-frp:sec:contrib},
+ i.e., the self-healing gradient (\emph{scenario G}---cf. \Cref{acsos2023-frp:fig:scenario-g}) and channel (\emph{scenario C}---cf.~\Cref{acsos2023-frp:fig:scenario-c}),
  are executed for 300 simulated time units. 
 %
 The former represents a minimally complex self-organising behaviour, enabling evaluation of basic dynamics, 
@@ -1357,10 +1357,10 @@ The execution for the round-based solution is configured
  with an evaluation frequency of 1Hz: any device will evaluate the entire ScaFi program every second
  and then broadcast the resulting export to its neighbourhood (even if it did not change from the previous execution).
 
-\subsection{Results and Discussion}\label{eval:results}
+\subsection{Results and Discussion}\label{acsos2023-frp:eval:results}
 %
 In this section, we will present the results obtained from the simulations, 
- highlighting how the proposed model satisfies the goals elicited in \Cref{eval:goals}.
+ highlighting how the proposed model satisfies the goals elicited in \Cref{acsos2023-frp:eval:goals}.
 %
 We run a total of 768 simulations
 by running 64 randomized instances
@@ -1370,11 +1370,11 @@ for each one of the $12$ \emph{simulation configurations} obtained by a differen
 \textit{(ii)} throttling period, and
 \textit{(iii)} scenario program.
 %
-Our results are presented in \Cref{fig:rel-values} and \Cref{fig:subprogram-eval}.
-%\Cref{fig:channel-messages-rel} and \Cref{fig:gradient-messages-rel} for the gradient and the channel, respectively, averaging the data extracted.
+Our results are presented in \Cref{acsos2023-frp:fig:rel-values} and \Cref{acsos2023-frp:fig:subprogram-eval}.
+%\Cref{acsos2023-frp:fig:channel-messages-rel} and \Cref{acsos2023-frp:fig:gradient-messages-rel} for the gradient and the channel, respectively, averaging the data extracted.
 %%% GOAL 1 
 
-\subsubsection{Correctness (goal G.1)} Consider \Cref{fig:channel-output-rel} and \Cref{fig:gradient-output-rel}:
+\subsubsection{Correctness (goal G.1)} Consider \Cref{acsos2023-frp:fig:channel-output-rel} and \Cref{acsos2023-frp:fig:gradient-output-rel}:
  we observe that in all cases,
 especially in the reactive and throttling executions,
  the program output converges to the same collective result.
@@ -1386,12 +1386,12 @@ Pure reactive policies have less noise (as variations are reduced)
 
 \subsubsection{Efficiency (goal G.2)} 
 %
-From~\Cref{fig:rel-values},
+From~\Cref{acsos2023-frp:fig:rel-values},
 we can see how the reactive computation is more efficient than the round-based one
 (cf.\ goal G.2)
 in the sense of communication/computation efficiency
-(\Cref{fig:channel-messages-rel,fig:gradient-messages-rel})
-and time efficiency (\Cref{fig:gradient-output-rel,fig:gradient-output-rel}).
+(\Cref{acsos2023-frp:fig:channel-messages-rel,acsos2023-frp:fig:gradient-messages-rel})
+and time efficiency (\Cref{acsos2023-frp:fig:gradient-output-rel,acsos2023-frp:fig:gradient-output-rel}).
 %
 Moreover, as expected, throttling can further improve the efficiency of the reactive solution.
 
@@ -1475,7 +1475,7 @@ Concerning reactivity (goal G.3),
  we notice how the reactive solutions effectively ``follow'' environmental changes.
 %
 This can be observed from 
-  \Cref{fig:channel-messages-rel} and \Cref{fig:gradient-messages-rel}:
+  \Cref{acsos2023-frp:fig:channel-messages-rel} and \Cref{acsos2023-frp:fig:gradient-messages-rel}:
   when there is no change to react to, 
  no program evaluation is performed, 
  resulting in no new messages being sent
@@ -1487,7 +1487,7 @@ Moreover, as the environmental conditions vary,
  
 Finally, we show how the model promotes \emph{fine-grained reactivity}.
 %
-\Cref{fig:subprogram-eval} shows how
+\Cref{acsos2023-frp:fig:subprogram-eval} shows how
  \ac{langname} enables a program to re-compute required sub-computations \emph{only}.
 %
 Indeed, at $t=200$, only the channel's target changes,
@@ -1496,7 +1496,7 @@ and thus the source gradient is not re-computed
 %
 Also, this execution occurs only where needed, 
  resulting in a ``wave'' of re-computations from the source to the destination
-(cf.\ the larger red circles in \Cref{fig:subprogram-eval}).
+(cf.\ the larger red circles in \Cref{acsos2023-frp:fig:subprogram-eval}).
 
 \begin{figure}
   %% Subfigures for the channel-messages-rel, channel-output-rel, gradient-messages-rel and gradient-output-rel
@@ -1505,25 +1505,25 @@ Also, this execution occurs only where needed,
       \centering
       \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/channel-messages-rel}
       \caption{Channel: messages.}
-      \label{fig:channel-messages-rel}
+      \label{acsos2023-frp:fig:channel-messages-rel}
   \end{subfigure}
   \begin{subfigure}[b]{\linewidth}
       \centering
       \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/channel-output-rel}
       \caption{Channel: output.}
-      \label{fig:channel-output-rel}
+      \label{acsos2023-frp:fig:channel-output-rel}
   \end{subfigure}
   \begin{subfigure}[b]{\linewidth}
       \centering
       \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/gradient-messages-rel}
       \caption{Gradient: messages.}
-      \label{fig:gradient-messages-rel}
+      \label{acsos2023-frp:fig:gradient-messages-rel}
   \end{subfigure}
   \begin{subfigure}[b]{\linewidth}
       \centering
       \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/gradient-output-rel}
       \caption{Gradient: output.}
-      \label{fig:gradient-output-rel}
+      \label{acsos2023-frp:fig:gradient-output-rel}
   \end{subfigure}
   \caption[Simulation results of \ac{langname} simulations]{
     Simulation data.
@@ -1539,7 +1539,7 @@ Also, this execution occurs only where needed,
     convergence to correct values faster than the round-based version;
     also, their communication overhead does not grow with time, but depends on changes.
   }
-  \label{fig:rel-values}
+  \label{acsos2023-frp:fig:rel-values}
 \end{figure}
 \begin{figure*}
   %% Subfigure for init, expansion, revaluation and finish
@@ -1548,40 +1548,40 @@ Also, this execution occurs only where needed,
       \centering
       \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/channel201.0.png}
       \caption{}
-      \label{fig:init}
+      \label{acsos2023-frp:fig:init}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.24\linewidth}
       \centering
       \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/channel210.0.png}
       \caption{}
-      \label{fig:expansion}
+      \label{acsos2023-frp:fig:expansion}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.24\linewidth}
       \centering
       \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/channel240.0.png}
       \caption{}
-      \label{fig:revaluation}
+      \label{acsos2023-frp:fig:revaluation}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{0.24\linewidth}
       \centering
       \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/channel270.0.png}
       \caption{}
-      \label{fig:finish}
+      \label{acsos2023-frp:fig:finish}
   \end{subfigure}\hfill
   \begin{subfigure}[b]{\linewidth}
     \centering
     \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/message_count.pdf}
   \end{subfigure}
   \caption[behaviour of the channel in response to changes in a destination]{
-  The behaviour of the channel in response to changes in a destination is shown through a sequence of snapshots in the first line (using the same graphical notation as \Cref{fig:scenario-screenshots} where, additionally, the grey shadows denote nodes where computation is taking place). 
+  The behaviour of the channel in response to changes in a destination is shown through a sequence of snapshots in the first line (using the same graphical notation as \Cref{acsos2023-frp:fig:scenario-screenshots} where, additionally, the grey shadows denote nodes where computation is taking place). 
   It is observed that the computation ``moves'' to different portions of the system until it reaches a stable situation. 
   However, the computation only results in the re-computation of the destination gradient, as seen in the bottom plot.
   }
-  \label{fig:subprogram-eval}
+  \label{acsos2023-frp:fig:subprogram-eval}
 \end{figure*}
 
 \section{Conclusions and Future Work}
-\label{sec:conc}
+\label{acsos2023-frp:sec:conc}
 
 This paper proposes \ac{langname},
  a \emph{functional reactive macroprogramming model

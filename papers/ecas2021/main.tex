@@ -104,7 +104,7 @@ Such systems are typically required
 %
 However, engineering CASs is a challenging task.
 %
-Generally, reliance on a centralised device is not allowed,
+Generally, reliance on a centralized device is not allowed,
 and the system is expected to reach global goals based 
  on the coordinated (inter-)actions of the individual entities that compose the system.
 %& Check whether we should leave it or keep it.
@@ -129,7 +129,7 @@ Since in CASs the challenging case in which no controllers exist must typically 
 %
 However, real-world networks are usually structured hierarchically, and the ability to target multiple infrastructural setups can help to achieve non-functional benefits.
 
-\emph{Pulverisation}~\cite{DBLP:journals/fi/CasadeiPPVW20}
+\emph{Pulverization}~\cite{DBLP:journals/fi/CasadeiPPVW20}
 is an approach proposed for aggregate computing (but in principle applicable to other frameworks) to neatly separate behavioural and deployment concerns.
 %
 In short, it decomposes the concept of a \emph{logical device}, which is the target for which the behaviour is programmed,
@@ -139,7 +139,7 @@ and whose internal communication protocol is defined at deployment time.
 This technique de-facto relieves the behaviour designer from the duty to consider multiple possible deployments in different networks,
 allowing them to write the behaviour for the most generic case, and have the program \emph{functionally} behave as designed regardless of the actual final deployment.
 
-However, pulverisation does not directly provide ways for \emph{specifying} and \emph{deploying} components in a safe and meaningful fashion:
+However, pulverization does not directly provide ways for \emph{specifying} and \emph{deploying} components in a safe and meaningful fashion:
 it proposes a methodology to cleanly separate behavioural and deployment concerns that need to be addressed at some point.
 %
 The definition of the deployment strategy and its execution is thus a very relevant and challenging engineering issue on its own:
@@ -147,7 +147,7 @@ ideally, such a specification should be declarative
  and possibly guided and checked by static analysis
  to lower the risk of failures at runtime.
 
-This work discusses the initial research effort to fill the gap between a pulverised system and its actual deployment and execution on multiple different network structures,
+This work discusses the initial research effort to fill the gap between a pulverized system and its actual deployment and execution on multiple different network structures,
 by leveraging a recent approach known as \emph{multi-tier programming}~\cite{DBLP:journals/csur/WeisenburgerWS20}.
 %
 In multi-tier programming, a distributed system is \emph{declaratively} described, in terms of components and admissible interactions \emph{in a single code base}.
@@ -160,8 +160,8 @@ the responsibility of breaking the computation into deployment units %peers,
  enforcing the contract defined in the code.
 
 The remainder of this paper is as follows:
-\Cref{background} introduces the current state of the art, discussing pulverisation in the context of aggregate computing and multi-tier programming;
-\Cref{multitier+pulverisation} discusses the possible integration of pulverised aggregate computing systems and multi-tier programming and shows initial experiments leveraging the \scafi{} and \scalaloci{} Scala domain-specific languages (DSLs);
+\Cref{background} introduces the current state of the art, discussing pulverization in the context of aggregate computing and multi-tier programming;
+\Cref{multitier+pulverisation} discusses the possible integration of pulverized aggregate computing systems and multi-tier programming and shows initial experiments leveraging the \scafi{} and \scalaloci{} Scala domain-specific languages (DSLs);
 \Cref{implicitation} exposes and discusses the short and long term implications of this integration;
 finally,
 \Cref{conclusion} concludes and discusses the next research steps.
@@ -204,9 +204,9 @@ finally,
 \newcommand{\LAct}{\boldsymbol{A}}
 \newcommand{\LState}{\boldsymbol{K}}
 
-At the core of pulverisation~\cite{DBLP:journals/fi/CasadeiPPVW20} is the idea that the functional behaviour of a distributed application is fundamentally orthogonal to the actual deployment of the services that compose it.
+At the core of pulverization~\cite{DBLP:journals/fi/CasadeiPPVW20} is the idea that the functional behaviour of a distributed application is fundamentally orthogonal to the actual deployment of the services that compose it.
 %
-Thus, through a classic \emph{divide-and-conquer} approach, in a pulverised system, any \emph{logical device} (of the many composing the CAS) is broken down into five \emph{components} acting as \emph{units of deployment}:
+Thus, through a classic \emph{divide-and-conquer} approach, in a pulverized system, any \emph{logical device} (of the many composing the CAS) is broken down into five \emph{components} acting as \emph{units of deployment}:
 \begin{enumerate*}
  \item \emph{Sensors ($\LSens$)}, encapsulating the ability to retrieve information from the environment;
  \item \emph{Actuators ($\LAct$)}, responsible for acting upon the environment;
@@ -215,7 +215,7 @@ Thus, through a classic \emph{divide-and-conquer} approach, in a pulverised syst
  \item \emph{Communication ($\LComm$)}, which provides means to interact with other logical devices.
 \end{enumerate*}
 %
-These pulverised components can be deployed to different physical nodes of the network:
+These pulverized components can be deployed to different physical nodes of the network:
  as far as they can communicate with each other
  and the target execution protocol is respected,
  the functionality should not be affected.
@@ -236,7 +236,7 @@ This strategy is especially well-suited to adapt approaches designed to work wit
 %
 Consider, for instance, the simple case of
 \Cref{img:p2p}:
-there is a 1:1 mapping between logical and physical devices, and direct communication among devices (actually, among their $\LComm$ pulverised components) must be possible.
+there is a 1:1 mapping between logical and physical devices, and direct communication among devices (actually, among their $\LComm$ pulverized components) must be possible.
 %
 This is typically not the case in many Internet applications, however:
 let us consider the case in which the same application should be deployed in an IoT scenario where end devices are \emph{thin},
@@ -248,8 +248,8 @@ These devices cannot host the actual computation of the program (component $\LCo
 This change in the deployment would typically imply a re-writing of the functional logic of the program,
 as end devices cannot be considered computation-capable nodes any more.
 %
-Instead, with pulverisation, they retain their existence as logical devices
-with some of their pulverised components hosted on different physical nodes as depicted in
+Instead, with pulverization, they retain their existence as logical devices
+with some of their pulverized components hosted on different physical nodes as depicted in
 \Cref{img:thin}.
 %
 Crucially, this makes the original application work on a different network architecture without any functional logic changes.
@@ -257,19 +257,19 @@ Crucially, this makes the original application work on a different network archi
 Aggregate computing~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19}
  is a global-level functional programming model for CAS
  where a single program expresses the collective adaptive behaviour of a distributed system as a whole.
-Also, aggregate computing is a naturally pulverisable approach:
+Also, aggregate computing is a naturally pulverizable approach:
 its semantics can be expressed as a purely functional manipulation of state, messages, and sensor readings~\cite{DBLP:journals/jlap/ViroliBDACP19},
-providing a straightforward mapping into pulverised components.
+providing a straightforward mapping into pulverized components.
 %
 Indeed, initial experiments~\cite{DBLP:journals/fi/CasadeiPPVW20}
-showed that aggregate programs deployed on pulverised infrastructures retain their original functional behaviour onto different deployments.
+showed that aggregate programs deployed on pulverized infrastructures retain their original functional behaviour onto different deployments.
 %
-Nevertheless, pulverisation is not a silver bullet:
+Nevertheless, pulverization is not a silver bullet:
 the approach is fundamentally an engineering pattern to encapsulate a non-functional concern
 (network structure and deployment),
 allowing for the business logic to work across deployments,
 but it does not specify \emph{how} 
- a pulverised architecture should be described
+ a pulverized architecture should be described
 %  (e.g., in terms of declarative abstractions)
  and verified so that it can be operated correctly at runtime.
 %the pulverised architecture should communicate once instanced on physical nodes, nor provides meaningful abstractions to declaratively setup a deployed system.
@@ -372,7 +372,7 @@ A \scalainline{@multitier} module can capture the controller-worker schema:
 \end{minted}
 The \scalainline{run} method has return type as the placement type \scalainline{Future[T] on Controller}\footnote{Scala enables infix use of binary type constructors;  i.e., \mintinline[fontsize=\scriptsize]{scala}{A on B} refers to the same type as \mintinline[fontsize=\scriptsize]{scala}{on[A,B]}.}, effectively placing \scalainline{run} on the \scalainline{Controller} peer. 
 %
-The \scalainline{Task} type is parametrised over the type \scalainline{T} of the value, which a task produces after execution. 
+The \scalainline{Task} type is parametrized over the type \scalainline{T} of the value, which a task produces after execution. 
 %
 Running a remote task remotely results in a \scalainline{Future} to account for processing time and network delays and potential failures. 
 %
@@ -384,7 +384,7 @@ A single worker instance in a pool of workers is selected for processing the tas
 
 The module can be used to implement an application where a server offloads work
  to the connected clients. In the following code, 
-we specialise the clients to be workers and the server to be a controller:
+we specialize the clients to be workers and the server to be a controller:
 
 \begin{minted}{scala}
 @multitier trait VolunteerProcessing {
@@ -400,43 +400,43 @@ we specialise the clients to be workers and the server to be a controller:
 \section{Multi-tier pulverised aggregate computing}
 \label{multitier+pulverisation}
 
-The contribution of this work is an architecture for multi-tiered deployment strategies in pulverised systems,
+The contribution of this work is an architecture for multi-tiered deployment strategies in pulverized systems,
 along with a prototypical implementation using aggregate programming and \scalaloci{}.
 % 
 Using multi-tier abstractions, we: 
 \begin{enumerate}
-  \item map the overall logical system into a multi-tiered module, building the concept of pulverised device into \scalaloci{} (see \Cref{code:loci:pulverised});
-  \item define the functions associated with each pulverised component;
-  \item characterise the possible kinds of network nodes (e.g., cloud, edge, thin end device);
+  \item map the overall logical system into a multi-tiered module, building the concept of pulverized device into \scalaloci{} (see \Cref{code:loci:pulverised});
+  \item define the functions associated with each pulverized component;
+  \item characterize the possible kinds of network nodes (e.g., cloud, edge, thin end device);
   \item decide the network structure in terms of possible connections among network node kinds;
-  \item detail the deployment by assigning each pulverised component to a network node kind. 
+  \item detail the deployment by assigning each pulverized component to a network node kind. 
 \end{enumerate}
 
 Ultimately, this architectural design allows us to specify functional behaviour independently of deployment
-(via pulverised aggregate programming),
+(via pulverized aggregate programming),
 then declaratively define multiple deployment schemes and their related communication constraints
 (thanks to multi-tier programming),
 and finally, statically enforce the respect of the expressed constraints
 (as a consequence of the robust type programming system introduced by \scalaloci{}).
 
-\subsection{Pulverised architecture in \scalaloci{}}
+\subsection{Pulverized architecture in \scalaloci{}}
 
 \input{papers/ecas2021/pulverised.tex}
 
-As a first step, we need to formalise what a pulverised architecture is in \scalaloci{},
-by defining all the pulverised components and binding them together into the concept of logic node.
+As a first step, we need to formalize what a pulverized architecture is in \scalaloci{},
+by defining all the pulverized components and binding them together into the concept of logic node.
 %
-\Cref{img:pulverised-loci} shows a possible \scalaloci{} implementation (\Cref{code:loci:pulverised}) of a pulverised device (\Cref{fig:pulv:dev}):
+\Cref{img:pulverised-loci} shows a possible \scalaloci{} implementation (\Cref{code:loci:pulverised}) of a pulverized device (\Cref{fig:pulv:dev}):
 \scalainline{LNode} represents the logical device,
-\scalainline{LogicalSystem} encloses the concept of pulverised system into a multi-tier module.
+\scalainline{LogicalSystem} encloses the concept of pulverized system into a multi-tier module.
 %
-The logical device and all its pulverised components are mapped on abstract peers.
+The logical device and all its pulverized components are mapped on abstract peers.
 %
 % This specification does not capture all the communication constraints depicted in \Cref{fig:pulv:dev}:
 % at the current stage, the implementation is prototypical, and we expect to enrich it in the future.
 
 Once all components are modelled,
-their contract must be specified to characterise them and define their behaviour.
+their contract must be specified to characterize them and define their behaviour.
 %
 This is done by \emph{placing} the available computations on the components that will effectively host them.
 %
@@ -482,15 +482,15 @@ This situation is typical of WAN sensing networks (e.g., LoRaWAN),
 where end devices are equipped with minimal memory and very low power microcontrollers
 and are expected to run on battery for years.
 %
-To summarise, different network architectures can be specified by following two steps:
+To summarize, different network architectures can be specified by following two steps:
 \begin{enumerate*}
  \item definition of the physical devices involved in the architecture and how they are \emph{tied} together; and
- \item allocation of the pulverised components on the kinds of devices that can host them.
+ \item allocation of the pulverized components on the kinds of devices that can host them.
 \end{enumerate*}
 
-The resulting system can then be instanced by selecting a communication protocol and a serialisation framework.
+The resulting system can then be instanced by selecting a communication protocol and a serialization framework.
 %
-For example, in the following snippet, we show how this could be done for the system in \Cref{img:broker}, assuming communication via TCP and serialisation via the uPickle library.
+For example, in the following snippet, we show how this could be done for the system in \Cref{img:broker}, assuming communication via TCP and serialization via the uPickle library.
 
 \begin{minted}{scala}
 import loci.serializer.upickle._ // Serialization logic
@@ -509,7 +509,7 @@ object Peer extends App {
 \label{scafiloci}
 
 The design described so far is entirely independent of the specific aggregate programming language of choice:
-due to pulverisation, the way the logic is expressed only concerns the behavioural component ($\LComp$).
+due to pulverization, the way the logic is expressed only concerns the behavioural component ($\LComp$).
 %
 Currently, there are three choices for practical aggregate programming:
 Protelis~\cite{PianiniSAC2015}, a stand-alone, JVM-hosted domain-specific language (DSL);
@@ -523,9 +523,9 @@ and thus it could be the foundation stone of a unified framework living in the S
 In order to perform a collective computation, \scafi{} requires to define an \scalainline{AggregateProgram} (i.e. an object containing the aggregate application logic) and 
 a \scalainline{Context} (i.e., the set of information required to evaluate an \scalainline{AggregateProgram}, such as the previous state, sensors' data, and messages received from neighbours).
 %
-\scafi{}'s \scalainline{Context}s in a pulverised architecture are embedded in the \scalainline{State} component.
+\scafi{}'s \scalainline{Context}s in a pulverized architecture are embedded in the \scalainline{State} component.
 %
-Consequently, the glue code required to execute \scafi{} aggregate code over a pulverised network is minimal:
+Consequently, the glue code required to execute \scafi{} aggregate code over a pulverized network is minimal:
 \begin{minted}{scala}
 def compute(
   deviceIdentifier: Id,
@@ -544,11 +544,11 @@ def compute(
 \end{minted}
 \section{Implications}
 \label{implicitation}
-The construction of a pulverised platform for aggregate computing through multi-tier programming has several interesting applications that we analyse in this section.
+The construction of a pulverized platform for aggregate computing through multi-tier programming has several interesting applications that we analyse in this section.
 
-\paragraph*{Programmability and compile-time safety of deployment architectures for pulverised systems}
+\paragraph*{Programmability and compile-time safety of deployment architectures for pulverized systems}
 %
-A type-annotated definition of a pulverised system deployment can be used to statically enforce consistency between the intended architecture and its deployment implementation.
+A type-annotated definition of a pulverized system deployment can be used to statically enforce consistency between the intended architecture and its deployment implementation.
 %
 Access to data that cannot be reached by a certain component will not be possible as it will be checked by the compiler.
 % So we have the guarantee that the aggregate program semantics remains unchanged in any concrete deployment. 
@@ -558,8 +558,8 @@ Access to data that cannot be reached by a certain component will not be possibl
  We note that this research direction could be seen as a part of a larger effort to encapsulate the \emph{functional} part of the application (i.e., writing the aggregate computing program),
  isolating \emph{non-functional} concerns and tackling them separately, possibly through dedicated techniques and languages.
 
-\paragraph*{Opportunistic deployment and reconfiguration of pulverised systems}
-As a matter of principle, the pulverisation approach supports self-adaptive application deployment. 
+\paragraph*{Opportunistic deployment and reconfiguration of pulverized systems}
+As a matter of principle, the pulverization approach supports self-adaptive application deployment. 
   Indeed, nothing prevents moving components of a logical device across physical nodes (e.g. $\LComp$ component can be placed into the cloud if the device has a low battery level). 
   This direction, however, is not currently supported by \scalaloci{}, which assumes static data placement. 
   The influence of our design could lead to an extension of the languages in which the placed type could be moved data between peers, while still leaving the system specification type-safe.
@@ -577,12 +577,12 @@ A different yet intriguing research direction would be to understand if and how 
 \section{Conclusion}
 \label{conclusion}
 In this article, we propose an approach 
- to bridge pulverised architectures 
+ to bridge pulverized architectures 
  and verified deployment of aggregate systems,
 leveraging multi-tier programming to foster 
  declarativity, expressiveness, and safety. 
 %
-In particular, we show how a pulverised architecture could be specified in \scalaloci{},
+In particular, we show how a pulverized architecture could be specified in \scalaloci{},
 and then mapped onto a concrete deployment.
 %
 Finally, we show how aggregate computations can be easily soldered into the infrastructure,
@@ -593,7 +593,7 @@ we show that the approach is general enough to support different deployment arch
 we exemplify peer-to-peer and IoT edge-cloud architecture with thick or thin end devices,
 but of course, the design space in this context is huge.
 %
-We believe that the integration between multi-tier programming and pulverised aggregate programming is a promising approach for the design and implementation of collective adaptive systems that can execute independently of the underlying infrastructure,
+We believe that the integration between multi-tier programming and pulverized aggregate programming is a promising approach for the design and implementation of collective adaptive systems that can execute independently of the underlying infrastructure,
 preserving the business logic.
 
 \printbibliography

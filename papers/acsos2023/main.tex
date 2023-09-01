@@ -284,7 +284,7 @@ This formulation allows \acp{GNN} to effectively process and extract features fr
 %\lukas{do we need definitions of $o_v$, $h_v^*$ over time $t$?}
 
 \acp{GNN} are used in several application areas such as social network analysis, chemistry, and physics.
- In this paper, we use \acp{GNN} to learn a local behaviour for each agent in a multi-agent system (more details in Section~\ref{sec:approach}).
+ In this paper, we use \acp{GNN} to learn a local behaviour for each agent in a multi-agent system (more details in Section~\ref{acsos2023:sec:approach}).
 \subsection{Many-Agent Reinforcement Learning}
 %\ga{plan: we could discuss briefly about standard approach (few agents), and mean-field approach (many agents). 
 %This will lead to our approach, which is a combination of DQN (or any Deep RL approach) and GNN.}
@@ -601,7 +601,7 @@ Finally, we use \scafi{}~\cite{casadei2022scafi} as the aggregate programming la
 The evaluation is performed in two stages, first the neural networks are trained in an explicit training phase before being extensively evaluated in the testing stage.
 \footnote{The simulations are publicly available at \url{https://github.com/AggregateComputing/experiment-2023-acsos-field-informed-rl}.}
 \subsection{Scenario}
-\Cref{acsos2023:fig:scenarios} presents the three different types of scenarios utilized within the evaluation. The first type of experiments considers a single phenomenon at a static location (i.e., \emph{Zone Fixed}), the second type of experiment considers two phenomena in two independent but static locations (i.e., \emph{Two Zones}), and the third type of experiment considers a moving phenomenon (i.e., \emph{Moving}). All phenomena are modelled as a Gaussian distribution. Importantly, only the left scenario illustrated in Figure~\ref{fig:static} was used for training the neural networks. 
+\Cref{acsos2023:fig:scenarios} presents the three different types of scenarios utilized within the evaluation. The first type of experiments considers a single phenomenon at a static location (i.e., \emph{Zone Fixed}), the second type of experiment considers two phenomena in two independent but static locations (i.e., \emph{Two Zones}), and the third type of experiment considers a moving phenomenon (i.e., \emph{Moving}). All phenomena are modelled as a Gaussian distribution. Importantly, only the left scenario illustrated in Figure~\ref{acsos2023:fig:static} was used for training the neural networks. 
 Furthermore, all three types of scenarios contain a set of $\mathcal{P} = 25$ agents placed in a 2D grid large 1000x1000 meters. % and a single, stationary phenomenon with a  
 Each agent can perceive the presence
  of the phenomenon of interest through an installed sensor $\zeta_v$ with $v \in \mathbb{V}$. 
@@ -698,7 +698,7 @@ The training process for each neural network was divided into 100 episodes, each
 %
 For each episode, 
  the 25 agents are semi-randomly positioned on a grid (i.e., in a lattice layout with a random variation in their position) without knowing the correct position of the phenomenon, 
- but that is fixed in the top right corner. The position of the phenomenon with an example of positioned agents can be seen in Figure~\ref{fig:static}. 
+ but that is fixed in the top right corner. The position of the phenomenon with an example of positioned agents can be seen in Figure~\ref{acsos2023:fig:static}. 
 % \lukas{so for all 20,000 experiences, the phenomena is exactly as shown in fig 2a during training? --> WE ONLY USE THE SINGLE PHENOMA IN A SINGLE FIXED LOCATION BUT WITH VARYING POSITIONS OF AGENTS!!}
  The feature set used by the \ac{GNN} created for each agent consists of the vector computed by the aggregated program and the value of the local sensor $\zeta$.
 %

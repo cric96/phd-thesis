@@ -62,18 +62,18 @@ To start addressing these problems, in this work we present \scarlib{}, a framew
 With \scafi{}, in particular, \scarlib{} is provided with a high-level language for distributed computing that provides a declarative
  and compositional ways of expressing complex coordination tasks. 
 
-The remainder of this paper is organized as follows: \Cref{background} provides key background in the context of learning and the Alchemist/\scafi{} toolchain, \Cref{contribution} presents the \scarlib{} tool, \Cref{experiments} presents demos of \scarlib{}, \Cref{sec:related} discuss some state-of-the-art solutions, and finally \Cref{conclusion} concludes and presents future works.
+The remainder of this paper is organized as follows: \Cref{coordination2023:background} provides key background in the context of learning and the Alchemist/\scafi{} toolchain, \Cref{coordination2023:contribution} presents the \scarlib{} tool, \Cref{coordination2023:experiments} presents demos of \scarlib{}, \Cref{coordination2023:sec:related} discuss some state-of-the-art solutions, and finally \Cref{coordination2023:conclusion} concludes and presents future works.
 %
 %% TODO probably here we should add a discussion about why the DSL is important, or in general why this framework is better w.r.t. the others
 %% Here we should add the outline of the paper
-\section{Background}\label{background} %% Or background??
+\section{Background}\label{coordination2023:background} %% Or background??
 %\meta{This section should provide a brief overview of the related work (in this case I would say that there should be a discussion about the other libraries)}
 
 \subsection{Reinforcement Learning}
 \ac{rl} is a subfield of machine learning, other than supervised and unsupervised learning,
  that focuses on solving sequential decision problems: 
  giving an \emph{agent} that can interact with an \emph{environment}, the \ac{rl} goal is to \emph{learn} a policy (i.e., the action to take in a certain \emph{state} of the environment) that maximizes a reward signal.
- %The general framework of RL is composed around a bunch of very simple concepts: %(\Cref{fig:rl}): 
+ %The general framework of RL is composed around a bunch of very simple concepts: %(\Cref{coordination2023:fig:rl}): 
  %there is a learner called \emph{agent} and the thing it interacts with is called \emph{environment}. 
  Most specifically, the dynamics of these agent-environment interactions are modelled in discrete steps (i.e., $t=0,1,2,\dots$). 
  At each step, the agent receives an \emph{observation} $S_t \in \mathcal{S}$ ($\mathcal{S}$ is the
@@ -86,7 +86,7 @@ The remainder of this paper is organized as follows: \Cref{background} provides 
 %     \centering
 %     \includegraphics[width=0.6\textwidth]{papers/coordination2023/imgs/RL.pdf}
 %     \caption{RL Framework}
-%     \label{fig:rl}
+%     \label{coordination2023:fig:rl}
 %\end{figure}
 In order for \ac{rl} to be effective, two conditions are fundamental: \emph(i) all is meant by \emph{goals/purposes/success} can be well thought of as the maximization of the expected 
     value of the cumulative sum of the reward (i.e., a scalar signal) -- called \emph{the reward hypothesis}; and \emph{(ii)} the environment state should summarize the past compactly, so that future states only depend on the current state (and not on past states) -- 
@@ -123,13 +123,13 @@ From the Q-function,
         \centering
         \includegraphics[width=\textwidth]{papers/coordination2023/imgs/q-learning.pdf}
         \caption{Q-Learning}
-        \label{fig:ql}
+        \label{coordination2023:fig:ql}
     \end{subfigure}
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{papers/coordination2023/imgs/deepQL.pdf}
         \caption{Deep Q-Learning}
-        \label{fig:dqn}
+        \label{coordination2023:fig:dqn}
     \end{subfigure}
 \caption{Q-Learning and Deep Q-Learning visual comparison}\vspace{-10pt}
 \end{figure*}
@@ -163,7 +163,7 @@ In this work, we focus on a subset of MARL, namely: \emph{many-agent reinforceme
  %(i.e., $N \gg 2$, typically less than one or two thousands ~\cite{smac,marl-curricula}).
  Moreover, we focus on cooperative homogeneous and heterogeneous learning.
 
-\subsection{Alchemist}\label{alchemist}
+\subsection{Alchemist}\label{coordination2023:alchemist}
 
 Alchemist\footnote{\url{http://alchemistsimulator.github.io/}}~\cite{DBLP:journals/jos/PianiniMV13} is meta-simulator
  mainly designed for simulating complex distributed systems 
@@ -204,7 +204,7 @@ The \scafi{} incarnation supports the \scafi{} Scala DSL
 Alchemist offers an effortless method for loading simulations. 
  The process requires a YAML file that includes essential parameters, 
  such as the incarnation type, neighbour connection model, and node deployment. 
- In \Cref{fig:alchemist}, we have provided an example YAML file 
+ In \Cref{coordination2023:fig:alchemist}, we have provided an example YAML file 
  that creates a simulation using the \scafi{} incarnation (first row). 
  It also defines the neighbourhood relationship based on fixed distances (0.5 in this case), 
  placing nodes in a fixed grid of size 10x10 starting at -(5,5) and ending at (5,5), 
@@ -243,10 +243,10 @@ deployments:
     The simulation result on the right is obtained 
     by running the simulation described on the left.
     }
-\label{fig:alchemist}
+\label{coordination2023:fig:alchemist}
 \end{figure*}
 
-\subsection{ScaFi}\label{scafi}
+\subsection{ScaFi}\label{coordination2023:scafi}
 
 \scafi{} (Scala Fields \footnote{\url{https://scafi.github.io/}})~\cite{Casadei2022} 
  is a Scala framework for developing large-scale 
@@ -290,7 +290,7 @@ algorithms,
 %project and is actively maintained by researchers from various
 %universities and research institutions.
 
-\section{\scarlib{}}\label{contribution}
+\section{\scarlib{}}\label{coordination2023:contribution}
 %\meta{This section should provide a description of the framework, including the main features and the architecture.}
 %\newline
 %\begin{itemize}
@@ -308,7 +308,7 @@ This project aims to provide a tool that allows easy and powerful system specifi
 %
 To meet this purpose we have designed many abstractions, that model high-level aspects of the MARL domain, 
  without caring about low-level implementation details.
-Basically, \scarlib{} is composed of three main modules (\Cref{fig:modules}), namely: 
+Basically, \scarlib{} is composed of three main modules (\Cref{coordination2023:fig:modules}), namely: 
     i) \texttt{scarlib-core} that implements the main abstractions over the CMARL domain,
     ii) \texttt{dsl-core} that provides a high-level language to specify the system, and
     iii) \texttt{alchemist-scafi} that provides bindings between \scarlib{} and the two tools Alchemist and \scafi{}.
@@ -319,12 +319,12 @@ Basically, \scarlib{} is composed of three main modules (\Cref{fig:modules}), na
     \centering
     \includegraphics[width=0.7\textwidth]{papers/coordination2023/imgs/scarlib-modules.pdf}
     \caption{\scarlib{} main modules}
-    \label{fig:modules}
+    \label{coordination2023:fig:modules}
 \end{figure}
 
 \paragraph{Core abstraction:} the module \texttt{scarlib-core} implements the core functionalities and abstractions of the framework, such as the definition of the main data structures and the implementation of the main algorithms. 
 %
-All the abstractions (\Cref{fig:arc}) are built around a bunch of concepts. The key element is the \texttt{System}, which is a collection of agents that interact within a shared environment and that are trained to optimize a global or local reward signal
+All the abstractions (\Cref{coordination2023:fig:arc}) are built around a bunch of concepts. The key element is the \texttt{System}, which is a collection of agents that interact within a shared environment and that are trained to optimize a global or local reward signal
 expressed by a reward function. 
 %
 The tool comes with two types of systems already implemented that are very common in literature~\cite{Du2020},
@@ -343,7 +343,7 @@ Only by using this module,
     \centering
     \includegraphics[width=\textwidth]{papers/coordination2023/imgs/core-architecture.pdf}
     \caption{\scarlib{} core architecture}
-    \label{fig:arc}
+    \label{coordination2023:fig:arc}
 \end{figure} %% TODO increase the font in this figure
 
 To better understand the dynamics of the system it is useful to explain some internals.
@@ -360,7 +360,7 @@ At the end of an epoch,
  the environment is reset, and the agents are trained using the collected experience.
 
 Most specifically,
- if the chosen system is a \texttt{CTDESystem} (\Cref{fig:ctde}) the agents are trained in a centralized way, 
+ if the chosen system is a \texttt{CTDESystem} (\Cref{coordination2023:fig:ctde}) the agents are trained in a centralized way, 
  for that reason, there is  a single central dataset, 
  where the global experience of all the agents is stored, 
  and a single central learner that is responsible for the training process 
@@ -370,7 +370,7 @@ The system is also responsible
  for the execution of all the agents and the notification of the updated policy. 
  In this way, it is possible to easily extend the system in order to modify the execution flow, e.g., if a concurrent and distributed execution is needed. 
 %
-The \texttt{DTDESystem} (\Cref{fig:dtde}) works similarly, 
+The \texttt{DTDESystem} (\Cref{coordination2023:fig:dtde}) works similarly, 
  the only difference is that every agent has its own dataset and learner.
 
 %In order to provide an efficient learning process we have bindings with a state-of-the-art 
@@ -404,13 +404,13 @@ In this case, we have isolated everything in DQN, which is therefore the entry p
         \centering
         \includegraphics[width=\textwidth]{papers/coordination2023/imgs/ctdesystem.pdf}
         \caption{CTDE System}
-        \label{fig:ctde}
+        \label{coordination2023:fig:ctde}
     \end{subfigure}
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{papers/coordination2023/imgs/DTDE.pdf}
         \caption{DTDE System}
-        \label{fig:dtde}
+        \label{coordination2023:fig:dtde}
     \end{subfigure}
 \caption[Examples of developed System dynamics in \scarlib{}]{Examples of developed System dynamics. 
 On the left, there is the centralized system, 
@@ -421,7 +421,7 @@ On the right, there is a decentralized system,
 where each agent has a local policy and a local policy.}
 \end{figure*}
 
-\paragraph{\scafi{}-Alchemist integration:} in addition to the core, we have implemented another module called \texttt{alchemist-scafi} (\Cref{fig:alchemist-arc}) 
+\paragraph{\scafi{}-Alchemist integration:} in addition to the core, we have implemented another module called \texttt{alchemist-scafi} (\Cref{coordination2023:fig:alchemist-arc}) 
  in which there is the integration with the two tools: 
  Alchemist \cite{DBLP:journals/jos/PianiniMV13} and \scafi{} \cite{Casadei2022}.
 %
@@ -443,7 +443,7 @@ The specification of a learning system does not change, only two new elements ar
  the specification of the Alchemist simulation and the implementation of the \scafi{}-based logic.
 %
 In particular, 
- the Alchemist simulation will be defined as shown in \Cref{fig:alchemist}, 
+ the Alchemist simulation will be defined as shown in \Cref{coordination2023:fig:alchemist}, 
  by passing a \scafi{} class as a program, which contains aggregate programming code. 
  In order to advance the training process, 
  a molecule with the current action to be taken (a subtype of \texttt{Action} class) 
@@ -461,7 +461,7 @@ In particular,
     A \texttt{ScafiProgram} should be passed to the \texttt{AlchemistEnvironment}
     in order to start the learning process. 
     }
-    \label{fig:alchemist-arc}
+    \label{coordination2023:fig:alchemist-arc}
 \end{figure}
 
 \paragraph{DSL for learning configurations:} 
@@ -518,7 +518,7 @@ val system = learningSystem {
 }
 \end{lstlisting}
 %The last module: \texttt{dsl-core}, provides a handy way for defining the learning system. 
-%Basically, it is composed of six composable elements, an example is provided in \ref{lst:sysdef}.
+%Basically, it is composed of six composable elements, an example is provided in \ref{coordination2023:lst:sysdef}.
 
 %begin{lstlisting}[caption={CTDE system definition} ,label={lst:sysdef},language=scala]
 %val system = learningSystem {
@@ -567,7 +567,7 @@ For further details on how to specify simulations and environments,
  please refer to the repository README, 
  the presentation video and 
  the developed simulation (following section).
-\section{Experiments}\label{experiments}
+\section{Experiments}\label{coordination2023:experiments}
 % \meta{This section should provide a description of the experiments, including the results and the discussion.}
 % \meta{For each experiment, we can have the following structure:
 % \paragraph{Description}
@@ -585,7 +585,7 @@ For further details on how to specify simulations and environments,
 % west, north-east, north-west, south-east and south-west. 
 % The state of each agent consist of the relative distance to the neighborhood 
 %  and of his own position.
-%The reward function (\Cref{fig:cc-rf}) is parametrized by a target distance $d$, in the graph the target
+%The reward function (\Cref{coordination2023:fig:cc-rf}) is parametrized by a target distance $d$, in the graph the target
 % distance is represented by the red vertical line.
 % The portion of the graph to the right of the red line represents the influence of the cohesion term:
 % the more the agents are far from each other, the more the reward linearly decrease.
@@ -630,7 +630,7 @@ We aim to learn a policy by which agents, initially spread in a very sparse way 
 The collision factor comes into play when the distance is less than $\delta$, 
  and exponentially weighs the distance $d$ relative to its closest neighbour:
 \begin{equation}
-    \label{eq:collision-factor}
+    \label{coordination2023:eq:collision-factor}
     \begin{split}
         \text{collision} = \begin{cases}
             0 & \text{if } d > \delta \\
@@ -654,7 +654,7 @@ However, if only this factor were used,
 \end{equation}
 %
 The overall reward function is defined as the sum of these two factors ($cohesion + collision$)
- as shown in \Cref{fig:cc-rf}.
+ as shown in \Cref{coordination2023:fig:cc-rf}.
  \begin{figure}[t]
     \centering
     \includegraphics[width=0.6\textwidth]{papers/coordination2023/imgs/ccreward.pdf}
@@ -662,14 +662,14 @@ The overall reward function is defined as the sum of these two factors ($cohesio
         The portion of the graph to the right of the red line represents the influence of the cohesion term,
         while the left one represents the influence of the collision term.
     }
-    \label{fig:cc-rf}
+    \label{coordination2023:fig:cc-rf}
 \end{figure}
 
 
 \paragraph{Results}
-%\Cref{fig:cc-results} shows the results of the two experiments, the first one ran with 25 agents (purple lines)
+%\Cref{coordination2023:fig:cc-results} shows the results of the two experiments, the first one ran with 25 agents (purple lines)
 %    and the second one with 50 agents (cyan lines) using a hundred and fifty episodes each of two hundred steps.
-% The first graph (\Cref{fig:loss-cc}) shows a comparison of the loss functions,
+% The first graph (\Cref{coordination2023:fig:loss-cc}) shows a comparison of the loss functions,
 %  while the second one of the reward functions. 
 %  In both learning processes, 
 %  when the loss function increases, 
@@ -705,7 +705,7 @@ With the CDTE policy,
  we also verified the behaviour as the number of nodes varied,
  expecting similar performance as the nodes increased.
 
-The graphs shown in \Cref{fig:cc-results} 
+The graphs shown in \Cref{coordination2023:fig:cc-results} 
  demonstrate the multi-objective nature of the problem. 
 In fact, cohesion and collision are two contrasting signals, 
  and the system had to find a balance between these two values. 
@@ -721,7 +721,7 @@ In the case of DTDE learning,
  therefore greater overall complexity compared to a single homogeneous policy.
 
 During the testing phase 
- (\Cref{fig:simulation-snapshots} shows a series of snapshots of the learned policy), 
+ (\Cref{coordination2023:fig:simulation-snapshots} shows a series of snapshots of the learned policy), 
  we observed that the system is capable of maintaining a distance of approximately $\delta$, 
  both in the CDTE and DTDE cases. 
  Most specifically, 
@@ -729,54 +729,54 @@ During the testing phase
  a winning choice for homogeneous \ac{cmarl} tasks. 
 %
 Increasing the number of agents (from 50 to 200), 
- we can observe that collective performances are similar to those with few agents (\Cref{fig:test}).
+ we can observe that collective performances are similar to those with few agents (\Cref{coordination2023:fig:test}).
 \begin{figure*}[t]
     \centering
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{papers/coordination2023/imgs/reward-ctde.pdf}
         %\caption{Total average reward}
-        %\label{fig:reward-cc}
+        %\label{coordination2023:fig:reward-cc}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{papers/coordination2023/imgs/collision-ctde.pdf}
         %\caption{Average collision factor}
-        %\label{fig:collision-cc}
+        %\label{coordination2023:fig:collision-cc}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{papers/coordination2023/imgs/cohesion-ctde.pdf}
         %\caption{Average cohesion factor}
-        %\label{fig:cohesion-cc}
+        %\label{coordination2023:fig:cohesion-cc}
     \end{subfigure}
     \par\bigskip
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{papers/coordination2023/imgs/reward-dtde.pdf}
         \caption{Total average reward}
-        \label{fig:reward-dcc}
+        \label{coordination2023:fig:reward-dcc}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{papers/coordination2023/imgs/collision-dtde.pdf}
         \caption{Average collision factor}
-        \label{fig:collision-dcc}
+        \label{coordination2023:fig:collision-dcc}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{papers/coordination2023/imgs/cohesion-dtde.pdf}
         \caption{Average cohesion factor}
-        \label{fig:cohesion-dcc}
+        \label{coordination2023:fig:cohesion-dcc}
     \end{subfigure}
 \caption[Cohesion and collision experiment results]{Cohesion and collision experiment results. The y-axis represents the reward value.
 The x-axis represents the total number of episodes.
 The first three graphs show the results of the CDTE learning process, while the last three show the results of the DTDE learning process.}
-\label{fig:cc-results}
+\label{coordination2023:fig:cc-results}
 \end{figure*}
 
 \begin{figure*}[t]
@@ -809,19 +809,19 @@ The first three graphs show the results of the CDTE learning process, while the 
         \centering
         \fbox{\includegraphics[width=\textwidth]{papers/coordination2023/imgs/3-large.png}}
         \caption{}
-        \label{fig:sim2}
+        \label{coordination2023:fig:sim2}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.25\textwidth}
         \centering
         \fbox{\includegraphics[width=\textwidth]{papers/coordination2023/imgs/4-large.png}}
         \caption{}
-        \label{fig:sim3}
+        \label{coordination2023:fig:sim3}
     \end{subfigure}
 \caption[Snapshots of the learned policy in \scarlib{}]{Snapshots of the learned policy, the time flow is from left to right. 
 In the first row, there are 50 agents, whereas in the second row, there are 200 agents.
 In the last step of the simulation, the agents converged to a distance of approximately $\delta$.}
-\label{fig:simulation-snapshots}
+\label{coordination2023:fig:simulation-snapshots}
 \end{figure*}
 
 \begin{figure*}[h!]
@@ -851,7 +851,7 @@ In the charts, as the number of agents varies, the performance of the learned po
 Moreover, the minimum (blue line) distance between the agents is always greater than $\delta$.
 The average distance (orange line) stays close to 2 * $\delta$ (after convergence).
 }
-\label{fig:test}
+\label{coordination2023:fig:test}
 \end{figure*}
 %\subsection*{Cleaning Robot}
 %\paragraph{Description}
@@ -874,7 +874,7 @@ The average distance (orange line) stays close to 2 * $\delta$ (after convergenc
 
 %\paragraph{Results}
 %Here you should show the result of the cleaning robot experiment
-\section{Related work}\label{sec:related}
+\section{Related work}\label{coordination2023:sec:related}
 MARL has gained significant interest in the past decade, 
  leading to the development of several frameworks 
  for use in both research and industry communities. 
@@ -940,7 +940,7 @@ In particular, mean-field RL~\cite{meanfield} is probably one of the
 Currently, however, only a few implementations 
  exist~\footnote{\url{https://github.com/mlii/mfrl}} and they are not considered to be general-purpose. 
  \scarlib{} instead is practical and already provides a simple implementation that can be leveraged in \ac{cmarl} settings. 
-\section{Conclusion and Future work}\label{conclusion}
+\section{Conclusion and Future work}\label{coordination2023:conclusion}
 In this paper, we presented \scarlib{}: 
  a collaborative many-agent deep reinforcement learning framework that integrates the functionalities of \scafi{} and Alchemist.
 %

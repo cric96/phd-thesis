@@ -123,16 +123,16 @@ We consider the case of the classic gradient algorithm, a paradigmatic and key b
  learns an improved way to compute and adjust gradient fields to network perturbations.
 
 In the rest of the paper: 
-\Cref{s:background} offers background on \ac{ac} and \ac{rl};
+\Cref{coordination2022:s:background} offers background on \ac{ac} and \ac{rl};
 %
-\Cref{s:contrib} discusses the integration of \ac{rl} and \ac{ac}, and the use of the approach to improve the basic gradient algorithm;
+\Cref{coordination2022:s:contrib} discusses the integration of \ac{rl} and \ac{ac}, and the use of the approach to improve the basic gradient algorithm;
 %
-\Cref{s:eval} provides an experimental evaluation of the proposed approach;
+\Cref{coordination2022:s:eval} provides an experimental evaluation of the proposed approach;
 %
-\Cref{s:conc} summarizes results and future research.
+\Cref{coordination2022:s:conc} summarizes results and future research.
 
 
-\section{Background}\label{s:background}
+\section{Background}\label{coordination2022:s:background}
 
 In this work, we contribute to \emph{field-based coordination}~\cite{DBLP:conf/chi/XiaoH98,DBLP:journals/pervasive/MameiZL04,DBLP:conf/kes/TrzecL07,DBLP:journals/tosem/MameiZ09,DBLP:journals/jlap/ViroliBDACP19}, a well-known nature-inspired approach~\cite{DBLP:conf/idc/Omicini12} to coordination that exploits computational mechanisms inspired by the force fields of physics. % (e.g., force fields).
 %
@@ -161,14 +161,14 @@ In \acl{ac}~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP
 %% \ac{iot} deployments,
 %% and similar distributed cyber-physical collectives.
 %%%
-%%However, as will be discussed in \Cref{s:contrib},
+%%However, as will be discussed in \Cref{coordination2022:s:contrib},
 %% learning could play a role to improve ...
 
-We recap \acl{ac} in \Cref{s:background:ac}.
-Then, we review \ac{rl} in \Cref{s:background:rl},
- to prepare the ground for our contribution, \emph{Reinforcement Learning-based Aggregate Computing} (\Cref{s:contrib}).
+We recap \acl{ac} in \Cref{coordination2022:s:background:ac}.
+Then, we review \ac{rl} in \Cref{coordination2022:s:background:rl},
+ to prepare the ground for our contribution, \emph{Reinforcement Learning-based Aggregate Computing} (\Cref{coordination2022:s:contrib}).
 
-\subsection{\acl{ac}}\label{s:background:ac}
+\subsection{\acl{ac}}\label{coordination2022:s:background:ac}
 %\meta{TODO: taken from ALPACA, verify if it needs to be re-written}
 %\meta{
 %  \begin{itemize}
@@ -268,10 +268,10 @@ and periodical execution promotes the emergence of globally coherent results.
 %
 Full coverage of \ac{fc}/\scafi{} is beyond the scope of this paper. A more comprehensive presentation is given in~\cite{DBLP:journals/jlap/ViroliBDACP19}. 
 %
-As a key example, we introduce the gradient algorithm, which will be considered \Cref{s:contrib,s:eval}.
+As a key example, we introduce the gradient algorithm, which will be considered \Cref{coordination2022:s:contrib,s:eval}.
 %In the next section we briefly explain the gradient algorithm, one of the most important building blocks for devising collective behaviour.
 
-\subsection{The gradient building block}\label{sec:gradient}
+\subsection{The gradient building block}\label{coordination2022:sec:gradient}
 %\meta {
 %  @GA to @ALL how much we want to go into the details about FLEX, CRF? We want to introduce also BIS and ULT?
 %}
@@ -334,11 +334,11 @@ Otherwise, the output of the gradient follows the classical formula.
 %
 %\input{crf-definition.tex} %% TODO we want to remove it?
 
-%In \Cref{s:contrib},
+%In \Cref{coordination2022:s:contrib},
 % we will discuss how \ac{ac} building blocks such as the gradient
 % could be improved by learning and, in particular, by \ac{rl}.
 
-\subsection{\acl{rl}}\label{s:background:rl}
+\subsection{\acl{rl}}\label{coordination2022:s:background:rl}
 
 \acl{rl}~\cite{sutton2018reinforcement-learning} is a generic framework 
  %-- inspired by how humans learn -- 
@@ -465,7 +465,7 @@ To this aim, \ac{hql} introduces two learning rates ($\alpha$ and $\beta$) to we
 %    Q(s_t, a_t) + \beta \, \delta(t) & \text{else}
 %  \end{cases}
 %\end{align}
-In this study (cf. \Cref{s:eval}), we use \ac{hql} as reference \ac{rl} algorithm since it has a strong empirical track for cooperative multi-agent systems~\cite{DBLP:journals/ker/MatignonLF12,DBLP:journals/tsmc/XuZLF12,DBLP:journals/asc/BarbaliosT14}. 
+In this study (cf. \Cref{coordination2022:s:eval}), we use \ac{hql} as reference \ac{rl} algorithm since it has a strong empirical track for cooperative multi-agent systems~\cite{DBLP:journals/ker/MatignonLF12,DBLP:journals/tsmc/XuZLF12,DBLP:journals/asc/BarbaliosT14}. 
 %
 Moreover, although structurally similar to \ac{dql}, it can be used in non-deterministic MDPs---a typical setting for \acp{cas}. 
 %
@@ -497,7 +497,7 @@ With this assumption, the learner only has to find a single strategy that applie
 %
 %Obviously, this also reduces the solution space, but in \acp{cas} the condition of homogeneity is acceptable because simple controllers can still produce complex collective behaviour as observed in nature.
 
-\section{Reinforcement Learning-based Aggregate Computing}\label{s:contrib}
+\section{Reinforcement Learning-based Aggregate Computing}\label{coordination2022:s:contrib}
 %\meta{
 %  \begin{itemize}
 %    \item clarify the motivation
@@ -508,7 +508,7 @@ With this assumption, the learner only has to find a single strategy that applie
 
 \subsection{On Integrating Machine Learning and Aggregate Computing}
 
-As anticipated in \Cref{s:background:ac}, the behaviour of an aggregate system depends on the interplay of three main ingredients:
+As anticipated in \Cref{coordination2022:s:background:ac}, the behaviour of an aggregate system depends on the interplay of three main ingredients:
  (i) the aggregate program, expressing conceptually the global behaviour of the entire system, and concretely the local behaviour of each individual node in terms of local processing and data exchange with neighbours; and 
  (ii) the aggregate execution model, promoting a certain dynamics of the system in terms of topology management (e.g., via neighbour discovery), execution of rounds, scheduling of communications; and
  (iii) the environment dynamics.
@@ -548,9 +548,9 @@ From a local viewpoint, an \ac{ac} device is an agent acting based on the local 
 So, our long-term goal is to integrate \ac{rl} into the \ac{ac} ``stack'' (i.e., across the platform, language, and library levels) to improve the collective behaviour defined by \scafi{} aggregate programs in terms of \emph{efficiency} (i.e., reducing the resource usage maintaining the same functional interface), \emph{efficacy} (i.e., synthesizing more stable and faster converging behaviours) and \emph{adaptability} (i.e., the same program works against different environments).
 %
 
-As a first contribution, summarized in \Cref{fig:ac-and-rl}, in this work we integrate \ac{rl} within the \ac{ac} control architecture in order to support learning of good collective behaviour sketched by a given aggregate program.
+As a first contribution, summarized in \Cref{coordination2022:fig:ac-and-rl}, in this work we integrate \ac{rl} within the \ac{ac} control architecture in order to support learning of good collective behaviour sketched by a given aggregate program.
 %
-Specifically, we focus on improving \ac{ac} building blocks (such as the gradient algorithm covered in \Cref{sec:gradient}) through learning, leading toward a so-called \emph{Reinforcement Learning-based Aggregate Computing}. 
+Specifically, we focus on improving \ac{ac} building blocks (such as the gradient algorithm covered in \Cref{coordination2022:sec:gradient}) through learning, leading toward a so-called \emph{Reinforcement Learning-based Aggregate Computing}. 
 %
 Learning, thus, does not replace the \ac{ac} methodology for defining the programs, but it is best understood as a technique that supports and improves the \ac{ac} algorithm design process. %, especially for handling critical situations (e.g. unpredictable environment dynamics, opportunistic deployments, etc.).
 %
@@ -573,7 +573,7 @@ Learning, thus, does not replace the \ac{ac} methodology for defining the progra
 %
 %Thus, learning algorithms could be combined with the above ideas to let the system self-adapt directly through raw experience.
 
-\subsection{Building blocks Refinement}\label{s:learning-gradient}
+\subsection{Building blocks Refinement}\label{coordination2022:s:learning-gradient}
 %\meta{@GA: this may became a subsection of Reinforcement Learning-based AC?}
 %\meta{
 %  \begin{itemize}
@@ -631,7 +631,7 @@ In this case, instead, we used a handcraft feature engineering process since we 
 
 Concerning the \emph{multi-agent credit assignment problem}, we decided to use offline learning 
 %based on simulation and then the policy is deployed in a concrete system 
-in a typical \ac{ctde} setting (\Cref{fig:learning-scheme}).
+in a typical \ac{ctde} setting (\Cref{coordination2022:fig:learning-scheme}).
 %
 This way, we assess the influence of an individual in comparison to the entire system, which cannot be done in online learning due to the difficulty of achieving global snapshots of the system in a reasonable time.
 
@@ -642,7 +642,7 @@ The learning algorithm is seen as a state ($s_t$) evolution function in which th
 %
 The state is built from a neighbourhood field of the building block generic output ($o_t$) passed as input.
 %
-\Cref{lst:general-schema} exemplifies the general program structure used to combine \ac{rl} with \ac{ac} for improving building blocks.
+\Cref{coordination2022:lst:general-schema} exemplifies the general program structure used to combine \ac{rl} with \ac{ac} for improving building blocks.
 %
 The branching operator (\lstinline|branch|) on \lstinline|learn| condition makes it possible to use the \ac{ctde} schema since when the \lstinline|learn| is \lstinline|false| there is no need for a central entity (\lstinline|simulation|).
 %
@@ -675,7 +675,7 @@ Though we could have extracted the learning process from the \ac{ac} program, %p
 %}
 
 %\meta{@GA to @All: another way to generalise G?}
-The gradient block (cf. \Cref{sec:gradient}) could be generalized as follows:
+The gradient block (cf. \Cref{coordination2022:sec:gradient}) could be generalized as follows:
 \begin{lstlisting}
 def gradientOpt(source, metric, opt) {
   rep(infinity) { g => mux(source) { 0 } { opt(g, metric)) } }
@@ -684,9 +684,9 @@ def gradientOpt(source, metric, opt) {
 where \lstinline|opt| is a function that determines how to evolve the gradient based on the field of current gradient values \lstinline|g| and current \lstinline|metric| (estimation of distances to neighbour). 
 %In this way, the correction factor applied to the gradient could be composed, creating a gradient block that handles several scenarios.
 In this article, we consider \lstinline|opt| as a \emph{hole} that a \ac{rl} algorithm will fill through raw experience
- with actions aiming at incrementally constructing a gradient field, hopefully mitigating the \emph{rising-value} issue (cf. \Cref{sec:gradient}).
+ with actions aiming at incrementally constructing a gradient field, hopefully mitigating the \emph{rising-value} issue (cf. \Cref{coordination2022:sec:gradient}).
 %
-To frame our learning problem, we adopt the above-described general schema (\Cref{fig:learning-scheme}). The state and action functions are inspired by the CRF algorithm.
+To frame our learning problem, we adopt the above-described general schema (\Cref{coordination2022:fig:learning-scheme}). The state and action functions are inspired by the CRF algorithm.
 %
 The \lstinline|state| function must hold enough information to know when agents should speed up the local rising of values.
 %
@@ -731,7 +731,7 @@ When this is the case, we provide a value equals to $0$;
 instead, when the value is different from the expected one, 
  we provide a small negative reward, $-1$, in order to push the nodes to quickly seek the situation where the actual and ideal value match.
 
-\section{Evaluation}\label{s:eval}
+\section{Evaluation}\label{coordination2022:s:eval}
 
 \begin{table}[t]
   \centering
@@ -750,11 +750,11 @@ instead, when the value is different from the expected one,
   %
   %So simulation 0000 is the one with $\gamma = 0.4, \epsilon_0 = 0.5, \theta = 200, \beta = 0.5, \alpha = 0.01, buckets = 16,  maxBound = 4$.
   }
-  \label{table:parameters}
+  \label{coordination2022:table:parameters}
 \end{table}
 
 To evaluate our approach, we run a set of simulated experiments and verify that an aggregate system
- can successfully learn an improved way to compute a gradient field (cf. the gradient block described in \Cref{sec:gradient}).
+ can successfully learn an improved way to compute a gradient field (cf. the gradient block described in \Cref{coordination2022:sec:gradient}).
 %
 To this purpose, we adopt Alchemist~\cite{DBLP:journals/jos/PianiniMV13},
  a flexible simulator 
@@ -792,7 +792,7 @@ An entire simulation lasts $N_E = 1200$ episodes, in which in the first $N_L = 1
 %
 In these last runs, the agents act following the greedy policy.
 
-As learning algorithm, we used Hysteretic Q-Learning (cf. \Cref{s:background:rl}). %, since it tackles environments stochasticity.
+As learning algorithm, we used Hysteretic Q-Learning (cf. \Cref{coordination2022:s:background:rl}). %, since it tackles environments stochasticity.
 %
 As behavioural policy, we use an $\epsilon$-greedy with an exponential decay to balance the exploration-exploitation.
 %
@@ -800,7 +800,7 @@ We make this choice because without using the decay the policy found tends to be
 %
 At each episode $i$, the $\epsilon$ value is updated as $\epsilon_i = \epsilon_0 \cdot e^{{i} / \theta}$.
 
-Several variables are used, summarized in \Cref{table:parameters}, so we perform a grid search to find the optimal combination.
+Several variables are used, summarized in \Cref{coordination2022:table:parameters}, so we perform a grid search to find the optimal combination.
 %
 To evaluate a particular configuration, we verified the total error performed in the last $N_T$ episodes.
 %
@@ -816,16 +816,16 @@ And finally, the error of each episode is evaluated as:
 \begin{equation}
 error_{episode} = \sum_{t = 0}^T error_{t}
 \end{equation}
-We choose the configuration by observing the box plots (\Cref{subfig:boxplot}) and taking the lowest average error in the last $N_T$ episodes.
+We choose the configuration by observing the box plots (\Cref{coordination2022:subfig:boxplot}) and taking the lowest average error in the last $N_T$ episodes.
 
 \input{papers/coordination2022/simulation-result.tex}
 \subsection{Results and Discussion}
 
-\Cref{fig:eval} shows the performance of our \acl{rl}-based gradient algorithm.
+\Cref{coordination2022:fig:eval} shows the performance of our \acl{rl}-based gradient algorithm.
 %
-\Cref{subfig:boxplot} was used to choose which configuration was the best.
+\Cref{coordination2022:subfig:boxplot} was used to choose which configuration was the best.
 %
-\Cref{subfig:mean-error-over-episode} shows the error trend as the episodes change. 
+\Cref{coordination2022:subfig:mean-error-over-episode} shows the error trend as the episodes change. 
 %
 The second row shows the trend of the mean error over the last $N_T$ episodes. 
 %
@@ -839,13 +839,13 @@ In the following we discuss the result reached with the best configuration, that
 
 Our goal was to create a solution that outperforms the classic gradient against the rising-value problem.
 %
-In fact, the system eventually learns how to speed up the gradient rising: observing the \Cref{subfig:mean-error-over-episode} the $error_{episode}$ of the new algorithm is lower than the error produced by the standard solution. 
+In fact, the system eventually learns how to speed up the gradient rising: observing the \Cref{coordination2022:subfig:mean-error-over-episode} the $error_{episode}$ of the new algorithm is lower than the error produced by the standard solution. 
 %
 In particular, this means that the agents learn the moment when they should ignore their neighbourhood and increase the output with a certain velocity (i.e. using the \lstinline|Ignore| action).
 
-This intuition is enforced by \Cref{subfig:error-few,subfig:error-many,subfig:output-few,subfig:output-many}.
+This intuition is enforced by \Cref{coordination2022:subfig:error-few,coordination2022:subfig:error-many,coordination2022:subfig:output-few,coordination2022:subfig:output-many}.
 % 
-In particular, in \Cref{subfig:error-few,subfig:output-few} the behaviour is more evident due to the reduced number of agents: when the error is maximized (due to the source that disappears), the error decreased faster than the naive gradient (and, consequently, the output is faster growing).
+In particular, in \Cref{coordination2022:subfig:error-few,coordination2022:subfig:output-few} the behaviour is more evident due to the reduced number of agents: when the error is maximized (due to the source that disappears), the error decreased faster than the naive gradient (and, consequently, the output is faster growing).
 %
 Furthermore, we can also observe that the overall algorithm behaviour is comparable with the CRF handcrafted solution for the rising problem. 
 %
@@ -865,7 +865,7 @@ Finally, we want to stress that the nodes do not fire synchronously, and thus th
 %
 This, again, makes it possible to use the same policy in different scenarios due to the unknown local aggregate programs evaluation order.
 
-\section{Conclusion}\label{s:conc}
+\section{Conclusion}\label{coordination2022:s:conc}
 
 This paper discusses the integration of \acl{ac} -- a programming approach for \aclp{cas} -- and \acl{rl}, with the goal of fostering the design of collective adaptive behaviour.
 % 
