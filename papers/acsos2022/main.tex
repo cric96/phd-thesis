@@ -16,15 +16,7 @@
 \def\tablename{Table}
 \sloppypar
 %% Acronyms
-\acrodef{api}[API]{Application Program Interface}
-\acrodef{RL}[RL]{Reinforcement Learning}
-\acrodef{MDP}[MDP]{Markov Decision Process}
-\acrodef{AC}[AC]{Aggregate Computing}
-\acrodef{CAS}[CAS]{Collective Adaptive System}
-\acrodef{iot}[IoT]{Internet of Things}
-\acrodef{it}[IT]{Information Technology}
-\acrodef{ci}[CI]{Collective Intelligence}
-\acrodef{marl}[MARL]{multi-agent reinforcement learning}
+
 \newcommand{\scafiinline}[1]{\lstinline[language=scafi]$#1$}
 %\end{lstlisting}
 
@@ -96,28 +88,28 @@ Our thesis is exposed through a case study, in which \ac{RL} -- and in particula
 
 The paper is structured as follows.
 %
-\Cref{sec:background} provides background on \ac{AC} and \ac{RL}, and introduces reference examples. 
+\Cref{acsos2022:sec:background} provides background on \ac{AC} and \ac{RL}, and introduces reference examples. 
 %
-\Cref{sec:contribution} describes the core contribution applying \ac{RL} to \ac{AC}. %our idea of using \ac{RL} for non-functional aspects, devising also the learning settings. 
+\Cref{acsos2022:sec:contribution} describes the core contribution applying \ac{RL} to \ac{AC}. %our idea of using \ac{RL} for non-functional aspects, devising also the learning settings. 
 %
-\Cref{sec:evaluation} provides experimental evaluation. %evaluates the approach. % against the goal of reducing power consumption. %the combination of \ac{AC} and \ac{RL} in the case of reduce the power consumption.
+\Cref{acsos2022:sec:evaluation} provides experimental evaluation. %evaluates the approach. % against the goal of reducing power consumption. %the combination of \ac{AC} and \ac{RL} in the case of reduce the power consumption.
 %
 %Finally, 
-\Cref{sec:conclusion} provides final thoughts and discusses future work.
+\Cref{acsos2022:sec:conclusion} provides final thoughts and discusses future work.
 
 \section{Background and Related Work}
-\label{sec:background}
+\label{acsos2022:sec:background}
 %\meta{- on the purpose of give an overview of AC and RL}
 
 This section
  describes the system model
- assumed through the paper (\Cref{s:background:ac}),
+ assumed through the paper (\Cref{acsos2022:s:background:ac}),
  the reference aggregate program examples
- (\Cref{s:background:ac-prog}),
+ (\Cref{acsos2022:s:background:ac-prog}),
  and the basics of \ac{RL}
- (\Cref{s:background:rl}).
+ (\Cref{acsos2022:s:background:rl}).
 
-\subsection{System Model (Aggregate Computing Model)}\label{s:background:ac}
+\subsection{System Model (Aggregate Computing Model)}\label{acsos2022:s:background:ac}
 
 \ac{AC}~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19}
  is an approach 
@@ -150,7 +142,7 @@ The neighbouring relationship is application-specific
 %        to create a new field denoting danger zones. 
         %Local operators like $>$ are naturally lifted to fields by making them work device-wise (i.e, considering as operands the values of the two fields at the same device, and doing the same for all the devices in the field domain).
 %        }
-%        \label{fig:aggregate-computing}
+%        \label{acsos2022:fig:aggregate-computing}
 %    \end{figure}
 
 
@@ -213,7 +205,7 @@ perform \emph{rounds of computation/communication} consisting of:
   \end{enumerate}
 %
 This system-wide asynchronous evaluation
- combined with the aggregate program specification (see \Cref{s:background:ac-prog})
+ combined with the aggregate program specification (see \Cref{acsos2022:s:background:ac-prog})
  can eventually lead to interesting collective behaviours~\cite{DBLP:journals/jlap/ViroliBDACP19}. 
  
 %
@@ -223,12 +215,12 @@ This system-wide asynchronous evaluation
 % for a comprehensive introduction. 
 
 \subsection{Reference Examples}
-\label{s:background:ac-prog}
+\label{acsos2022:s:background:ac-prog}
 
 In this section,
  we present the two aggregate computing algorithms (aggregate programs)
  that will be considered throughout the paper,
- especially in the experimental evaluation of \Cref{sec:evaluation}.
+ especially in the experimental evaluation of \Cref{acsos2022:sec:evaluation}.
 %
 We introduce them as black boxes, 
  focussing on their input/output interface and dynamics,
@@ -284,7 +276,7 @@ mapping a Boolean \lstinline|source| field
  to a field of \lstinline|Double|s 
  denoting the length of the shortest path from any device to its closest source.
 %
-Considering the execution model described in \Cref{s:background:ac},
+Considering the execution model described in \Cref{acsos2022:s:background:ac},
  the system dynamics corresponding to an application of function \lstinline|gradient|  would consist in having each device
  repeatedly evaluate such function application,
  round by round;
@@ -301,7 +293,7 @@ Indeed, a gradient induces a spanning tree on a network,
  where the \emph{parent} of a node 
  is the node's neighbour with the locally minimum value of the gradient.
 %
-The following two aggregate algorithms, graphically illustrated in \Cref{fig:c-and-g}, are intimately related to gradients.
+The following two aggregate algorithms, graphically illustrated in \Cref{acsos2022:fig:c-and-g}, are intimately related to gradients.
  
 \subsubsection{Gradient-cast (G block)}
 %
@@ -363,10 +355,10 @@ The G and C blocks, though relatively simple,
  and computational ecosystems.
 %
 
-In~\Cref{sec:contribution},
+In~\Cref{acsos2022:sec:contribution},
  we will consider
  what would be an efficient scheduling of rounds
- (cf. \Cref{s:background:ac})
+ (cf. \Cref{acsos2022:s:background:ac})
  for executing G and C computations,
  and how \ac{RL} could 
  be leveraged to automatically devise good strategies.
@@ -401,7 +393,7 @@ In~\Cref{sec:contribution},
 
 
 %\subsection{Aggregate Programming Model}
-%\label{s:background:ac-prog}
+%\label{acsos2022:s:background:ac-prog}
 %
 %\acf{AC}~\cite{DBLP:journals/computer/BealPV15}
 % is a macro-programming approach~\cite{DBLP:journals/corr/abs-2201-03473}
@@ -435,7 +427,7 @@ In~\Cref{sec:contribution},
 % in terms of output fields.
 %%
 %So for instance, 
-% a field of temperatures could be mapped in a field of Boolean values that reveals zones in danger (\Cref{fig:aggregate-computing});
+% a field of temperatures could be mapped in a field of Boolean values that reveals zones in danger (\Cref{acsos2022:fig:aggregate-computing});
 % the application may then use the danger field
 % to run actuations (e.g., cooling fans) or call other services (e.g., emergency operators).
 % 
@@ -472,7 +464,7 @@ In~\Cref{sec:contribution},
 %\end{lstlisting}
 %
 %\caption{A subset of the Scala API used to express Field Calculus}
-%\label{code:dsl}
+%\label{acsos2022:code:dsl}
 %\end{figure}
 %
 %Aggregate computing roots its semantics in field calculus~\cite{DBLP:journals/jlap/ViroliBDACP19}, 
@@ -482,7 +474,7 @@ In~\Cref{sec:contribution},
 %In the following, we leverage the ScaFi aggregate programming language~\cite{DBLP:conf/isola/CasadeiVAD20}
 %to showcase field calculus operators.
 % ScaFi is a scala-based toolkit that implements 
-% the field calculus semantic and exposes the main operators through an \ac{api} (\Cref{code:dsl}). 
+% the field calculus semantic and exposes the main operators through an \ac{api} (\Cref{acsos2022:code:dsl}). 
 %
 %To express a collective computation through computational field manipulation, 
 % a program needs constructs to express \emph{field evolution in time}, 
@@ -561,7 +553,7 @@ In~\Cref{sec:contribution},
 %%
 %Two of the most important building blocks are 
 % \emph{gradient-cast} (\scafiinline{G}) 
-% and \emph{converge-cast} (\scafiinline{C})~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/cee/AudritoCDPV21} (\Cref{fig:c-and-g}). 
+% and \emph{converge-cast} (\scafiinline{C})~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/cee/AudritoCDPV21} (\Cref{acsos2022:fig:c-and-g}). 
 %%
 %The first one spreads information from source devices 
 % (identified through a Boolean field) 
@@ -631,11 +623,11 @@ In~\Cref{sec:contribution},
          and the information is accumulated 
          (i.e, shown as a sum of local value) in the source, 
          that works as a sink node.
-    }\label{fig:c-and-g}
+    }\label{acsos2022:fig:c-and-g}
 \end{figure*}
 
 \subsection{\acl{RL}}
-\label{s:background:rl}
+\label{acsos2022:s:background:rl}
 
 %\begin{comment}
 %\meta{
@@ -738,7 +730,7 @@ Using $Q^*$ we could extract the \emph{target} policy,
 %
 %However, the solutions are application-specific and hardly scale in different scenarios.
 \revision{
-\subsection{Related Work and Motivation}\label{s:related-and-motivation:rl}
+\subsection{Related Work and Motivation}\label{acsos2022:s:related-and-motivation:rl}
 The problem we deal with in this work may fall under the topic of 
  Multi-Objective Sequential Decision-Making~\cite{DBLP:journals/jair/RoijersVWD13}. 
  In fact, our goal is to optimize a functional goal 
@@ -768,7 +760,7 @@ One way to improve efficiency would be to act at the level of scheduling
 However, our work is quite different from the previous. 
  We aim to leverage learning to improve a \emph{general} collective computation 
  expressed in \ac{AC}-like execution model 
- (i.e, asynchronous and iterative evaluation of \revision{rounds} eventually lead to collective behaviours--see \Cref{s:background:ac})
+ (i.e, asynchronous and iterative evaluation of \revision{rounds} eventually lead to collective behaviours--see \Cref{acsos2022:s:background:ac})
  and not a specific application as is often the case (e.g. distributed sensing in WSN).
 For example, consider a typical AC application, 
  namely the management of crowds of people equipped with smart devices~\cite{DBLP:journals/computer/BealPV15}. 
@@ -797,11 +789,11 @@ If a node wants to propagate an alarm to the whole system,
  the neighbourhood model, reducing the messages sent 
  while maintaining the same application goal.
 }
-\section{Aggregate Platform Improvement Through \acl{RL}}\label{sec:contribution}
+\section{Aggregate Platform Improvement Through \acl{RL}}\label{acsos2022:sec:contribution}
 
 
 %As above mentioned, \ac{AC} is a general approach by which it is possible to devise self-organising reusable collective behaviours, that do not depend on any particular IT architecture. 
-As discussed in \Cref{s:background:ac},
+As discussed in \Cref{acsos2022:s:background:ac},
  in \ac{AC}, collective behaviour 
  is the result of both
  an aggregate program
@@ -876,7 +868,7 @@ Also, in the case of \emph{online} and \emph{continuous} learning,
 %
 %This situation is difficult to handle with handcraft algorithms, that require a deep domain knowledge.
 
-\subsection{Learning Setting}\label{sec:learning-setting}
+\subsection{Learning Setting}\label{acsos2022:sec:learning-setting}
 
 \begin{figure}[b]
 	\centering
@@ -884,7 +876,7 @@ Also, in the case of \emph{online} and \emph{continuous} learning,
     \caption[Description of the general scheme of \ac{RL} applied to the execution platform.]{Description of the general scheme of \ac{RL} applied to the execution platform. 
     %
     The agent receives the state and reward from the platform and produces an action that can affect one of the platform aspects (blue circles).}
-    \label{fig:rl-and-ac}
+    \label{acsos2022:fig:rl-and-ac}
 \end{figure}
 \revision{
 In the \ac{AC} framework, 
@@ -910,7 +902,7 @@ In doing so, the policy works for small networks as well as large networks. % (i
  to yield behavioural variations~\cite{DBLP:conf/acsos/Aguzzi21}, namely different aggregate programs.
 %
 However, in this work, \ac{RL} does not change the aggregate program; 
- rather, it changes the orchestration logic of the \ac{AC} execution platform (\Cref{fig:rl-and-ac}). 
+ rather, it changes the orchestration logic of the \ac{AC} execution platform (\Cref{acsos2022:fig:rl-and-ac}). 
 %
 The agent, however, could \emph{inspect} the learning and evaluation process. 
  Therefore, the agent state should depend on locally produced export and output, 
@@ -933,13 +925,13 @@ such as global functions (i.e., the reward signal is received after collective a
  since it does not depend on the application logic.
 }
 
-\subsection{\acl{RL} to Reduce Energy Consumption}\label{acrl-energy-goal}
+\subsection{\acl{RL} to Reduce Energy Consumption}\label{acsos2022:acrl-energy-goal}
 
 
 Among the non-functional goals that \ac{RL} could face, 
  this study %analyses the application of Distributed Q-Learning 
  focusses on reducing the \emph{energy consumption} of aggregate computations,
- by altering the local agent \emph{scheduling policy} (As pointed out in \Cref{s:discussion:ac}).
+ by altering the local agent \emph{scheduling policy} (As pointed out in \Cref{acsos2022:s:discussion:ac}).
 %
 \revision{Our goal is to reduce the number of computation rounds and hence the energy needed to achieve certain results in a certain time amount or, dually, 
  to reduce the amount of time to achieve certain results
@@ -961,7 +953,7 @@ In particular, the algorithm should learn how to reduce the round frequency in s
  the message exchange between neighbours 
  (which typically involves non-negligible power consumption).}
 
-\revision{Even if we consider the whole aggregate computing context as a state (cf. \Cref{s:background:ac}), 
+\revision{Even if we consider the whole aggregate computing context as a state (cf. \Cref{acsos2022:s:background:ac}), 
  in this work the agent observation space is based on the local output 
  produced by an aggregate program evaluation.} 
  Following the self-stabilisation assumptions, an agent state encodes the variation of the output history, \revision{thus we constrain the output to be a numeric value}.
@@ -1007,7 +999,7 @@ Besides, thanks to the local reward function, this learning setting could be als
 \newcommand{\adhocsol}{{\sc{}Ad-hoc}}
 \newcommand{\swapscen}{{\sc{}Swap}}
 \newcommand{\multiswap}{{\sc{}MultiSwap}}
-\section{Evaluation}\label{sec:evaluation}
+\section{Evaluation}\label{acsos2022:sec:evaluation}
 
 
 Our \ac{RL} approach combined with \ac{AC} is evaluated through a set of simulated experiments, 
@@ -1030,9 +1022,9 @@ For the sake of reproducibility, the code and the instructions to run simulation
     $\theta$ & Balance of reactivity vs. consumption & {[}0.975, 0.9, 0.99{]} \\ \hline
     \end{tabular}
     \caption{The parameters used in simulations. A simulation consist in a tuple of ($\epsilon_0$, $\gamma$, $\alpha$, $w$, $\theta$).}
-    \label{tab:parameters}
+    \label{acsos2022:tab:parameters}
 \end{table}
-\subsection{Simulation Setup}\label{s:simulation-setup}
+\subsection{Simulation Setup}\label{acsos2022:s:simulation-setup}
 In these experiments, the nodes are arranged in a grid large 100x100 meters containing $N=100$ nodes. 
  An entire simulation episode lasts 80 seconds of simulated time.
  The training phase is performed for $L=1000$ episodes using the $\epsilon$-greedy policy.
@@ -1047,7 +1039,7 @@ Then, the performance is evaluated in the last $T=50$ episodes, by deploying the
 In that case, each agent owns a copy of the local Q-table as resulting after the training phases.
  %Each node has four neighbours at most. 
  The actions available to each node are four, respectively with next-wake uptimes equal to 100ms, 200ms, 500ms and 1s.
- The programs that will be tuned with our scheduling policy are the ones described in \Cref{sec:background},
+ The programs that will be tuned with our scheduling policy are the ones described in \Cref{acsos2022:sec:background},
   namely the gradient-cast (G) and the converge-cast (C) building blocks.
 
 To introduce variability in the dynamics, we consider a variation in the source set. 
@@ -1082,7 +1074,7 @@ The other scenario involves five sources (\multiswap{}):
 
 Several parameters should be considered to evaluate the performance of the \ac{RL}-based solution (\rlsol{}). 
 %
-We launch a simulation batch for each tuple shown in \Cref{tab:parameters}.
+We launch a simulation batch for each tuple shown in \Cref{acsos2022:tab:parameters}.
 %
 To decide what configuration is the best, 
  the \rlsol{} solution was compared with fixed-rate scheduling (\periodicsol{}) 
@@ -1127,18 +1119,18 @@ The error percentage tells to what extent the computational field differs from t
 %
 This value should be maximized, since the greater it is, the greater the power saving.
 
-\subsection{Discussion and Results}\label{s:discussion:ac}
+\subsection{Discussion and Results}\label{acsos2022:s:discussion:ac}
 \begin{figure}
     \centering
     \includegraphics[width=0.85\linewidth]{papers/acsos2022/img//solution-g.pdf}
     \caption[Pareto front varying the $w$ parameter in the scheduling scenario]{The distribution of the solutions after the training phases in \swapscen{} scenario. 
-        Each point consists of one of the configurations expressed in \Cref{tab:parameters}.
+        Each point consists of one of the configurations expressed in \Cref{acsos2022:tab:parameters}.
         The colour of nodes shows the $\theta$ parameter. 
         The size of nodes represents the $w$ value (the smaller the node the smaller the $w$). 
         The solutions of interest are located in the blue ellipse.
         Similar results are achieved with C and in the \multiswap{} scenario. 
     }
-    \label{fig:solutions}
+    \label{acsos2022:fig:solutions}
 \end{figure}
 \begin{figure}[b]
     \centering
@@ -1159,7 +1151,7 @@ This value should be maximized, since the greater it is, the greater the power s
     In the leftmost figure, a new source appears in the bottom right corner. 
     The signal propagation produces a frequency drop on the node that evaluates the new value 
     (the black node grows toward the gradient direction).
-    }\label{fig:simulation-evolution}
+    }\label{acsos2022:fig:simulation-evolution}
 \end{figure}
 
 \begin{figure*}
@@ -1179,25 +1171,25 @@ This value should be maximized, since the greater it is, the greater the power s
     %
     Finally, the last two lines show how RL manages the C block, with different $\theta$ values. 
     The overall power-saving using our approach is between 60$\%$ to 40$\%$ with respect to the \periodicsol{} program evaluation.}
-    \label{fig:simulation-results}
+    \label{acsos2022:fig:simulation-results}
 \end{figure*}
 
 \begin{figure*}
     \centering
     \includegraphics[width=0.8\textwidth]{papers/acsos2022/img//error-and-ticks.pdf}
     \caption{Shows the average error and the average ticks during the learning episodes of \swapscen{} scenario. }
-    \label{fig:training-performance}
+    \label{acsos2022:fig:training-performance}
  \end{figure*}
  \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{papers/acsos2022/img//plain-gradient.pdf}
-    \caption[Error and energy saving percentage (see \Cref{s:simulation-setup}) as nodes vary.]{\revision{Error and energy saving percentage (see \Cref{s:simulation-setup}) as nodes vary. 
+    \caption[Error and energy saving percentage (see \Cref{acsos2022:s:simulation-setup}) as nodes vary.]{\revision{Error and energy saving percentage (see \Cref{acsos2022:s:simulation-setup}) as nodes vary. 
     We use the best policy found in the \swapscen{} scenario as a reference, checking how the error and energy saving change. }}
-    \label{fig:check-scale}
+    \label{acsos2022:fig:check-scale}
  \end{figure}
 The simulations demonstrate 
  that the learning algorithm produces different policies. 
- Particularly, observing the \Cref{fig:solutions} we could recognize three macro-behaviours:
+ Particularly, observing the \Cref{acsos2022:fig:solutions} we could recognize three macro-behaviours:
 \begin{itemize}
     \item the system tends to reduce the power consumption as much as possible, 
      leading to high error and non-reactive policy. 
@@ -1218,7 +1210,7 @@ This section discusses the results of
  and a low error in each scenario/program
  since the others do not have any particular point of interest. 
 %
-\Cref{fig:simulation-results} shows the charts of the simulation results.
+\Cref{acsos2022:fig:simulation-results} shows the charts of the simulation results.
 %
 In each scenario, the algorithm successfully 
  reduces the power consumption percentage of the system, 
@@ -1236,7 +1228,7 @@ Finally, with a great value of $w$,
  agents tend to better understand the output progression and then they better react to local changes. 
  %$\epsilon$ does not seem that alter so much the results in that cases. 
 
-The best results are achieved in the \swapscen{} (\Cref{fig:training-performance})
+The best results are achieved in the \swapscen{} (\Cref{acsos2022:fig:training-performance})
  scenario and with the gradient program. 
  Here, introducing at most a \revision{10$\%$} of error in the swap moments 
  (i.e., when the new source appears), 
@@ -1245,7 +1237,7 @@ The best results are achieved in the \swapscen{} (\Cref{fig:training-performance
 Particularly, the consumption is near to our \adhocsol{} solution, 
  but with a remarkably reduced error. 
 %
-Interestingly, at the swap time, the round frequency drops until a peak and then soars (\Cref{fig:simulation-evolution}).
+Interestingly, at the swap time, the round frequency drops until a peak and then soars (\Cref{acsos2022:fig:simulation-evolution}).
 This behaviour may appear counter-intuitive.
  At a first glance, indeed, we expect that the nodes tend to maintain a low-cost power consumption, 
  and then when changes in the environment happen, 
@@ -1273,7 +1265,7 @@ Indeed, the system learns how to reduce consumption also when it is used with bl
 % 
 Interestingly, $\theta$ could be used to decide the trade-off 
  between power consumption and reactivity: 
- the program with $\theta=0.9$ (fourth line \Cref{fig:simulation-results}) 
+ the program with $\theta=0.9$ (fourth line \Cref{acsos2022:fig:simulation-results}) 
  has a low error but a limited reduction in the power consumption ($\sim$ 40 $\%$); 
  instead, the program with $\theta=0.975$ has an increased convergence 
  time in the swap moments but the overall consumption is reduced by a factor of 70.
@@ -1287,14 +1279,14 @@ Lastly, we want to recall that \ac{AC} programs are scale-free regarding the num
 Therefore, even the learnt policy should not depend on the agents in the system. 
 To verify this consideration, we use the same policy found with 
  100 nodes in several other deployments (from 100 nodes to 900). 
- Particularly, in \Cref{fig:check-scale}, the power consumption reduction 
+ Particularly, in \Cref{acsos2022:fig:check-scale}, the power consumption reduction 
   remains stable as the nodes vary. 
   Moreover, the error is constant too. 
 There were some oscillations but the error remains negligible even 
   if the size has 10 times the nodes of the training configuration. 
 Differently, the heuristic worsens by a factor of three.}
  \revision{
-\subsection{On practical applicability}\label{s:reality-check}
+\subsection{On practical applicability}\label{acsos2022:s:reality-check}
 We test our algorithm in simulated scenarios, 
  but it can simply be adapted in a real system, which mainly means:
 \begin{enumerate}
@@ -1332,7 +1324,7 @@ Regarding communication instead,
 %Finally, this study needs to do a precise reality check against different types of 
 % deployment, to understand how this is effective in different types of systems.
  }
-\section{Conclusion}\label{sec:conclusion}
+\section{Conclusion}\label{acsos2022:sec:conclusion}
 
 
 This paper puts a stepping stone in combining \ac{RL} with \ac{AC} 
