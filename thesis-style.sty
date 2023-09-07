@@ -1,5 +1,6 @@
 % !TeX root = thesis-main.tex
 \usepackage[\thesislang]{babel}
+\usepackage{titlesec}
 
 % common utilities
 \usepackage{comment}
@@ -12,6 +13,7 @@
 \usepackage{latexsym}
 \usepackage{amsthm}
 \usepackage[\thesislang]{cleveref}
+\usepackage{lineno}
 \usepackage{geometry}
 \usepackage{listings}
 \usepackage{ifthen}
@@ -37,6 +39,9 @@
 \makeatother
 
 \newcommand{\scafi}{{ScaFi}}
+\newcommand{\scafiweb}[0]{{ScaFi-Web}}
+
+\newcommand{\meta}[1]{{\color{blue}#1}}
 % \usepackage[disable]{todonotes} % decommentare prima della versione finale
 \newcommand{\gcsidenote}[1]{\todo[size=\tiny,color=green]{\textbf{GC:} #1}}
 \newcommand{\gcnote}[1]{\todo[size=\scriptsize,color=green,inline]{\textbf{Giovanni Ciatto:} #1}}
@@ -44,7 +49,9 @@
 \newcommand{\dpnote}[1]{\todo[size=\scriptsize,color=red,inline]{\textbf{Danilo Pianini:} #1}}
 \newcommand{\rcsidenote}[1]{\todo[size=\tiny,color=cyan]{\textbf{RC:} #1}}
 \newcommand{\rcnote}[1]{\todo[size=\scriptsize,color=cyan,inline]{\textbf{Roberta Calegari:} #1}}
+\newcommand{\scarlib}{ScaRLib}
 
+\setcounter{secnumdepth}{4}
 % \usemintedstyle{pastie}
 \usemintedstyle{friendly}
 % \usemintedstyle{murphy}
@@ -122,3 +129,7 @@
 	ndkeywords={@Deprecated, @JvmField, @JvmName, @JvmOverloads, @JvmStatic, @JvmSynthetic, Array, Byte, Double, Float, Int, Integer, Iterable, Long, Runnable, Short, String, Unit, it},
 	sensitive=true
 }
+
+\input{yaml-def}
+
+\input{scala-def}

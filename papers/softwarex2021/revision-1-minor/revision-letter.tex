@@ -1,0 +1,361 @@
+\documentclass{article} 
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{hyperref}
+\usepackage{pdfpages}
+\usepackage[usenames]{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{nameref}
+\usepackage{acronym}
+\acrodef{AC}[AC]{aggregate computing}
+\acrodef{api}[API]{application program interface}
+\acrodef{CAS}[CAS]{collective adaptive system}
+\acrodef{cps}[CPS]{cyber-physical system}
+\acrodef{ci}[CI]{collective intelligence}
+\acrodef{cct}[CCT]{concurrent collective task}
+\acrodef{dd}[DD]{decentralization domain}
+\acrodef{dbms}[DBMS]{database management system}
+\acrodef{dcp}[DCP]{distributed computational process}
+\acrodefplural{dcp}[DCPes]{distributed computational processes}
+\acrodef{dsl}[DSL]{domain-specific language}
+\acrodef{RL}[RL]{reinforcement learning}
+\acrodef{ict}[ICT]{information and communication technology}
+\acrodef{iot}[IoT]{Internet of Things}
+%\acrodef{it}[IT]{information technology}
+%\acrodef{oca}[OCA]{overlapping collective activity}
+\acrodef{mape}[MAPE]{monitor--analyse--plan--execute}
+\acrodef{scr}[SCR]{self-organizing coordination regions}
+\acrodef{wsn}[WSN]{wireless sensor network}
+
+
+\newcommand{\revise}[1]{{#1}}
+
+
+\RequirePackage[sort&compress,sectionbib,numbers]{natbib}
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\usepackage{xr}
+\externaldocument[main:]{../paper21-softwarex-scafi}
+\usepackage{xr-hyper}
+
+
+\newcounter{reviewer}
+\newcounter{comment}[reviewer]
+
+\setcounter{reviewer}{0} % start with zero
+\newcommand{\reviewer}{
+\subsection*{\refstepcounter{reviewer}Reviewer \arabic{reviewer}}
+}
+\newcommand{\reviewerl}[1]{
+\subsection*{\refstepcounter{reviewer}\label{#1}Reviewer \arabic{reviewer}}
+}
+\newcommand{\reviewerlt}[2]{
+\subsection*{\refstepcounter{reviewer}\label{#1}#2}
+}
+\newcommand{\comment}[1]{
+	\subsubsection*{\refstepcounter{comment}Reviewer Comment \arabic{reviewer}.\arabic{comment}} %\arabic{reviewer}.
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{\setlength{\parskip}{0.5\baselineskip}%
+ #1 }}
+}
+\newcommand{\rcref}[2]{\ref{#1}.\ref{#2}}
+\newcommand{\commref}[1]{\ref{#1}}
+\newcommand{\commentl}[2]{
+	\subsubsection*{\refstepcounter{comment}\label{#1}Reviewer Comment \arabic{reviewer}.\arabic{comment}} %\arabic{reviewer}.
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{ #2 }}
+}
+\newcommand{\edcommentl}[2]{
+	\subsubsection*{\refstepcounter{comment}\label{#1}Editor Comment \arabic{comment}}\label{name:#1}
+	\colorbox{gray!10}{\parbox[t]{\linewidth}{ #2 }}
+}
+\newcommand{\reply}[1]{	\\[2pt]
+	\textbf{Author response:} 	
+	#1
+}
+\newcommand{\related}[1]{	\\[2pt]
+	\textbf{Related comments:} 	
+	#1
+}
+\newcommand{\commentAu}[2]{	\\[2pt]
+	\meta{\textbf{#1 comment:} 	
+	#2}
+}
+\newcommand{\action}[1]{	\\[2pt]
+	\textbf{Action to address the comment:} 
+	#1
+}
+\newcommand{\corrstart}{\color{red}}
+\newcommand{\corrend}{\color{black}}
+\newcommand{\correction}[1]{\corrstart #1\corrend{}}
+\newcommand{\checkstart}{\color{violet}}
+\newcommand{\tocheck}[1]{\checkstart{}#1\corrend{}}
+
+\makeatletter
+\renewcommand\p@comment{\thereviewer.}
+\makeatother
+
+\newcommand{\meta}[1]{{\color{blue}#1}}
+\newcommand{\assigned}[1]{{\color{purple}ASSIGNED TO: \textbf{#1}}}
+
+\newcommand{\revq}[1]{{\emph{\textbf{#1}}}}
+
+
+\newcommand{\say}[3]{
+\noindent\fcolorbox{black}{cyan!20!white}{
+\begin{minipage}{\textwidth}
+\textbf{{#1}} \textbf{({@}#2)}: #3
+\end{minipage}
+}
+}
+
+
+\usepackage{cleveref}
+
+
+\begin{document}
+
+\acused{}
+
+\newcommand{\scafi}[0]{{\sc{}ScaFi}}
+\newcommand{\scafiweb}[0]{{\sc{}ScaFi-Web}}
+
+\title{{\Large Revision Letter for} ``\scafi{}: a Scala DSL and Toolkit for\\Aggregate Programming''}
+\author{
+Roberto Casadei
+\and
+Mirko Viroli
+\and 
+Gianluca Aguzzi
+\and 
+Danilo Pianini
+}
+
+\maketitle
+
+Dear Editors, \newline
+
+Thank you very much for giving us the chance to revise our article.
+%
+We have taken into account all the suggestions from the reviewers and implemented corresponding revisions to our manuscript.
+%
+Our replies and corrective actions are detailed below.
+%
+Based on your comments, we have implemented the following main revisions:
+%
+\begin{itemize}
+\item we have clarified the relationship of aggregate computing and ScaFi w.r.t. other approaches (cf. Comment~\ref{r1c1b}, \ref{r1c3});
+\item we have improved the introductory explanation of various mentioned concepts (cf. Comment~\ref{r1c1a});
+\item we have removed less necessary self-citations (cf. Comment~\ref{r1c1a}, \ref{r1c2}, \ref{r1c2b});
+\item we have improved formatting of code (cf. Comment~\ref{r2c0}) and provided some details about the implementation of ScaFi (cf. Comment~\ref{r2c2}).
+\end{itemize}
+%
+To simplify the review, we attach below this response letter the revised manuscript with corrections/additions highlighted in {\color{purple}PURPLE}.
+%
+We are convinced that you will be satisfied with the revised version of our paper and consider this improved version suitable for publication.
+\\ ~ \\
+
+\noindent Sincerely yours,
+
+Gianluca Aguzzi, Roberto Casadei, Danilo Pianini, Mirko Viroli
+
+
+\raggedbottom
+
+%\section*{Comment and replies}
+
+\pagebreak
+
+
+\reviewerl{r1}
+
+\commentl{r1c1a}{
+In this work, the authors describe ScaFi, a Scala-based toolkit for designing, simulating, and orchestrating (through an Akka-based implementation) aggregate programming applications.
+
+In its current form, this work seems more like a catalogue of the authors' previous works than a research paper. The discussion refers to many concepts without introducing them or a generic description, but it is always accompanied by a citation to the authors' previous works. Among others: incarnation (row 90), BlockG, BlockC, BlockS (row 103), the spawn function for concurrent aggregate processes (row 104), the exchange primitive (row 206), and the situated tuples coordination model (row 219). This kind of presentation makes some sentences relatively obscure for the reader.
+}
+\reply{ 
+The paper presents ScaFi software as a language and toolkit for aggregate programming, which is relatively rich paradigm for collective adaptive systems programming. 
+The referred concepts were meant as a presentative set of examples of features supported by the language, some of which are peculiar to aggregate computing (e.g., \texttt{spawn}, \texttt{exchange}---mentioned as not necessarily supported by other aggregate programming languages like Protelis and FCPP), while others recur, maybe in other terms, in self-organization approaches (e.g., BlockG, BlockC, BlockS). Though a full introduction of them goes beyond the scope of the paper, we have improved the introductory explanation of the mentioned concepts:
+\begin{itemize}
+\item \emph{incarnation}: an object (as in the Cake pattern~\cite{DBLP:conf/oopsla/OderskyZ05,Hunt2013cakepattern}) providing access to a coherent family of types;
+\item \emph{BlockG}, \emph{BlockC}, \emph{BlockS}: these denote, respectively, algorithms for information propagation, information collection, and sparse choice (leader election);
+\item \emph{spawn} supports the definition of independent and overlapping aggregate computations;
+\item \emph{exchange}: a generalisation of communication primitives like \texttt{nbr}~\cite{DBLP:journals/tocl/AudritoVDPB19};
+\item \emph{situated tuples}: it is a Linda-like model~\cite{DBLP:journals/toplas/Gelernter85} for coordinating processes where tuples and tuple operations are situated in space
+\end{itemize}
+%
+so that at least a reader familiar with collective adaptive systems can grasp the idea, and other readers can check out the reference for a comprehensive introduction and more details.
+%
+Finally, to address the self-referentiality issue and provide other perspectives on those concepts, we have also 
+\begin{itemize}
+\item added references to works from other researchers, such as~\cite{DBLP:conf/saso/WolfH07,DBLP:conf/sac/BealBVT08,testa2022processes} (numbered \cite{main:DBLP:conf/saso/WolfH07,DBLP:conf/sac/BealBVT08,testa2022processes} in the manuscript); and 
+\item removed the following five self-references~\cite{DBLP:conf/saso/AudritoCDV17,DBLP:journals/fgcs/CasadeiFPRSV19,DBLP:journals/jfp/SaitoIV08,DBLP:journals/tasm/BucchiaroneDPCS20,DBLP:conf/huc/ViroliCP16} (possibly substituting them with references to works from other researchers). 
+\end{itemize}
+%
+%\meta{TODO: properly introduce the referred concepts}
+%
+%\meta{GA: For the incarnation concept, we probably could use an image to a graphical overview of the concept (like the one that you use in our master thesis robi :)). 
+%Perhaps, if we don't have enough space, we may drop the discussion on "situated tuples".}
+%
+%\meta{Danilo: due to the space constraints and the fact that we do have too many self-citations, I would consider *removing* some of the concepts (situated tuples, for instance)}
+%
+%\meta{TODO: remove this nocite, it is there just for letting the document compile \nocite{*}}
+}
+
+\commentl{r1c1b}{
+Even the concept of aggregate programming is roughly defined in Sec. 1. It is introduced as a way to program the self-organising behaviour of a group of devices or agents. However, the authors do not explain the advantages of using aggregate programming instead of other distributed programming paradigms.
+}
+\reply{ 
+Though a detailed introduction to aggregate programming does not fit the length limitations for this article, we now clarify the benefits of aggregate programming w.r.t. other approaches in \Cref{main:sec:intro} which, in a nutshell, derive from the combination of four main elements: (i) macro-stance, (ii) compositionality, (iii) formality, (iv) practicality.
+%
+%\meta{TODO: address by referring to  macro-stance, compositionality, formality, practicality, and citing ECOOP paper, and citing other approaches to CASs}
+}
+
+\commentl{r1c2}{
+Besides, the references section seems unbalanced, with more than 65\% of references containing at least one of the authors of this work. This concentration of related works on a few people does not denote a broad research community's interest in the field. This feeling is exacerbated in the "Impact" section, where all but two cited works that used ScaFi have been written by the authors themselves.
+}
+\reply{
+We acknowledge that the impact of the approach/toolchain 
+ (which is generally a complex social matter) 
+ is not as extensive as we believe it deserves. 
+%
+However, on one hand, the paper has exactly the goal of
+ presenting ScaFi to the community of researchers and practitioners,
+ showing that the software is available and usable,
+ and to hopefully promote its usage and contamination across research silos.
+%
+On the other hand,
+ we point out that  several research groups and researchers have contributed to and/or adopted (possibly with the help of some of the authors of this paper) ScaFi at least once, for instance:
+%
+\begin{itemize}
+\item Prof. Ferruccio Damiani and Dr. Giorgio Audrito (University of Turin, IT)~\cite{audrito2022ecoop-xc};
+\item Prof. Danny Weyns (KU Leuven, BE)~\cite{casadei2022applsci};
+\item Prof. Franco Zambonelli and Dr. Stefano Mariani (University of Modena and Reggio Emilia)~\cite{DBLP:journals/lmcs/PianiniCVMZ21};
+\item Prof. Guido Salvaneschi (University of St. Gallen, CH)~\cite{audrito2022ecoop-xc};
+\item Prof. Schahram Dustdar and Dr. Christos Tsigkanos (TU Wien, AT)~\cite{DBLP:conf/IEEEscc/CasadeiTVD19}.
+%\item Prof. Giancarlo Fortino and Claudio Savaglio (University of Calabria, IT)~\cite{};
+\end{itemize}
+%
+Much more researchers could be cited if we consider past adoption of ``aggregate computing'' in general beyond ScaFi.
+%
+We hope that ScaFi, thanks to its improved accessibility (using it is as easy as importing a JVM dependency) and support (cf. the ScaFi-Web playground),
+ could improve the impact of the paradigm.
+
+%\meta{TODO: acknowledge this but also point out that (1) these works involve different institutions and research groups, as well as that (2) this software publication is aimed at making this software more accessible to the research community.
+%}
+%\meta{GA: Yeah it makes sense for me -- I would not modify the paper to manage this comment.}
+}
+
+\commentl{r1c2b}{
+Plus, even the (rough) comparison with other frameworks for aggregate programming lists 2/3 software developed by one of the authors. 
+}
+\reply{
+The reference for Proto referred to a first formalisation that resulted out of a collaboration. To accomodate the Reviewer's observation,  it has now been updated to~\cite{DBLP:journals/expert/BealB06} (numbered~\cite{main:DBLP:journals/expert/BealB06} in the manuscript) that more pertinently refers only to the original authors (Beal and Bachrach).
+}
+
+\commentl{r1c3}{
+Finally, the "Impact" section lacks a proper evaluation of the ScaFi framework. The authors say that ScaFi implementation was an inspiration for advancing theoretical research in aggregate programming, that it is more developer-friendly than its alternatives, and that it has been used to implement three use-cases, which are briefly and roughly described. However, nothing is said about novel applications enabled by ScaFi or to which extent it provides better performance (in terms of runtime processing or developing time) than other approaches. In particular, no empirical evaluation or quantitative analysis of at least one of the use-cases are provided to demonstrate the actual value of ScaFi, motivating why a researcher should consider ScaFi to implement its workload.
+}
+\reply{
+We believe that a quantitative evaluation and comparison are beyond the scope of this article.
+
+A preliminary comparison between aggregate programming and other traditional approaches has been performed in~\cite{audrito2022ecoop-xc}. This provides motivation for aggregate programming languages in general. A brief account on this has also been added as a response to Comment~\ref{r1c1b}.
+
+Regarding the relationship between aggregate programming languages, namely between ScaFi, Protelis, Proto, FCPP,
+ much of the discussion revolves around
+ the distinction between internal (ScaFi, FCPP, Proto) and external DSLs (Protelis),
+ and, for internal DSLs, around the capabilities provided by the host language and the corresponding community (Scala for ScaFi, C++ for FCPP, and Scheme for Proto).
+%
+A discussion about these aspects can be found in~\cite{arxiv2020scafi-nc}; a brief excerpt was included in \Cref{main:s:impact} to extend the motivation for ScaFi.
+%
+%%A brief account of such a discussion was included in \Cref{main:s:impact} to extend the motivation for ScaFi: we have added another sentence in \Cref{main:sec:intro} anticipating such a discussion, hence providing a complement to the action addressing Comment~\ref{r1c1b}.
+
+%\meta{
+%TODO: let's focus on (1) novel applications, and (2) better performance in terms of development time wrt other approaches.
+%We cannot perform empircal evaluation/quantitative analysis in this paper:
+% we may say this goes beyond the scope of this work
+% and could cite the ECOOP paper instead, where a sort of ``expressiveness'' study has been performed.
+%}
+%
+%\meta{
+%	G.A. Yes I agree that we cannot do an empirical analysis here.
+%	Perhaps we could show just a little example of scafi application w.r.t. standard application? Even if it is quite hard to built up :) 
+%}
+%
+%\meta{
+%	Danilo: io forse punterei più sull'accesso all'ecosistema scala.
+%	Di fatto per le applicazioni è questione di cosa si fa con aggregate, più che con Scafi.
+%	Si può dire invece che Scala può fare targeting di js e di native, e le alternative no (solo JVM protelis e solo native FCPP).
+%	Ho guardato un po' la questione di development time,
+%	secondo me non è proprio corretta.
+%	Anzi.
+%	Si può fare un cherry-pick di paper che sostengono che avere linguaggi tipati sia meglio,
+%	ma se si guardano le review la cosa è come minimo dibattuta.
+%	Potremmo aggiungere una figura che mostra errori in Pt/FCPP che in Scala vengono intercettati, forse?
+%}
+}
+
+\pagebreak
+
+\reviewerl{r2}
+
+\commentl{r2c0}{
+The paper describes a Scala toolkit providing for aggregate primitives and systems. The main contribution is fill the gap between research and industry, whose code contains enough components and facilitate developers to customize their own aggregate programs.
+
+Here are some suggestions:
+
+1) It is better to rearrage the code and assign more color to distinguish different types in Figure 2. Current codes in Figure 2 seem somehow confused.
+}
+\reply{
+The code in \Cref{main:fig:example-full} has been improved by:
+\begin{itemize}
+\item improving colouring (e.g., strings in orange);
+\item rearranging code (so that, e.g., type declarations come at the beginning, then follow all value declarations come at the beginning of their scope, and blank spaces separate logical sections);
+\item implementing minor simplifications.
+\end{itemize}
+%
+%\meta{TODO: simple but not easy .. let's rearrange and color it in some way. Suggestions?}
+%
+%\meta{Probabily the 2.b it to condensed -- we could move the 2.b. in another page and dilate just a little bit. For colouring: I dunno - probably could help in using standard colouring? e.g., through minted?
+%}
+%
+%\meta{
+%	SUGGERIMENTO: secondo me c'è **troppo** boilerplate.
+%	Io propongo un approccio più spinto:
+%	creiamo un default in Scafi che consenta a quel blocco di codice di stare in max 10 righe.
+%	Così com'è è del tutto incomprensibile.
+%	Insomma miglioriamo l'API, e poi il codice viene migliorato in automatico.
+%}
+%
+}
+
+
+\commentl{r2c2}{
+2) The author could provide more details about the aggregate computing and its internal related implementation rather than simply introduce how to use the library if possible.
+}
+\reply{
+We have provided more details on aggregate computing and its implementation as follows:
+\begin{itemize}
+\item we have clarified the benefits of aggregate computing w.r.t. other approaches in \Cref{main:sec:intro};
+\item we have clarified the design construct of an ``incarnation'' in \Cref{main:sec:scafi-arch-design};
+\item we have provided an UML diagram describing the core design of the \scafi{} DSL (new \Cref{main:fig:scafi-design}) and a corresponding description in \Cref{main:sec:scafi-arch-design}.
+\end{itemize}
+%\meta{TODO: these are rather simple additions (though we have a 3000-words limit that doesn't help). 
+%Regarding the internals of the implementation, we may add a figure with UML diagram (we currently have 3 out of 6 figures).}
+%
+%\meta{
+%	DANILO: Using an additional figure sounds very good.
+%}
+}
+
+\bibliographystyle{elsarticle-num}
+\bibliography{../biblio}
+
+
+\includepdf[pages=-,
+pagecommand={},width=\paperwidth,pagecommand={}\label{phdthesis-end}]{../paper21-softwarex-scafi-diff.pdf}
+
+\end{document}

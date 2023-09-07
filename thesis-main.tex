@@ -14,15 +14,25 @@
 \addbibresource[label=discoli]{papers/discoli/biblio.bib}
 \addbibresource[label=acsos2023]{papers/acsos2023/bibliography.bib}
 \addbibresource[label=acsos2022]{papers/acsos2022/biblio.bib}
-\addbibresource[label=coordination2023]{papers/coordination2023/biblio.bib}
 \addbibresource[label=coordination2022]{papers/coordination2022/biblio.bib}
+\addbibresource[label=coordination2023]{papers/coordination2023/biblio.bib}
 \addbibresource[label=mdpi2020]{papers/mdpi2020/bibliography.bib}
 \addbibresource[label=swarm-intellingence2021]{papers/swarm-intelligence2021/biblio.bib}
 \addbibresource[label=coordination2023-macro]{papers/coordination2023-macro/biblio.bib}
 \addbibresource[label=acsos2023-frp]{papers/acsos2023-frp/biblio.bib}
 \addbibresource[label=ieee2022]{papers/ieee2022/bibliography.bib}
 \addbibresource[label=ecas2021]{papers/ecas2021/biblio.bib}
-
+\addbibresource[label=softwarex]{papers/softwarex2021/biblio.bib}
+\addbibresource[label=mine]{my-publications.bib}
+\defbibheading{bib2023}[2023:]{
+  \section*{#1}
+}
+\defbibheading{bib2022}[2022:]{
+  \section*{#1}
+}
+\defbibheading{bib2021}[2021:]{
+  \section*{#1}
+}
 \begin{document}
 	
 \frontmatter
@@ -52,18 +62,29 @@ Curiositas mater scientiae.
 \mainmatter
 
 \begin{refsection}\input{chapters/introduction.tex}\end{refsection}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PART I %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \part{Background}
 \begin{refsection}\input{chapters/cyber-physical-swarms.tex}\end{refsection}
 \begin{refsection}\input{chapters/macro-programming.tex}\end{refsection}
 \begin{refsection}\input{chapters/many-agent-rl.tex}\end{refsection}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PART II %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \part{Learning in Cyber-Physical Swarms}
 \begin{refsection}\input{papers/discoli/main.tex}\end{refsection}
+\begin{refsection}\input{papers/coordination2023/main.tex}\end{refsection}
 \begin{refsection}\input{papers/acsos2022/main.tex}\end{refsection}
 \begin{refsection}\input{papers/coordination2022/main.tex}\end{refsection}
 \begin{refsection}\input{papers/acsos2023/main.tex}\end{refsection}
-\begin{refsection}\input{papers/coordination2023/main.tex}\end{refsection}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PART III %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{Engineering Cyber-Physical Swarms}
 \begin{refsection}\input{papers/mdpi2020/main.tex}\end{refsection}
 \begin{refsection}\input{papers/swarm-intelligence2021/main.tex}\end{refsection}

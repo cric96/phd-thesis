@@ -24,20 +24,10 @@
 
 \sloppypar
 
-\input{scala-def.tex}
 %\chapter{Towards Reinforcement Learning-based Aggregate Computing}
 \chapter{Program Sketching with Aggregate Computing}
 \minitoc% Creating an actual minitoc
-\section{Introduction}
-%\meta{
-%  \begin{itemize}
-%    \item discussion on CAS engineering
-%    \item discussion on top-down-global-to-local approaches
-%    \item discussion on learning applied to CAS
-%    \item few sentences that motivate RL + AC
-%  \end{itemize}
-%}
-
+\begin{comment}
 The pervasiveness of computing and networking
  fosters applications 
  backed by large-scale cyber-physical collectives---cf. edge-fog-cloud infrastructures, robot swarms, %power grids, 
@@ -81,7 +71,8 @@ A computational field is a macro-abstraction
 \ac{ac} is based on the \emph{\ac{fc}}~\cite{DBLP:journals/jlap/ViroliBDACP19}, or variants thereof,
  that define constructs for manipulating and evolving fields.
 %
-So, \ac{cas} behaviour
+\end{comment}
+\ac{cas} behaviour
  can be expressed by a single \emph{aggregate program} (global perspective)
  that also defines 
  what processing and communication activities
@@ -106,7 +97,7 @@ The difficulty lies in determining,
  in terms e.g. of processing steps and communication acts,
  producing output fields that quickly converge to the correct solution.
 
-In this work, we start what we consider a key future research thread of field-based coordination, i.e.,
+In chapter, we start what we consider a key future research thread of field-based coordination, i.e.,
  the study of Machine Learning techniques 
  to improve existing \ac{ac} coordination algorithms.
 %
@@ -122,14 +113,14 @@ We consider the case of the classic gradient algorithm, a paradigmatic and key b
  that the system, after sufficient training,
  learns an improved way to compute and adjust gradient fields to network perturbations.
 
-In the rest of the paper: 
-\Cref{coordination2022:s:background} offers background on \ac{ac} and \ac{rl};
-%
-\Cref{coordination2022:s:contrib} discusses the integration of \ac{rl} and \ac{ac}, and the use of the approach to improve the basic gradient algorithm;
-%
-\Cref{coordination2022:s:eval} provides an experimental evaluation of the proposed approach;
-%
-\Cref{coordination2022:s:conc} summarizes results and future research.
+% In the rest of the paper: 
+% \Cref{coordination2022:s:background} offers background on \ac{ac} and \ac{rl};
+% %
+% \Cref{coordination2022:s:contrib} discusses the integration of \ac{rl} and \ac{ac}, and the use of the approach to improve the basic gradient algorithm;
+% %
+% \Cref{coordination2022:s:eval} provides an experimental evaluation of the proposed approach;
+% %
+% \Cref{coordination2022:s:conc} summarizes results and future research.
 
 
 \section{Background}\label{coordination2022:s:background}
@@ -337,7 +328,7 @@ Otherwise, the output of the gradient follows the classical formula.
 %In \Cref{coordination2022:s:contrib},
 % we will discuss how \ac{ac} building blocks such as the gradient
 % could be improved by learning and, in particular, by \ac{rl}.
-
+\begin{comment}
 \subsection{\acl{rl}}\label{coordination2022:s:background:rl}
 
 \acl{rl}~\cite{sutton2018reinforcement-learning} is a generic framework 
@@ -505,7 +496,7 @@ With this assumption, the learner only has to find a single strategy that applie
 %    \item integration perspective: building block optimization (why, current solution)
 %  \end{itemize}
 %}
-
+\end{comment}
 \subsection{On Integrating Machine Learning and Aggregate Computing}
 
 As anticipated in \Cref{coordination2022:s:background:ac}, the behaviour of an aggregate system depends on the interplay of three main ingredients:

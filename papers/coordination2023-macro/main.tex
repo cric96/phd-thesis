@@ -6,15 +6,12 @@
 % If you use the hyperref package, please uncomment the following line
 % to display URLs in blue roman font according to Springer's eBook style:
 % \renewcommand\UrlFont{\color{blue}\rmfamily}
-\input{scala-def}
 \lstset{language=scafi}
 % Please use the
 
 \newcommand{\MacroSwarm}{{\sc{}MacroSwarm}}
 
 
-%% Page limit: 7-15 pages (without counting references)
-\newcommand{\meta}[1]{{\color{blue} #1}}%
 %\chapter{\MacroSwarm{} Swarm Programming Framework}
 \chapter{\MacroSwarm{}}
 \minitoc% Creating an actual minitoc
@@ -85,20 +82,20 @@ To evaluate \MacroSwarm{}, we show a use case that leverage our \ac{api}
 
 The remainder of this paper is organized as follows.
 %
-\Cref{sec:context} provides context and motivation.
+\Cref{coordination2023-macro:sec:context} provides context and motivation.
 %
-\Cref{sec:background} reviews background on aggregate computing.
+\Cref{coordination2023-macro:sec:background} reviews background on aggregate computing.
 %
-\Cref{sec:contrib} presents the main contribution of the paper, \MacroSwarm{}.
+\Cref{coordination2023-macro:sec:contrib} presents the main contribution of the paper, \MacroSwarm{}.
 %
-\Cref{sec:eval} provides a simulation-based evaluation of the approach.
+\Cref{coordination2023-macro:sec:eval} provides a simulation-based evaluation of the approach.
 %
-\Cref{sec:rw} reviews related works on swarm programming.
+\Cref{coordination2023-macro:sec:rw} reviews related works on swarm programming.
 %
-Finally, \Cref{sec:conc} provides a conclusion and future work.
+Finally, \Cref{coordination2023-macro:sec:conc} provides a conclusion and future work.
 
 \section{Context and Motivation}
-\label{sec:context}
+\label{coordination2023-macro:sec:context}
 
 Engineering the collective behaviour of swarms is 
  a significant research challenge~\cite{DBLP:journals/swarm/BrambillaFBD13}.
@@ -107,7 +104,7 @@ Two main kinds of design methods can be identified~\cite{DBLP:journals/swarm/Bra
  \emph{automatic} design methods like evolutionary robotics~\cite{DBLP:series/sci/2008-108} or multi-agent reinforcement learning~\cite{DBLP:journals/tsmc/BusoniuBS08},
  also called \emph{behaviour-based} design, involving manually-implemented algorithms expressed via general-purpose or \acp{dsl}.
 %
-Our focus is on the latter category of methods and especially on \acp{dsl} for expressing swarm behaviour (which are reviewed in \Cref{sec:rw}).
+Our focus is on the latter category of methods and especially on \acp{dsl} for expressing swarm behaviour (which are reviewed in \Cref{coordination2023-macro:sec:rw}).
 %
 
 Another main distinction is between \emph{centralized} (\emph{orchestration-based}) and \emph{decentralized} (\emph{choreographical}) approaches.
@@ -184,7 +181,7 @@ In summary,
  this work is motivated by the need of an
  approach for \emph{formal-yet-practical top-down behaviour-based design of decentralized swarm behaviour}.
 
-\section{Background: Aggregate Computing}\label{sec:background} %% or background? 
+\section{Background: Aggregate Computing}\label{coordination2023-macro:sec:background} %% or background? 
 
 Aggregate computing~\cite{DBLP:journals/jlap/ViroliBDACP19}
  is a field-based coordination~\cite{Mamei:2004a} and macroprogramming~\cite{Casadei2023} approach
@@ -322,7 +319,7 @@ Here, computation is split into separate subsets of devices. Notice that neighbo
 
 \paragraph*{General resilient operators.}
 %
-It is possible to identify some general higher-level operators to account for common self-organisation patterns~\cite{DBLP:journals/tomacs/ViroliABDP18}. These will be leveraged in \Cref{sec:contrib} and hence are briefly described.
+It is possible to identify some general higher-level operators to account for common self-organisation patterns~\cite{DBLP:journals/tomacs/ViroliABDP18}. These will be leveraged in \Cref{coordination2023-macro:sec:contrib} and hence are briefly described.
 %
 \begin{itemize}
 \item \emph{\textbf{S}parse choice (leader election)~\cite{DBLP:conf/acsos/PianiniCV22}.} Block \lstinline|S(grain:Double):Boolean| can be used to yield a self-stabilising Boolean field which is \lstinline|true| in a sparse set of devices located at a mean distance \lstinline|grain|.
@@ -333,7 +330,7 @@ Block \lstinline|G[T](source:Boolean,value:T,acc:T=>T):T| is used to propagate \
 \item \emph{\textbf{C}ollect-cast (distributed collection)~\cite{DBLP:journals/cee/AudritoCDPV21}.} Block \lstinline|C[T](sink:Boolean,value:T,acc(T,T)=>T):T| is used to summarize distributed information into \lstinline|sink| devices, the \lstinline|value|s provided by devices around the system, while aggregating information through \lstinline|acc| along the gradient directed towards the sinks.
 \end{itemize}
 %
-Examples further showing the compositionality of the approach are in \Cref{sec:contrib}.
+Examples further showing the compositionality of the approach are in \Cref{coordination2023-macro:sec:contrib}.
 
 
 
@@ -343,7 +340,7 @@ Examples further showing the compositionality of the approach are in \Cref{sec:c
 
 \subsubsection{Aggregate computing for swarm programming}
 %
-To motivate why aggregate computing appears to be a good match for swarm programming, we briefly explain how it helps to address the challenges identified, as studied in previous papers (presented in \Cref{sec:context}).
+To motivate why aggregate computing appears to be a good match for swarm programming, we briefly explain how it helps to address the challenges identified, as studied in previous papers (presented in \Cref{coordination2023-macro:sec:context}).
 %
 \begin{itemize}
 \item \emph{Top-down behaviour-based design.} It is promoted by the \emph{compositionality} and \emph{collective stance} of aggregate computing, supported by the functional paradigm and the field abstraction~\cite{AVDPB-TOCL2019,DBLP:conf/ecoop/AudritoCDSV22}.
@@ -356,7 +353,7 @@ To motivate why aggregate computing appears to be a good match for swarm program
 %The claims are properly backed by previous research: the reader is encouraged to look those references up for details.
 
 \section{\MacroSwarm{}}
-\label{sec:contrib}
+\label{coordination2023-macro:sec:contrib}
 
 % %\meta{here we can summarize the main ideas of \MacroSwarm{}, and then we can go into details in the next sections.}
 % \MacroSwarm{} aims to expose essential and minimal building blocks that capture the swarm's main patterns. 
@@ -396,14 +393,14 @@ To motivate why aggregate computing appears to be a good match for swarm program
 %  and distributed architecture types. 
 % %
 % Therefore, the library is rooted in this paradigm, 
-%  following the execution and actuation model described in \Cref{sec:architecture}.
+%  following the execution and actuation model described in \Cref{coordination2023-macro:sec:architecture}.
 % %
-% Based on this framework, \Cref{sec:api} details the design of the identified building blocks 
+% Based on this framework, \Cref{coordination2023-macro:sec:api} details the design of the identified building blocks 
 %  following the intuition that the collective computation 
 %  can be seen as a function that maps sensor and constants fields 
 %  to actuation fields (the type of \emph{actions} will be specified later).
 % %
-% \subsection{Execution and actuation model}\label{sec:architecture}
+% \subsection{Execution and actuation model}\label{coordination2023-macro:sec:architecture}
 % %\meta{Here we can describe the execution model of \MacroSwarm{} (that is the same of AC) and the execution model of the swarm behaviours (that is a field of velocity).}-
 % An aggregate computation imposes several conditions for achieving 
 %  the specified collective behaviour described by the program. 
@@ -447,19 +444,19 @@ To motivate why aggregate computing appears to be a good match for swarm program
 % This vector -- in the library mapped using a \lstinline|Point3D(x: Double, y: Double, z: Double)| class -- must then be appropriately mapped to the input of the actuation model 
 %  for the mobile robot of interest.
 % %% Here an image could help to explain the execution model and the actuation model
-% \subsection{API Design}\label{sec:api}
+% \subsection{API Design}\label{coordination2023-macro:sec:api}
 \begin{figure}[t]
   \includegraphics[width=\textwidth]{papers/coordination2023-macro/images/architecture.drawio.pdf}
   \caption[\MacroSwarm{}: architecture overview.]{\MacroSwarm{}: architecture overview. 
   The black boxes contained in the green rectangle 
   represent the main modules of the library.
-  }\label{fig:architecture}
+  }\label{coordination2023-macro:fig:architecture}
 \end{figure}
 
 This section presents the \MacroSwarm{} approach and \ac{api}.
 %
 In particular, we describe its overall architecture, and the main blocks exposed by the \ac{api}
- (summarized in \Cref{fig:architecture}), 
+ (summarized in \Cref{coordination2023-macro:fig:architecture}), 
  which support the specification of a wide range of high-level swarm behaviours. 
 %
 The key idea in the design of \MacroSwarm{}  
@@ -495,12 +492,12 @@ We have organized the \ac{api}
 %  shows how to sequentially combine high-level collective patterns according to a swarm plan.
 %\meta{General idea: we have a set of blocks that can be composed to create swarm behaviours. Here we classify the blocks in terms of their functionality, and we show how they can be composed to create complex behaviours. We present the blocks in several subsections}
 
-\subsubsection{Movement blocks}\label{subsec:base}
+\subsubsection{Movement blocks}\label{coordination2023-macro:subsec:base}
 %
 These blocks control the movement of individual agents within the swarm. 
 %These blocks are responsible for determining how agents move and interact with their environment. 
 The simplest movement expressible 
- with \MacroSwarm{} is a collective constant movement (\Cref{fig:constant}), 
+ with \MacroSwarm{} is a collective constant movement (\Cref{coordination2023-macro:fig:constant}), 
  described through a tuple 
  %(\lstinline|Point2D(x, y)|) or a
  %triple (
@@ -533,7 +530,7 @@ The former allows the systems to maintain a certain velocity for the time specif
 The latter, instead, is used to maintain a certain velocity until a condition is met 
  (e.g., a target position is reached).
 %
-This module also exposes an \lstinline|obstacleAvoidance| block (\Cref{fig:obstacle-avoidance}), which creates a vector pointing away from obstacles.
+This module also exposes an \lstinline|obstacleAvoidance| block (\Cref{coordination2023-macro:fig:obstacle-avoidance}), which creates a vector pointing away from obstacles.
 
 Even if these blocks are quite simple, 
  it is still possible to combine them to create interesting behaviours. 
@@ -563,7 +560,7 @@ def maintainUntil(direction: Vector)(condition: Boolean): Vector
 def obstacleAvoidance(obstacles: List[Vector]): Vector
 \end{lstlisting}
 
-\subsubsection{Flocking blocks}\label{subsec:flockig} 
+\subsubsection{Flocking blocks}\label{coordination2023-macro:subsec:flockig} 
 In a swarm-like system, 
  it is often necessary to coordinate the movement of the entire swarm, 
  rather than just individual agents, to achieve emergent behaviours,
@@ -577,7 +574,7 @@ Several models are available in the literature for this purpose.
  Particularly, \MacroSwarm{} exposes 
  the Vicsek~\cite{VicsekModeling1995}, 
  Cucker-Smale~\cite{CuckerSmaleModeling2007}, 
- and Reynolds (\Cref{fig:flock})~\cite{DBLP:conf/siggraph/Reynolds87} models. 
+ and Reynolds (\Cref{coordination2023-macro:fig:flock})~\cite{DBLP:conf/siggraph/Reynolds87} models. 
 % 
 %We chose the first one because it is simple 
 % and only require knowledge of the neighbours' velocity. 
@@ -629,7 +626,7 @@ This is because the previous velocities
 %
 %To express changes in the computational field 
 % in the aggregate computing context, the \lstinline|rep| operator 
-% can be used (refer to \Cref{sec:background} for more details). 
+% can be used (refer to \Cref{coordination2023-macro:sec:background} for more details). 
 Typical usage of this operator follows the following schema:
 \begin{lstlisting}
 rep(initialVelocity) { oldVelocity => flockingOperator(oldVelocity, ..) }  
@@ -647,7 +644,7 @@ rep(Point2D.Zero) {
 % the self-organizing blocks of aggregate computing 
 % are used only within the extended neighbourhood (through the aggregated processes).
 
-\subsubsection{Leader-based blocks}\label{subsec:leader}
+\subsubsection{Leader-based blocks}\label{coordination2023-macro:subsec:leader}
 These blocks allow agents to follow a designated leader.
 The idea behind leadership in swarm systems is that a leader 
  can act as a coordinator, influencing the followers that recognize it as such. 
@@ -658,17 +655,17 @@ In the context of aggregate computing,
 %
 Leaders can be predetermined (i.e., nodes with certain characteristics), 
  virtual (i.e., nodes that do not actually exist in the system but are simulated for collective movement steering),
- or chosen in space (e.g., using the \lstinline|S| block---see \Cref{sec:background}). %, which seeks to create spatial partitions of the system). 
+ or chosen in space (e.g., using the \lstinline|S| block---see \Cref{coordination2023-macro:sec:background}). %, which seeks to create spatial partitions of the system). 
 % 
 A leader can be thought of as creating an \emph{area of influence}, affecting the actions of its followers.
 %This leader creates a field of influence in which actions chosen by it can be taken.
 
 
-Currently, we have identified \lstinline|alignWithLeader| and \lstinline|sinkAt| (\Cref{fig:towards-leader}) 
+Currently, we have identified \lstinline|alignWithLeader| and \lstinline|sinkAt| (\Cref{coordination2023-macro:fig:towards-leader}) 
  as essential blocks. 
 %
 The former propagates the leader's velocity throughout 
- its area of influence (e.g., via \lstinline|G|---see \Cref{sec:background}),
+ its area of influence (e.g., via \lstinline|G|---see \Cref{coordination2023-macro:sec:background}),
  with followers adjusting their velocity to it. 
 %
 However, sometimes it may also be desirable 
@@ -680,7 +677,7 @@ For this reason, the  \lstinline|sinkAt| block creates a computational field
 These blocks are useful for higher-level blocks, 
  such as those associated with the creation of teams or spatial formations.
  
-\subsubsection{Team formation blocks}\label{subsec:team}
+\subsubsection{Team formation blocks}\label{coordination2023-macro:subsec:team}
 These blocks allow agents to form \emph{teams} or sub-groups within the swarm,
  useful e.g. for work division
  or situations requiring intervention by few agents.
@@ -688,9 +685,9 @@ These blocks allow agents to form \emph{teams} or sub-groups within the swarm,
 %Team formation is essential in cases where work division  is necessary or when specific situations arise. 
 % 
 In general, the formation of a team creates a ``split'' in the swarm logic, 
- conceptually creating multiple swarms with potentially different goals (cf. \Cref{fig:team}).
+ conceptually creating multiple swarms with potentially different goals (cf. \Cref{coordination2023-macro:fig:team}).
  %
-One way to create teams is by using the \lstinline|branch| construct (see \Cref{sec:background}). 
+One way to create teams is by using the \lstinline|branch| construct (see \Cref{coordination2023-macro:sec:background}). 
 %This allows for the creation of two non-communicating spatial zones. 
 For example, the following program,
 \begin{lstlisting}
@@ -756,40 +753,40 @@ team.insideTeam{leader => alignWithLeader(leader)(rep(brownian())(x => x))}
   \centering
   {\includegraphics[width=\textwidth]{papers/coordination2023-macro/images/constant.png}}
   \caption{}
-  \label{fig:constant}
+  \label{coordination2023-macro:fig:constant}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.32\textwidth}
   \centering
   {\includegraphics[width=\textwidth]{papers/coordination2023-macro/images/towards-leader.png}}
   \caption{}
-  \label{fig:towards-leader}
+  \label{coordination2023-macro:fig:towards-leader}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.32\textwidth}
   \centering
   {\includegraphics[width=\textwidth]{papers/coordination2023-macro/images/branching.png}}
   \caption{}
-  \label{fig:team}
+  \label{coordination2023-macro:fig:team}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.32\textwidth}
   \centering
   {\includegraphics[width=\textwidth]{papers/coordination2023-macro/images/obstacle-avoidance.png}}
   \caption{}
-  \label{fig:obstacle-avoidance}
+  \label{coordination2023-macro:fig:obstacle-avoidance}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
   \centering
   {\includegraphics[width=\textwidth]{papers/coordination2023-macro/images/flock.png}}
   \caption{}
-  \label{fig:flock}
+  \label{coordination2023-macro:fig:flock}
 \end{subfigure}
-\caption{Overview of swarm behaviours expressible with \MacroSwarm{}.}\label{fig:movement-overview}
+\caption{Overview of swarm behaviours expressible with \MacroSwarm{}.}\label{coordination2023-macro:fig:movement-overview}
 \end{figure}
 
-\subsubsection{Pattern formation blocks}\label{subsec:pattern}
+\subsubsection{Pattern formation blocks}\label{coordination2023-macro:subsec:pattern}
 %they enable agents to create complex spatial patterns. 
 Team formation blocks can be used to create groups of agents with certain characteristics.
 %
@@ -808,7 +805,7 @@ collects the hop-by-hop distances
  of their followers (leveraging \lstinline|G| and \lstinline|C|) and
  sends them a direction in which they should go to form the required structure (using \lstinline|G|).
 
-The structures currently supported (\Cref{fig:formations}) are v-like shapes (\lstinline|vShape|), lines (\lstinline|line|), and circular formations (\lstinline|centeredCircle|). 
+The structures currently supported (\Cref{coordination2023-macro:fig:formations}) are v-like shapes (\lstinline|vShape|), lines (\lstinline|line|), and circular formations (\lstinline|centeredCircle|). 
  These structures are \emph{self-healing}: if there is a disturbance 
  of the structure, 
  the group tends to reconstruct itself and return to a stable structure. 
@@ -823,10 +820,10 @@ Additionally, it is assumed that the leader has his own speed logic.
    line formation, v-like formation, and
    circular formation.
   }
-   \label{fig:formations}
+   \label{coordination2023-macro:fig:formations}
 \end{figure}
   
-\subsubsection{Swarm Planning blocks}\label{subsec:planner} %% I dunno if we wanna discuss this
+\subsubsection{Swarm Planning blocks}\label{coordination2023-macro:subsec:planner} %% I dunno if we wanna discuss this
 
 With the previous blocks available, there is a need for a handy mechanism to express a series of \emph{plans} that 
  change over time and move the swarm towards different targets. 
@@ -878,14 +875,14 @@ The use of \lstinline|G| in this way is a recurrent pattern,
  and in \scafi{} it is exposed through the \lstinline|broadcast[T](center: Boolean, value: T): T| block.
  
 \section{Evaluation}
-\label{sec:eval}
+\label{coordination2023-macro:sec:eval}
 
 To validate the proposed approach and \ac{api} we define a simulated \emph{find-and-rescue} case study,
 to show 
-the ability of \MacroSwarm{} to express complex swarm behaviours (\Cref{subsec:case-study}). 
-Then, we discuss the results of the case study and the applicability of the proposed approach in real-world scenarios (\Cref{subsec:discussion}).
+the ability of \MacroSwarm{} to express complex swarm behaviours (\Cref{coordination2023-macro:subsec:case-study}). 
+Then, we discuss the results of the case study and the applicability of the proposed approach in real-world scenarios (\Cref{coordination2023-macro:subsec:discussion}).
 
-\subsection{Case Study: Find and Rescue}\label{subsec:case-study}
+\subsection{Case Study: Find and Rescue}\label{coordination2023-macro:subsec:case-study}
 In our scenario, we want a fleet of drones to patrol a spatial area.
 % 
 In the area, dangerous situations may arise (e.g., a fire breaks out, a person gets injured, etc.). 
@@ -925,35 +922,35 @@ The node should form teams of at least one healer and several explorers, maintai
   \centering
   \fbox{\includegraphics[width=\textwidth]{papers/coordination2023-macro/images/team-formation.png}}
   \caption{Team formation}
-  \label{fig:team-formation}
+  \label{coordination2023-macro:fig:team-formation}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.29\textwidth}
   \centering
   \fbox{\includegraphics[width=\textwidth]{papers/coordination2023-macro/images/circle-formation.png}}
   \caption{Circle formation}
-  \label{fig:circle-formation}
+  \label{coordination2023-macro:fig:circle-formation}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.29\textwidth}
   \centering
   \fbox{\includegraphics[width=\textwidth]{papers/coordination2023-macro/images/explore.png}}
   \caption{Explore}
-  \label{fig:explore}
+  \label{coordination2023-macro:fig:explore}
 \end{subfigure}
-\caption[\MacroSwarm{} graphical simulations example]{The first phases of the scenario described in \Cref{sec:eval}. 
+\caption[\MacroSwarm{} graphical simulations example]{The first phases of the scenario described in \Cref{coordination2023-macro:sec:eval}. 
  At the beginning, the system is split into teams; 
  afterwards, the teams assume a spatial formation (circular, in this case);
- finally, the teams start exploring the overall area.}\label{fig:scenario}
+ finally, the teams start exploring the overall area.}\label{coordination2023-macro:fig:scenario}
 \end{figure}
 
 To structure the desired swarm behaviour, 
  we break the problem into parts:
 \begin{enumerate}
   \item the swarm must split into teams regulated by a healer, who works as a \emph{leader} %in which at least one leader is present 
-   (\Cref{fig:team-formation});
-  \item teams must assume a spatial formation promoting the efficiency of the exploration (\Cref{fig:circle-formation});
-  \item the teams must explore the overall area (\Cref{fig:explore});
+   (\Cref{coordination2023-macro:fig:team-formation});
+  \item teams must assume a spatial formation promoting the efficiency of the exploration (\Cref{coordination2023-macro:fig:circle-formation});
+  \item the teams must explore the overall area (\Cref{coordination2023-macro:fig:explore});
   \item when any node detects an alarm zone, it must point that to the healer;
   \item the healer node approaches the dangerous situation to fix it;
   \item then, the team should return to the exploration phase.
@@ -1042,60 +1039,60 @@ This program shows that the \ac{api}
 We validated the results by effectively running simulations, 
  publicly available at \url{https://zenodo.org/badge/latestdoi/611692727}. 
  For this task, we used Alchemist~\cite{DBLP:journals/jos/PianiniMV13}, a general simulator for multi-agent and pervasive systems. % developed to support scenarios in pervasive computing, 
-% but which is well suited to swarm behaviour contexts as well (the plots shown in \Cref{fig:scenario} were produced using this simulator).
+% but which is well suited to swarm behaviour contexts as well (the plots shown in \Cref{coordination2023-macro:fig:scenario} were produced using this simulator).
 %
 We launched 64 simulation runs with different random seeds: 
- \Cref{fig:results} shows the average results obtained. 
+ \Cref{coordination2023-macro:fig:results} shows the average results obtained. 
 We extracted the following data:
 \begin{itemize}
   \item \emph{intra-team distance}:
    after an initial adjustment phase, 
-   the system should converge to an average distance of 50 meters (\Cref{fig:distance});
+   the system should converge to an average distance of 50 meters (\Cref{coordination2023-macro:fig:distance});
   \item \emph{minimum distance between each node}: 
     as we want to avoid collisions, 
     the minimum distance between 
-    two nodes should always be greater than zero (\Cref{fig:min_distance});
+    two nodes should always be greater than zero (\Cref{coordination2023-macro:fig:min_distance});
   \item \emph{number of nodes in danger}: 
    we expect the nodes in danger to increase 
-   up to 50 minutes and then decrease, tending towards zero (\Cref{fig:danger}).
+   up to 50 minutes and then decrease, tending towards zero (\Cref{coordination2023-macro:fig:danger}).
 \end{itemize}
-The results (\Cref{fig:results}) show that the system can achieve the expected outcomes.
+The results (\Cref{coordination2023-macro:fig:results}) show that the system can achieve the expected outcomes.
 \begin{figure}[t]
 \centering
 \begin{subfigure}{0.4\textwidth}
   \centering
   \includegraphics[width=\textwidth]{papers/coordination2023-macro/images/average_intra_team_distance}
   \caption{}
-  \label{fig:distance}
+  \label{coordination2023-macro:fig:distance}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.4\textwidth}
   \centering
   \includegraphics[width=\textwidth]{papers/coordination2023-macro/images/min_distance}
   \caption{}
-  \label{fig:min_distance}
+  \label{coordination2023-macro:fig:min_distance}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.4\textwidth}
   \centering
   \includegraphics[width=\textwidth]{papers/coordination2023-macro/images/in_danger}
   \caption{}
-  \label{fig:danger}
+  \label{coordination2023-macro:fig:danger}
 \end{subfigure}
 \caption[Quantitative plots of the simulated scenario in \MacroSwarm{}.]{
   Quantitative plots of the simulated scenario. 
-  \Cref{fig:distance} shows the average team distance in the first two minutes. 
-  \Cref{fig:min_distance} shows the minimum distance between nodes. 
-  \Cref{fig:danger} shows the nodes in danger through time. 
+  \Cref{coordination2023-macro:fig:distance} shows the average team distance in the first two minutes. 
+  \Cref{coordination2023-macro:fig:min_distance} shows the minimum distance between nodes. 
+  \Cref{coordination2023-macro:fig:danger} shows the nodes in danger through time. 
   Since we run several simulations, 
    the lines show the average values, whereas 
    the area around the lines shows the confidence interval throughout the simulations.
-}\label{fig:results}
+}\label{coordination2023-macro:fig:results}
 \end{figure}
 %\meta{We will show the results of the simulations of the swarm behaviours, and the composition of the behaviours. }
 %% figure composed of two subfigures
 
-\subsection{Discussion}\label{subsec:discussion}
+\subsection{Discussion}\label{coordination2023-macro:subsec:discussion}
 %
 Despite its simplicity, 
 this use case allowed us to demonstrate the capability of \MacroSwarm{}, both in qualitative terms (i.e., the produced code is simple and understandable) and quantitative terms (i.e., the data show that the swarm follows the given instructions correctly).
@@ -1116,7 +1113,7 @@ That being said, we know that the reality gap for real-world scenarios could int
 We aim to test the \ac{api} in more realistic simulators (like Gazebo~\cite{DBLP:conf/iros/KoenigH04}) or real systems as a future work.
 
 \section{Related Work}
-\label{sec:rw}
+\label{coordination2023-macro:sec:rw}
 
 Related programming approaches for swarms 
  include 
@@ -1279,7 +1276,7 @@ Finally, we mention another category of related works, which are \emph{task orch
 %However, Resh is not Turing-complete, to simplify synthesis of task orchestration programs.
 
 \section{Conclusion and Future Work}
-\label{sec:conc}
+\label{coordination2023-macro:sec:conc}
 
 We presented \MacroSwarm{},
  a framework 

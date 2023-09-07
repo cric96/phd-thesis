@@ -20,31 +20,16 @@
 %\ga{Page limit: 10 pages (include refs)}
 
 
-%Autonomous agents interacting and operating towards a common task, rely on shared information and consequently emerging knowledge in order to achieve the underlying goals efficiently. 
-%
-%Coordinating and organising this information exchange within the network of agents is required for improve the collaboration among them further~\cite{jennings1996coordination}.
-%
-%Through this coordination, agents may overcome problems requiring (i) efficiency and accuracy only achieved by multiple agents, (ii) the complementary competencies of the individual agents, or (iii) the collective resources of multiple agents.  
-
-%Various phenomena in the real world are not evenly distributed across the environment such as watershed, wild fires, traffic, human crowd movement, or wild life movement from insects, fish, birds, and mammals.
-%To acquire appropriate information about such phenomena, we also need to distribute the sensors accordingly to cover all aspects sufficiently. While manual deployment will mitigate the problem, not all phenomena are known exactly \emph{a priori} and would require maintenance and adjustment during runtime. Even worse, with phenomena able to change their location, size, and shape---as it is the case with crowds, wild life, or wild fires---an adaptation of the collective sensors is required in order to ensure all necessary information is acquired. 
-
-%This leads to several questions 
-%\begin{enumerate}
-%	\item How to distribute sensors to ensure good attainment of information?
-%	\item How to maintain knowledge about the phenomena and unlearn irrelevant information?
-%	\item How to move sensors when the phenomena moves to ensure good coverage?
-%\end{enumerate} \lukas{refine and rework these questions}
 The coordination of a group of autonomous agents that can perceive and act in their environment is a fundamental problem in artificial intelligence. 
 Such agents need to cooperate and communicate in order to achieve a common goal, 
  while dealing with the challenges of distributed and situated intelligence. 
  These challenges include the limited and local nature of the information available to each agent and the emergence of global behaviour from local interactions. 
 
-One domain where these challenges are particularly evident is Cyber-Physical Swarms (CPSs, or \emph{swarm-like systems}), 
- where a large number of agents interact with each other and their environment based on spatial proximity. 
+%One domain where these challenges are particularly evident is Cyber-Physical Swarms (CPSs, or \emph{swarm-like systems}), 
+% where a large number of agents interact with each other and their environment based on spatial proximity. 
 %
-Examples of CPSs include swarm robotics~\cite{brambilla2013swarm}, smart cities~\cite{bajovic2021marvel}, sensor networks~\cite{pianini2022collective}, and social systems~\cite{zhou2019cyber}. 
- In these systems, agents need to adapt to dynamic and uncertain situations, while ensuring the achievement of global objectives that may not be directly observable or measurable by individual agents.
+%Examples of CPSs include swarm robotics~\cite{brambilla2013swarm}, smart cities~\cite{bajovic2021marvel}, sensor networks~\cite{pianini2022collective}, and social systems~\cite{zhou2019cyber}. 
+% In these systems, agents need to adapt to dynamic and uncertain situations, while ensuring the achievement of global objectives that may not be directly observable or measurable by individual agents.
 
 A key question in designing swarm-like systems is how to create distributed controllers for the agents that enable them to perform complex \emph{collective} tasks. 
  Two main approaches have been proposed for this problem: manual design and automatic design. 
@@ -61,15 +46,16 @@ Automatic design can overcome these limitations by learning from data and experi
  However, automatic design can also suffer from several challenges, such as learning the right representation for agent communication.
 %
 
-In this paper, we propose a novel hybrid approach that combines manual and automatic design of distributed controllers.
-This follows a novel trend in which high-level declarative programming languages are mixed with machine learning techniques in order to synthesize robust collective controllers~\cite{DBLP:conf/acsos/Aguzzi21,DBLP:conf/icdcs/AguzziCV22,DBLP:conf/coordination/AguzziCV22}.
+In this chapter, we propose a novel hybrid approach that combines manual and automatic design of distributed controllers.
+%This follows a novel trend in which high-level declarative programming languages are mixed with machine learning techniques in order to synthesize robust collective controllers~\cite{DBLP:conf/acsos/Aguzzi21,DBLP:conf/icdcs/AguzziCV22,DBLP:conf/coordination/AguzziCV22}.
 Specifically, we propose a solution called \ac{FIRL} that utilizes aggregate computing~\cite{Beal2015Computer} together with a \ac{GNN}~\cite{Zhou2020AIOpen} in combination with a reinforcement learning approach, namely \ac{DQN}~\cite{mnih2015human}. 
 % First, aggregate computing is utilized to collect information from neighbours and create a local knowledge base for each agent. Second, we utilize a \ac{GNN} within the \ac{DQN}. 
  Here the \ac{GNN} is trained on field-information from aggregate computing and provides so-called node embeddings for each agent, serving as input for the \ac{DQN}. 
  The \ac{DQN} provides then the appropriate actions for the agent to achieve their tasks.
 %We further combine this with reinforcement learning techniques to respond to changing conditions in the environment. 
 %
-The main contribution of \ac{FIRL} is the \emph{definition of distributed controllers that are informed by collective knowledge that has been distilled during training, but that use only local information when deployed}. This way, \ac{FIRL} can achieve a balance between manual design and automatic design, combining the benefits of both approaches while mitigating their drawbacks.
+The main contribution of \ac{FIRL} is the \emph{definition of distributed controllers that are informed by collective knowledge that has been distilled during training, but that use only local information when deployed}. 
+This way, \ac{FIRL} can achieve a balance between manual design and automatic design, combining the benefits of both approaches while mitigating their drawbacks.
 Moreover, the learned policies have the potential to scale with size and adapt to different network topologies due to the inherent nature of GNNs and aggregate computations.
 %% Perhaps to much detail 
 \ac{FIRL} can also be seen as a way of bridging the gap between symbolic and sub-symbolic AI methods, by integrating declarative programming with deep learning.
@@ -110,11 +96,11 @@ We employ this approach in a swarm-like system setting where agents are tasked t
 % By leveraging this layer, we can build collective distributed intelligence using \ac{GNN},
 %  which uses the information in the field to determine the best action for a given task.
 %\ga{first draft, need a refinement}
-The remainder of this paper is structured as follows. 
- First, we introduce the relevant background and problem formulation in \Cref{acsos2023:sec:background}. 
- Afterwards, we introduce our approach in \Cref{acsos2023:sec:approach}. 
- \Cref{acsos2023:sec:eval} outlines the performed experiments and discusses the obtained results. 
- Finally, we will present our conclusions in \Cref{acsos2023:sec:conclusion}.
+%The remainder of this paper is structured as follows. 
+% First, we introduce the relevant background and problem formulation in \Cref{acsos2023:sec:background}. 
+% Afterwards, we introduce our approach in \Cref{acsos2023:sec:approach}. 
+% \Cref{acsos2023:sec:eval} outlines the performed experiments and discusses the obtained results. 
+% Finally, we will present our conclusions in \Cref{acsos2023:sec:conclusion}.
 
 \section{Background and Motivation}
 \label{acsos2023:sec:background}
@@ -154,6 +140,7 @@ The homogeneity of the controller is a key requirement to ensure the \emph{scala
  as it allows us to avoid the need for a centralized controller that would be a bottleneck for the system,
  and it is the typical choice in swarm-like systems~\cite{brambilla2013swarm,yang2021many,pmlr-v80-yang18d,DBLP:conf/aaai/ZhengYCZZWY18}.
 %
+\begin{comment}
 \subsection{Field-based Coordination}
 %\ga{discussion about field used as a coordination mechanism in multi-agent systems. Introduction to AC}
 The field-based coordination approaches utilize a concept of \emph{computational fields} 
@@ -219,26 +206,21 @@ where \texttt{source} is a Boolean field indicating the presence of a source age
  \texttt{acc} is the accumulation function that is applied to the value during the cast.
 %
 This is a fundamental building block for the coordination of swarm-like systems: in fact, the resulting system can be used to broadcast information, or route towards selected nodes.
-
+\end{comment}
 %\lukas{Lukas to review this section again.}
+\begin{comment}
 \subsection{Graph Neural Networks}
-%Over the years, several different neural networks have been proposed to solve specific tasks, ranging from 
-%  simple \ac{MLP}~\cite{werbos1975beyond} to \ac{CNN}~\cite{oshea2015introduction}.
-%  \lukas{more examples? }
-%%
-%Whereas \ac{CNN} is designed to be used with image and spatial-like data (e.g., audio), 
  \ac{GNN} is a novel neural network model used to process graph-structured data with deep learning approaches.
 %
 Let $G = (V, E)$ be a graph  
 where $E\subseteq V\times V$ defines the neighbourhood relations for each participating node, 
-and $V$ identifies the nodes present in the graph. %at that time.  \lukas{no time in the definition}
+and $V$ identifies the nodes present in the graph.
 % 
 Each node $v \in V$ is associated with an observation (or feature set) $f_v$.
 For the sake of simplicity, 
  we thereafter describe $G_f$ as a graph that contains the feature set $f_v$ for each node $v \in V$.
  Note that, when we refer to $G_f$ and $G_o$ we are referring to the same graph $G$ but with different node features.
  Also, to access the feature set $f_v$ of a node $v \in V$ we use the notation $f_v$ or $G_f[v]$.
-%\lukas{Over time this graph $G$ can change and therefore we define $G_t$ as the graph $G$ at a specific time $t$.} 
 %
 Given $f_v$, %a feature vector associated with each node $v \in V$, 
  the goal of a \ac{GNN} is to learn the node embedding $h_v$ for each node $v \in V$. 
@@ -249,7 +231,6 @@ In modern \acp{GNN}, the node embedding $h_v$ is computed by aggregating informa
 %
 The \acp{GNN} is partitioned into several message passing layer $k$
  where each of them is responsible for computing the node embedding $h_v^{(k)}$ for each node $v \in V$.
- %With each traversal of an edge $e \in E$ from $v$, the number of layers increases.
 Formally, a \ac{GNN} can be defined by three phases:
 \begin{equation}
 m^{(k)}_{uv} = \psi^{(k)}\left(h_u^{(k-1)}, h_v^{(k-1)}, e^{(k-1)}_{uv}\right) 
@@ -281,13 +262,62 @@ Thereafter, we express the application of a \ac{GNN} to a graph $G_f$ as:
 \mathit{GNN}(G_f) = \{h_v^{(k)}: v \in V, k \in \mathbb{N}\}
 \end{equation} 
 This formulation allows \acp{GNN} to effectively process and extract features from graph-structured data by iteratively aggregating and transforming information from the node's neighbours.
-%\lukas{do we need definitions of $o_v$, $h_v^*$ over time $t$?}
 
 \acp{GNN} are used in several application areas such as social network analysis, chemistry, and physics.
  In this paper, we use \acp{GNN} to learn a local behaviour for each agent in a multi-agent system (more details in Section~\ref{acsos2023:sec:approach}).
+\end{comment}
+\subsection{Graph Neural Networks}
+
+Graphs are ubiquitous structures that represent entities and their inter-relationships. With the rise of deep learning, there has been a growing interest in developing neural network models that can process graph-structured data. \ac{GNN} is one such model that has gained significant attention in recent years.
+
+\ac{GNN} is a novel neural network model used to process graph-structured data with deep learning approaches. Unlike traditional neural networks that operate on fixed-size vectors, \acp{GNN} are designed to handle irregular structures, making them suitable for various applications where data is inherently graph-structured.
+
+\subsubsection{Graph Representation}
+
+Let $G = (V, E)$ be a graph where $E\subseteq V\times V$ defines the neighbourhood relations for each participating node, and $V$ identifies the nodes present in the graph. Each node $v \in V$ is associated with an observation (or feature set) $f_v$. For the sake of simplicity, we thereafter describe $G_f$ as a graph that contains the feature set $f_v$ for each node $v \in V$. Note that, when we refer to $G_f$ and $G_o$, we are referring to the same graph $G$ but with different node features. Also, to access the feature set $f_v$ of a node $v \in V$, we use the notation $f_v$ or $G_f[v]$.
+
+\subsubsection{Objective of GNNs}
+
+Given $f_v$, the goal of a \ac{GNN} is to learn the node embedding $h_v$ for each node $v \in V$. The node embedding $h_v$ describes the node in the network and summarizes the geometric properties of the graph in this location, allowing for comparison of various nodes in the graph. This is analogous to how convolutional neural networks (CNNs) learn spatial hierarchies in images; \acp{GNN} learn to capture the topological and combinatorial structure of graphs.
+
+\subsubsection{Message Passing in GNNs}
+
+In modern \acp{GNN}, the node embedding $h_v$ is computed by aggregating information from the node's neighbours $\mathcal{N}_G(v)$, and then combining it with the node's current embedding $h_v$ in a process called \emph{message passing}~\cite{DBLP:conf/icml/GilmerSRVD17}. This iterative process allows \acp{GNN} to capture long-range dependencies in the graph.
+
+The \acp{GNN} is partitioned into several message passing layers $k$, where each of them is responsible for computing the node embedding $h_v^{(k)}$ for each node $v \in V$. Formally, a \ac{GNN} can be defined by three phases:
+
+\begin{equation}
+m^{(k)}_{uv} = \psi^{(k)}\left(h_u^{(k-1)}, h_v^{(k-1)}, e^{(k-1)}_{uv}\right) 
+\end{equation}
+
+\begin{equation}
+a^{(k)}_u = \bigoplus^{(k)}\left(\left\{m^{(k)}_{uv}: v \in \mathcal{N}_G(u)\right\}\right)
+\end{equation}
+
+\begin{equation}
+h_u^{(k)} = \phi^{(k)}\left(h_u^{(k-1)}, a^{(k)}_u\right)
+\end{equation}
+
+Where $h_{v}^{k}$ is the embedding of node $v$ within the $k$-th layer, and $\mathcal{N}_G(v)$ is the set of neighbours of node $v$ computed from $E$. The initial embedding $h_v^0$ is usually set to the node's feature vector $f_v$. The differential part comes into play in the $\psi$ and $\phi$ functions, which are typically differentiable functions such as neural networks.
+
+\subsubsection{Aggregation Functions in GNNs}
+
+The $\psi$ function, called the \emph{message function}, computes the message $m_{uv}^{(k)}$ from node $u$ to node $v$. The $\phi$ function, known as the \emph{update function}, updates the node embedding $h_v^{(k)}$ of node $v$. The aggregation function $\bigoplus$ aggregates information from the neighbours of a node $v$. While simple aggregation functions like sum, max, or sum of products are common, more complex aggregation functions have been proposed to capture intricate relationships in the graph~\cite{pellegrini2020learning}.
+
+\subsubsection{GNN Application}
+
+Applying a \ac{GNN} to a graph $G_f$ can be expressed as:
+
+\begin{equation}
+\mathit{GNN}(G_f) = \{h_v^{(k)}: v \in V, k \in \mathbb{N}\}
+\end{equation} 
+
+This formulation allows \acp{GNN} to effectively process and extract features from graph-structured data by iteratively aggregating and transforming information from the node's neighbours.
+
+\acp{GNN} have found applications in diverse areas. They are used in social network analysis to understand user behaviours and community structures. In chemistry, they help in predicting molecular properties and drug discovery. In physics, they assist in understanding complex systems. In this chapter, we delve into the application of \acp{GNN} in multi-agent systems, focusing on learning local behaviours for each agent (more details in Section~\ref{acsos2023:sec:approach}).
+
+\begin{comment}
 \subsection{Many-Agent Reinforcement Learning}
-%\ga{plan: we could discuss briefly about standard approach (few agents), and mean-field approach (many agents). 
-%This will lead to our approach, which is a combination of DQN (or any Deep RL approach) and GNN.}
 
  \Ac{RL} has gained a lot of interest recently, 
  thanks to its successful application in various scenarios, 
@@ -296,7 +326,7 @@ This formulation allows \acp{GNN} to effectively process and extract features fr
 % 
 In \ac{RL}, an \emph{agent} (i.e., a smart entity capable of making decisions) 
  performs \emph{actions} in an \emph{environment} (i.e., everything outside the agent) according to a \emph{policy}, 
- to maximize long-term \emph{reward signal}. %(or minimize a \emph{regret}).
+ to maximize long-term \emph{reward signal}.
 
 One interesting application of \ac{RL} is when there are multiple learning agents involved. 
  Such scenarios are referred to as multi-agent reinforcement learning (MARL)~\cite{zhang2019marl}. 
@@ -338,25 +368,13 @@ Some known approaches using mean-field reinforcement learning include Q-mean,
 %
 These approaches have shown promising results in various domains, such as multi-agent coordination 
  and decentralized control, and are actively being researched and developed for further applications.
+
+\end{comment}
 \subsection{Problem formalization}
 Given the homogeneity, large system scale, and the \emph{locality} (i,e., each agent can only observe its neighbours), 
- the problem can be modelled through the SwarMDP model~\cite{DBLP:conf/atal/SosicKZK17}---an extension of the \ac{DecPOMDP}~\cite{Decpomdp2000} model for swarm-like systems.
+ the problem can be modelled through the SwarMDP model~\cite{DBLP:conf/atal/SosicKZK17}---an extension of the \ac{DecPOMDP}~\cite{Decpomdp2000} model for swarm-like systems (see the Background section for more details).
 % 
-A SwarMDP is characterized by a \emph{swarming agent} ($\mathbb{A}$) and the dynamics of the environment ($\mathbb{E}$).
-Specifically, $\mathbb{A}$ is a tuple ($\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, \pi$) where:
-\begin{itemize}
-  \item $\mathcal{S, O, A}$ are the set of local states, observations (or features), and actions, respectively;
-  \item $\mathcal{R}: \mathcal{S} \rightarrow \mathbb{R}$ is the reward function, which is influenced by the environment;
-  \item $\pi: \mathcal{O} \rightarrow \mathcal{A}$ is the policy function, which maps the observations to the actions: it could be deterministic or stochastic.
-\end{itemize}
-Starting from this definition, the environment $\mathbb{E}$ is defined as a tuple ($\mathcal{P}, \mathbb{A}, \mathcal{T}, \xi$), where:
-\begin{itemize}
-  \item $\mathcal{P}$ is the total number of agents in the systems (the agent population), which is assumed to be fixed;
-  \item $\mathbb{A}$ is the defined agent prototype that rules each agent $v \in P$;
-  \item $\mathcal{T}: \mathcal{S}^P \times \mathcal{A}^P \times \mathcal{S}^P \rightarrow \mathbb{R}$ is the transition  global function, which is influenced by the actions of the agents and returns a collective reward -- this is typically not known by the swarming agents;
-  \item $\xi: \mathcal{S^P} \rightarrow \mathcal{O^P}$ is the global observation model of the systems.
-\end{itemize}
-In swarMDP, the neighbourhood is not directly defined, but it is implicitly defined by the observation model $\xi$.
+However, In swarMDP, the neighbourhood is not directly defined, but it is implicitly defined by the observation model $\xi$.
 In our specific case, the agents can only interact with 1-hop neighbours and are not directly influenced by other agent observations. We can therefore restrict the observation model as follows:
 \begin{equation*}
 \xi(v): \{s_j, j \in \mathcal{N}^v\} \rightarrow O
@@ -408,7 +426,7 @@ However, in these works, communication was left entirely to the neural network,
 %\ga{Plan: we should discuss the approach in detail, including the system model, and the learning dynamics. Particularly, I would like to highlight how each node in the graph is a local controller, but it could be seen as a global evolution, therefore we can use global information to inform the local controller.}
 \begin{figure}
 	\centering
-  \includegraphics[width=.98\linewidth]{papers/acsos2023/imgs/architecture.pdf}
+  \includegraphics[width=.8\linewidth]{papers/acsos2023/imgs/architecture.pdf}
 
   \caption[High-level description of \ac{FIRL} approach.]{ High-level description of \ac{FIRL} approach. 
   For each time step $t$, a graph is constructed from the environment, and it will associate each node with a local feature $o^v_t$ (hexagons in the picture). 
@@ -798,7 +816,7 @@ Formally, we define the overall coverage for a certain time step as:
 C = \frac{|\Omega \cap \mathcal{P}|}{|\mathcal{P}|}
 \end{equation*}
 where $\mathcal{P}$ is the area of the phenomenon and $\Omega$ is the area covered by the agents.
-%This is computed for each step of the simulation. 
+%This is computed for each step of the simulation. 45
 In the training phases, 
  we measure the average coverage in each episode, and the total reward obtained by the agents at each episode of the simulation. 
 %
@@ -832,7 +850,7 @@ We observe that the field-informed version successfully moves the agents closer 
 For all experiments, both \ac{GNN} versions demonstrate the capability to transfer the learned experience to the test phase whereas the MLP version fails to generalize. 
 %
 It is worth noting that, in the \emph{Zone Fixed} experiment, % (left graph in \Cref{acsos2023:fig:test}), 
- once the desired configuration is achieved in the static case, 
+ once the desired configurati45on is achieved in the static case, 
  the agents cease to move, maintaining the found configuration.
 %
 Interesting observations arise when we use scenarios different from the training phase. 
@@ -868,13 +886,13 @@ Nevertheless, we acknowledge the crucial role of \acp{GNN}.
 \begin{figure}
   \centering
   \hfill
-  \begin{subfigure}[b]{0.885\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \includegraphics[width=\linewidth]{papers/acsos2023/imgs/coverage-in-time}
     \caption{Average coverage for each episode in training }
     \label{acsos2023:fig:coverage}
-  \end{subfigure}\\
-  \hfill
-  \begin{subfigure}[b]{0.91\linewidth}
+  \end{subfigure}%\\
+  %\hfill
+  \begin{subfigure}[b]{0.5\linewidth}
     \includegraphics[width=\linewidth]{papers/acsos2023/imgs/reward-in-time}
     \caption{Reward during training}
     \label{acsos2023:fig:reward}
@@ -890,12 +908,12 @@ Nevertheless, we acknowledge the crucial role of \acp{GNN}.
 
 \begin{figure*}
   \centering
-  \begin{subfigure}[b]{0.9\linewidth}
+  \begin{subfigure}[b]{0.75\linewidth}
     \includegraphics[width=\linewidth]{papers/acsos2023/imgs/coverage-test.pdf}
     \caption[Ratio of coverage of the phenomena in \ac{FIRL}]{Ratio of coverage of the phenomena. Our \ac{FIRL} approach can outperform other approaches lacking field information.}
     \label{acsos2023:fig:coverage-test}
   \end{subfigure}
-  \begin{subfigure}[b]{0.9\linewidth}
+  \begin{subfigure}[b]{0.75\linewidth}
     \includegraphics[width=\linewidth]{papers/acsos2023/imgs/inside-test}
     \caption{Number of agents inside the phenomenon in the three types of experiments}
     \label{acsos2023:fig:inside-test}
@@ -907,12 +925,12 @@ Nevertheless, we acknowledge the crucial role of \acp{GNN}.
 \end{figure*}
 \begin{figure*}
 	\centering
-  	\begin{subfigure}[b]{0.85\linewidth}
+  	\begin{subfigure}[b]{0.75\linewidth}
     \includegraphics[width=\linewidth]{papers/acsos2023/imgs/inside-two-test}
     \caption{\emph{Two Zones} experiment: aggregated number of agent inside each phenomenon}
     \label{acsos2023:fig:inside-two-test}
   \end{subfigure}
-  \begin{subfigure}[b]{0.85\linewidth}
+  \begin{subfigure}[b]{0.75\linewidth}
     \includegraphics[width=\linewidth]{papers/acsos2023/imgs/coverage-two-test}
     \caption{\emph{Two Zones} experiment: ratio of covered to the uncovered zones both phenomena}
     \label{acsos2023:fig:coverage-two-test}

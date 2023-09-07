@@ -48,10 +48,7 @@
 % Only for the journal Toxins
 %\keycontribution{The breakthroughs or highlights of the manuscript. Authors can write one or two sentences to describe the most important part of the paper.}
 
-\newcommand{\meta}[1]{{\color{blue}{#1}}}
-
 \newcommand{\revision}[1]{{#1}}
-\include{scala-def.tex}
 \lstset{frame=single,basewidth=0.5em,language={scafi},
 basicstyle=\lst@ifdisplaystyle\small\fi\ttfamily}
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -117,17 +114,17 @@ We argue that this programming approach,
 %
 Accordingly, in this work, we address the concept of \emph{collective autonomy}, i.e., the form of autonomy that applies at the level of a group of individuals.
 %
-Though this notion has been investigated in the literature (cf. \Cref{s:background-rw}), there are mainly preliminary approaches for practical \emph{programming} of collective autonomous behaviour by a global perspective; so, in this manuscript, we address this software engineering problem explicitly, and sketch a roadmap for further research.
+Though this notion has been investigated in the literature (cf. \Cref{mdpi2020:s:background-rw}), there are mainly preliminary approaches for practical \emph{programming} of collective autonomous behaviour by a global perspective; so, in this manuscript, we address this software engineering problem explicitly, and sketch a roadmap for further research.
 %
 Therefore: %, in summary, we provide the following contributions\revision{, matching the structure of the manuscript}:
 \begin{itemize}
-\item we provide a review of literature about autonomy and especially collective autonomy in MASs \revision{(\Cref{s:background-rw})};
-\item we analyse the aggregate computing framework by the perspective of autonomy, by covering its positioning with respect to individual and collective autonomy, and showing how it can supports adjustable autonomy \revision{(\Cref{s:autonomy-ac})};
+\item we provide a review of literature about autonomy and especially collective autonomy in MASs \revision{(\Cref{mdpi2020:s:background-rw})};
+\item we analyse the aggregate computing framework by the perspective of autonomy, by covering its positioning with respect to individual and collective autonomy, and showing how it can support adjustable autonomy \revision{(\Cref{mdpi2020:s:autonomy-ac})};
 \item we exemplify the discussion through a simulated case study, investigating (i) the relationship between individual goals/autonomy
  and collective goals/autonomy;
-  and (ii) the relationship between structures and collective autonomy \revision{(\Cref{s:eval})}; and
+  and (ii) the relationship between structures and collective autonomy \revision{(\Cref{mdpi2020:s:eval})}; and
 \item we \revision{discuss} gaps in literature on programming reliable collective autonomy 
- and delineate a research roadmap \revision{(\Cref{s:discussion})}.
+ and delineate a research roadmap \revision{(\Cref{mdpi2020:s:discussion})}.
 %\item we present a library support for collective autonomy in the aggregate computing framework, providing bricks to design collective adaptive strategies for formation of dynamic groups, collection of distributed data, and distributed action;
 \end{itemize}
 %
@@ -135,16 +132,16 @@ Therefore: %, in summary, we provide the following contributions\revision{, matc
 %
 %This manuscript is organised as follows.
 %%
-%\Cref{s:background-rw} provides background and related work about computational autonomy and aggregate programming.
+%\Cref{mdpi2020:s:background-rw} provides background and related work about computational autonomy and aggregate programming.
 %%
-%\Cref{s:autonomy-ac} covers the notion(s) of autonomy in aggregate programming, with emphasis on aspects related to \emph{collective} autonomy.
+%\Cref{mdpi2020:s:autonomy-ac} covers the notion(s) of autonomy in aggregate programming, with emphasis on aspects related to \emph{collective} autonomy.
 %%
-%\Cref{s:eval} provides an experimental evaluation
+%\Cref{mdpi2020:s:eval} provides an experimental evaluation
 % of the proposed concepts and approach.
 %%
-%\Cref{s:discussion} discusses opportunities and challenges related to the ability of expressing or even programming the collective autonomy of systems, and delineates a roadmap for further research.
+%\Cref{mdpi2020:s:discussion} discusses opportunities and challenges related to the ability of expressing or even programming the collective autonomy of systems, and delineates a roadmap for further research.
 %%
-\revision{Finally, we conclude with a wrap-up in \Cref{s:conc}.}
+\revision{Finally, we conclude with a wrap-up in \Cref{mdpi2020:s:conc}.}
 %
 \revision{In summary, in this route
   we cover how aggregate computing relates to and supports various forms of autonomy,
@@ -158,7 +155,7 @@ Therefore: %, in summary, we provide the following contributions\revision{, matc
 }
 
 \section{Background and Related Work}
-\label{s:background-rw}
+\label{mdpi2020:s:background-rw}
 
 This section provides the background for our contribution, 
  which is positioned at the intersection 
@@ -166,14 +163,14 @@ This section provides the background for our contribution,
  and software engineering.
 
 \subsection{Autonomy in software engineering and multi-agent systems}
-\label{background-autonomy}
+\label{mdpi2020:background-autonomy}
 
 At a first level, autonomy is used as a general informal notion, a characteristic 
  assumed to be possessed by some entities during design.
 %
 Etymologically, autonomy refers to an entity that follows its own laws, i.e., that is able to self-regulate its behaviour.
 %
-At a second level, concrete and (semi-)formal notions of autonomy are developed to support engineering tasks under specific viewpoints\revision{---see \Cref{table:autonomy-notions} for a summary}.
+At a second level, concrete and (semi-)formal notions of autonomy are developed to support engineering tasks under specific viewpoints\revision{---see \Cref{mdpi2020:table:autonomy-notions} for a summary}.
 %
 For instance, from a programming language perspective, 
  agents are computationally autonomous in the sense that they ``encapsulate invocation'' (i.e., they act as internally defined, e.g., by rules or goals). Therefore, agents can be thought of as the next step of an evolution from monoliths to modules (encapsulation of behaviour), to objects
@@ -264,10 +261,10 @@ Source of autonomy with respect to a component of a reference entity & \multicol
 %\\\hline
 \end{tabularx}
 \caption{\revision{A summary of common notions of autonomy.}}
-\label{table:autonomy-notions}
+\label{mdpi2020:table:autonomy-notions}
 \end{table}
 
-\subsection{Collective autonomy}\label{s:collective-autonomy}
+\subsection{Collective autonomy}\label{mdpi2020:s:collective-autonomy}
 
 The notion of \emph{collective autonomy}
  emerges when the reference agent 
@@ -310,7 +307,7 @@ They classify agent programming languages
  individual agent programming (\emph{micro-level}),
  agents integration and interaction programming (\emph{meso-level}),
  and 
- multi-agent organisation programming (\emph{macro-level}).
+ multi-agent organization programming (\emph{macro-level}).
 %
 Representatives 
  of these classes
@@ -334,7 +331,7 @@ In the following, we cover a programming model
  addressing the meso- and macro-levels of a MAS.
 
 \subsubsection{Aggregate programming}
-\label{background-ac}
+\label{mdpi2020:background-ac}
 
 Aggregate programming is an approach 
  to specify the \emph{collective adaptive}
@@ -361,7 +358,7 @@ In particular, we define an \emph{aggregate system}
  as a MAS of agents,
  structurally connected such that an agent can only interact with a subset of other agents known as its \emph{neighbours},
  and repeatedly plays an aggregate program against its up-to-date context
- (further details about the execution protocol are provided in \Cref{contrib-ac-control-arch}).
+ (further details about the execution protocol are provided in \Cref{mdpi2020:contrib-ac-control-arch}).
 
 Historically, aggregate programming originated from works drawing inspiration from nature: whereas the biological inspiration led to swarm intelligent MASs, where agent indirectly interact by pheromones \cite{DBLP:conf/atal/ParunakBS02}, the physical inspiration led to the idea of agents acting in environments empowered with potential fields \cite{DBLP:books/daglib/0015276}.
 %
@@ -394,15 +391,15 @@ The idea of aggregate programming is to
  and let these drive the local activity of every device in the system.
 %
 Aggregate programming is embodied by concrete aggregate programming languages~\cite{viroli2019jlamp-si-coord},
- such as ScaFi~\cite{DBLP:conf/isola/CasadeiVAD20,DBLP:journals/eaai/CasadeiVAPD21},
+ such as \scafi{}~\cite{DBLP:conf/isola/CasadeiVAD20,DBLP:journals/eaai/CasadeiVAPD21},
  a Domain-Specific Language (DSL) embedded in Scala
  as well as a toolchain for aggregate system development and simulation~\cite{Casadei2016mass}.
 %
-ScaFi is used for the examples in this paper and for the experimental evaluation of \Cref{s:eval}.
+\scafi{} is used for the examples in this paper and for the experimental evaluation of \Cref{mdpi2020:s:eval}.
 
 \revision{
-We adopt ScaFi in this paper mostly for practical reasons: with respect to other aggregate programming languages such as Proto and Protelis, surveyed in \cite{viroli2019jlamp-si-coord},
- ScaFi
+We adopt \scafi{} in this paper mostly for practical reasons: with respect to other aggregate programming languages such as Proto and Protelis, surveyed in \cite{viroli2019jlamp-si-coord},
+ \scafi{}
  is a \emph{strongly typed}, \emph{internal} DSL;
   therefore, it enables straightforward reuse 
   of powerful features from the Scala host language
@@ -411,12 +408,12 @@ We adopt ScaFi in this paper mostly for practical reasons: with respect to other
   (including Integrated Development Environments, static analysis, and debugging tools),
   at the expense of a more constrained syntax and semantics.
 %
-Additionally, ScaFi also represents an agile framework for testing experimental language features (cf. \emph{aggregate processes}~\cite{DBLP:journals/eaai/CasadeiVAPD21}---referenced in \Cref{gaps:expressiveness}).
+Additionally, \scafi{} also represents an agile framework for testing experimental language features (cf. \emph{aggregate processes}~\cite{DBLP:journals/eaai/CasadeiVAPD21}---referenced in \Cref{mdpi2020:gaps:expressiveness}).
 %
-Hence, among the existing languages for aggregate programming, we believe ScaFi is the one better fitting rich scenarios like those addressed in this paper.
+Hence, among the existing languages for aggregate programming, we believe \scafi{} is the one better fitting rich scenarios like those addressed in this paper.
 }
 %
-A full account of research about aggregate programming, field calculi, and ScaFi is beyond the scope of this article; the interested reader can refer to~\cite{viroli2019jlamp-si-coord,DBLP:journals/eaai/CasadeiVAPD21}.
+A full account of research about aggregate programming, field calculi, and \scafi{} is beyond the scope of this article; the interested reader can refer to~\cite{viroli2019jlamp-si-coord,DBLP:journals/eaai/CasadeiVAPD21}.
 
 Recently, some preliminary work~\cite{viroli2017ijaose-aggregate-plans} has been carried out 
  to consider application of the aggregate approach 
@@ -425,9 +422,9 @@ Recently, some preliminary work~\cite{viroli2017ijaose-aggregate-plans} has been
 There, two main ideas are proposed.
 %
 One is the notion of a \emph{cognitive field} (e.g., fields of beliefs, fields of goals, fields of intentions),
- which could be used to represent ``a kind of distributed, decentralised, and externalised mental state''.
+ which could be used to represent ``a kind of distributed, decentralized, and externalized mental state''.
 %
-The other is the notion of an \emph{aggregate plan}, i.e., a global, collective plan of actions modelling the way in which a dynamic team of agents cooperate towards a social goal in a self-organising way.
+The other is the notion of an \emph{aggregate plan}, i.e., a global, collective plan of actions modelling the way in which a dynamic team of agents cooperates towards a social goal in a self-organising way.
 %
 In particular, aggregate plans can be created by an initiator agent
 and iteratively spread by the other agents; any agent has the faculty of choosing
@@ -436,7 +433,7 @@ corresponding actions, which in general will depend on the agent’s position in
 space and in the team. This mechanism may be suitable where the behaviour to
 be executed is somehow related to the space/environment, where the MAS can
 be clustered in teams of agents exhibiting uniform behaviour, or where the MAS
-has to embed a decentralised, self-organising force. A management lifecycle for
+has to embed a decentralized, self-organizing force. A management lifecycle for
 aggregate plans involves the following phases: synthesis, spreading, collection, selection, execution.
 %
 In this article, we build on this perspective, and rather focus on the notion of (collective) autonomy.
@@ -447,22 +444,22 @@ In this article, we build on this perspective, and rather focus on the notion of
 \includegraphics[width=0.7\textwidth]{papers/mdpi2020/imgs/aggregate-agent-control-architecture.pdf}
 \caption[Agent control architecture in aggregate programming.]{Agent control architecture in aggregate programming.\\ 
 Notation: square boxes denote components; rounded boxes denote activities; dashed rounded boxes denote agents; solid arrows denote control passing; dashed arrows denote data passing.}
-\label{fig:aggregate-control-arch}
+\label{mdpi2020:fig:aggregate-control-arch}
 \end{figure}
 
 \section{Autonomy in Aggregate Computing}
-\label{s:autonomy-ac}
+\label{mdpi2020:s:autonomy-ac}
 
 In this section,
- we analyse the notion of autonomy (cf. \Cref{background-autonomy})
- by the aggregate computing and programming perspective (cf. \Cref{background-ac}).
+ we analyse the notion of autonomy (cf. \Cref{mdpi2020:background-autonomy})
+ by the aggregate computing and programming perspective (cf. \Cref{mdpi2020:background-ac}).
 %
 In particular, we 
  propose the aggregate execution protocol 
-  as basis of an agent control architecture (\Cref{contrib-ac-control-arch}), and then
- discuss aggregate programming of individual (\Cref{contrib-individual-autonomy})
- as well as collective autonomy (\Cref{contrib-collective-autonomy}).
- %, and then propose patterns for autonomy-oriented programming (\Cref{contrib-patterns}).
+  as basis of an agent control architecture (\Cref{mdpi2020:contrib-ac-control-arch}), and then
+ discuss aggregate programming of individual (\Cref{mdpi2020:contrib-individual-autonomy})
+ as well as collective autonomy (\Cref{mdpi2020:contrib-collective-autonomy}).
+ %, and then propose patterns for autonomy-oriented programming (\Cref{mdpi2020:contrib-patterns}).
  
 
 \begin{table}
@@ -479,11 +476,11 @@ Exogenous autonomy (undergone by the AC program) & Controlled -- Uncontrolled
 \\\hline
 \end{tabularx} 
 \caption{Individual autonomy in aggregate computing.}
-\label{table:summary-ac-individual-autonomy}
+\label{mdpi2020:table:summary-ac-individual-autonomy}
 \end{table}
 
 \subsection{Aggregate-oriented agent control architecture}
-\label{contrib-ac-control-arch}
+\label{mdpi2020:contrib-ac-control-arch}
 
 %
 The field calculus small-step operational semantics~\cite{audrito2019tocl}
@@ -517,8 +514,8 @@ The aggregate execution protocol typically consists
  \end{itemize}
 \end{enumerate}
 
-Such an abstract aggregate execution protocol %(introduced in \Cref{background-ac}---comprising context evaluation, aggregate program evaluation, context action) 
- can effectively be used to define an \emph{agent control architecture} (\Cref{fig:aggregate-control-arch}).
+Such an abstract aggregate execution protocol %(introduced in \Cref{mdpi2020:background-ac}---comprising context evaluation, aggregate program evaluation, context action) 
+ can effectively be used to define an \emph{agent control architecture} (\Cref{mdpi2020:fig:aggregate-control-arch}).
 %
 Variants of such a control architecture can also be envisaged,
  e.g.,
@@ -536,9 +533,9 @@ This control architecture also provides a basis for integrating the aggregate pa
 
 
 \subsection{Individual autonomy in aggregate computing}
-\label{contrib-individual-autonomy}
+\label{mdpi2020:contrib-individual-autonomy}
 
-As a running example, consider a crowd detection and steering application~\cite{DBLP:journals/computer/BealPV15} (cf. \Cref{fig:crowd-snapshot}).
+As a running example, consider a crowd detection and steering application~\cite{DBLP:journals/computer/BealPV15} (cf. \Cref{mdpi2020:fig:crowd-snapshot}).
 %
 When this application is built with the aggregate paradigm, the crowd is represented as an aggregate system consisting of 
  a large-scale, dense network of smartphone- or wearable-augmented people---co-located in a spatial region such as a public exhibition area, a concert, or a stadium.
@@ -549,13 +546,13 @@ An aggregate program can be continuously played by this system,
  a local risk level,
  and possibly -- if the vicinity to risky areas exceeds a certain threshold -- advice for safe dispersal (in terms of a field of movement directions).
 %
-In ScaFi, such a program may be implemented, reusing a library of general-purpose aggregate components~\cite{DBLP:conf/saso/BealV14a}, %\cite{DBLP:conf/saso/FranciaPBV17,DBLP:journals/tomacs/ViroliABDP18}, 
- as per \Cref{fig:scafi-crowd}. 
+In \scafi{}, such a program may be implemented, reusing a library of general-purpose aggregate components~\cite{DBLP:conf/saso/BealV14a}, %\cite{DBLP:conf/saso/FranciaPBV17,DBLP:journals/tomacs/ViroliABDP18}, 
+ as per \Cref{mdpi2020:fig:scafi-crowd}. 
 %
-Function \lstinline|crowdTracking| (\Cref{line:crowdtrack})
+Function \lstinline|crowdTracking| (\Cref{mdpi2020:line:crowdtrack})
  runs
  a collective crowding risk estimation process,
- by calling \lstinline|collectiveDensityEstimation| (\Cref{line:colldens}),
+ by calling \lstinline|collectiveDensityEstimation| (\Cref{mdpi2020:line:colldens}),
  and selects the corresponding output (i.e., a crowding value---\lstinline|NoRisk|, \lstinline|Risk|, or \lstinline|Danger|)
  only for the devices for which the perceived local density
  exceeds threshold value \lstinline|thCrowd|;
@@ -564,7 +561,7 @@ Function \lstinline|crowdTracking| (\Cref{line:crowdtrack})
 Function \lstinline|collectiveDensityEstimation| (whose code is not shown)
  may, e.g., using the building blocks in~\cite{DBLP:conf/saso/BealV14a}, break the system into multiple areas, compute the mean local density in each one of them, and share to all the members the area-wide crowding level (based on whether the average density exceeds threshold \lstinline|thDanger|).
 %
-Then, function \lstinline|crowdDispersal| (\Cref{line:dispersal})
+Then, function \lstinline|crowdDispersal| (\Cref{mdpi2020:line:dispersal})
  provides a suggestion for dispersal
  for all the devices that are closer than \lstinline|riskRange|
  from any device with crowding level \lstinline|Risk|;
@@ -574,7 +571,7 @@ Then, function \lstinline|crowdDispersal| (\Cref{line:dispersal})
 %
 We remark that, 
  though the aggregate program is unique (essentially like a shared plan for all the involved agents),
- its execution is distributed (i.e., decentralised)
+ its execution is distributed (i.e., decentralized)
  and local (i.e., with agents interacting with neighbour agents only),
  hence enabling scalable collective computations.
  
@@ -582,32 +579,32 @@ We remark that,
 \begin{figure}
 \begin{minipage}{0.37\textwidth}\centering
 \includegraphics[width=\textwidth]{papers/mdpi2020/imgs/crowd-example.png}
-\subcaption[A simulation snapshot of the crowd detection and steering example.]{\label{fig:crowd-snapshot}A simulation snapshot of the crowd detection and steering example. Red nodes are devices in an overcrowded area;
+\subcaption[A simulation snapshot of the crowd detection and steering example.]{\label{mdpi2020:fig:crowd-snapshot}A simulation snapshot of the crowd detection and steering example. Red nodes are devices in an overcrowded area;
  cyan nodes are nodes at risk since close to overcrowded devices;
  black nodes are in a safe location. Solid lines denote connectivity links (the longer links are those between infrastructural nodes).}
 \end{minipage}\hfill\begin{minipage}{0.62\textwidth}
 \centering
 \includegraphics[width=\textwidth]{papers/mdpi2020/imgs/crowd-detection-steering-diagram.pdf}
 \subcaption{
-\label{fig:crowd-diagram}\revision{Diagram corresponding to the ScaFi application code below. Boxes denote computational field expressions; solid arrows denote input/output relationships;
+\label{mdpi2020:fig:crowd-diagram}\revision{Diagram corresponding to the \scafi{} application code below. Boxes denote computational field expressions; solid arrows denote input/output relationships;
 dashed arrows are a shorthand to denote conditional selection (when initially separated---for \lstinline|mux|, where the ``then'' and ''else'' expressions are both evaluated, but only one is returned) and conditional evaluation (when initially joined---for \lstinline|branch|, where only one between the ``then'' and  ``else'' expression is evaluated and returned).}
 }
 \end{minipage}\\[0.4cm]
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[escapechar=\%,numbers=left]
 /* Shared plans (see also %\cite{DBLP:journals/computer/BealPV15}%) */
-def crowdTracking(p: Double, r: Double, w: Double, t: Double, %\label{line:crowdtrack}%
+def crowdTracking(p: Double, r: Double, w: Double, t: Double, %\label{mdpi2020:line:crowdtrack}%
                   thCrowd: Double, thDanger: Double): Crowding = {
   val localDensity = localDensityEstimation(p, r)
   mux(recentlyTrue(localDensity > thCrowd, t)){
-    collectiveDensityEstimation(p, r, thDanger)%\label{line:colldens}%
+    collectiveDensityEstimation(p, r, thDanger)%\label{mdpi2020:line:colldens}%
   } { NoRisk }
 }
 
-def crowdDispersal(c: Crowding, r: Double): TargetPosition = %\label{line:dispersal}%
+def crowdDispersal(c: Crowding, r: Double): TargetPosition = %\label{mdpi2020:line:dispersal}%
     // if a device is closer than r to any device with crowding level = Risk or higher
     // then compute a movement vector to move away from the Overcrowded area, or do not move
-    branch(distanceTo(c >= Risk) < r){ vectorFrom(c == Overcrowded) }{ currentPosition() }%\label{line:on-collective-intention}%
+    branch(distanceTo(c >= Risk) < r){ vectorFrom(c == Overcrowded) }{ currentPosition() }%\label{mdpi2020:line:on-collective-intention}%
 
 /* Shared beliefs: see %\cite{DBLP:journals/computer/BealPV15}% for motivation of the specific values */
 val p = 0.005 // proportion of people with a corresponding device (agent)
@@ -622,7 +619,7 @@ val riskRange = 50  // distance to risk for triggering alert
 val crowdingLevel = crowdTracking(p, r, w, thCrowd, thDanger, t)
 crowdDispersal(crowdingLevel, riskRange) // dispersal advice
 \end{lstlisting}
-\subcaption{\label{fig:scafi-crowd}Aggregate program as implemented in ScaFi.}
+\subcaption{\label{mdpi2020:fig:scafi-crowd}Aggregate program as implemented in \scafi{}.}
 %%
 %%def localDensityEstimation(p: Double, r: Double, w: Double): Double = {
 %%  val nbrsWithinRange = sumHood(mux(nbrRange() < r) { 1 } { 0 })
@@ -658,7 +655,7 @@ crowdDispersal(crowdingLevel, riskRange) // dispersal advice
 %%}
 \end{minipage}\\[0.2cm]
 \caption{Crowd detection and steering example: snapshot, architecture and program.}
-\label{fig:crowd-example}
+\label{mdpi2020:fig:crowd-example}
 \end{figure}
 
 An \emph{aggregate behaviour} is the result
@@ -679,7 +676,7 @@ Therefore, for an aggregate behaviour to actually work, i.e.,
  (which can be seen as a ``social benefit'')
  it is important that the aggregate execution
 % (roughly following the protocol 
-% discussed in \Cref{background-ac}: context evaluation -- aggregate program evaluation -- context action),
+% discussed in \Cref{mdpi2020:background-ac}: context evaluation -- aggregate program evaluation -- context action),
  which is tailored to match prefigured features of the environment,
  is respected by every device, generally.
 %
@@ -712,7 +709,7 @@ In the crowd example,
  is instrumental to achieve good ``social'' performance in risk detection
  and dispersal self-correction; moreover, a great damage may result from \emph{not} following a dispersal advice---so, the crowd program may be interpreted as the reification of a social norm for safe behaviour in a perilous situation.
 %
-Inspired by normative MAS, deviance can be minimised
+Inspired by normative MAS, deviance can be minimized
  by leveraging social enforcement mechanisms
  such as rewards or sanctions~\cite{DBLP:journals/jasss/HollanderW11}.
 %
@@ -771,12 +768,12 @@ Aggregate programs are typically developed
  to adapt and overcome corresponding perturbations
  to the collectively desired state-of-affairs.
 %
-\revision{\Cref{table:summary-ac-individual-autonomy} synthesises the various sources and forms of individual autonomy in aggregate computing.}
+\revision{\Cref{mdpi2020:table:summary-ac-individual-autonomy} synthesizes the various sources and forms of individual autonomy in aggregate computing.}
 
 \subsection{Collective autonomy in aggregate computing}
-\label{contrib-collective-autonomy}
+\label{mdpi2020:contrib-collective-autonomy}
 
-As discussed in \Cref{s:collective-autonomy}, collective autonomy is the form of autonomy exhibited by a collective,
+As discussed in \Cref{mdpi2020:s:collective-autonomy}, collective autonomy is the form of autonomy exhibited by a collective,
  i.e., a MAS as a whole.
 %
 Such a concept can be framed around two notions.
@@ -810,7 +807,7 @@ Indeed, collective intentionality
 %
 In aggregate computing, the shared goal 
  and the corresponding shared plan to achieve it
- are reified into an aggregate program (cf. \Cref{fig:scafi-crowd}),
+ are reified into an aggregate program (cf. \Cref{mdpi2020:fig:scafi-crowd}),
  namely a program that is  
  meant to be played by the whole MAS.
 %
@@ -830,7 +827,7 @@ For instance, in the crowd example,
  dispersal is activated 
  once a group of devices
  determines that the level of danger is sufficiently high
- (cf. \Cref{line:on-collective-intention} in \Cref{fig:scafi-crowd}).
+ (cf. \Cref{mdpi2020:line:on-collective-intention} in \Cref{mdpi2020:fig:scafi-crowd}).
  
 As we said,
  collective autonomy, as a notion,
@@ -846,7 +843,7 @@ Notice that an aggregate MAS can be collectively autonomous
  even if its overall behaviour
  is highly determined by the deliberation of few individuals---if those individuals have been delegated for decision-making by the collective.
 %
-Consider the \emph{Self-organising Coordination Regions (SCR)} pattern~\cite{casadei2019scr}, which is also exploited in \Cref{s:eval}; a general encoding in ScaFi is as follows:
+Consider the \emph{Self-organising Coordination Regions (SCR)} pattern~\cite{casadei2019scr}, which is also exploited in \Cref{mdpi2020:s:eval}; a general encoding in \scafi{} is as follows:
 %
 \begin{lstlisting}
 val leaders = S(grain) // sparse-choice: elect leaders at mean distance of grain
@@ -914,7 +911,7 @@ In other words, an aggregate program
 % to foster definition of collective adaptive behaviour.
 %
 %\subsection{Aggregate computing patterns for autonomy-oriented programming}
-%\label{contrib-patterns}
+%\label{mdpi2020:contrib-patterns}
 %
 %As we said,
 % aggregate programming enables specification
@@ -927,24 +924,24 @@ In other words, an aggregate program
 
 \revision{
 \subsection{Summary and comparison with related work}
-\label{s:summary-comparison-rw}
+\label{mdpi2020:s:summary-comparison-rw}
 } 
 
 To recap, aggregate programming provides computational mechanisms for supporting various levels of autonomy. Examples include:
 \begin{itemize}
 \item \emph{collective autonomy}: by cooperative execution of the aggregate program, or in terms of collective structures constraining individual behaviour;
 \item \emph{(endogenous) individual autonomy}: by calling local functions (as a sort of delegation);
-\item \emph{adjustable autonomy}: by using structures or branching mechanisms to regulate the relationship between individual and collective autonomy, or by controlling the amount of endogenous vs. exogenous autonomy \revision{(cf. \Cref{table:summary-ac-individual-autonomy})}.
+\item \emph{adjustable autonomy}: by using structures or branching mechanisms to regulate the relationship between individual and collective autonomy, or by controlling the amount of endogenous vs. exogenous autonomy \revision{(cf. \Cref{mdpi2020:table:summary-ac-individual-autonomy})}.
 \end{itemize}
 %
 The discussion in this section is substantiated by the experiments
- of \Cref{s:eval}
- and extended in \Cref{s:discussion}
+ of \Cref{mdpi2020:s:eval}
+ and extended in \Cref{mdpi2020:s:discussion}
  with further considerations on research gaps
  and potential directions for future investigations.
 
 \revision{
-The proposed approach differs from other works (such as those reviewed in \Cref{s:background-rw}) 
+The proposed approach differs from other works (such as those reviewed in \Cref{mdpi2020:s:background-rw}) 
  in crucial ways.
 %
 Prominently, it takes a global (``aggregate'') perspective on MAS design and programming.
@@ -961,12 +958,12 @@ Note that such perspectives are not alternative but complementary:
  for determining what individual autonomous behaviour has to be enacted
  is not built into aggregate programming.
 %
-As discussed in \Cref{s:discussion},
+As discussed in \Cref{mdpi2020:s:discussion},
  the combination of cognitive architectures
  with collective adaptive systems
  is a theme still to be investigated.
 %
-The proposed architecture (cf. \Cref{fig:aggregate-control-arch})
+The proposed architecture (cf. \Cref{mdpi2020:fig:aggregate-control-arch})
  is simpler than cognitive architectures:
  it is inspired by self-organising systems~\cite{DBLP:series/ncs/RodriguezHGGK11},
  and fosters \emph{emergence} of collective behaviour
@@ -977,14 +974,14 @@ Works that also consider MASs by a global perspective
  such as MOISE~\cite{DBLP:journals/ijaose/HubnerSB07}.
 %
 MOISE is a very articulated approach 
- for describing agent \emph{organisations}
+ for describing agent \emph{organizations}
  (i.e., dynamic \emph{groups} of agents
  comprising roles, properties, and interaction protocols) 
  and 
- how agents and organisations interact
- (e.g., participation to organisations, 
- evolution of organisations,
- and organisational effects on agents).
+ how agents and organizations interact
+ (e.g., participation to organizations, 
+ evolution of organizations,
+ and organizational effects on agents).
 %
 It is a very rich and flexible model, but it is also quite complex,
  requiring explicit definitions for the
@@ -994,15 +991,15 @@ By contrast,
  the aggregate computing approach 
  expresses collective behaviour
  through relatively small scripts
- (cf. the example in \Cref{fig:scafi-crowd})
+ (cf. the example in \Cref{mdpi2020:fig:scafi-crowd})
  obtained by composing functions of other collective behaviour together.
 %
 That is, whereas MOISE builds on 
- an explicit representation of organisations,
+ an explicit representation of organizations,
  with agents knowing and reasoning about them,
  aggregate computing favours a more implicit 
  representation of group structures, 
- more typical in the swarm intelligence and self-organisation tradition.
+ more typical in the swarm intelligence and self-organization tradition.
 %
 As aggregate computing builds on a main abstraction,
  the computational field,
@@ -1014,7 +1011,7 @@ On the other hand,
  other approaches of autonomous \emph{ensembles} programming,
  such as SCEL~\cite{DBLP:journals/taas/NicolaLPT14},
  do not achieve the same levels of declarativity
- of aggregate programming languages such as ScaFi.
+ of aggregate programming languages such as \scafi{}.
 %
 Arguably, the investigation of notions like collective autonomy 
  could take advantage of ``simple'', compact models 
@@ -1022,24 +1019,24 @@ Arguably, the investigation of notions like collective autonomy
 }
 
 \section{Case study}
-\label{s:eval}
+\label{mdpi2020:s:eval}
 
 To showcase the ability of aggregate computing to orchestrate collective behaviour
  comprising both individual and collective autonomy, in this section we present a case study, evaluated by simulation. 
 % 
 We conduct the experiments using Alchemist~\cite{DBLP:journals/jos/PianiniMV13}, a bio-inspired large-scale multi-agent simulator
- supporting the ScaFi aggregate programming language~\cite{Casadei2016mass}, which is used to write aggregate programs in our experiments. 
+ supporting the \scafi{} aggregate programming language~\cite{Casadei2016mass}, which is used to write aggregate programs in our experiments. 
 \revision{
 Our basic requirements for a simulator
  include the ability of
  simulating large-scale networks of mobile devices
  as well as the ability of 
  defining a dynamics suitable to express
- the aggregate execution protocol discussed in \Cref{contrib-ac-control-arch}, which consists of asynchronous rounds of execution with neighbourhood-based communication.
+ the aggregate execution protocol discussed in \Cref{mdpi2020:contrib-ac-control-arch}, which consists of asynchronous rounds of execution with neighbourhood-based communication.
 %
 Therefore, Alchemist represents a first choice 
  as it ships already with a module providing 
- ScaFi support.
+ \scafi{} support.
 %
 Moreover, Alchemist is solid and flexible:
  in the literature, it has been used extensively 
@@ -1053,7 +1050,7 @@ Moreover, Alchemist is solid and flexible:
 % GPS tracks, Smart cameras support, environment based upon OpenStreetMap maps and indoor node navigation.
 }
 %
-%We choose ScaFi instead of Protelis because 
+%We choose \scafi{} instead of Protelis because 
 % it exploits an internal Scala DSL that makes 
 % the development process agile and safe.
 %
@@ -1061,7 +1058,7 @@ The simulations are open-sourced and accessible from a public repository\footnot
 
 
 %\subsection{Individual vs. Collective Autonomy: the Case of Wildlife Monitoring and Rescue}
-%\label{s:exp1}
+%\label{mdpi2020:s:exp1}
 %
 
 We consider \emph{wildlife monitoring} as target application domain, which nowadays
@@ -1088,7 +1085,7 @@ Bridging with realistic environments and data is left as future work.
 %Note that the wildlife minitoring domain is used to take inspiration for general-purpose collective behaviour,
 %rather than to on realistic scenario modelling.
 
-\subsection{Experiment setup} \label{sb:experiment-setup}
+\subsection{Experiment setup} \label{mdpi2020:sb:experiment-setup}
 
 The collective goal is to find animals in danger and rescue them.
 %
@@ -1108,7 +1105,7 @@ There are three types of nodes:
 \end{itemize}
 %
 \revision{In this experiment, \emph{Mobile nodes} can perform \emph{tasks}, namely problems to be solved.
- Our characterisation of this concept is a lightweight version of the definition in~\cite{DBLP:conf/agents/FatimaW01}: 
+ Our characterization of this concept is a lightweight version of the definition in~\cite{DBLP:conf/agents/FatimaW01}: 
  each task has a \emph{goal}, a set of \emph{capabilities} needed to accomplish it, 
  and \emph{spatial constraints} (e.g., on the location of the agent or the task). We do not consider deadline and priority concepts. %, which could be introduced as future work.
 % Each task is also associated with the ID of the agent who created it.
@@ -1178,7 +1175,7 @@ Leaders then receive a map specifying
  (e.g. choosing the nearest node) and then they create a \emph{HealTask} 
  that has the goal of directing healers to a chosen animal to 
  rescue it. Besides, leaders share tasks that lead the explorers 
- to stay in the leader's area of influence (i.e. creting a \emph{ExploreAreaTask}).
+ to stay in the leader's area of influence (i.e. creating a \emph{ExploreAreaTask}).
 %
 At this point, tasks are shared across 
  the zones with the \lstinline|broadcast| function.
@@ -1188,14 +1185,14 @@ Finally, the slaves, who receive the various tasks created,
  local intentions (e.g., a node may not listen to 
  the collective's decision and go their way).
 %
-With ScaFi, this behaviour can be synthesised as described in \Cref{fig:wildlife-code}
+With \scafi{}, this behaviour can be synthesized as described in \Cref{mdpi2020:fig:wildlife-code}
 %
 \begin{figure}[t!]
 \centering
 \begin{subfigure}[b]{\textwidth}
 \centering
 \includegraphics[width=0.7\textwidth]{papers/mdpi2020/imgs/wildlife-program-diagram.pdf}
-\caption[High-level diagram expressing the implemented scenario]{\label{fig:eval:diagram}\revision{Diagram corresponding to the code below. This figure uses the same notation of \Cref{fig:crowd-diagram}. In addition, we use a same colour to denote multiple references to the same functional block.}}
+\caption[High-level diagram expressing the implemented scenario]{\label{mdpi2020:fig:eval:diagram}\revision{Diagram corresponding to the code below. This figure uses the same notation of \Cref{mdpi2020:fig:crowd-diagram}. In addition, we use a same colour to denote multiple references to the same functional block.}}
 \end{subfigure}
 %%%%%
 \par\bigskip % force a bit of vertical whitespace
@@ -1231,12 +1228,12 @@ val collectiveTasks = Seq(healTaskForSlave, exploreAreaToSlave)
 val localTask = Planner.eval(collectiveTasks) //the task choice is encapsulated here..
 val actuation = localTask.call(this) // produces data in order to achieve the task chosen 
 \end{lstlisting}
-\caption{\revision{The ScaFi code snippet for the wildlife program behaviour.}}
-\label{fig:wildlife-code}
+\caption{\revision{The \scafi{} code snippet for the wildlife program behaviour.}}
+\label{mdpi2020:fig:wildlife-code}
 \end{subfigure}
 %
 \caption{Wildlife monitoring and rescue example: architecture and program.}
-\label{fig:wildlife-example}
+\label{mdpi2020:fig:wildlife-example}
 \end{figure}
 %
 Next, we briefly link different 
@@ -1267,7 +1264,7 @@ From a collective perspective, the MAS performs:
 \item task selection to reduce the animal in danger in zones.
 \end{itemize}
 %
-With ScaFi the overall behaviour is intentionally described as:
+With \scafi{} the overall behaviour is intentionally described as:
 \begin{lstlisting}
 val targets = animalsInDanger()
 branch(isAnimal){doNothing} {rescue(targets)}
@@ -1288,7 +1285,7 @@ So, what we expect is that most the system is locally autonomous less
 %In particular, agents have a probability \emph{1 - p} to not follow the
 % collective choice and could act selfishly (e.g. trying to heal the nearest animal).
 %
-\subsection{Performance metrics and parameters} \label{sb:performance}
+\subsection{Performance metrics and parameters} \label{mdpi2020:sb:performance}
 
 In simulation evaluation, we consider whether 
  functional and non-functional aspects.
@@ -1308,7 +1305,7 @@ A non-functional value verified is the average distance to the leader.
 We also introduce a metric that represents the general performance of a simulation run.
  Given a period \emph{t} expressed in seconds, we sample the experiment at each second.
  For each sample, we evaluate two parameters, \textit{events} and \textit{healed count}. 
- Given a sample t, events measure how many animal turn on danger during the simulation until the t. 
+ Given a sample t, events measure how many animal turns on danger during the simulation until the t. 
  Indeed, the \textit{healed count} tells how many animals were rescued by the collective. 
  Hypothetically, if the system is completely reactive, \textit{healed count} and \textit{events} should have the same value. 
  Hence, the greater is the distance between these two values, the worse system perform. 
@@ -1331,7 +1328,7 @@ We test the application varying these parameters:
   the collective task 
 \end{itemize}
 %
-\subsection{Results and discussion}\label{sb:results}
+\subsection{Results and discussion}\label{mdpi2020:sb:results}
 
 \begin{figure}[t!]
 \centering
@@ -1346,18 +1343,18 @@ We test the application varying these parameters:
  Animals are drawn as a half-circle. Each group have a uniform colour. 
  When they turn in danger, a half red circle come out.
 }
-\label{fig:wildlife-monitoring-gui}
+\label{mdpi2020:fig:wildlife-monitoring-gui}
 \end{figure}
 
 We now present the key results produced 
- by the different simulation runs we conducted. In \Cref{fig:wildlife-monitoring-gui} there is
+ by the different simulation runs we conducted. In \Cref{mdpi2020:fig:wildlife-monitoring-gui} there is
  a graphical result obtained in Alchemist.
 %
  We had varied \emph{p} by four values (0, 0.25, 0.5, 0.75 and 1) and \emph{healer count} by \revision{four values (2, 4, 6, 8)}. 
  For each \emph{p} and \emph{healer count} combination, 50 simulation runs are performed. 
- The data reported in \Cref{fig:wildlife-simulation} contains the average behaviour of those simulations. 
+ The data reported in \Cref{mdpi2020:fig:wildlife-simulation} contains the average behaviour of those simulations. 
 % 
-\revision{In \Cref{fig:stack-plot-error}, the average error is reported for each combination of \emph{healer count} and \emph{p}.}
+\revision{In \Cref{mdpi2020:fig:stack-plot-error}, the average error is reported for each combination of \emph{healer count} and \emph{p}.}
 %
 Each run has lasts 300 seconds. 
  Furthermore, after 100 seconds, no other animals turn their status in danger.
@@ -1370,7 +1367,7 @@ In general, the results confirm our thesis:
  Because even if agents don't collaborate, there is a high probability that two \emph{Mobile nodes}
  are near to the same animal in danger.
 %
-\revision{We see the benefits of collective choice with higher healer count values (\Cref{fig:stack-plot-error}).
+\revision{We see the benefits of collective choice with higher healer count values (\Cref{mdpi2020:fig:stack-plot-error}).
  For example, when \emph{healer count} is $8$ the system at $p=1$ performs better than all other configurations. 
  We want to emphasize how the difference w.r.t. the other \emph{p} values grows as \emph{healer count} increases. 
 % Small note about the performance of the system when with \emph{p} = 0.75 and \emph{healer count} = 6. In this configuration, 
@@ -1480,7 +1477,7 @@ It is because all agents must adapt to the aggregate protocol, losing some of th
 The first column shows how many animals are rescued during the simulation.
 The plots in the second column show the average distance from the leader.
 The plots in the last column point out how many zones have not enough healers to rescue an animal.}} %Todo
-\label{fig:wildlife-simulation}
+\label{mdpi2020:fig:wildlife-simulation}
 \end{figure}
 
 \begin{figure}[ht!]
@@ -1488,10 +1485,10 @@ The plots in the last column point out how many zones have not enough healers to
 \includegraphics[width=\textwidth]{papers/mdpi2020/imgs/box-plot.pdf}
 \caption[Simulations result of the wild-life scenario]{\revision{Average error (RMSE) for each combination of \emph{p} and \emph{healer count}.
  Horizontal lines mark the performance of \emph{p} = 1.0. }}
-\label{fig:stack-plot-error}
+\label{mdpi2020:fig:stack-plot-error}
 \end{figure}
 
-\subsection{Final remarks} \label{sb:case-study-remarks}
+\subsection{Final remarks} \label{mdpi2020:sb:case-study-remarks}
 \revision{
 In this experiment, we deliberately did not 
  consider the following aspects (even if they could affect 
@@ -1525,19 +1522,19 @@ Environmental aspects are perceived through sensors that can
  (e.g., a scheduler to choose tasks).
 }
 \section{Research Roadmap} %{Discussion and Research Directions} % Opportunities and Challenges}
-\label{s:discussion}
+\label{mdpi2020:s:discussion}
 
 In the following,
  we identify a roadmap of two research directions
  to unveil the full potential of aggregate programming for collective autonomy: they 
  comprise
- expressing collective autonomous behaviour (\Cref{gaps:expressiveness})
+ expressing collective autonomous behaviour (\Cref{mdpi2020:gaps:expressiveness})
  and
  achieving reliable collective autonomy
-(\Cref{gaps:reliability}).
+(\Cref{mdpi2020:gaps:reliability}).
 
 \subsection{Expressing collective autonomous behaviour}
-\label{gaps:expressiveness}
+\label{mdpi2020:gaps:expressiveness}
 
 Addressing problems at a suitable level of abstraction
  is key in modelling and programming.
@@ -1579,15 +1576,15 @@ Indeed, it would be interesting to investigate,
  might help to drive group and individual behaviour.
 
 
-\subsubsection{Collective autonomy and structural organisation}
+\subsubsection{Collective autonomy and structural organization}
 
-One of the first works analysing the relationship between organisational structure
+One of the first works analysing the relationship between organizational structure
  and autonomy 
  is by Schillo~\cite{DBLP:journals/connection/Schillo02}.
 %
 Schillo proposes a framework based on the notion of \emph{delegation},
-draws a link between self-organisation and adjustable autonomy,
-and defines a spectrum of seven organisational forms of increasing coupling between agents in a MAS: 
+draws a link between self-organization and adjustable autonomy,
+and defines a spectrum of seven organizational forms of increasing coupling between agents in a MAS: 
  single-agent system,
  task delegation,
  virtual enterprise,
@@ -1598,10 +1595,10 @@ and defines a spectrum of seven organisational forms of increasing coupling betw
 %
 In~\cite{DBLP:journals/ker/HorlingL04},
  Horling et al. 
- provide a survey of MAS organisational paradigms.
+ provide a survey of MAS organizational paradigms.
 %
-They identify ten kinds of organisational structures:
- adhocracies, hierarchies, holarchies, coalitions, teams, congregations, societies, federations, markets, and matrix-like organisations.
+They identify ten kinds of organizational structures:
+ adhocracies, hierarchies, holarchies, coalitions, teams, congregations, societies, federations, markets, and matrix-like organizations.
 %
 We believe that more work is needed for better understanding and specifying the inter-dependencies between structures
  and collective autonomous behaviour.
@@ -1632,11 +1629,11 @@ In this respect,
 Approaches inspired by holonic MASs~\cite{DBLP:series/ncs/RodriguezHGGK11},
  such as SARL~\cite{DBLP:conf/webi/RodriguezGG14},
  may prove useful or insights when considering multiple levels of autonomy and
- hierarchical organisations.
+ hierarchical organizations.
  
 
 \subsection{Reliable collective autonomy}
-\label{gaps:reliability}
+\label{mdpi2020:gaps:reliability}
 
 Related to the ability of expressing collective autonomous behaviour
  is the extent to which specifications lead to properties 
@@ -1706,19 +1703,9 @@ In large-scale MASs,
 %
 Preliminary work in aggregate programming research
  has been carried out
- to exclude non-trusted devices
- from the collective computation~\cite{casadei2018scp},
- leveraging a notion of \emph{trust field} 
- mapping any agent of the MAS to a trust score
- that is computed collectively.
-%
-We believe further work is required on these topics
- to promote reliable (collective) autonomy.
-
-%\subsection{Methodologies for integrated design of individual and collective autonomy} 
-
+ to exclude non-trusted deviceshysical Swarms Optimization: Insights from La
 \revision{
-\subsection{Applications}\label{roadmap:apps}
+\subsection{Applications}\label{mdpi2020:roadmap:apps}
 
 Multi-agent systems and technologies span various application domains~\cite{DBLP:books/sp/14/Muller014}
  including %aerospace, 
@@ -1768,7 +1755,7 @@ In this sense,
 }
 
 \section{Conclusion} % and Future Work
-\label{s:conc}
+\label{mdpi2020:s:conc}
 
 In this paper, we consider the problem
  of programming the collective autonomous behaviour
@@ -1779,7 +1766,7 @@ We consider the aggregate programming paradigm,
  founded on a calculus of computational fields
  originally introduced 
  to express the coordination 
- and self-organisation logic of spatially situated systems.
+ and self-organization logic of spatially situated systems.
 %
 We analyse the support provided by aggregate computing
  by a MAS perspective,
@@ -1797,30 +1784,30 @@ Finally,
 \revision{
 %Therefore, in summary, we provide the following contributions\revision{, matching the structure of the manuscript}:
 %\begin{itemize}
-%\item we provide a review of literature about autonomy and especially collective autonomy in MASs \revision{(\Cref{s:background-rw})};
-%\item we analyse the aggregate computing framework by the perspective of autonomy, by covering its positioning with respect to individual and collective autonomy, and showing how it can supports adjustable autonomy \revision{(\Cref{s:autonomy-ac})};
+%\item we provide a review of literature about autonomy and especially collective autonomy in MASs \revision{(\Cref{mdpi2020:s:background-rw})};
+%\item we analyse the aggregate computing framework by the perspective of autonomy, by covering its positioning with respect to individual and collective autonomy, and showing how it can supports adjustable autonomy \revision{(\Cref{mdpi2020:s:autonomy-ac})};
 %\item we exemplify the discussion through a simulated case study, investigating (i) the relationship between individual goals/autonomy
 % and collective goals/autonomy;
-%  and (ii) the relationship between structures and collective autonomy \revision{(\Cref{s:eval})}; and
+%  and (ii) the relationship between structures and collective autonomy \revision{(\Cref{mdpi2020:s:eval})}; and
 %\item we provide gaps in literature on programming reliable collective autonomy 
-% and delineate a research roadmap \revision{(\Cref{s:discussion})}.
+% and delineate a research roadmap \revision{(\Cref{mdpi2020:s:discussion})}.
 %\end{itemize}
 The various goals described in the introduction have been addressed as follows.
 %
-The literature review in \Cref{s:background-rw} 
+The literature review in \Cref{mdpi2020:s:background-rw} 
  provides a variegated view of autonomy in software engineering and MAS, with emphasis on actionable notions and programming.
 %
-This helped us to position the contribution of \Cref{s:autonomy-ac} on aggregate computing, where multiple autonomy-related notions 
+This helped us to position the contribution of \Cref{mdpi2020:s:autonomy-ac} on aggregate computing, where multiple autonomy-related notions 
 are supported (also enabling adjustable autonomy) but implicit, and had never been unveiled in previous publications.
 %
 Explicit mechanisms and extensions for (adjustable) autonomy could be considered in the future.
 %
 Moreover, the contribution of the view of the aggregate execution model as an agent control architecture represents a step towards comparison and integration with other architectures---which is left as an interesting future work.
 %
-The case study of \Cref{s:eval} shows how the discussed framework
+The case study of \Cref{mdpi2020:s:eval} shows how the discussed framework
  enables functional specification of 
  MASs exhibiting a form of collective autonomy
- as well as parameterised behaviours
+ as well as parameterized behaviours
  where individual and collective autonomy 
  can be adjusted off-line.
 %
@@ -1832,7 +1819,7 @@ Self-organising algorithms and patterns for on-line autonomy adjustment
  as well as more quantitative analysis of trade-offs
  can be considered in future research.
 %
-Finally, the discussion in \Cref{s:discussion}
+Finally, the discussion in \Cref{mdpi2020:s:discussion}
  highlights significant research directions
  and application domains
  which complement the above discussion.
@@ -1848,7 +1835,7 @@ It is a matter of abstraction
 %
 As discussed,
  specifications of collective autonomous behaviour,
- such as aggregate programs written in ScaFi,
+ such as aggregate programs written in \scafi{},
  provide a natural support for adjustable autonomy,
  and this could pave the way to the integration
  with traditional agent control architectures.
@@ -1859,3 +1846,5 @@ However, more work is needed
  and hence in reliable forms of collective autonomy.
 
 \printbibliography
+
+\subsection{List of Publications}

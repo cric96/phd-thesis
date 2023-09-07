@@ -1,5 +1,3 @@
-\newcommand{\meta}[1]{{\color{blue}#1}}
-
 \newcommand{\todos}[1]{\todo[inline, color=cyan]{\textbf{TODO}: #1}}
 \newcommand{\constraints}[1]{\todo[inline, color=red]{#1}}
 \newcommand{\suggestions}[1]{\todo[inline, color=yellow]{#1}}    
@@ -9,41 +7,41 @@
 \sloppypar    
 \chapter{Machine Learning for Aggregate Computing}
 \minitoc % Creating an actual minitoc
-\emph{\ac{ac}}~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/eaai/CasadeiVAPD21}
- is an approach
- for programming
- \emph{\ac{ci}}~\cite{DBLP:journals/fgcs/Szuba01,DBLP:journals/jair/WolpertT02} in 
- distributed systems.
+%\emph{\ac{ac}}~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/eaai/CasadeiVAPD21}
+% is an approach
+% for programming
+% \emph{\ac{ci}}~\cite{DBLP:journals/fgcs/Szuba01,DBLP:journals/jair/WolpertT02} in 
+% distributed systems.
 %
-\ac{ac} is based on a macro-programming model~\cite{DBLP:journals/corr/abs-2201-03473,beal2013organizing-aggregate,DBLP:conf/ipsn/NewtonMW07}
- whereby the collective behaviour of a system
- of neighbour-interacting agents 
- is expressed through a single ``aggregate program''
- specifying both data processing and data exchange by a global perspective.
+%\ac{ac} is based on a macro-programming model~\cite{DBLP:journals/corr/abs-2201-03473,beal2013organizing-aggregate,DBLP:conf/ipsn/NewtonMW07}
+% whereby the collective behaviour of a system
+% of neighbour-interacting agents 
+% is expressed through a single ``aggregate program''
+% specifying both data processing and data exchange by a global perspective.
 %
-For collective adaptive behaviour to unfold,
- the full program has to be played by all the agents
- of the system
- through asynchronous \emph{sense-compute-act} rounds,
- hence somewhat mimicking self-organization processes in natural systems~\cite{yates2012selforg}.
+%For collective adaptive behaviour to unfold,
+% the full program has to be played by all the agents
+% of the system
+% through asynchronous \emph{sense-compute-act} rounds,
+% hence somewhat mimicking self-organization processes in natural systems~\cite{yates2012selforg}.
 %
-For actual execution,
- a proper \ac{ac} middleware or platform
- has to be deployed across the nodes of the target distributed system,
- to support the services
- needed for the execution of applications~\cite{DBLP:journals/fi/CasadeiPPVW20,DBLP:journals/iotj/RazzaqueMPC16}.
+%For actual execution of an aggregate program,
+% a proper \ac{ac} middleware or platform
+% has to be deployed across the nodes of the target distributed system,
+% to support the services
+% needed for the execution of applications~\cite{DBLP:journals/fi/CasadeiPPVW20,DBLP:journals/iotj/RazzaqueMPC16}.
 %
-It has been shown 
- that the approach is especially effective
- for programming 
- large-scale homogeneous distributed systems
- and multi-agent systems 
- such as crowds of device-equipped humans~\cite{DBLP:journals/computer/BealPV15},
- robot swarms~\cite{DBLP:journals/eaai/CasadeiVAPD21},
- sensor-actuator networks~\cite{DBLP:journals/cee/AudritoCDPV21}, and
- smart cities~\cite{DBLP:journals/fi/CasadeiPPVW20}. %~\cite{DBLP:conf/coordination/CasadeiPVN19}.
+%It has been shown 
+% that the approach is especially effective
+% for programming 
+% large-scale homogeneous distributed systems
+% and multi-agent systems 
+% such as crowds of device-equipped humans~\cite{DBLP:journals/computer/BealPV15},
+% robot swarms~\cite{DBLP:journals/eaai/CasadeiVAPD21},
+% sensor-actuator networks~\cite{DBLP:journals/cee/AudritoCDPV21}, and
+% smart cities~\cite{DBLP:journals/fi/CasadeiPPVW20}. %~\cite{DBLP:conf/coordination/CasadeiPVN19}.
 
-In summary, the engineering of \ac{ac} applications 
+Engineering of \ac{ac} applications 
  is a rich activity 
  that spans multiple concerns
  including
@@ -57,7 +55,7 @@ Traditionally,
  these activities have been carried out 
  through ad-hoc designs and implementations
  created by developers
- and tailored to specific contexts and goals,
+ and tailored to specific contexts and goals (see Part II of the thesis),
  leading to, e.g.,
  self-organization algorithms 
  that are very reactive under certain network assumptions~\cite{DBLP:journals/cee/AudritoCDPV21},
@@ -74,18 +72,14 @@ In particular, we observe that
  can be applied at different levels
  of the \ac{ac} ``engineering stack''.
 %
-The integration of \ac{ac} and \ac{ml}, 
+The integration of \ac{ac} and \ac{ml} done during this thesis, 
  which we refer to as \ac{acml},
- is expected to provide a lot of opportunities and challenges, fostering a long-term record of research contributions.
+ is provided a lot of opportunities and challenges, 
+ fostering a long-term record of research contributions.
 %
-Accordingly, in this paper,
- we provide and discuss a research roadmap
+In this chapter, we discuss a research roadmap followed during the thesis,
  for achieving the vision of \ac{acml}.
 
-% \meta{
-% \section{Background: Aggregate Computing}
-% do we need this?
-% }
 
 \begin{figure}[h]
 \centering
@@ -107,13 +101,13 @@ Accordingly, in this paper,
   \label{fig:roadmap}
 \end{figure}
 
-\section{ Research Roadmap}\label{s:roadmap}
+\section{Research Roadmap}\label{s:roadmap}
 
 This section details motivation and direction for \ac{acml} research,
  also summarized in \Cref{fig:roadmap}.
 %
-For a comprehensive introduction to \ac{ac},
- the reader can refer to~\cite{DBLP:journals/jlap/ViroliBDACP19}.
+%For a comprehensive introduction to \ac{ac},
+% the reader can refer to~\cite{DBLP:journals/jlap/ViroliBDACP19}.
 
 \subsection{Goals and Means}
 
@@ -130,7 +124,7 @@ The goals include:
 \begin{enumerate}
 \item \emph{functionality} | achieving some collective behaviour (e.g., 
   environment monitoring and control through sensor-actuator networks~\cite{DBLP:journals/fi/CasadeiPPVW20,danilo2021lmcs},
-%resiliently organise the system into leader-regulated areas~\cite{DBLP:conf/coordination/CasadeiPVN19},
+ resiliently organize the system into leader-regulated areas~\cite{DBLP:conf/coordination/CasadeiPVN19},
  and 
  matching and coordinating collective tasks with worker ensembles~\cite{DBLP:journals/eaai/CasadeiVAPD21});
 
@@ -160,8 +154,6 @@ Now, it turns out that \ac{ml}
  to replace
  or augment
  those traditionally human-engineered means.
-
-
 \subsection{Learning \ac{ac} algorithms}
 
 \ac{ac} algorithms 
@@ -169,7 +161,8 @@ Now, it turns out that \ac{ml}
  and use computational mechanisms
  to produce collective outputs.
 %
-In the \emph{field calculus}~\cite{DBLP:journals/jlap/ViroliBDACP19}, the minimal formal framework 
+In the \emph{field calculus}~\cite{DBLP:journals/jlap/ViroliBDACP19},
+ the minimal formal framework 
  that underpins \ac{ac},
  collective inputs and outputs are denoted by
  \emph{computational fields} (or \emph{fields} for short), namely
@@ -205,12 +198,13 @@ So, different gradient algorithms may achieve the same functionality (i.e., the 
  with different non-functional outcomes.
 %
 Indeed, they may:
- (i) take different time or a different number of rounds to converge, for the same initial condition;
- (ii) require a different amount of data to be exchanged;
- (iii) take different trade-offs e.g. regarding reactivity and smoothness (cf. the stability of values during change)~\cite{DBLP:journals/cee/AudritoCDPV21,DBLP:conf/saso/AudritoCDV17};
+\begin{itemize}
+  \item take different time or a different number of rounds to converge, for the same initial condition;
+  \item require a different amount of data to be exchanged;
+  \item take different trade-offs e.g. regarding reactivity and smoothness (cf. the stability of values during change)~\cite{DBLP:journals/cee/AudritoCDPV21,DBLP:conf/saso/AudritoCDV17};
  or 
- (iv) take different assumptions regarding the execution model or the environment~\cite{DBLP:journals/cee/AudritoCDPV21}, which may affect applicability.
-
+ \item take different assumptions regarding the execution model or the environment~\cite{DBLP:journals/cee/AudritoCDPV21}, which may affect applicability.
+\end{itemize}
 Designing efficient and versatile \ac{ac} algorithms can be complex~\cite{DBLP:journals/cee/AudritoCDPV21,DBLP:conf/saso/AudritoCDV17}: therefore, 
  it is interesting to explore
  whether algorithms can be learnt or synthesized
@@ -233,15 +227,17 @@ In this case, learning would be used to \emph{search}
 The resulting algorithm, then, would need extensive testing (e.g. by simulation) in a representative set of environments and dynamics.
 %
 In this regard, research is needed to identify what synthesis techniques, learning algorithms, frameworks, and methodologies can support the learning of algorithms able to achieve performance similar or better than state-of-the-art solutions.
+%
+First effort in this direction has been done in~\cite{DBLP:conf/coordination/CasadeiPVN19}, where a gradient algorithm has been learnt through a reinforcement learning approach. %TODO add reference to the right chapter.
 
 \subsection{Learning execution strategies and adaptations}
 
 For a given \ac{ac} program or algorithm,
   multiple execution strategies can be applied,
   affecting aspects like
-  the scheduling of computation rounds,
-  the scheduling of communications,
-  the retention of messages from neighbours.
+  the scheduling of computation rounds (i.e., the frequency of execution),
+  the scheduling of communications (i.e., when the devices exchange data),
+  the retention of messages from neighbours (i.e., when should messages from the neighbor be considered too old to be used).
 %
 In particular,
  a first distinction 
@@ -283,11 +279,9 @@ The emphasis on improving efficiency
  of collective computations,
  could be the opportunity to open up a vision 
  of \emph{green autonomic computing}.
-
- 
- 
+%
+In~\cite{aguzzi2022coord-ac-rl} the authors have proposed a reinforcement learning approach to learn the execution strategy to improve the execution efficiency of a gradient algorithm. %TODO add reference to the right chapter.
 \subsection{Learning system structures and re-structuring}
-
 A logical \ac{ac} system 
  consists of a logical network
  of logical devices
@@ -302,8 +296,6 @@ As shown in recent work on \emph{pulverized architectures}~\cite{DBLP:journals/f
  of application components
  onto the available \ac{ict} infrastructure.
 %
-% which emphasises how to break an aggregate computation 
-% into a set of essential components deployable in a particular computational network. 
 %
 For instance,
  it is possible to embed evaluations of the aggregate program into the devices themselves,
@@ -439,9 +431,7 @@ These challenges are mitigated
  analysing and reasoning about aggregate computations and systems~\cite{DBLP:journals/jlap/ViroliBDACP19},
  and the support given by tools for 
  developing and simulating aggregate systems~\cite{DBLP:journals/jlap/ViroliBDACP19}.
-
-
-\section{Conclusion}
+\section{Final Remarks}
 %
 Developing \ac{ac} applications
  requires addressing
@@ -455,13 +445,14 @@ The integration of \ac{ml}
  provides opportunities and challenges
  requiring significant research.
 %
-The roadmap for \ac{acml} delineated in this paper
+The roadmap for \ac{acml} delineated in this thesis
  is expected to provide results and insights
  on the engineering of collectively intelligent distributed systems.
+%
+In next chapters, 
+ firstly we will introduce \scarlib{}: a tool for many-agent reinforcement learning developed to support our research.
+% 
+After that we will present a concrete application of \ac{acml} to improve the efficiency of a gradient algorithm
+ both by learning the execution strategy and the algorithm itself.
  
 \printbibliography
-
-
-%\vspace{12pt}
-%\color{red}
-%IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.

@@ -1,4 +1,5 @@
 \chapter{Reinforcement Learning}\label{chap:marl}
+
 \minitoc% Creating an actual minitoc
 \newcommand{\RS}{\mathcal{S}}
 \newcommand{\RA}{\mathcal{A}}
@@ -6,8 +7,14 @@
 \newcommand{\RR}{\mathcal{R}}
 \newcommand{\RE}{\mathbb{E}}
 
+\section{Introduction}
+Modern AI applications are transitioning from mere feature recognition, like identifying a cat in an image, to decision-making processes, such as safely navigating a traffic intersection. In these scenarios, interactions among multiple agents are inevitable. This requires each agent to act strategically, especially since current decisions can impact future outcomes.
+
+Machine learning is essentially the transformation of data into knowledge. For instance, a learning algorithm might take training data (like images of cats) and produce knowledge (rules to detect cats in images). Over the past decade, there has been significant advancement in a specific machine learning technique called deep learning. One of its primary manifestations is various types of deep neural networks (DNNs).
+
+Reinforcement Learning (RL) is a subset of machine learning where agents learn optimal behaviours through a trial-and-error process as they interact with their environment. Unlike supervised learning, which uses labelled data (e.g., an image labelled with "cat"), RL is goal-driven. It aims to develop a learning model that strives to achieve the best long-term goal by refining its approach through trial and error, without relying on labelled data for knowledge acquisition.
 \section{Single-agent}
-acl{rl}~\cite{sutton2018reinforcement-learning} is a generic framework 
+\acl{rl}~\cite{sutton2018reinforcement-learning} is a generic framework 
  %-- inspired by how humans learn -- 
  used to structure \emph{control problems}. 
 %
@@ -104,4 +111,102 @@ Nowadays, Q-Learning is applied in various fields, ranging from robotics to wire
 %
 However, one of the most challenging settings in which Q-Learning could be applied is when the learning process has to deal with multiple concurrent learners, namely a multi-agent system.
 \section{Multi-agent}
+\subsection{Formalization}
+In the realm of reinforcement learning, multi-agent systems refer to environments where multiple agents interact with each other and the environment simultaneously. The formalization of multi-agent reinforcement learning (MARL) typically extends the standard Markov Decision Process (MDP) framework to account for multiple agents. Each agent has its own state, action, and reward function, and the joint actions of all agents determine the transition dynamics and rewards.
+
+\begin{equation}
+MARL = \langle \mathcal{N}, \mathcal{S}, \mathcal{A}_1, \ldots, \mathcal{A}_N, \mathcal{P}, \mathcal{R}_1, \ldots, \mathcal{R}_N \rangle
+\end{equation}
+
+Where:
+\begin{itemize}
+    \item $\mathcal{N}$ is the number of agents.
+    \item $\mathcal{S}$ is the joint state space.
+    \item $\mathcal{A}_i$ is the action space of agent $i$.
+    \item $\mathcal{P}$ is the joint transition probability function.
+    \item $\mathcal{R}_i$ is the reward function for agent $i$.
+\end{itemize}
+
+\subsection{Taxonomies}
+Multi-agent systems can be categorized based on various criteria:
+
+\begin{itemize}
+    \item \textbf{Communication}: Agents can either communicate directly with each other or have no communication.
+    \item \textbf{Cooperation Level}: Systems can be fully cooperative, fully competitive, or mixed (both cooperative and competitive).
+    \item \textbf{Adversarial Nature}: Some systems have agents with opposing goals, making them adversarial.
+\end{itemize}
+
+\subsection{State-of-the-art}
+Recent advancements in MARL have led to the development of algorithms that can handle complex interactions between agents. Some state-of-the-art algorithms include Proximal Policy Optimization (PPO) for multi-agent settings, MADDPG (Multi-Agent Deep Deterministic Policy Gradient), and QMIX.
+
 \section{Many-agent}
+In particular, in this work, we consider \emph{homogeneous \ac{MAARL}}~\cite{yang2021many}, 
+ where the set of agents is large ($N \gg 2$) and each agent is \emph{interchangeable} and \emph{indistinguishable}.
+%
+This research area is relevant in the context of large-scale systems 
+ where collective intelligence emerges from local and repeated interaction of simple entities, like in swarm robotics.
+%
+In such many-agent scenarios, 
+ the implementation of fully decentralized learning is often unfeasible due to the large number of learning agents, 
+ which makes the system non-stationary and difficult to manage. 
+%
+Conversely, a centralized controller capable of coordinating 
+ the entire system may not be a viable solution due to scalability concerns. 
+ To address this challenge, a practical solution is the adoption of \emph{\ac{CTDE}} approach.
+%
+The idea is to learn a policy at simulation time when there is a collective view of the system, 
+ and then at runtime use that policy but only with local observations. 
+%This approach creates policies that are influenced by global information but only require local information to function at runtime. 
+%
+The typical approach in such cases is based on actor-critic systems~\cite{DBLP:conf/nips/LoweWTHAM17,wu2022more,song2022ctds,song2022centralized},
+  where the \emph{actor} is the distributed policy (with only local information) and the critic is a neural network that takes the overall system state.
+%
+%In fact, the first works in this direction were discussed precisely swarm robotics, %\lukas{what does this mean `in the last field'?}
+% exploring new models (e.g., swarMDP~\cite{DBLP:conf/atal/SosicKZK17}) and learning algorithms capable of extrapolating a policy representing the entire system.  \lukas{This sentence still needs rework.}
+%Modern approaches, however, 
+% have started to consider the use of 
+% Recently, deep learning approaches have been considered 
+% to synthesise robust controllers capable of generalizing to new tasks. 
+%In this context, mean-field reinforcement learning~\cite{pmlr-v80-yang18d} is certainly noteworthy. 
+Mean-field RL~\cite{pmlr-v80-yang18d} is one of such concrete applications of \ac{CTDE} 
+ where the interactions among the population of agents are estimated by considering either the effect of a single agent and the average impact of the entire population or the influence of neighbouring agents.
+%
+Some known approaches using mean-field reinforcement learning include Q-mean, 
+ which is an extension of Q-learning to mean-field settings~\cite{yang2018mean}, 
+ and actor-critic mean-field~\cite{frikha2023actor}, which combines actor-critic algorithms with mean-field approximations. 
+%
+These approaches have shown promising results in various domains, such as multi-agent coordination 
+ and decentralized control, and are actively being researched and developed for further applications.
+\subsection{Motivating applications}
+Many-agent systems, a subset of multi-agent systems, involve a large number of agents interacting in an environment. These systems are particularly relevant in:
+
+\begin{itemize}
+    \item \textbf{Traffic Management}: Managing a large number of vehicles in urban settings.
+    \item \textbf{Swarm Robotics}: Coordinating a swarm of robots to achieve a common goal.
+    \item \textbf{Financial Markets}: Modeling the behavior of numerous traders in a market.
+\end{itemize}
+
+\subsection{Formalization}
+\subsubsection{SwarMDP}
+A SwarMDP is characterized by a \emph{swarming agent} ($\mathbb{A}$) and the dynamics of the environment ($\mathbb{E}$).
+Specifically, $\mathbb{A}$ is a tuple ($\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, \pi$) where:
+\begin{itemize}
+  \item $\mathcal{S, O, A}$ are the set of local states, observations (or features), and actions, respectively;
+  \item $\mathcal{R}: \mathcal{S} \rightarrow \mathbb{R}$ is the reward function, which is influenced by the environment;
+  \item $\pi: \mathcal{O} \rightarrow \mathcal{A}$ is the policy function, which maps the observations to the actions: it could be deterministic or stochastic.
+\end{itemize}
+Starting from this definition, the environment $\mathbb{E}$ is defined as a tuple ($\mathcal{P}, \mathbb{A}, \mathcal{T}, \xi$), where:
+\begin{itemize}
+  \item $\mathcal{P}$ is the total number of agents in the systems (the agent population), which is assumed to be fixed;
+  \item $\mathbb{A}$ is the defined agent prototype that rules each agent $v \in P$;
+  \item $\mathcal{T}: \mathcal{S}^P \times \mathcal{A}^P \times \mathcal{S}^P \rightarrow \mathbb{R}$ is the transition  global function, which is influenced by the actions of the agents and returns a collective reward -- this is typically not known by the swarming agents;
+  \item $\xi: \mathcal{S^P} \rightarrow \mathcal{O^P}$ is the global observation model of the systems.
+\end{itemize}
+\subsubsection{Networked Markov Decision Process}
+
+\subsection{State-of-the-art}
+In many-agent systems, the sheer number of agents makes traditional MARL techniques computationally infeasible. Recent advancements focus on scalable algorithms and techniques like mean-field theory to approximate the interactions between agents. Some notable algorithms include Mean Field Q-learning and Graph Neural Networks for many-agent systems.
+
+\section{Gran-challenges}
+
+\printbibliography

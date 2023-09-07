@@ -7,8 +7,6 @@
 % to display URLs in blue roman font according to Springer's eBook style:
 % \renewcommand\UrlFont{\color{blue}\rmfamily}
 %
-\input{yaml-def}
-\input{scala-def}
 \lstset{language=scafi}
 % Please use the
 %
@@ -17,10 +15,9 @@
 \chapter{ScaRLib}%: A Framework for Cooperative Many Agent Deep Reinforcement learning in Scala}
 %
 \minitoc% Creating an actual minitoc
-\newcommand{\meta}[1]{{\color{blue} #1}}% used for meta-comments
-\newcommand{\scarlib}{ScaRLib}
 %
 \acresetall
+\begin{comment}
 Recent advances in machine learning 
  have led to the development of \ac{marl}~\cite{Busoniu2008}, 
  which involves multiple agents learning simultaneously 
@@ -33,7 +30,8 @@ This area of research has gained significant interest in recent years
 \ac{marl} provides a powerful approach to tackling complex problems 
  that cannot be easily solved by single-agent reinforcement learning. 
 %
-Most specifically, \ac{cmarl}~\cite{yang2021many,https://doi.org/10.48550/arxiv.2106.09825}
+\end{comment}
+\Ac{cmarl}~\cite{yang2021many,https://doi.org/10.48550/arxiv.2106.09825}
  is a relevant subclass of \ac{marl}, 
  where thousands of agents work together to achieve a common coordination goal. 
 \ac{cmarl} finds several applications in contexts like swarm robotics~\cite{huttenrauch2019deep}, wireless sensor networks, and smart grid management. 
@@ -62,10 +60,12 @@ To start addressing these problems, in this work we present \scarlib{}, a framew
 With \scafi{}, in particular, \scarlib{} is provided with a high-level language for distributed computing that provides a declarative
  and compositional ways of expressing complex coordination tasks. 
 
-The remainder of this paper is organized as follows: \Cref{coordination2023:background} provides key background in the context of learning and the Alchemist/\scafi{} toolchain, \Cref{coordination2023:contribution} presents the \scarlib{} tool, \Cref{coordination2023:experiments} presents demos of \scarlib{}, \Cref{coordination2023:sec:related} discuss some state-of-the-art solutions, and finally \Cref{coordination2023:conclusion} concludes and presents future works.
+%The remainder of this paper is organized as follows: \Cref{coordination2023:background} provides key background in the context of learning and the Alchemist/\scafi{} toolchain, \Cref{coordination2023:contribution} presents the \scarlib{} tool, \Cref{coordination2023:experiments} presents demos of \scarlib{}, \Cref{coordination2023:sec:related} discuss some state-of-the-art solutions, and finally \Cref{coordination2023:conclusion} concludes and presents future works.
 %
 %% TODO probably here we should add a discussion about why the DSL is important, or in general why this framework is better w.r.t. the others
 %% Here we should add the outline of the paper
+\section{Background}\label{coordination2023:background}
+\begin{comment}
 \section{Background}\label{coordination2023:background} %% Or background??
 %\meta{This section should provide a brief overview of the related work (in this case I would say that there should be a discussion about the other libraries)}
 
@@ -162,7 +162,7 @@ In this work, we focus on a subset of MARL, namely: \emph{many-agent reinforceme
  may range from a hundred to one or two thousands whereas, in Multi Agent Reinforcement Learning, there are only a few tens~\cite{smac,marl-curricula}.
  %(i.e., $N \gg 2$, typically less than one or two thousands ~\cite{smac,marl-curricula}).
  Moreover, we focus on cooperative homogeneous and heterogeneous learning.
-
+\end{comment}
 \subsection{Alchemist}\label{coordination2023:alchemist}
 
 Alchemist\footnote{\url{http://alchemistsimulator.github.io/}}~\cite{DBLP:journals/jos/PianiniMV13} is meta-simulator
@@ -247,7 +247,7 @@ deployments:
 \end{figure*}
 
 \subsection{ScaFi}\label{coordination2023:scafi}
-
+\begin{comment}
 \scafi{} (Scala Fields \footnote{\url{https://scafi.github.io/}})~\cite{Casadei2022} 
  is a Scala framework for developing large-scale 
  distributed applications and simulating systems of networked agents.
@@ -289,8 +289,9 @@ algorithms,
 %social networks, and robotics, among others. It is an open-source
 %project and is actively maintained by researchers from various
 %universities and research institutions.
-
-\section{\scarlib{}}\label{coordination2023:contribution}
+\end{comment}
+\input{papers/softwarex2021/main.tex}
+\section{Software Description}\label{coordination2023:contribution}
 %\meta{This section should provide a description of the framework, including the main features and the architecture.}
 %\newline
 %\begin{itemize}
@@ -301,7 +302,7 @@ algorithms,
 %    \item CTDE and DTDE schema
 %\end{itemize}
 
-\scarlib{} \footnote{Tool available on GitHub at \url{https://github.com/ScaRLib-group/ScaRLib}}~\footnote{demo video at: \url{https://github.com/ScaRLib-group/ScaRLib-demo-video}} is a research Scala framework designed to support
+\scarlib{} \footnote{Tool available on GitHub at \url{https://github.com/ScaRLib-group/ScaRLib}}~\footnote{demo video at: \url{https://github.com/ScaRLib-group/ScaRLib-demo-video}} Is a research Scala framework designed to support
 the development of \ac{cmarl} systems by JVM-based high-level specification, and with learning performed under the hood by PyTorch\footnote{\url{https://pytorch.org/}}.
 %
 This project aims to provide a tool that allows easy and powerful system specification.
@@ -322,7 +323,7 @@ Basically, \scarlib{} is composed of three main modules (\Cref{coordination2023:
     \label{coordination2023:fig:modules}
 \end{figure}
 
-\paragraph{Core abstraction:} the module \texttt{scarlib-core} implements the core functionalities and abstractions of the framework, such as the definition of the main data structures and the implementation of the main algorithms. 
+\subsection{Core abstraction} The module \texttt{scarlib-core} implements the core functionalities and abstractions of the framework, such as the definition of the main data structures and the implementation of the main algorithms. 
 %
 All the abstractions (\Cref{coordination2023:fig:arc}) are built around a bunch of concepts. The key element is the \texttt{System}, which is a collection of agents that interact within a shared environment and that are trained to optimize a global or local reward signal
 expressed by a reward function. 
@@ -421,7 +422,7 @@ On the right, there is a decentralized system,
 where each agent has a local policy and a local policy.}
 \end{figure*}
 
-\paragraph{\scafi{}-Alchemist integration:} in addition to the core, we have implemented another module called \texttt{alchemist-scafi} (\Cref{coordination2023:fig:alchemist-arc}) 
+\subsection{\scafi{}-Alchemist integration} In addition to the core, we have implemented another module called \texttt{alchemist-scafi} (\Cref{coordination2023:fig:alchemist-arc}) 
  in which there is the integration with the two tools: 
  Alchemist \cite{DBLP:journals/jos/PianiniMV13} and \scafi{} \cite{Casadei2022}.
 %
@@ -464,7 +465,7 @@ In particular,
     \label{coordination2023:fig:alchemist-arc}
 \end{figure}
 
-\paragraph{DSL for learning configurations:} 
+\subsection{DSL for learning configurations} 
 the latest module developed
  is an internal DSL that allows for agile 
  and flexible creation of \ac{cmarl} training systems. 
@@ -531,9 +532,8 @@ val system = learningSystem {
 %    }
 %}
 %\end{lstlisting}
-\paragraph{Tool usage:}
-
-the tool is published on Maven Central 
+\subsection{Tool usage}
+The tool is published on Maven Central 
  and it is possible to include it in your project, 
  for example, through a build system. 
  In the case of Gradle, for instance, 
@@ -577,7 +577,7 @@ For further details on how to specify simulations and environments,
 % }
 
 %\subsection*{Cohesion and Collision}
-\paragraph{Description}
+\subsection{Description}
 %This environment consists of a group of agents (in our experiment fifty) that interact in a 2D world 
 % to learn how to stay close with each other without colliding. 
 %Each agent has a fixed neighborhood (the three closest, that is an hyper-parameter) 
@@ -666,7 +666,7 @@ The overall reward function is defined as the sum of these two factors ($cohesio
 \end{figure}
 
 
-\paragraph{Results}
+\subsection{Results}
 %\Cref{coordination2023:fig:cc-results} shows the results of the two experiments, the first one ran with 25 agents (purple lines)
 %    and the second one with 50 agents (cyan lines) using a hundred and fifty episodes each of two hundred steps.
 % The first graph (\Cref{coordination2023:fig:loss-cc}) shows a comparison of the loss functions,
@@ -881,8 +881,8 @@ MARL has gained significant interest in the past decade,
 Here, we highlight current state-of-the-art solutions 
  for MARL problems and compare 
  them to the tools presented in this work.
-\subsubsection{Many Agent simulators:}   
-unlike supervised learning, 
+\subsection{Many Agent simulators:}   
+Unlike supervised learning, 
  where a large dataset is required to improve neural network performance, 
  in RL, algorithms require a simulator to gain experience. 
 One such comprehensive solution for MARL is PettingZoo~\cite{NEURIPS2021_7ed2d345}, 
@@ -901,7 +901,7 @@ While \scarlib is not directly linked to any simulator,
  its main abstraction can be potentially linked 
  to both JVM-based simulators and gym-based Python environments. 
  Our choice of Alchemist was mainly due to its ability to express \ac{cmarl} settings easily, but potentially it can be used with any of the above-described solutions.
-\subsubsection{Multi-Agent Deep RL libraries:}
+\subsection{Multi-Agent Deep RL libraries:}
 since the importance of multi-agent settings several libraries have been developed in recent years. 
 Ray~\cite{ray} is one of the most comprehensive frameworks, 
  originally designed for single-agent RL but 
@@ -928,8 +928,8 @@ Finally, some innovative approaches aim to scale solutions to large populations 
 
 Overall, \ac{cmarl} is a high-level framework that reduces the effort required for developers and practitioners to define and implement \ac{cmarl} problems when compared to current state-of-the-art solutions.
 
-\subsubsection{Many-Agent Proof of Concept:}
-the above RL library solutions are mainly created for multi-agent systems, 
+\subsection{Many-Agent Proof of Concept:}
+The above RL library solutions are mainly created for multi-agent systems, 
  so they generally do not scale well with large populations of agents. 
  Novel approaches aim to scale the solution to potentially infinite populations of cooperative agents. 
 In particular, mean-field RL~\cite{meanfield} is probably one of the 
@@ -940,8 +940,8 @@ In particular, mean-field RL~\cite{meanfield} is probably one of the
 Currently, however, only a few implementations 
  exist~\footnote{\url{https://github.com/mlii/mfrl}} and they are not considered to be general-purpose. 
  \scarlib{} instead is practical and already provides a simple implementation that can be leveraged in \ac{cmarl} settings. 
-\section{Conclusion and Future work}\label{coordination2023:conclusion}
-In this paper, we presented \scarlib{}: 
+\section{Wrap up}\label{coordination2023:conclusion}
+In this chapter, we presented \scarlib{}: 
  a collaborative many-agent deep reinforcement learning framework that integrates the functionalities of \scafi{} and Alchemist.
 %
  The framework enables the definition of simulations of large-scale distributed scenarios 
@@ -949,6 +949,10 @@ In this paper, we presented \scarlib{}:
 % 
 With \scarlib{}, developers can effectively and efficiently simulate and experiment with different reinforcement learning algorithms, 
  thereby providing a valuable tool for the advancement of coordination and multi-agent systems research.
+This tool is essential in the view presented in this thesis: the development of Cyber-Physical Swarms applications need both a foundational theory and a practical tool to test and validate the theory.
+%
+This is the reason why we developed \scarlib{} and why we used it in the experiments presented in the next chapter.
+\begin{comment}
 Looking forward, \scarlib{} presents a promising solution 
  for expressing collaborative multi-agent reinforcement learning applications -- like hybrid aggregate computing solutions~\cite{Aguzzi2021,Aguzzi2022,Aguzzi2022-Roadmap,DBLP:conf/acsos/AguzziCV22}.
  However, further development and integration is necessary for it to be more easily adopted by non-expert users. 
@@ -966,7 +970,7 @@ This integration would further enhance the capabilities of \scarlib{} and make i
 %\subsubsection{Acknowledgements} Please place your acknowledgments at
 %the end of the paper, preceded by an unnumbered run-in heading (i.e.
 %3rd-level heading).
-
+\end{comment}
 
 %
 % ---- Bibliography ----
