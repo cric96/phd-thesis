@@ -56,11 +56,11 @@
 %}
 
 %\meta{INTRO: budget = ca. 250 words ; currently ca. 350 words}
-\chapter{Dynamic Decentralization Domains} %for the Internet of Things}
+\chapter[Dynamic Decentralization Domains]{Dynamic Decentralization Domains for \ac{cspw}}
 \minitoc% Creating an actual minitoc
 Edge computing
  and related scenarios
- like the \ac{iot} and \acp{cps}
+ like \acp{cspw}
  promote a vision of
  distributed computational systems 
  deeply integrated with
@@ -133,30 +133,30 @@ and propose the concepts of \emph{concurrent collective tasks} and \emph{decentr
 % (for task decentralization)
 % or \emph{exclusive} (for operational decentralization).
 
-In \Cref{sec:motiv},
- we motivate the proposal,
- identify three essential requirements,
- and briefly summarize the state of the art.
+%In \Cref{sec:motiv},
+% we motivate the proposal,
+% identify three essential requirements,
+% and briefly summarize the state of the art.
 %
-In \Cref{sec:contrib}, we 
- detail the technical solution,
- providing a declarative \ac{api}.
+%In \Cref{sec:contrib}, we 
+% detail the technical solution,
+% providing a declarative \ac{api}.
 %
-In \Cref{sec:eval}, we functionally evaluate the proposal through simulation
- in an environmental monitoring case study.
+%In \Cref{sec:eval}, we functionally evaluate the proposal through simulation
+% in an environmental monitoring case study.
 %
-Our finding and perspective, detailed in \Cref{sec:conc},
- is that the programming model
- provides a high-level yet expressive framework
- for \acp{dcp},
- with fine-grained control over 
- decentralization.
+%Our finding and perspective, detailed in \Cref{sec:conc},
+% is that the programming model
+% provides a high-level yet expressive framework
+% for \acp{dcp},
+% with fine-grained control over 
+% decentralization.
 
  
 %\meta{We'll surely cite \cite{DBLP:journals/eaai/CasadeiVAPD21,DBLP:journals/fgcs/PianiniCVN21,DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19}}
  
  
-\section{Background and Motivation}\label{sec:motiv}
+\section{Motivation}\label{sec:motiv}
 
 %\meta{
 % BUDGET: ca. 1500 words
@@ -164,7 +164,7 @@ Our finding and perspective, detailed in \Cref{sec:conc},
 %}
 
 % Go with the following progression, with one subsection* each:
-
+\begin{comment}
 \subsection{Declarative abstractions for complex decentralized \ac{iot} systems}
 \label{declarative-abstractions}
 
@@ -247,15 +247,30 @@ carried out across sensor nodes and base stations.
 We aim to apply the same principle to self-organizing systems,
 primarily to realize decentralized situation recognition and action.
 
+\end{comment}
+\section{Motivation}
+CPSW are increasingly tasked with monitoring and acting upon dynamically changing environments, 
+ often without the availability of a central coordinator.% Examples of such systems include crowd tracking and steering, environmental monitoring for landslides, flooding, and fires, and the coordination of robot swarms.
 
-\subsection{Decentralized situation recognition and action: a case study}
+The recurrent approach in computer/software engineering 
+ to manage such complexity is to adopt various \emph{levels} of abstractions 
+ and mechanisms that encapsulate coherent sets of problems and solutions. 
+This work aims to simplify the programming of these complex systems by enabling the user to express high-level goals, 
+ without having to fully specify the \emph{how}. 
+ This allows lower-level components to handle issues such as dynamicity, failure, and heterogeneity.
+
+As an analogy, consider database management systems: 
+ SQL queries express what data needs to be retrieved, while the system itself determines the most efficient way to fulfill the request. 
+ The ultimate objective is to apply this principle to self-organizing systems, primarily to realize decentralized situation recognition and action.
+
+\section{Decentralized situation recognition and action: a case study}
 \label{decentralized-sr}
 
 %\meta{
 %*) Our goal is to proceed in an analogous way for what we believe is an important problem in the future IoT, dynamically and opportunistically identify corrections regions for decentralised situated recognition and action. Consider the following case study... -- here we can anticipate something of the case study, and illustrate various (3) examples of different things we want to do. 
 %}
 
-A self-organizing \ac{iot} system
+A \ac{cpsw} system
  should ideally determine autonomously
  \emph{what} has to be done,
  \emph{when},
@@ -347,7 +362,7 @@ Given the high-level vision and goals discussed in the previous sections, and wi
 %\begin{enumerate}[label=\textbf{S.\arabic*}]
 %\item[\enlabel{req-concurrency}{R1})] 
 
-\paragraph{\reqlabel{req-concurrency}{R1} Concurrent collective task execution.} 
+\subsubsection{\reqlabel{req-concurrency}{R1} Concurrent collective task execution.} 
 %
 In \casename{},
 there is the need to coordinate
@@ -388,7 +403,7 @@ Notice that \acp{cct} may
  which may change over time.
 
 %\item[\enlabel{req-flexible-dec}{R2})] 
-\paragraph{\reqlabel{req-flexible-dec}{R2} Flexible and adaptive decentralization.} 
+\subsubsection{\reqlabel{req-flexible-dec}{R2} Flexible and adaptive decentralization.} 
 %
 \casename{}
 is centred on organizing distributed sensing and actuation
@@ -455,7 +470,7 @@ Multiple \acp{dd} can also \emph{compete} to gather resources exclusively within
 %\end{enumerate}
 %
 
-\paragraph{\reqlabel{req-feedback}{R3} Feedback-regulated activity within decentralized domains.}
+\subsubsection{\reqlabel{req-feedback}{R3} Feedback-regulated activity within decentralized domains.}
 %
 In \casename{}, each region
  should sense the water level and altitude,
@@ -484,7 +499,7 @@ which may trigger actions
 % and spreads the decisions which are then carried out,
 % producing new data to be gathered and so on.
 
-\paragraph{Summary of requirements.}
+\subsubsection{Summary of requirements.}
 \begin{figure*}
   \centering
   \includegraphics[width=\linewidth]{papers/ieee2022/img/approach-images/action-with-multilayer.pdf}
@@ -516,8 +531,8 @@ The rationale of the above requirements %, %in a nutshell,
  internal loops of regional situation recognition and action
  (\ref{req-feedback}).
  \Cref{fig:high-level-description} summarizes these ideas.
-
-\subsection{Related problems and state-of-the-art approaches}
+\begin{comment}
+\subsection{Related problem}
 
 %\meta{
 %*) State of the art addressed similar problems... -- we should both survey work of others, and then our recent works pertinent to what we are going to propose.
@@ -598,7 +613,7 @@ Overall, the contribution of this work
  lies primarily in the \emph{combination}
  of the discussed abstractions into a simple but effective \ac{api}.
 }
-
+\end{comment}
 \section{Dynamic Decentralization Domains in Practice}\label{sec:contrib}
 
 \subsection{\revise{Programming Model}}

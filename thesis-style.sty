@@ -40,7 +40,7 @@
 
 \newcommand{\scafi}{{ScaFi}}
 \newcommand{\scafiweb}[0]{{ScaFi-Web}}
-
+\newcommand{\rev}[1]{{#1}}
 \newcommand{\meta}[1]{{\color{blue}#1}}
 % \usepackage[disable]{todonotes} % decommentare prima della versione finale
 \newcommand{\gcsidenote}[1]{\todo[size=\tiny,color=green]{\textbf{GC:} #1}}
@@ -100,24 +100,6 @@
 }
 \Crefname{lstlisting}{Listing}{\lstlistingname}
 
-\lstset{
-	showstringspaces=false,
-	basicstyle=\ttfamily,
-	commentstyle={\color{olive}},
-	identifierstyle=\color{black},
-	ndkeywordstyle={\color{blue}},
-	stringstyle={\color{magenta}},
-	emphstyle={},
-	keywordstyle={\color{blue}},
-	breaklines=true,
-	numbers=left,
-	numberstyle=\tiny\color{gray},
-	numbersep=10pt,
-	tabsize=2,
-	extendedchars=true,
-	frame=trBL,
-	frameround=fttt,
-}
 
 \lstdefinelanguage{Kotlin}{
 	comment=[l]{//},
@@ -133,3 +115,6 @@
 \input{yaml-def}
 
 \input{scala-def}
+
+\lstset{frame=single,basewidth=0.5em,language={scafi},
+basicstyle=\lst@ifdisplaystyle\small\fi\ttfamily}

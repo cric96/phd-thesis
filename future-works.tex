@@ -1,0 +1,73 @@
+\subsubsection*{Future works}
+This is the first exploration in this direction 
+ and shed the light on possible future works and improvements. 
+%
+Particularly, the state only considers local output and not the neighbourhood state. 
+%
+However, integrating also the neighbours' states could 
+ be necessary to produce better policies 
+ (e.g., a node should consider increasing the local frequency 
+ if the neighbourhood has a higher frequency). 
+%
+Moreover, the output discretization was done through a handcrafted process. 
+ To improve the policy learnt, 
+ representation learning
+ could be leveraged to extract the right state representation for a given problem. 
+%
+Also, the action space could be improved.
+%
+Indeed, continuous action space better represents the wake-up scheduling period
+ and this could help to reduce the system-wide consumption. 
+%
+\revision{
+Therefore, Q-learning has proven too simple at managing the complexity 
+ that emerges in collective adaptive systems. 
+Among the many recent works applied in this context (e.g., DQN~\cite{DBLP:conf/dac/WeiWZ17}, A2C, MAPPO~\cite{DBLP:conf/smartgridcomm/LeeWN20}, etc.), 
+ the Asynchronous Advantage Actor Critic (A3C)~\cite{DBLP:conf/icml/MnihBMGLHSK16} 
+ seems a good match for our proposed solution, 
+ since it enables continuous state-action space policies (thanks to actor-critic settings)
+ using an asynchronous training model 
+ (i.e., several workers contribute to the global training process). }
+%
+Regarding the reward function, in this case, we considered local signals. 
+ However, since we are interested not only 
+ in individual efficiency but also in system-wide efficiency, 
+ the use of collective reward signals for globally improved power consumption
+ and convergence time could also be investigated. 
+%
+\revision{
+Managing the balance between consumption and convergence time 
+ with a single reward signal has shown to be complex. 
+ In fact, although $\theta$ is a good estimation of the balance between these two factors, 
+ it is not possible to know in advance whether a certain value will lead the system 
+ to prefer performance vs. consumption. 
+ Furthermore, the choice of $\theta$ must be made a priori and cannot be changed at runtime, 
+ making it difficult to change the policy in different profiles. 
+For this reason, in future work, we aim to consider multi-objective reinforcement learning~\cite{DBLP:journals/aamas/HayesRBKMRVZDHH22} as a technique 
+to manage multiple goals, even if they conflict with each other, and find solutions that 
+can concurrently optimize both consumption and responsiveness.
+%
+Finally, to reduce the problem of partial observability, 
+ we stack a sequence of outputs to understand the direction over time. 
+ However, this aspect could be learned using modern neural architectures 
+ that consider memory, i.e., Recurrent Neural Networks combined with Actor-Critic methods (e.g., A3C).}
+%%%%% Program synthesis RL
+
+
+This work is the first effort towards Reinforcement Learning-based Aggregate Computing.
+%
+In fact, there are still many aspects that need to be analysed in detail both at the conceptual and practical levels.
+%
+First, the approach could be tuned to learn gradient strategies for smoothness or maximal reactivity in highly variable scenarios, and compared with state-of-the-art algorithms like BIS and ULT~\cite{DBLP:conf/saso/AudritoCDV17}. 
+%
+Secondly, the approach could be systematically applied to other building blocks as well~\cite{DBLP:journals/jlap/ViroliBDACP19}.
+%
+Very interesting would also be the application of Machine Learning at the aggregate execution platform level, e.g. to improve the round frequency to reduce power consumption, reduce the amount of data exchanged between neighbours, or support opportunistic re-configuration of aggregate system deployments.
+%
+%Finally, we would like to extend these ideas into a systematic definition of reinforcement-learning based building blocks, thus improving currently inefficient aggregate computing algorithms.
+
+
+
+Future research could explore its application in diverse domains and evaluate its scalability and robustness in increasingly complex scenarios. 
+%
+In addition, we also plan to take the approach to modern actor-critical solutions, which are better suited to modern swarm robotics problems because of the continuous action space.

@@ -1,6 +1,4 @@
 
-
-\lstset{language=scafi}
 %basicstyle=\fontsize{8}{9}\selectfont\ttfamily
 
 %%%%%%% %%%%%%%%  %%%%%%% 
@@ -122,7 +120,7 @@ We consider the case of the classic gradient algorithm, a paradigmatic and key b
 % %
 % \Cref{coordination2022:s:conc} summarizes results and future research.
 
-
+\begin{comment}
 \section{Background}\label{coordination2022:s:background}
 
 In this work, we contribute to \emph{field-based coordination}~\cite{DBLP:conf/chi/XiaoH98,DBLP:journals/pervasive/MameiZL04,DBLP:conf/kes/TrzecL07,DBLP:journals/tosem/MameiZ09,DBLP:journals/jlap/ViroliBDACP19}, a well-known nature-inspired approach~\cite{DBLP:conf/idc/Omicini12} to coordination that exploits computational mechanisms inspired by the force fields of physics. % (e.g., force fields).
@@ -328,6 +326,7 @@ Otherwise, the output of the gradient follows the classical formula.
 %In \Cref{coordination2022:s:contrib},
 % we will discuss how \ac{ac} building blocks such as the gradient
 % could be improved by learning and, in particular, by \ac{rl}.
+\end{comment}
 \begin{comment}
 \subsection{\acl{rl}}\label{coordination2022:s:background:rl}
 
@@ -497,9 +496,9 @@ With this assumption, the learner only has to find a single strategy that applie
 %  \end{itemize}
 %}
 \end{comment}
-\subsection{On Integrating Machine Learning and Aggregate Computing}
+\section{On Integrating Machine Learning and Aggregate Computing}
 
-As anticipated in \Cref{coordination2022:s:background:ac}, the behaviour of an aggregate system depends on the interplay of three main ingredients:
+As anticipated in \Cref{chap:macro-programming}, the behaviour of an aggregate system depends on the interplay of three main ingredients:
  (i) the aggregate program, expressing conceptually the global behaviour of the entire system, and concretely the local behaviour of each individual node in terms of local processing and data exchange with neighbours; and 
  (ii) the aggregate execution model, promoting a certain dynamics of the system in terms of topology management (e.g., via neighbour discovery), execution of rounds, scheduling of communications; and
  (iii) the environment dynamics.
@@ -520,7 +519,7 @@ Since tuning programs or execution details to specific environments
  to let a system \emph{learn} effective strategies for unfolding collective adaptive behaviour.
 %
 
-\subsection{Aggregate Programs Improvement through \ac{rl}}
+\section{Aggregate Programs Improvement through \ac{rl}}
 \input{papers/coordination2022/rl-ac-architecture.tex}
 
 In this work, we focus on \emph{improving aggregate programs}
@@ -564,7 +563,7 @@ Learning, thus, does not replace the \ac{ac} methodology for defining the progra
 %
 %Thus, learning algorithms could be combined with the above ideas to let the system self-adapt directly through raw experience.
 
-\subsection{Building blocks Refinement}\label{coordination2022:s:learning-gradient}
+\section{Building blocks Refinement}\label{coordination2022:s:learning-gradient}
 %\meta{@GA: this may became a subsection of Reinforcement Learning-based AC?}
 %\meta{
 %  \begin{itemize}
@@ -627,7 +626,7 @@ in a typical \ac{ctde} setting (\Cref{coordination2022:fig:learning-scheme}).
 This way, we assess the influence of an individual in comparison to the entire system, which cannot be done in online learning due to the difficulty of achieving global snapshots of the system in a reasonable time.
 
 
-\subsubsection{Learning Schema} 
+\section{Learning Schema} 
 
 The learning algorithm is seen as a state ($s_t$) evolution function in which the nodes try to apply a correction factor (\lstinline|update|) following a policy ($\pi^Q_{target}$ or $\pi^Q_{behavioral}$) refined by learning.
 %
@@ -655,7 +654,7 @@ Though we could have extracted the learning process from the \ac{ac} program, %p
 %
 %In the next section, we describe an incarnation of this algorithm applied to the gradient block.
 
-\subsection{Reinforcement Learning-based gradient block}
+\section{Reinforcement Learning-based gradient block}
 %\meta{
 %  \begin{itemize}
 %    \item describe the block G -- why it is important, for what is used 
@@ -666,10 +665,10 @@ Though we could have extracted the learning process from the \ac{ac} program, %p
 %}
 
 %\meta{@GA to @All: another way to generalise G?}
-The gradient block (cf. \Cref{coordination2022:sec:gradient}) could be generalized as follows:
+The gradient block could be generalized as follows:
 \begin{lstlisting}
 def gradientOpt(source, metric, opt) {
-  rep(infinity) { g => mux(source) { 0 } { opt(g, metric)) } }
+  rep(infinity) { g => mux(source) { 0 } { opt(g, metric) } }
 }
 \end{lstlisting}
 where \lstinline|opt| is a function that determines how to evolve the gradient based on the field of current gradient values \lstinline|g| and current \lstinline|metric| (estimation of distances to neighbour). 
@@ -699,13 +698,11 @@ Hence, the cardinality of the state space of $|s_t| * |s_t| = buckets^4$.
 The action space is divided into two action types: \texttt{ConsiderNeighbourhood} is the action that will produce the classic gradient evaluation, while 
  \texttt{Ignore(velocity)} ignores the neighbour data and increases the gradient at a given \texttt{velocity}. So, the \texttt{update} function is defined as:
 \begin{lstlisting}[mathescape]
-def update($o_{t-1}$, $a_{t-1}$, metric) { // $o_{t-1}$ is the previous gradient output
+def update($o_{t-1}$, $a_{t-1}$, metric) = // $o_{t-1}$ is the previous gradient output
   val $g_{classic}$ = minHoodPlus(nbr($o_{t-1}$) + metric())
-  match $a_{t-1}$ { // scala-like pattern matching
+  match $a_{t-1}$ // scala-like pattern matching
     case ConsiderNeighbourhood => $g_{classic}$
     case Ignore(velocity) => $o_t$ + velocity * deltaTime() 
-  }
-}
 \end{lstlisting}
 %
 Finally, the \texttt{reward} function is described as follows: 
@@ -856,26 +853,14 @@ Finally, we want to stress that the nodes do not fire synchronously, and thus th
 %
 This, again, makes it possible to use the same policy in different scenarios due to the unknown local aggregate programs evaluation order.
 
-\section{Conclusion}\label{coordination2022:s:conc}
+\section{Wrap up}\label{coordination2022:s:conc}
 
-This paper discusses the integration of \acl{ac} -- a programming approach for \aclp{cas} -- and \acl{rl}, with the goal of fostering the design of collective adaptive behaviour.
+This chapter discusses the integration of \acl{ac} -- a programming approach for \aclp{cas} -- and \acl{rl}, with the goal of fostering the design of collective adaptive behaviour.
 % 
 In particular, we propose to use \ac{rl} as a means to improve building block \ac{ac} algorithms. %- in a similar way to what is done in program synthesis. 
 %
 Our approach is applied to improving the gradient algorithm, one of the key \ac{ac} algorithms, where learning is performed through Hysteretic Q-Learning.
 %
 We evaluate the approach through synthetic experiments comparing the reactivity of different gradient algorithms in dealing with the rising value problem.
-
-This work is the first effort towards Reinforcement Learning-based Aggregate Computing.
-%
-In fact, there are still many aspects that need to be analysed in detail both at the conceptual and practical levels.
-%
-First, the approach could be tuned to learn gradient strategies for smoothness or maximal reactivity in highly variable scenarios, and compared with state-of-the-art algorithms like BIS and ULT~\cite{DBLP:conf/saso/AudritoCDV17}. 
-%
-Secondly, the approach could be systematically applied to other building blocks as well~\cite{DBLP:journals/jlap/ViroliBDACP19}.
-%
-Very interesting would also be the application of Machine Learning at the aggregate execution platform level, e.g. to improve the round frequency to reduce power consumption, reduce the amount of data exchanged between neighbours, or support opportunistic re-configuration of aggregate system deployments.
-%
-%Finally, we would like to extend these ideas into a systematic definition of reinforcement-learning based building blocks, thus improving currently inefficient aggregate computing algorithms.
 
 \printbibliography

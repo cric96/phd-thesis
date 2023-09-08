@@ -153,7 +153,7 @@ Even more functionality is available in module \texttt{scafi-stdlib-ext}, which 
 
 \paragraph*{Virtual machine for the local execution of aggregate programs}
 %
-An \texttt{AggregateProgram} instance 
+An AggregateProgram instance 
  is a function
  mapping a \texttt{Context}
  (the set of inputs needed by an individual device
@@ -276,8 +276,8 @@ Development comes into two parts:
 \begin{figure}
 \newsavebox{\exoprogram}
 \begin{lrbox}{\exoprogram}% Store first listing
-\begin{lstlisting}
-// 1. Define/import an incarnation, which provides ScaFi types and classes
+\begin{lstlisting}[basicstyle=\lst@ifdisplaystyle\footnotesize\fi\ttfamily]
+// 1. Define/import an incarnation, it provides ScaFi types and classes
 object MyIncarnation extends
   it.unibo.scafi.incarnations.BasicAbstractIncarnation
 // 2. Bring into scope the stuff from the chosen incarnation
@@ -295,12 +295,13 @@ class GradientProgram extends AggregateProgram {
 \newsavebox{\exosystem}
 \begin{lrbox}{\exosystem}% Store first listing
 \begin{lstlisting}[deletekeywords={[2]{nbr}},
-emph={state}]
+emph={state}, basicstyle=\lst@ifdisplaystyle\footnotesize\fi\ttfamily]
 // 4. In your program, implement an "execution loop" whereby
 // your device or system executes the aggregate program
 object HelloScafi extends App {
   case class DeviceState(self: ID, exports: Map[ID, EXPORT],
-      localSensors: Map[CNAME, Any], nbrSensors: Map[CNAME, Map[ID, Any]]) {
+      localSensors: Map[CNAME, Any], 
+      nbrSensors: Map[CNAME, Map[ID, Any]]) {
     def updateExport(dev: ID, export: EXPORT): DeviceState = 
         this.copy(exports = exports + (dev -> export))
   }
@@ -308,9 +309,9 @@ object HelloScafi extends App {
   val sourceId = 2      // device 2 is the source of the gradient
   val scheduling = devices ++ devices ++ devices ++ devices ++ devices
   val program = new GradientProgram()
-  def neighboursFrom(id: ID): Seq[Int] = // topology: [1]-[2]-[3]-[4]-[5]
+  def neighboursFrom(id: ID): Seq[Int] = // topology [1]-[2]-[3]-[4]-[5]
     Seq(id - 1, id, id + 1).filter(n => n > 0 && n < 6)
-  // Now let's build a simplified system to illustrate the execution model
+// Now let's build a simplified system to illustrate the execution model
   var state: Map[ID, DeviceState] = (for {
     d <- devices
   } yield d -> DeviceState(d, Map.empty, Map("source" -> false),
@@ -318,7 +319,7 @@ object HelloScafi extends App {
         .map(nbr => nbr -> Math.abs(d - nbr).toDouble)).toMap))).toMap
   state = state + (sourceId -> state(sourceId).copy(localSensors =
       state(sourceId).localSensors + ("source" -> true))) // set source
-  // The cycle simulates scheduling&communication by read/write on `state`
+// The cycle simulates scheduling&communication by read/write on `state`
   for(d <- scheduling){ // run 5 rounds for each device `d`, round-robin
     // build the local context for device d
     val ctx = factory.context(selfId = d, exports = state(d).exports,
@@ -331,7 +332,7 @@ object HelloScafi extends App {
     // Simulate sending of messages to neighbours
     state(d).nbrSensors(NBR_RANGE).keySet.foreach(
       nbr => state += nbr -> state(nbr).updateExport(d, export))
-    println(s"\tEXPORT: ${export}\n\tOUTPUT: ${export.root()}\n----------")
+    println(s"\tEXPORT: ${export}\n\tOUTPUT: ${export.root()}\n---")
   }
 }
 \end{lstlisting}
@@ -347,8 +348,6 @@ object HelloScafi extends App {
 \caption{Complete example: an aggregate system computing a gradient.}
 \label{fig:example-full}
 \end{figure}
-
-
 
 \paragraph{Self-organising Coordination Regions in Simulation}
 %
@@ -407,12 +406,15 @@ We implemented this scenario in the repository\footnote{\url{https://github.com/
  and a snapshot taken from %a corresponding run in 
  the \scafi{} simulator.
 
-\begin{figure}
-\centering
-\newsavebox{\scrprogram}
-\begin{lrbox}{\scrprogram}% Store first listing
-\begin{lstlisting}[deletekeywords={[2]{nbr}}]
-class SCR extends AggregateProgram with BuildingBlocks with StandardSensors {
+ \begin{figure}
+  \centering
+  \newsavebox{\scrprogram}
+  \begin{lrbox}{\scrprogram}% Store first listing
+  \begin{lstlisting}[deletekeywords={[2]{nbr}}]
+class SCR extends AggregateProgram 
+  with BuildingBlocks 
+  with StandardSensors 
+{
   val radius = 300 // average area of interest
   val leader = S(radius, nbrRange) 
   val potential = distanceTo(leader)
@@ -421,20 +423,25 @@ class SCR extends AggregateProgram with BuildingBlocks with StandardSensors {
   (leader, zoneTemperature)
   // Coloring following leader information
 }
-\end{lstlisting}
-\end{lrbox}
-\subfloat[\label{fig:example-scr-code}\scafi{} program]{
-\usebox{\scrprogram}
-}\\
-\subfloat[\label{fig:example-scr-snapshot}Snapshot from the \scafi{} simulator (Big circles mark node as leader).]{
-  \centering
-  \includegraphics[width=0.8\linewidth]{papers/softwarex2021/imgs/scr-result.png}
-}\\
-\subfloat[\label{fig:example-temperature}Simulated temperature distribution.]{
-  \includegraphics[width=0.8\linewidth]{papers/softwarex2021/imgs/temperature-distribution.png}
-}
-\caption{SCR pattern in \scafi{}. Colours denote the temperature perceived by the devices (the redder the higher the temperature).}  \label{fig:scr}
+  \end{lstlisting}
+  \end{lrbox}
+  \begin{subfigure}{\textwidth}
+    \usebox{\scrprogram}
+    \caption{\label{fig:example-scr-code}\scafi{} program}
+  \end{subfigure}\\
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{papers/softwarex2021/imgs/scr-result.png}
+    \caption{\label{fig:example-scr-snapshot}Snapshot from the \scafi{} simulator (Big circles mark node as leader).}
+  \end{subfigure}\\
+  \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.8\linewidth]{papers/softwarex2021/imgs/temperature-distribution.png}
+    \caption{\label{fig:example-temperature}Simulated temperature distribution.}
+  \end{subfigure}
+  \caption{SCR pattern in \scafi{}. Colours denote the temperature perceived by the devices (the redder the higher the temperature).}  \label{fig:scr}
 \end{figure}
+  
 \subsubsection{Features}
 \label{s:impact}
 

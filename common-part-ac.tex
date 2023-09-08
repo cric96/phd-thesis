@@ -1,109 +1,149 @@
-\chapter{Macro-programming}\label{chap:macro-programming}
-\minitoc% Creating an actual minitoc
-Macroprogramming, as a paradigm, 
- has emerged as a pivotal approach in the realm of distributed systems. 
+common-part-ac.tex
+
+\subsection{System Model (Aggregate Computing Model)}\label{acsos2022:s:background:ac}
+
+\ac{AC}~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19}
+ is an approach 
+ for engineering the self-organising collective behaviour
+ of a network of asynchronously computing and neighbour-interacting devices.
 %
-It offers a unique perspective, 
- allowing developers to express the \emph{macroscopic behaviour} of a collective system using a singular program.
-% 
-This chapter delves into the intricacies of macroprogramming, 
- its historical evolution, and its significance in the modern computational landscape, 
- leading to aggregate computing -- a novel macro-programming approach for Cyber-Physical Swarms.
-
-\begin{figure}
-\includegraphics[width=\textwidth]{chapters/img/macro-programming.jpg}
-\caption{Overview of macroprogramming}\label{macro:fig:macro-programming}
-\end{figure}
-\section{The Essence of Macroprogramming}
-Macroprogramming  emphasizes the overarching behaviour of a system, abstracting the intricacies of individual components. 
- This abstraction is crucial for systems where the collective behaviour is more significant than the sum of its parts.
-
-The primary motivation behind macroprogramming 
- is to simplify the design and development of complex systems. 
- By providing a higher-level perspective, 
- it allows developers to address system-wide concerns without getting bogged down by the details of individual components. 
- This not only streamlines the development process but also ensures that the system's behaviour is \emph{consistent} and \emph{predictable}.
-
-In essence, macroprogramming is about seeing the \emph{forest} for the \emph{trees}. 
- It recognizes that while individual components (or trees) are essential,
- understanding and managing their collective behaviour (or the forest) is of paramount importance. 
-This perspective is particularly relevant in today's interconnected world, 
- where systems often comprise numerous components that need to work in harmony.
-
-Furthermore, macroprogramming leverages macro-level abstractions, 
- such as \emph{collective states}, \emph{groups}, or \emph{spatiotemporal} patterns. 
- These abstractions provide a structured way to think about and design systems, ensuring that they are both \emph{robust} and \emph{adaptable}. 
-By focusing on these higher-level abstractions, 
- macroprogramming allows for a more intuitive and efficient approach to system design, 
- making it an indispensable tool in the modern developer's toolkit.
-\Cref{macro:fig:macro-programming} provides an overview of the idea behind this paradigm.
-
-Diving deeper into the terminology, 
- terms like ``system programming'', ``centralized programming'', and ``high-level programming'' 
- have been used in various contexts, leading to potential confusion. 
-% 
-Among these, domain-specific terms like ``global-level programming'', ``swarm programming'', and 
- ``aggregate programming'' stand out. 
+The \ac{AC} model 
+ assumes the system and execution model (also called a distributed protocol) described in the following,
+ which shares similarity -- for locality, decentralization, and progressive computation -- with the dynamics of natural self-organising systems~\cite{bonabeau1999swarm-intelligence}.
 %
-These terms reflect the diverse perspectives from which macroprogramming can be approached, 
- emphasizing the need for a unified framework that can consolidate these diverse viewpoints. 
+
+\newcommand{\neigh}{\ensuremath{\leadsto}}
+\newcommand{\deviceId}{\ensuremath{\delta}}
+
+Structurally, an aggregate computing system consists of a network $G=(D,\neigh)$ of computing \emph{devices} (nodes $\deviceId \in D$)
+ connected together through a \emph{neighbouring relationship} $\neigh$.
 %
-Such a framework would not only provide clarity but also pave the way for innovative solutions in the realm of systemic behaviour modelling.
+The neighbouring relationship is application-specific
+ and may derive 
+ from physical connectivity (cf. ad-hoc networks)
+ or 
+ be based on spatial proximity (e.g., a node is connected to all the devices within a certain distance to it).
 
-\section{Conceptual Framework}
-
-\subsection{Preliminaries}
-Macroprogramming addresses the challenge of programming the behaviour of a computational system \( S \), composed of multiple computational entities. Given two entities \( A \) and \( B \) within this system, there are three primary modes to influence their behaviour to promote properties ascribable to \( S \):
+By a dynamical point of view, 
+ system execution proceeds
+ through \emph{asynchronous rounds}
+ of \emph{sense-compute-(inter)act steps}.
+%
+Indeed, a node, to be part of an aggregate system, should %proactively 
+perform \emph{rounds of computation/communication} consisting of:
 \begin{enumerate}
-    \item Altering their context, indirectly influencing them. For instance, a change in sensor \( A \) might subsequently affect \( B \).
-    \item Interaction, such as triggering their behaviour. If \( A \) is an actuator, its actions might influence \( B \).
-    \item Setting their behaviour to produce certain global outcomes when activated.
+    \item \emph{context acquisition}: the device collects information 
+     from the sensors and the last messages it received 
+     from each neighbour (including the device itself, to model the state);
+    \item \emph{program execution}: using the context, 
+    the aggregate program is evaluated producing an \emph{\export{}},
+    namely a message sent to the neighbours for yielding the aggregate computation, 
+    triggered by the use of special communication constructs in the aggregate language specification;
+    \item \emph{context action}: \revision{comprising
+    	(i) \emph{communication}, by broadcasting the \export{} to the neighbours; and 
+    	(ii) \emph{actuation}, by driving local actuations using \export{} data as input.}
+  \end{enumerate}
+%
+This system-wide asynchronous evaluation
+ combined with the aggregate program specification (see \Cref{acsos2022:s:background:ac-prog})
+ can eventually lead to interesting collective behaviours~\cite{DBLP:journals/jlap/ViroliBDACP19}. 
+ 
+
+ Aggregate computing algorithms
+ can be thought as functions
+ over \emph{computational fields} (or \emph{fields} for short)~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/pervasive/MameiZL04}.
+%
+A field is a collective/distributed data structure,
+ typically modelled as 
+ a mapping $\phi: D \to \mathbb{V}$
+ from a domain of devices $\deviceId \in D$
+ to values $v$ from some domain $\mathbb{V}$ of computational values.
+%
+For instance,
+ an expression querying a local temperature sensor,
+ when evaluated in every device in the aggregate system,
+ would yield a field of temperature readings.
+%
+Such field of temperatures may be processed
+ to produce a field of warnings (e.g., when the local temperature exceeds a threshold value),
+ or a field of actuations (e.g., commands for local thermostats).
+%
+Then,
+ an aggregate algorithm
+ is a function from input fields to output fields.
+%
+Let $\Phi_\mathbb{V}$ denote the set of computational fields with co-domain $\mathbb{B}$ in a network $G$,
+ then an $n$-ary field function is a partial map
+ $f: \Phi_\mathbb{V}^n \hookrightarrow \Phi_\mathbb{V}$.
+ 
+ %% Another one
+ %\ga{discussion about field used as a coordination mechanism in multi-agent systems. Introduction to AC}
+The field-based coordination approaches utilize a concept of \emph{computational fields} 
+(or simply \emph{fields}), 
+which are \emph{distributed} data structures that associate each location with a computational value that evolves over time. 
+%
+\emph{Aggregate computing}~\cite{Beal2015Computer}, a modern field-coordination approach, is rooted in earlier work on \emph{artificial potential fields}~\cite{DBLP:conf/icra/Warren89} and \emph{co-fields}~\cite{DBLP:journals/pervasive/MameiZL04}. 
+% 
+This \emph{macro-programming}~\cite{DBLP:journals/corr/abs-2201-03473} paradigm can be realized to devise collective and self-organizing behaviour through a composition of functions operating on fields. 
+%
+The fields map a set of individual agents to computational values, 
+allowing them to associate what they sense, process, and actuate. 
+%
+Fields are computed locally but subject to a global viewpoint, 
+enabling emergent collective behaviour through the interplay of the \emph{system model} (i.e., structure and dynamics of the systems)
+and the \emph{programming model} (i.e., how collective behaviours are expressed).
+
+On the one hand, the system model is structurally similar to \emph{swarm-like systems}, 
+as it is composed of a set of \emph{agents} 
+that interact with each other through a \emph{network} of \emph{neighbourhood relations}.
+%
+The dynamics of each agent follow a local control loop called \emph{round}
+that comprises the following steps:
+\begin{enumerate}
+ \item \emph{Sense}: the agent acquires information from the environment and collects the messages of its neighbourhood, building a \emph{context};
+ \item \emph{Compute}: the agent executes a \emph{program} that computes an \emph{export}, that is a set of values to be sent to the neighbourhood;
+ \item \emph{Act}: the agent sends the export to its neighbourhood and updates its internal state acting on the environment.
 \end{enumerate}
-The term "program" refers to an abstract description executable by a computational entity. Modes (1) and (2) allow an external entity \( C \) to influence \( A \) or \( B \), and consequently \( S \).
+The proactive and iterative execution of the round by each agent leads to the emergence of collective behaviour specified by the program.
 
-\subsection{Macroprogramming: Definition and Basic Concepts}
-Macroprogramming is defined as an abstract paradigm for programming the macroscopic behaviour of systems of computational entities. As a paradigm, it's an approach rooted in a mathematical theory or a set of coherent principles. The foundational principles of macroprogramming include:
-\begin{itemize}
-    \item Micro-macro distinction: Recognizing two primary system levels - macro (global structures) and micro (computational entities).
-    \item Macroscopic perspective: Focusing on the system's macroscopic aspects, considering micro-level entities from a global perspective.
-    \item Macroprogram: The result of macroprogramming, a program executed by the system adopting the macroscopic perspective.
-    \item Macro-to-micro mapping: Implementing how a macroprogram is executed by the system, defining a logic to map macro instructions to micro-level behaviors.
-\end{itemize}
+On the other hand, the programming model is ruled by the \emph{field calculus}~\cite{DBLP:conf/saso/ViroliBDP15,DBLP:journals/tocl/AudritoVDPB19},  
+a core language that allows the expression of collective behaviours through the composition of \emph{functions} operating on fields.
+%
+Field calculus includes main operators for expressing \emph{spatio-temporal} computations that allow for 
+\emph{i)} the progression of values over time, achieved by transforming a field computed in a previous round into a new field; 
+\emph{ii)} the exchange of data with neighbouring fields (typically referred to as \lstinline|nbr|), where received data is accessed by adjacent fields; and 
+\emph{iii)} the conditional division of computation into distinct domains of collective computation. 
+%
+%We avoid presenting here the full details of these operators since they are not essential to the contribution. 
+For further elaboration on the actual field calculus, please refer to the work of~\cite{DBLP:journals/jlap/ViroliBDACP19}.
 
-\subsubsection{On Micro-Macro and Local-Global Distinction}
-The micro-macro distinction is prevalent in various scientific areas, distinguishing smaller elements from larger ones. For programming, a system can be defined based on a boundary condition, distinguishing between the micro and macro dimensions. The goal of macroprogramming is closely tied to the concept of emergence, analysing the relationships between microscopic and macroscopic states.
+On these minimal operators, 
+it is then possible to build \emph{self-organizing} coordination blocks.
+One of the founding blocks is the \emph{gradient} essential for 
+\emph{information} flows~\cite{DBLP:conf/saso/WolfH07}.
+%
+This operator generates a numerical field that represents the minimum distance from a source zone. 
+%
+In other words, it maps a Boolean field (where ``true'' indicates the presence of a source agent and ``false'' indicates its absence) to a distance field that indicates the proximity to the nearest source. 
+%
+In the \scafi{}~\cite{casadei2022scafi} implementation of field calculus is defined by function:
+\begin{lstlisting}
+def gradient(source: Boolean): Double
+\end{lstlisting}
+Along the gradient, it is possible to cast information within the system, accumulating value during the field expansion. 
+This pattern is called \emph{gradient-cast} (or \emph{G}):
+\begin{lstlisting}
+def G[V](source: Boolean, value: V, acc: V => V): V
+\end{lstlisting}
+%\ga{more description here}
+where \texttt{source} is a Boolean field indicating the presence of a source agent, 
+\texttt{value} is the value to be cast, and 
+\texttt{acc} is the accumulation function that is applied to the value during the cast.
+%
+This is a fundamental building block for the coordination of swarm-like systems: in fact, the resulting system can be used to broadcast information, or route towards selected nodes.
 
-\subsubsection{On Collectives}
-Macroprogramming often targets collectives, groups of similar entities sharing common traits or goals. While heterogeneous collectives exist, they tend to complicate macroprogramming by emphasizing individual perspectives or widening the macro-to-micro gap.
 
-\subsubsection{On Declaratively}
-Declarativity is a hallmark of macroprogramming, focusing on the computation's goal rather than its method. This approach abstracts away specific computational aspects, offering high-level abstractions tailored to specific application domains, often resulting in Domain-Specific Languages (DSLs).
 
-\subsection{Historical Evolution and Context}
-
-The historical roots of macroprogramming can be traced back to the pioneering work of Newton and Welsh in 2004. 
- Their research laid the foundation for the application of macroprogramming in the domain of Wireless Sensor Networks (WSNs). 
- These networks, characterized by embedded units equipped with processing, communication, and sensing capabilities, presented unique challenges that necessitated a macroscopic view for effective data processing and logic description. 
-The emphasis was on capturing the collective behaviour of these sensor nodes, 
- ensuring efficient data aggregation, processing, and communication.
-
-WSNs were among the first systems that required a departure from traditional programming paradigms. 
- Given the distributed nature of these networks and the limited resources of individual sensor nodes, 
- there was a pressing need to optimize both computation and communication. 
- Macroprogramming emerged as a solution, allowing developers to focus on the overall behaviour of the network rather than the intricacies of individual nodes.
-
-As technology evolved, so did the applications of macroprogramming. 
- The rise of the Internet of Things (IoT) in the subsequent years brought forth a plethora of interconnected devices, each with its own set of capabilities and functions. 
- The complexity of these systems further underscored the importance of a macroscopic approach. Macroprogramming principles were adapted and refined to cater to the diverse requirements of IoT ecosystems.
-
-Furthermore, the emergence of Cyber-Physical Systems (CPSs) and spatial computing introduced new challenges and opportunities for macroprogramming. 
- These systems, which integrate computational processes with physical entities, demanded a holistic approach to ensure seamless interaction and coordination. 
- Macroprogramming, with its emphasis on collective behaviour and high-level abstractions, proved to be an invaluable tool in this context.
-
-Over the years, the principles of macroprogramming have been enriched by interdisciplinary research, drawing insights from fields such as distributed systems, artificial intelligence, and network theory. 
- This confluence of ideas has shaped the evolution of macroprogramming, making it a dynamic and ever-evolving field that continues to adapt to the changing technological landscape.
-
-\section{Aggregate computing}
 \subsection{Field-based Computing}
 \label{s:background-fieldcomp}
 
@@ -368,14 +408,3 @@ Secondly, it could be interesting to compare (or combine) the meta-algorithm aga
 %
 Last but not least, we would like to evaluate our algorithms on real use cases, e.g. in smart logistics and precision agriculture scenarios, by implementing them %using the FCPP field-based computing language and deploying them
 on actual drones or robots.
-\section{Wrap up}
-
-Macroprogramming, with its focus on the macroscopic behaviour of systems, 
- has proven to be an invaluable tool in the computational world. 
-%
-From its early applications in WSNs to its modern-day relevance in IoT and CPSs, 
- it has consistently demonstrated its utility. 
-As we move towards an increasingly interconnected world, 
- the principles of macroprogramming will undoubtedly play a pivotal role in shaping the future of computational systems.
-
- \printbibliography

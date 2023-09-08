@@ -17,7 +17,7 @@
 %=================================================================
 % Full title of the paper (Capitalized)
 %\chapter{A Programming Approach to Collective Autonomy}
-\chapter{Collective Autonomy}
+\chapter[On Collective Autonomy]{A Programming Approach to Collective Autonomy}
 
 \minitoc% Creating an actual minitoc
 %\simplesumm{} % Simple summary
@@ -49,8 +49,8 @@
 %\keycontribution{The breakthroughs or highlights of the manuscript. Authors can write one or two sentences to describe the most important part of the paper.}
 
 \newcommand{\revision}[1]{{#1}}
-\lstset{frame=single,basewidth=0.5em,language={scafi},
-basicstyle=\lst@ifdisplaystyle\small\fi\ttfamily}
+%\lstset{frame=single,basewidth=0.5em,language={scafi},
+%basicstyle=\lst@ifdisplaystyle\small\fi\ttfamily}
 %%%%%%%%%%%%%%%%%%%%%%%
 
 %\meta{
@@ -61,17 +61,19 @@ basicstyle=\lst@ifdisplaystyle\small\fi\ttfamily}
 
 % liu2005autonomy-oriented-computing
 
-Research and technology trends 
- promote a vision of artificial systems
- that are able to resiliently manage themselves 
- and autonomously deal with issues at runtime
- in dynamic environments.
+%Research and technology trends 
+% promote a vision of artificial systems
+% that are able to resiliently manage themselves 
+% and autonomously deal with issues at runtime
+% in dynamic environments.
 %
-Such a vision is mainly investigated by two related research threads.
+%Such a vision is mainly investigated by two related research threads.
 %
-One is the field of \emph{autonomic computing}~\cite{DBLP:journals/computer/KephartC03} and \emph{self-adaptive systems}~\cite{lemos2010sweng-selfadaptive-2ndresearchroadmap},
- which promote the development of ICT \revision{(Information and Communications Technology)} systems
- able to self-manage given a set of high-level goals.
+%One is the field of \emph{autonomic computing}~\cite{DBLP:journals/computer/KephartC03} and \emph{self-adaptive systems}~\cite{lemos2010sweng-selfadaptive-2ndresearchroadmap},
+% which
+%
+Cyber-Physical Swarms promote the development of ICT \revision{(Information and Communications Technology)} systems
+able to self-manage given a set of high-level goals.
 %
 Indeed, endowing systems with higher degrees of autonomy can be leveraged to
  unburden humans from mundane tasks (cf. driving and autonomous vehicles),
@@ -94,39 +96,37 @@ Indeed, beyond the results that individual autonomous agents
  of multiple agents or robots.
 %
 Emerging \emph{macro-paradigms}~\cite{DBLP:journals/corr/abs-1202-5509,viroli2019jlamp-si-coord}
+ discussed in \Cref{chap:macro-programming}
  provide an approach to programming whole collectives
  towards global goals.
 %
-\emph{Aggregate computing} or \emph{programming}~\cite{DBLP:journals/computer/BealPV15,viroli2019jlamp-si-coord} is one such paradigm, formally grounded in a calculus of \emph{computational fields}~\cite{audrito2019tocl} (maps from agents to values) enabling functional specification and composition of collective behaviours. % that could be proved, under certain technical conditions, to be self-stabilising.
-%
-The major benefit of the aggregate programming approach
- is that it explicitly addresses 
- collective adaptive behaviour, rather than the behaviour of individuals (which is addressed indirectly, as a consequence of the intended global behaviour).
+\emph{Aggregate computing} or \emph{programming}~\cite{DBLP:journals/computer/BealPV15,viroli2019jlamp-si-coord} is one such paradigm 
+which has as a major benefit the explicit addressing of collective adaptive behaviour, rather than the behaviour of individuals (which is addressed indirectly, as a consequence of the intended global behaviour).
 %
 The idea is to code scripts, conceptually executed by the collective as a whole, in terms of reusable building blocks of collective tasks~\cite{DBLP:conf/saso/BealV14a}
  capturing both state, behaviour, and interaction,
  crucially enjoying formal mapping to the behaviour of individuals
  and often provable convergence properties~\cite{viroli2019jlamp-si-coord,DBLP:journals/tomacs/ViroliABDP18}.
 %
-We argue that this programming approach,
- which originated from the research areas of coordination~\cite{malone1994interdisciplinary} and spatial computing~\cite{DBLP:journals/corr/abs-1202-5509} (see~\cite{viroli2019jlamp-si-coord} for a historical note),
- can be suitable to MAS programming.
+%We argue that this programming approach,
+ %which originated from the research areas of coordination~\cite{malone1994interdisciplinary} and spatial computing~\cite{DBLP:journals/corr/abs-1202-5509} (see~\cite{viroli2019jlamp-si-coord} for a historical note),
+% can be suitable to MAS programming.
 %
-Accordingly, in this work, we address the concept of \emph{collective autonomy}, i.e., the form of autonomy that applies at the level of a group of individuals.
+In this work, we address the concept of \emph{collective autonomy}, i.e., the form of autonomy that applies at the level of a group of individuals.
 %
-Though this notion has been investigated in the literature (cf. \Cref{mdpi2020:s:background-rw}), there are mainly preliminary approaches for practical \emph{programming} of collective autonomous behaviour by a global perspective; so, in this manuscript, we address this software engineering problem explicitly, and sketch a roadmap for further research.
+Though this notion has been investigated in the literature (cf. \Cref{mdpi2020:s:background-rw}), there are mainly preliminary approaches for practical \emph{programming} of collective autonomous behaviour by a global perspective; so, in this chapter, we address this software engineering problem explicitly, and sketch a roadmap for further research.
 %
-Therefore: %, in summary, we provide the following contributions\revision{, matching the structure of the manuscript}:
-\begin{itemize}
-\item we provide a review of literature about autonomy and especially collective autonomy in MASs \revision{(\Cref{mdpi2020:s:background-rw})};
-\item we analyse the aggregate computing framework by the perspective of autonomy, by covering its positioning with respect to individual and collective autonomy, and showing how it can support adjustable autonomy \revision{(\Cref{mdpi2020:s:autonomy-ac})};
-\item we exemplify the discussion through a simulated case study, investigating (i) the relationship between individual goals/autonomy
- and collective goals/autonomy;
-  and (ii) the relationship between structures and collective autonomy \revision{(\Cref{mdpi2020:s:eval})}; and
-\item we \revision{discuss} gaps in literature on programming reliable collective autonomy 
- and delineate a research roadmap \revision{(\Cref{mdpi2020:s:discussion})}.
+%Therefore: %, in summary, we provide the following contributions\revision{, matching the structure of the manuscript}:
+%\begin{itemize}
+%\item we provide a review of literature about autonomy and especially collective autonomy in MASs \revision{(\Cref{mdpi2020:s:background-rw})};
+%\item we analyse the aggregate computing framework by the perspective of autonomy, by covering its positioning with respect to individual and collective autonomy, and showing how it can support adjustable autonomy \revision{(\Cref{mdpi2020:s:autonomy-ac})};
+%\item we exemplify the discussion through a simulated case study, investigating (i) the relationship between individual goals/autonomy
+% and collective goals/autonomy;
+%  and (ii) the relationship between structures and collective autonomy \revision{(\Cref{mdpi2020:s:eval})}; and
+%\item we \revision{discuss} gaps in literature on programming reliable collective autonomy 
+% and delineate a research roadmap \revision{(\Cref{mdpi2020:s:discussion})}.
 %\item we present a library support for collective autonomy in the aggregate computing framework, providing bricks to design collective adaptive strategies for formation of dynamic groups, collection of distributed data, and distributed action;
-\end{itemize}
+%\end{itemize}
 %
 %Moreover, we outline opportunities and challenges for reliable aggregate autonomy. 
 %
@@ -141,7 +141,7 @@ Therefore: %, in summary, we provide the following contributions\revision{, matc
 %%
 %\Cref{mdpi2020:s:discussion} discusses opportunities and challenges related to the ability of expressing or even programming the collective autonomy of systems, and delineates a roadmap for further research.
 %%
-\revision{Finally, we conclude with a wrap-up in \Cref{mdpi2020:s:conc}.}
+%\revision{Finally, we conclude with a wrap-up in \Cref{mdpi2020:s:conc}.}
 %
 \revision{In summary, in this route
   we cover how aggregate computing relates to and supports various forms of autonomy,
@@ -225,44 +225,40 @@ An approach to (strong) agency is to consider agents
 A well-known model in this class is the \emph{Belief-Desire-Intention (BDI)} control architecture, which counts several implementations and variants~\cite{desilva2020bdi}.
 
 \begin{table}
-\centering
-\def\arraystretch{1.4}%
-\begin{tabularx}{\textwidth}{|p{0.355\textwidth}|X|X|X|X|}
-\hline
-\textbf{Dimension} & \multicolumn{4}{c|}{\textbf{Elements / Terms}}
-\\\hline
-Reference entity & \multicolumn{2}{c|}{Agent} & \multicolumn{2}{c|}{Group of agents}
-\\\hline
-& \multicolumn{2}{c|}{\emph{individual autonomy}} & \multicolumn{2}{c|}{\emph{collective autonomy}}
-\\\hline\hline
-Autonomy \emph{``from''} something & \multicolumn{2}{c|}{Other agents} & \multicolumn{2}{c|}{Environment}
-\\\hline
-& \multicolumn{2}{c|}{\emph{social autonomy}} & \multicolumn{2}{c|}{\emph{non-social / environmental autonomy}}
-\\\hline\hline
-Autonomy \emph{``with respect to''} something & \multicolumn{2}{c|}{Goals} & \multicolumn{2}{c|}{Plans}
-\\\hline
-& \multicolumn{2}{c|}{\emph{motivational autonomy}} & \multicolumn{2}{c|}{\emph{executive autonomy}}
-\\\hline\hline
-Autonomy extremes & \multicolumn{2}{c|}{None} & \multicolumn{2}{c|}{Full}
-\\\hline
-& \multicolumn{2}{c|}{\emph{no autonomy (passivity)}} & \multicolumn{2}{c|}{\emph{absolute autonomy (freedom)}}
-\\\hline
-Autonomy flexibility & \multicolumn{2}{c|}{None} & \multicolumn{2}{c|}{Full}
-\\\hline
-& \multicolumn{2}{c|}{\emph{fixed autonomy}} & \multicolumn{2}{c|}{\emph{adjustable autonomy}}
-\\\hline
-Source of autonomy with respect to a component of a reference entity & \multicolumn{2}{c|}{Internal} & \multicolumn{2}{c|}{External}
-\\\hline
-& \multicolumn{2}{c|}{\emph{endogenous autonomy}} & \multicolumn{2}{c|}{\emph{exogenous autonomy}}
-\\\hline
-%Representation of goals & \multicolumn{2}{c|}{Implicit} & \multicolumn{2}{c|}{Explicit}
-%\\\hline
-%& \multicolumn{2}{|c|}{\emph{weak agency}} & \multicolumn{2}{c|}{\emph{strong agency}}
-%\\\hline
-\end{tabularx}
-\caption{\revision{A summary of common notions of autonomy.}}
-\label{mdpi2020:table:autonomy-notions}
-\end{table}
+  \centering
+  \def\arraystretch{1.4}%
+  \begin{tabularx}{\textwidth}{|p{0.2\textwidth}|X|X|X|X|}
+  \hline
+  \textbf{Dimension} & \multicolumn{4}{c|}{\textbf{Elements / Terms}}
+  \\\hline
+  Reference entity & \multicolumn{2}{c|}{Agent} & \multicolumn{2}{c|}{Group of agents}
+  \\\hline
+  & \multicolumn{2}{c|}{\emph{individual autonomy}} & \multicolumn{2}{c|}{\emph{collective autonomy}}
+  \\\hline\hline
+  Autonomy \emph{``from''} something & \multicolumn{2}{c|}{Other agents} & \multicolumn{2}{c|}{Environment}
+  \\\hline
+  & \multicolumn{2}{c|}{\emph{social autonomy}} & \multicolumn{2}{c|}{\emph{non-social / environmental autonomy}}
+  \\\hline\hline
+  Autonomy \emph{``with respect to''} something & \multicolumn{2}{c|}{Goals} & \multicolumn{2}{c|}{Plans}
+  \\\hline
+  & \multicolumn{2}{c|}{\emph{motivational autonomy}} & \multicolumn{2}{c|}{\emph{executive autonomy}}
+  \\\hline\hline
+  Autonomy extremes & \multicolumn{2}{c|}{None} & \multicolumn{2}{c|}{Full}
+  \\\hline
+  & \multicolumn{2}{c|}{\emph{no autonomy (passivity)}} & \multicolumn{2}{c|}{\emph{absolute autonomy (freedom)}}
+  \\\hline
+  Autonomy flexibility & \multicolumn{2}{c|}{None} & \multicolumn{2}{c|}{Full}
+  \\\hline
+  & \multicolumn{2}{c|}{\emph{fixed autonomy}} & \multicolumn{2}{c|}{\emph{adjustable autonomy}}
+  \\\hline
+  Source of autonomy with respect to a component of a reference entity & \multicolumn{2}{c|}{Internal} & \multicolumn{2}{c|}{External}
+  \\\hline
+  & \multicolumn{2}{c|}{\emph{endogenous autonomy}} & \multicolumn{2}{c|}{\emph{exogenous autonomy}}
+  \\\hline
+  \end{tabularx}
+  \caption{A summary of common notions of autonomy.}
+  \label{mdpi2020:table:autonomy-notions}
+  \end{table}
 
 \subsection{Collective autonomy}\label{mdpi2020:s:collective-autonomy}
 
@@ -330,6 +326,7 @@ In the following, we cover a programming model
  based on specifications
  addressing the meso- and macro-levels of a MAS.
 
+\begin{comment}
 \subsubsection{Aggregate programming}
 \label{mdpi2020:background-ac}
 
@@ -446,7 +443,7 @@ In this article, we build on this perspective, and rather focus on the notion of
 Notation: square boxes denote components; rounded boxes denote activities; dashed rounded boxes denote agents; solid arrows denote control passing; dashed arrows denote data passing.}
 \label{mdpi2020:fig:aggregate-control-arch}
 \end{figure}
-
+\end{comment}
 \section{Autonomy in Aggregate Computing}
 \label{mdpi2020:s:autonomy-ac}
 
@@ -489,8 +486,9 @@ The field calculus small-step operational semantics~\cite{audrito2019tocl}
 %
 The aggregate execution protocol typically consists
  of having an agent repeatedly run (e.g., once per second, or upon change of the local context) 
- a \emph{computation round} consisting of the following steps:
+ a \emph{computation round} (see \Cref{chap:macro-programming} for more details).
 %
+\begin{comment}
 \begin{enumerate}
 \item \emph{Context evaluation.} In this step, 
  the agent looks at its current state,
@@ -513,7 +511,7 @@ The aggregate execution protocol typically consists
  \item trigger actuations (if needed).
  \end{itemize}
 \end{enumerate}
-
+\end{comment}
 Such an abstract aggregate execution protocol %(introduced in \Cref{mdpi2020:background-ac}---comprising context evaluation, aggregate program evaluation, context action) 
  can effectively be used to define an \emph{agent control architecture} (\Cref{mdpi2020:fig:aggregate-control-arch}).
 %
@@ -602,9 +600,9 @@ def crowdTracking(p: Double, r: Double, w: Double, t: Double, %\label{mdpi2020:l
 }
 
 def crowdDispersal(c: Crowding, r: Double): TargetPosition = %\label{mdpi2020:line:dispersal}%
-    // if a device is closer than r to any device with crowding level = Risk or higher
-    // then compute a movement vector to move away from the Overcrowded area, or do not move
-    branch(distanceTo(c >= Risk) < r){ vectorFrom(c == Overcrowded) }{ currentPosition() }%\label{mdpi2020:line:on-collective-intention}%
+  branch(distanceTo(c >= Risk) < r){ 
+    vectorFrom(c == Overcrowded) 
+  }{ currentPosition() }%\label{mdpi2020:line:on-collective-intention}%
 
 /* Shared beliefs: see %\cite{DBLP:journals/computer/BealPV15}% for motivation of the specific values */
 val p = 0.005 // proportion of people with a corresponding device (agent)
@@ -620,39 +618,7 @@ val crowdingLevel = crowdTracking(p, r, w, thCrowd, thDanger, t)
 crowdDispersal(crowdingLevel, riskRange) // dispersal advice
 \end{lstlisting}
 \subcaption{\label{mdpi2020:fig:scafi-crowd}Aggregate program as implemented in \scafi{}.}
-%%
-%%def localDensityEstimation(p: Double, r: Double, w: Double): Double = {
-%%  val nbrsWithinRange = sumHood(mux(nbrRange() < r) { 1 } { 0 })
-%%  nbrsWithinRange / (p * Math.PI * r * r * w)
-%%}
-%%
-%%def recentlyTrue(event: Boolean, timeout: Double): Boolean = 
-%%  branch ( event ) { true } { timerLocalTime(timeout) > 0 }
-%
-%%def collectiveDensityEstimation(p: Double, r: Double, thDanger: Double) = {
-%%  val mr = managementRegions(r*2, nbrRange)
-%%  val danger = average(mr, densityEst(p, r)) > thDanger &&
-%%    summarize(mr, (_:Double)+(_:Double), 1 / p, 0) > 300
-%%  if(danger) { high } else { low }
-%%}
-%%def collectiveDensityEstimation(p: Double, r: Double, w: Double, t: Double, 
-%%                                thCrowd: Double, thDanger: Double): Boolean = {
-%%    val partition = S(range, nbrRange)
-%%    val localDensity = densityEstimation(p, range, w)
-%%    val avg = summarize(partition, _+_, localDensity, 0.0) /
-%%      summarize(partition, _+_, 1.0, 0.0)
-%%    val count = summarize(partition, _+_, 1.0 / p, 0.0)
-%%    avg > dangerousDensity && count > groupSize
-%%%%}
-%%def collectiveDensityEstimation(p: Double, r: Double, w: Double, t: Double, 
-%%                                thCrowd: Double, thDanger: Double): Boolean = {
-%%    val partition = S(r * 10) // split
-%%    val localDensity = densityEstimation(p, r, w)
-%%    val avg = summarize(partition, _+_, localDensity, 0.0) /
-%%      summarize(partition, _+_, 1.0, 0.0)
-%%    val count = summarize(partition, _+_, 1.0 / p, 0.0)
-%%    broadcast(partition, avg > dangerousDensity && count > groupSize)
-%%}
+
 \end{minipage}\\[0.2cm]
 \caption{Crowd detection and steering example: snapshot, architecture and program.}
 \label{mdpi2020:fig:crowd-example}
@@ -846,11 +812,16 @@ Notice that an aggregate MAS can be collectively autonomous
 Consider the \emph{Self-organising Coordination Regions (SCR)} pattern~\cite{casadei2019scr}, which is also exploited in \Cref{mdpi2020:s:eval}; a general encoding in \scafi{} is as follows:
 %
 \begin{lstlisting}
-val leaders = S(grain) // sparse-choice: elect leaders at mean distance of grain
-val potential = distanceTo(leaders) // gradient field from leaders
-val regions = broadcast(potential, mid()) // multi-hop propagation of IDs of leaders
-val collectedData = C(potential, membersData()) // collect info towards leaders
-val decisions = broadcast(potential, leaderDecision(collectedData)) // propagate leader choices
+// sparse-choice: elect leaders at mean distance of grain
+val leaders = S(grain)
+// gradient field from leaders
+val potential = distanceTo(leaders) 
+// multi-hop propagation of IDs of leaders
+val regions = broadcast(potential, mid())
+// collect info towards leaders
+val collectedData = C(potential, membersData())
+// propagate leader choices
+val decisions = broadcast(potential, leaderDecision(collectedData)) 
 localAction(decisions)
 \end{lstlisting}
 %
@@ -1187,7 +1158,7 @@ Finally, the slaves, who receive the various tasks created,
 %
 With \scafi{}, this behaviour can be synthesized as described in \Cref{mdpi2020:fig:wildlife-code}
 %
-\begin{figure}[t!]
+\begin{figure}
 \centering
 \begin{subfigure}[b]{\textwidth}
 \centering
@@ -1199,10 +1170,10 @@ With \scafi{}, this behaviour can be synthesized as described in \Cref{mdpi2020:
 %%%%%
 \begin{subfigure}[b]{\textwidth}
 \centering
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\lst@ifdisplaystyle\footnotesize\fi\ttfamily]
 val leader = branch(isStationary) { S(grain) } { false } //(1.) leader election
 //.. (2.) sense animals in danger ..
-val noAnimal : Map[ID, P] = Map.empty
+val noAnimal: Map[ID, P] = Map.empty
 val animalsInDanger = {
   foldhood(noAnimal)(combineDangerMap){
     mux(nbr(isDanger)) {
@@ -1212,9 +1183,9 @@ val animalsInDanger = {
 }
 val potential = distanceTo(leader)
 //(2.) send information to the leader
-val animalDangerInArea = C(potential, combineDangerMap, animalsInDanger, noAnimal)
+val animalInArea = C(potential, combineDangerMap, animalsInDanger, noAnimal)
 //(3.) leader chooses an animal to rescue
-val leaderHealTask = animalDangerInArea.toSeq.sortBy {
+val leaderHealTask = animalInArea.toSeq.sortBy {
   case (_, p) => p.distance(currentPosition()) //choosing policy
 }.headOption.map {
   case (id, p) => HealTask(mid(), id, p)
@@ -1225,8 +1196,8 @@ val healTaskForSlave =  broadcast(leader, leaderHealTask)
 val exploreAreaToSlave = broadcast(leader, exploreArea)
 //(5.) slave choose the task according its role, intentions and leader choice
 val collectiveTasks = Seq(healTaskForSlave, exploreAreaToSlave)
-val localTask = Planner.eval(collectiveTasks) //the task choice is encapsulated here..
-val actuation = localTask.call(this) // produces data in order to achieve the task chosen 
+val localTask = Planner.eval(collectiveTasks) //the task choice is encapsulated
+val actuation = localTask.call(this) // produces data to achieve the task 
 \end{lstlisting}
 \caption{\revision{The \scafi{} code snippet for the wildlife program behaviour.}}
 \label{mdpi2020:fig:wildlife-code}
@@ -1330,12 +1301,11 @@ We test the application varying these parameters:
 %
 \subsection{Results and discussion}\label{mdpi2020:sb:results}
 
-\begin{figure}[t!]
+\begin{figure}
 \centering
-\includegraphics[width=\textwidth]{papers/mdpi2020/imgs/alchemist-v2.png}
-
+\includegraphics[width=0.7\textwidth]{papers/mdpi2020/imgs/alchemist-v2.png}
 \caption[Wildlife monitoring simulation screenshot]{Wildlife monitoring simulation screenshot. 
- The "wi-fi" like symbol represents a \emph{Station} node. 
+ The ``wi-fi'' like symbol represents a \emph{Station} node. 
  Each \emph{Station} has an influence area (displayed with a coloured circle). 
  Mobile nodes are represented with a triangle.
  Healers have a half-moon on the shorter side. 
@@ -1390,7 +1360,7 @@ In general, however, we can observe that even if the system control is not total
  the emerging behaviour is comparable with others.
 %
 It is because all agents must adapt to the aggregate protocol, losing some of their autonomy.
-\begin{figure}[t!]
+\begin{figure}
 \centering
 \begin{subfigure}[b]{0.32\textwidth}
 \centering
@@ -1480,7 +1450,7 @@ The plots in the last column point out how many zones have not enough healers to
 \label{mdpi2020:fig:wildlife-simulation}
 \end{figure}
 
-\begin{figure}[ht!]
+\begin{figure}
 \centering
 \includegraphics[width=\textwidth]{papers/mdpi2020/imgs/box-plot.pdf}
 \caption[Simulations result of the wild-life scenario]{\revision{Average error (RMSE) for each combination of \emph{p} and \emph{healer count}.
@@ -1846,5 +1816,3 @@ However, more work is needed
  and hence in reliable forms of collective autonomy.
 
 \printbibliography
-
-\subsection{List of Publications}

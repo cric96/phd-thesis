@@ -7,12 +7,12 @@
 % to display URLs in blue roman font according to Springer's eBook style:
 % \renewcommand\UrlFont{\color{blue}\rmfamily}
 %
-\lstset{language=scafi}
+%\lstset{language=scafi}
 % Please use the
 %
 %\chapter{ScaRLib: A Framework for Cooperative Many Agent Deep Reinforcement learning in Scala}
 %
-\chapter{ScaRLib}%: A Framework for Cooperative Many Agent Deep Reinforcement learning in Scala}
+\chapter[ScaRLib]{ScaRLib: A Framework for Cooperative Many Agent Deep Reinforcement learning in Scala}%: A Framework for Cooperative Many Agent Deep Reinforcement learning in Scala}
 %
 \minitoc% Creating an actual minitoc
 %
@@ -485,7 +485,11 @@ Therefore, if a developer wants to start their simulation
  is compared to the current environmental condition.
 \begin{lstlisting}
 class MyRewardFunction extends CollectiveRewardFunction:
-    override def computeReward(state: State, action: Action, nextState: State): Double = ...
+    override def computeReward(
+        state: State, 
+        action: Action, 
+        nextState: State
+    ): Double = ...
 \end{lstlisting}
 Consequently, they must decide which actions are supported 
  by the agents living in the chosen system. 

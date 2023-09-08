@@ -5,7 +5,7 @@
 
 %
 %\chapter{Field-informed Reinforcement Learning of Collective Tasks with Graph Neural Networks} %% Todo improve
-\chapter{Field-informed Reinforcement Learning} %% Todo improve
+\chapter[Field-informed Reinforcement Learning]{Field-informed Reinforcement Learning of Collective Tasks with Graph Neural Networks} %% Todo improve
 \minitoc% Creating an actual minitoc
 % or: Field-Informed Reinforcement Learning: A Scalable and Effective Method for Collective Intelligence
 % or: A Novel Approach to Reinforcement Learning for Adaptive Collective Systems
@@ -112,6 +112,7 @@ We employ this approach in a swarm-like system setting where agents are tasked t
 %Finally, we present a formalization of the problem and a discussion of the motivations behind our proposed work.
 %\ga{Page budget: 1/2 page \\}
 %\ga{Plan: discussion about the problem of coordination in multi-agent systems and the need for a scalable approach. In doing this, we will discuss some of the existing approaches (declarative, RL and )}
+\begin{comment}
 \subsection{Swarm systems}
 This article studies intelligent \emph{collective behaviours} within the context of \emph{large-scale} distributed systems.
  Specifically, we focus on \emph{Cyber-Physical Swarms} or \emph{swarm-like systems} consisting of \emph{devices} governed by autonomous software \emph{agents} and equipped with \emph{sensors} and \emph{actuator} able to interact with the real world.
@@ -140,6 +141,7 @@ The homogeneity of the controller is a key requirement to ensure the \emph{scala
  as it allows us to avoid the need for a centralized controller that would be a bottleneck for the system,
  and it is the typical choice in swarm-like systems~\cite{brambilla2013swarm,yang2021many,pmlr-v80-yang18d,DBLP:conf/aaai/ZhengYCZZWY18}.
 %
+\end{comment}
 \begin{comment}
 \subsection{Field-based Coordination}
 %\ga{discussion about field used as a coordination mechanism in multi-agent systems. Introduction to AC}
@@ -721,10 +723,8 @@ For each episode,
  The feature set used by the \ac{GNN} created for each agent consists of the vector computed by the aggregated program and the value of the local sensor $\zeta$.
 %
 In this case, we chose to use an exponential epsilon decay, defined as:
-$
-\epsilon = \epsilon_{min} + (\epsilon_{max} - \epsilon_{min}) \cdot e^{-\lambda \cdot e}
-$.
-Where e is the current episode number. 
+$$\epsilon = \epsilon_{min} + (\epsilon_{max} - \epsilon_{min}) \cdot e^{-\lambda \cdot e}$$
+Where $e$ is the current episode number. 
 This leads to a high number of random actions at the beginning and gradually shifts towards exploitation in the later episodes. 
 %
 In our training process, 
@@ -737,16 +737,15 @@ The hidden size was set to 256.
 %
 As the reward function is defined as a regret, 
  we decided to use the Huber loss function with $\delta = 1$. %~\cite{??}, 
- %which is a combination of the $L_1$ and $L_2$ loss functions.
-%
-%The loss function is defined as:
-%\begin{equation*}
-%L_\delta = \begin{cases}
-%  \frac{1}{2} (y - \hat{y})^2 & \text{if } |y - \hat{y}| < \delta \\
-%  \delta \cdot (|y - \hat{y}| - \frac{1}{2} \delta) & \text{otherwise,} 
-% \end{cases}
-%\end{equation*}
-%where $\delta$ is a hyperparameter that determines the threshold between the two loss functions (fixed to 1 in our experiemnt) and $y$ and $\hat{y}$ are the target and predicted values, respectively.
+ which is a combination of the $L_1$ and $L_2$ loss functions:
+
+\begin{equation*}
+L_\delta = \begin{cases}
+  \frac{1}{2} (y - \hat{y})^2 & \text{if } |y - \hat{y}| < \delta \\
+  \delta \cdot (|y - \hat{y}| - \frac{1}{2} \delta) & \text{otherwise,} 
+ \end{cases}
+\end{equation*}
+where $\delta$ is a hyperparameter that determines the threshold between the two loss functions (fixed to 1 in our experiemnt) and $y$ and $\hat{y}$ are the target and predicted values, respectively.
 This function is used to penalize the agent if the action taken is too far from the optimal action. 
 %\lukas{what is the value of $\delta$ in the training?}
 %\lukas{also: $\delta$ is used as a function and as a value?}
@@ -939,7 +938,7 @@ Nevertheless, we acknowledge the crucial role of \acp{GNN}.
   \label{acsos2023:fig:resCoverage}
 \end{figure*}
 
-\section{Conclusion and Future Work}
+\section{Wrap up}
 In this paper, 
  we have introduced a novel approach for constructing distributed controllers by leveraging aggregate computing to encode agent interactions, 
  along with the combination of \ac{DQN} and \ac{GNN} for synthesizing distributed intelligence.
@@ -948,10 +947,6 @@ By combining manual design and machine learning techniques,
  the approach enables agents to autonomously learn and adapt their behaviour while leveraging locally available information. 
 %
 The demonstrated success in the proposed case study in solving collective tasks underscores the potential impact of this approach in advancing the field of multi-agent systems and swarm robotics. 
-
-Future research could explore its application in diverse domains and evaluate its scalability and robustness in increasingly complex scenarios. 
-%
-In addition, we also plan to take the approach to modern actor-critical solutions, which are better suited to modern swarm robotics problems because of the continuous action space.
 %\ga{Page budget: 0.5}
 \label{acsos2023:sec:conclusion}
 

@@ -1,13 +1,11 @@
 
-\newcommand{\rev}[1]{#1}
-
 % revisions
 \newcommand{\LP}[2]{\marginpar{$\color{red}\star$}\color{gray}\sout{#1}\color{blue}\
   #2 \color{black}}
 \newcommand{\LPr}[2]{{\color{gray}\ #1\ \color{orange}\  #2}}
 
-\lstset{frame=single,basewidth=0.5em,language={scafi},
-basicstyle=\lst@ifdisplaystyle\small\fi\ttfamily}
+%\lstset{frame=single,basewidth=0.5em,language={scafi},
+%basicstyle=\lst@ifdisplaystyle\small\fi\ttfamily}
 
 %\chapter{A Field-based Computing Approach to Sensing-driven Clustering in Robot Swarms}
 \chapter[Sensing-driven Clustering in Robot Swarms]{Sensing-driven Clustering in Robot Swarms: A Field-based computing approach}
@@ -90,7 +88,7 @@ The problem has been considered in Wireless Sensor Networks (WSNs) and Internet-
   efficient distributed collection~\cite{DBLP:journals/ijcomsys/PhamLPC10},
   and disaster management~\cite{DBLP:journals/jaihc/KucukBSK20}.
 %
-However, to the best of our knowledge no existing work addresses the dynamic problem in mobile swarms, which requires specific
+However, to the best of our knowledge no existing work addresses the dynamic problem in \ac{cpsw}, which requires specific
 techniques to adaptively re-adjust clusters to face changes.
 %
 \rev{
@@ -99,25 +97,25 @@ Additionally, we look for solutions featuring \emph{resilience}, namely,
 }
 %
 %Therefore, i
-Accordingly, in this work, we present and address the \emph{dynamic sensing-based swarm clustering} problem.
+Accordingly, we present and address the \emph{dynamic sensing-based swarm clustering} problem.
 %
 
-Among the many approaches to express (and reason in terms of) collective behaviour featuring inherent adaptivity we shall consider the \emph{field-based computing} approach~\cite{DBLP:journals/jlap/ViroliBDACP19},
+Among the many approaches to express (and reason in terms of) collective behaviour featuring inherent adaptivity we shall consider the \emph{aggregate computing} approach~\cite{DBLP:journals/jlap/ViroliBDACP19},
  for its suitability in addressing dynamic problems by fostering ``controlled self-organization''.
 %
-In this approach, computations
- leverage an execution model based on repeated computation
- and asynchronous neighbour-based communication.
+%In this approach, computations
+% leverage an execution model based on repeated computation
+% and asynchronous neighbour-based communication.
 %
-On top, complex collective behaviour is described in terms of
+%On top, complex collective behaviour is described in terms of
  %a  functional abstraction, namely, by
- functional manipulations of \emph{(computational) fields}, i.e.,
- data structures evolving over time that map agents in a domain to computational values---sort of spatially distributed streams of values.
+% functional manipulations of \emph{(computational) fields}, i.e.,
+% data structures evolving over time that map agents in a domain to computational values---sort of % spatially distributed streams of values.
 %
-This is inspired by the common notion of fields found in physics (e.g., force or magnetic fields).
+%This is inspired by the common notion of fields found in physics (e.g., force or magnetic fields).
 %
-Notice, however, that in our viewpoint, the computational fields assign values to agents rather than to environment (space-time) positions as in e.g. \emph{artificial potential fields}~\cite{DBLP:conf/icra/Warren89},
- though the approaches are similar and related.
+%Notice, however, that in our viewpoint, the computational fields assign values to agents rather than to environment (space-time) positions as in e.g. \emph{artificial potential fields}~\cite{DBLP:conf/icra/Warren89},
+% though the approaches are similar and related.
 %
 We adopt this approach as it has shown to conveniently express
  a variety of \rev{resilient} collective swarm-like behaviour including
@@ -139,28 +137,28 @@ Essentially, the core idea of our clustering approach is to make agents
 %
 %Therefore, in this work we consider a field-based solution to clustering where the selection of candidate leaders is driven by sensor values---i.e., we address the sensing-based clustering problem using the field-based computing approach.
 
-In this manuscript we provide the following contributions:
+%In this manuscript we provide the following contributions:
 %
-\begin{itemize}
-\item we provide a precise definition of the
- dynamic sensing-based mobile swarm clustering problem;
-\item we present a field-based approach to address the problem, and describe a novel configurable meta-algorithm for inducing self-organised clustering in a system of neighbouring-interacting robots;
-\item we provide a publicly available and reproducible simulation framework for evaluating the algorithm on a set of diverse environment configurations, from which  we observe that our solution can identify various cluster shapes and cope with a certain degree of node mobility and changes in sensed phenomena.
-\end{itemize}
+%\begin{itemize}
+%\item we provide a precise definition of the
+% dynamic sensing-based mobile swarm clustering problem;
+%\item we present a field-based approach to address the problem, and describe a novel configurable meta-algorithm for inducing self-organised clustering in a system of neighbouring-interacting robots;
+%\item we provide a publicly available and reproducible simulation framework for evaluating the algorithm on a set of diverse environment configurations, from which  we observe that our solution can identify various cluster shapes and cope with a certain degree of node mobility and changes in sensed phenomena.
+%\end{itemize}
 %
-Therefore, the contribution lies both in the general \rev{area} of swarm intelligence and in the specific thread of research in field-based computing.
+%Therefore, the contribution lies both in the general \rev{area} of swarm intelligence and in the specific thread of research in field-based computing.
 
-The paper is organised as follows.
+%The paper is organised as follows.
 %
-\Cref{s:background} covers background, introducing the field-based computing paradigm and the swarm clustering problem.
+%\Cref{s:background} covers background, introducing the field-based computing paradigm and the swarm clustering problem.
 %
-\Cref{s:contrib} provides the novel technical contribution.
+%\Cref{s:contrib} provides the novel technical contribution.
 %
-\Cref{s:eval} presents our evaluation of the approach.
+%\Cref{s:eval} presents our evaluation of the approach.
 %
-\Cref{s:rw} covers related work.
+%\Cref{s:rw} covers related work.
 %
-Finally, \Cref{s:conc} provides a summary and discusses future research directions.
+%Finally, \Cref{s:conc} provides a summary and discusses future research directions.
 
 
 %%===========================================================================================%%
@@ -177,12 +175,10 @@ Finally, \Cref{s:conc} provides a summary and discusses future research directio
 %\meta{ASSIGNED TO: Roby / Ferruccio}
 %Swarms; related problems; motivation scenario
 %\meta{cross-disciplinary approaches $\to$ fields?}
-
+\begin{comment}
 The background of this work
  includes field-based computing (\Cref{s:background-fieldcomp})
  and the problem of clustering in swarms (\Cref{s:background-clustering}).
-
-
 
 \subsection{Field-based Computing}
 \label{s:background-fieldcomp}
@@ -435,8 +431,8 @@ Along the \lstinline|potential| towards leaders,
 %
 To propagate the complete count on the whole region, it is then sufficient to \lstinline|broadcast| the \lstinline|leader|'s \lstinline|collect| value outwards.
 }
-
-\subsubsection{Field-based Concurrent Processes}
+\end{comment}
+\subsection{Field-based Concurrent Processes}
 
 Field-based concurrent processes, also called \emph{aggregate processes}~\cite{DBLP:conf/coordination/CasadeiVAPD19,DBLP:journals/eaai/CasadeiVAPD21},
  are field-based computations
@@ -640,7 +636,7 @@ This work draws motivation
 Refer to \Cref{s:rw} for a more detailed account on these research gaps.
 
 
-\section{Contribution}
+\section{Sensing-Driven Clustering}
 \label{s:contrib}
 
 %\meta{ASSIGNED TO: Giorgio (interacting with G. Aguzzi/Ferruccio)}
@@ -1545,12 +1541,12 @@ Similarly to a clustering algorithm, the S block~\cite{DBLP:conf/saso/MoBD18} pr
 %% %
 %% However, such a S+G solution is not very effective in general as state-of-the-art solutions for the S block are subject to various issues~\cite{DBLP:journals/jlap/ViroliBDACP19} and, most importantly, it does not address the sensing-driven clustering problem.
 
-\section{Conclusion and Future Work}
+\section{Final Remarks}
 \label{s:conc}
 
 %\meta{ASSIGNED TO: Ferruccio / Mirko}
 
-In this paper, we precisely define and address
+In this chapter, we precisely define and address
  the dynamic sensing-based mobile swarm clustering problem.
 %
 Most specifically,
@@ -1566,18 +1562,5 @@ In particular, we show that a swarm can autonomously
  and is able to deal with a certain degree of change in the swarm topology and environment.
 %
 In order to perform the evaluation, we have implemented our algorithms using the \scafi{} Scala framework for field-based computing.
-
-Future work could be devised in multiple directions.
-%
-First, it could be interesting to stress and possibly refine
-the algorithm on more extreme environmental conditions,
- or to investigate it under different assumptions (e.g., a more constrained or rich system model).
-%
-Secondly, it could be interesting to compare (or combine) the meta-algorithm against (with)
- automated swarm behaviour design methods
- like multi-agent reinforcement learning.
-%
-Last but not least, we would like to evaluate our algorithms on real use cases, e.g. in smart logistics and precision agriculture scenarios, by implementing them %using the FCPP field-based computing language and deploying them
-on actual drones or robots.
 
 \printbibliography
