@@ -4,7 +4,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("de.fayard.refreshVersions:refreshVersions:0.9.5")
+        classpath("de.fayard.refreshVersions:refreshVersions:0.60.3")
     }
 }
 bootstrapRefreshVersions()
