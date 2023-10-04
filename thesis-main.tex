@@ -40,9 +40,21 @@
 \input{front.tex}
 
 \begin{abstract}	
-Max 2000 characters, strict.
+This thesis addresses the burgeoning field of Cyber-Physical Social Systems (CPSWs), 
+ which are large-scale ensembles of locally interacting computational devices deeply integrated into the physical world. 
+Driven by the explosion of IoT devices and advances in edge-cloud computing, these systems represent a transformative phase in information technology. 
+The work focuses on the engineering challenges unique to CPSWs, 
+ particularly in managing the complexities arising from their collective intelligence and large-scale nature. 
+ To tackle these issues, a language-based approach centred on aggregate computing is introduced. 
+ This programming model is well-suited for designing self-organizing behaviours, 
+ which are crucial for the efficient and resilient operation of large-scale CPSWs. 
+ The thesis makes significant contributions in both hybrid and standard engineering approaches. 
+ It offers a comprehensive roadmap for integrating machine learning with aggregate computing, 
+ proposes new algorithms for robust self-organization, and introduces novel tools and architectures tailored for CPSWs. 
+ The research aims to provide a holistic framework for the effective engineering and deployment of large-scale, adaptable, and robust CPSWs.
 \end{abstract}
-
+\\
+\
 \begin{dedication} % this is optional
 Curiositas mater scientiae.
 \end{dedication}
@@ -67,7 +79,7 @@ Curiositas mater scientiae.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PART I %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\part{Background}
+\part{Background}\label{part:background}
 \begin{refsection}\input{chapters/cyber-physical-swarms.tex}
 \input{chapters/macro-programming.tex}
 \input{chapters/many-agent-rl.tex}
@@ -78,7 +90,7 @@ Curiositas mater scientiae.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PART II %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\part{Learning in Cyber-Physical Swarms}
+\part{Learning in Cyber-Physical Swarms}\label{part:learning}
 \begin{refsection}\input{papers/discoli/main.tex}%\end{refsection}
 \input{papers/coordination2023/main.tex}%\end{refsection}
 \input{papers/acsos2022/main.tex}%\end{refsection}
@@ -89,7 +101,7 @@ Curiositas mater scientiae.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PART III %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\part{Engineering Cyber-Physical Swarms}
+\part{Engineering Cyber-Physical Swarms}\label{part:engineering}
 \begin{refsection}\input{papers/mdpi2020/main.tex}%\end{refsection}
 \input{papers/swarm-intelligence2021/main.tex}%\end{refsection}
 \input{papers/ieee2022/main.tex}%\end{refsection}
