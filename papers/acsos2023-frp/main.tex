@@ -441,20 +441,20 @@ Cell<String> state = ...;
 String currentState = state.sample();
 \end{lstlisting}
   
-%\paragraph{Switch (stream)}
-%Flattens a cell of streams into a single stream that emits whenever the active stream for the cell emits.
-%%
-%\begin{lstlisting}[frame=single, language=java]
-%Cell<Stream<Integer>> source = ...;
-%Stream<Integer> out = Cell.switchS(source);
-%\end{lstlisting}
+\paragraph{Switch (stream)}
+Flattens a cell of streams into a single stream that emits whenever the active stream for the cell emits.
 %
-%\paragraph{Switch (cell)}
-%Flattens a cell of cells into a single cell whose value is the value of the active cell of the wrapper cell.
-%\begin{lstlisting}[frame=single, language=java]
-%Cell<Cell<Integer>> source = ...;
-%Cell<Integer> out = Cell.switchC(source);
-%\end{lstlisting}
+\begin{lstlisting}[frame=single, language=java]
+Cell<Stream<Integer>> source = ...;
+Stream<Integer> out = Cell.switchS(source);
+\end{lstlisting}
+%
+\paragraph{Switch (cell)}
+Flattens a cell of cells into a single cell whose value is the value of the active cell of the wrapper cell.
+\begin{lstlisting}[frame=single, language=java]
+Cell<Cell<Integer>> source = ...;
+Cell<Integer> out = Cell.switchC(source);
+\end{lstlisting}
 
 %\meta{\texttt{CellLoop<T>}?}
   
@@ -1019,10 +1019,10 @@ will be re-evaluated only upon a change of the output of (one of) these three su
 %
 For a graphical view of the local and distributed dependency graph, see \Cref{acsos2023-frp:fig:channel:graph}: the key idea is that, e.g., a local change in sensor \lstinline|source| will not cause a re-computation of \lstinline|gradient(destination)|.
 
-\begin{figure}[t]
+\begin{figure}
   \centering%
   % subfigure
-  \begin{subfigure}[b]{\columnwidth}
+  \begin{subfigure}[b]{0.5\columnwidth}
     \centering%
     \includegraphics[width=\columnwidth]{papers/acsos2023-frp/imgs/channel-graphical}
     \caption{Node view.}
@@ -1575,10 +1575,10 @@ Also, this execution occurs only where needed,
   \label{acsos2023-frp:fig:subprogram-eval}
 \end{figure*}
 
-\section{Conclusions and Future Work}
+\section{Wrap up}
 \label{acsos2023-frp:sec:conc}
 
-This paper proposes \ac{langname},
+This chapter proposes \ac{langname},
  a \emph{functional reactive macroprogramming model
  for expressing self-organising behaviour}.
 %

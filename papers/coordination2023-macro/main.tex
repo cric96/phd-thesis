@@ -16,14 +16,14 @@
 \chapter[\MacroSwarm{}]{\MacroSwarm{} Swarm Programming Framework}
 \minitoc% Creating an actual minitoc
 %
-Recent technological advances 
- foster a vision of \emph{swarms} of mobile cyber-physical agents able to compute, coordinate with neighbours, and interact with the environment according to increasingly complex patterns, plans, and goals.
+% Recent technological advances 
+% foster a vision of \emph{swarms} of mobile cyber-physical agents able to compute, coordinate with neighbours, and interact with the environment according to increasingly complex patterns, plans, and goals.
 %
-Notable examples include swarms of drones and robots~\cite{DBLP:journals/firai/SchranzUSE20}, 
- fleets of vehicles~\cite{DBLP:journals/jiii/TahirBHTP19},
- and crowds of wearable-augmented people~\cite{DBLP:journals/wc/GalininaMH0K18}.
+%Notable examples include swarms of drones and robots~\cite{DBLP:journals/firai/SchranzUSE20}, 
+% fleets of vehicles~\cite{DBLP:journals/jiii/TahirBHTP19},
+% and crowds of wearable-augmented people~\cite{DBLP:journals/wc/GalininaMH0K18}.
 %
-In these domains,
+In \ac{cpsw} domains,
  a prominent research problem
  is how to effectively engineer \emph{swarm behaviour}~\cite{DBLP:journals/swarm/BrambillaFBD13},
  i.e., how to promote 
@@ -35,13 +35,13 @@ Complex patterns can emerge through the interaction of simple agents~\cite{bonab
  we seek for an approach based on %adopting 
  suitable distributed coordination models and languages to steer the micro-level activity of a possibly large set of agents.
 %
-This %general approach 
- direction has been explored by various research threads related to coordination
- like  \emph{macroprogramming}~\cite{Casadei2023,regiment}, 
- \emph{spatial computing}~\cite{SpatialIGI2013},
- \emph{ensemble languages}%\emph{attribute-based communication}
-~\cite{scel2014taas,abd2020programming-cas-attribute-based}, 
- \emph{field-based coordination}~\cite{DBLP:journals/corr/Lluch-LafuenteL16,Mamei:2004a}, and \emph{aggregate computing}~\cite{DBLP:journals/jlap/ViroliBDACP19}. 
+%This %general approach 
+% direction has been explored by various research threads related to coordination
+% like  \emph{macroprogramming}~\cite{Casadei2023,regiment}, 
+% \emph{spatial computing}~\cite{SpatialIGI2013},
+% \emph{ensemble languages}%\emph{attribute-based communication}
+%~\cite{scel2014taas,abd2020programming-cas-attribute-based}, 
+% \emph{field-based coordination}~\cite{DBLP:journals/corr/Lluch-LafuenteL16,Mamei:2004a}, and \emph{aggregate computing}~\cite{DBLP:journals/jlap/ViroliBDACP19}. 
  
 %
 Though a number of approaches and languages have been proposed 
@@ -64,8 +64,7 @@ Additionally, most of existing approaches tend to be pragmatic, not formally-fou
 %
 Exceptions that provide a formal approach exist, but they are typically overly abstract, requiring additional effort to actually code and execute swarm control programs~\cite{DBLP:journals/csur/LuckcuckFDDF19}.
 
-The goal of this work is 
- to introduce a formally-grounded \ac{api},
+In this chapter we introduce a formally-grounded \ac{api},
  expressive and practical enough
  to concisely and elegantly encode a wide array of swarm behaviours.
 %
@@ -80,19 +79,19 @@ Accordingly, we present \MacroSwarm{}, a \scafi{}-based framework to help progra
 To evaluate \MacroSwarm{}, we show a use case that leverage our \ac{api} 
  in a simulated environment based on the Alchemist multi-agent system simulator~\cite{DBLP:journals/jos/PianiniMV13}.
 
-The remainder of this paper is organized as follows.
+%The remainder of this paper is organized as follows.
 %
-\Cref{coordination2023-macro:sec:context} provides context and motivation.
+%\Cref{coordination2023-macro:sec:context} provides context and motivation.
 %
-\Cref{coordination2023-macro:sec:background} reviews background on aggregate computing.
+%\Cref{coordination2023-macro:sec:background} reviews background on aggregate computing.
 %
-\Cref{coordination2023-macro:sec:contrib} presents the main contribution of the paper, \MacroSwarm{}.
+%\Cref{coordination2023-macro:sec:contrib} presents the main contribution of the paper, \MacroSwarm{}.
 %
-\Cref{coordination2023-macro:sec:eval} provides a simulation-based evaluation of the approach.
+%\Cref{coordination2023-macro:sec:eval} provides a simulation-based evaluation of the approach.
 %
-\Cref{coordination2023-macro:sec:rw} reviews related works on swarm programming.
+%\Cref{coordination2023-macro:sec:rw} reviews related works on swarm programming.
 %
-Finally, \Cref{coordination2023-macro:sec:conc} provides a conclusion and future work.
+%Finally, \Cref{coordination2023-macro:sec:conc} provides a conclusion and future work.
 
 \section{Context and Motivation}
 \label{coordination2023-macro:sec:context}
@@ -100,14 +99,14 @@ Finally, \Cref{coordination2023-macro:sec:conc} provides a conclusion and future
 Engineering the collective behaviour of swarms is 
  a significant research challenge~\cite{DBLP:journals/swarm/BrambillaFBD13}.
 %
-Two main kinds of design methods can be identified~\cite{DBLP:journals/swarm/BrambillaFBD13}:
+%Two main kinds of design methods can be identified~\cite{DBLP:journals/swarm/BrambillaFBD13}:
  \emph{automatic} design methods like evolutionary robotics~\cite{DBLP:series/sci/2008-108} or multi-agent reinforcement learning~\cite{DBLP:journals/tsmc/BusoniuBS08},
  also called \emph{behaviour-based} design, involving manually-implemented algorithms expressed via general-purpose or \acp{dsl}.
 %
-Our focus is on the latter category of methods and especially on \acp{dsl} for expressing swarm behaviour (which are reviewed in \Cref{coordination2023-macro:sec:rw}).
+%Our focus is on the latter category of methods and especially on \acp{dsl} for expressing swarm behaviour (which are reviewed in \Cref{coordination2023-macro:sec:rw}).
 %
 
-Another main distinction is between \emph{centralized} (\emph{orchestration-based}) and \emph{decentralized} (\emph{choreographical}) approaches.
+A main distinction in engineering collective behaviour is between \emph{centralized} (\emph{orchestration-based}) and \emph{decentralized} (\emph{choreographical}) approaches.
 %
 In the former category,
  programs generally specify tasks and relationships between tasks, % (cf. PARoS~\cite{paros} and Maple-Swarm~\cite{DBLP:conf/isola/KosakHBWHR20}),
@@ -121,7 +120,7 @@ By contrast,
  and the resulting execution is decentralized
  (e.g., based on interaction with neighbours, like in Meld~\cite{Meld2007}).
 %
-In this work, we focus on \emph{decentralized} solutions, for they support resilience and scalability by avoiding single-points-of-failure and bottlenecks.
+In chaper, we focus on \emph{decentralized} solutions, for they support resilience and scalability by avoiding single-points-of-failure and bottlenecks.
 
 
 In the general context of behaviour-based swarm design,
@@ -134,16 +133,16 @@ In the general context of behaviour-based swarm design,
  heterogeneity, 
  and operational/maintenance issues
  (e.g., scalability, adaptation, and security). 
-%
-%Specific challenges can be found in the context of 
-% specific kinds of systems,
-% such as (micro) aerial swarms~\cite{Abdelkader2021aerialswarms,%
-%Coppola2020microairswarms},
-% specific domains,
-% like agriculture~\cite{DBLP:journals/cea/AlbieroGUP22},
-% or specific kinds of tasks,
-% like simultaneous localisation and mapping (SLAM)~\cite{Kegeleirs2021slam}.
-%
+
+Specific challenges can be found in the context of 
+specific kinds of systems,
+such as (micro) aerial swarms~\cite{Abdelkader2021aerialswarms,%
+Coppola2020microairswarms},
+specific domains,
+like agriculture~\cite{DBLP:journals/cea/AlbieroGUP22},
+or specific kinds of tasks,
+like simultaneous localisation and mapping (SLAM)~\cite{Kegeleirs2021slam}.
+
 
 To address %the problem of 
  top-down swarm programming,
@@ -156,13 +155,13 @@ Regarding the kinds of blocks that can be provided,
  it is helpful to look at proposed taxonomies of collective/swarm behaviour.
 %
 In a prominent survey on swarm engineering~\cite{DBLP:journals/swarm/BrambillaFBD13},
- collective behaviours are classified into 
- (i) spatially-organising behaviours (e.g., pattern formation, morphogenesis),
- (ii) navigation behaviours (e.g., collective exploration, transport, and coordinated motion),
- (iii) collective decision-making (e.g., consensus achievement and task allocation),
- and
- (iv) others (e.g., human-swarm interaction and group size regulation).
-
+ collective behaviours are classified into;
+\begin{itemize}
+  \item spatially-organising behaviours (e.g., pattern formation, morphogenesis);
+  \item navigation behaviours (e.g., collective exploration, transport, and coordinated motion);
+  \item collective decision-making (e.g., consensus achievement and task allocation);
+  \item others (e.g., human-swarm interaction and group size regulation).
+\end{itemize} 
 Finally, we observe in the literature 
  a rather sharp distinction
  between approaches leveraging
@@ -181,6 +180,7 @@ In summary,
  this work is motivated by the need of an
  approach for \emph{formal-yet-practical top-down behaviour-based design of decentralized swarm behaviour}.
 
+\begin{comment}
 \section{Background: Aggregate Computing}\label{coordination2023-macro:sec:background} %% or background? 
 
 Aggregate computing~\cite{DBLP:journals/jlap/ViroliBDACP19}
@@ -333,12 +333,12 @@ Block \lstinline|G[T](source:Boolean,value:T,acc:T=>T):T| is used to propagate \
 Examples further showing the compositionality of the approach are in \Cref{coordination2023-macro:sec:contrib}.
 
 
-
+\end{comment}
 %
 %\meta{Moreover, interestingly, it is not necessary to understand the primitives of the field calculus to use higher-level functions from fields to fields.}
 
 
-\subsubsection{Aggregate computing for swarm programming}
+\section{Aggregate computing for swarm programming}
 %
 To motivate why aggregate computing appears to be a good match for swarm programming, we briefly explain how it helps to address the challenges identified, as studied in previous papers (presented in \Cref{coordination2023-macro:sec:context}).
 %
@@ -1275,10 +1275,10 @@ Finally, we mention another category of related works, which are \emph{task orch
 %%
 %However, Resh is not Turing-complete, to simplify synthesis of task orchestration programs.
 
-\section{Conclusion and Future Work}
+\section{Wraper}
 \label{coordination2023-macro:sec:conc}
 
-We presented \MacroSwarm{},
+This chapter showcases
  a framework 
  for top-down swarm programming
  that provides composable blocks 

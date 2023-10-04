@@ -56,7 +56,8 @@ every node/.style={scale=.8}
 \begin{minipage}[b]{0.7\textwidth}\centering
 \begin{minted}[fontsize=\small,frame=none]{scala}
 @multitier object P2P extends PulverisedSystem {
-  // Definition of device kinds and possible network connections
+  /* Definition of device 
+  kinds and possible network connections */
   @peer type Node <: { type Tie <: Multiple[Node] }
   @peer type SensorComponent <: Node
   // Pulverised component allocation on devices
@@ -122,7 +123,9 @@ every node/.style={scale=.6}
 @multitier object BrokerBased extends PulverisedSystem {
   // Definition of device kinds and possible network connections
   @peer type Node <: { type Tie <: Single[Broker] }
-  @peer type Broker <: { type Tie <: Multiple[Node] with Multiple[Broker] }
+  @peer type Broker <: { 
+    type Tie <: Multiple[Node] with Multiple[Broker] 
+  }
   // Pulverised component allocation on devices
   @peer type SensorComponent <: Node
   @peer type ActuatorComponent <: Node
