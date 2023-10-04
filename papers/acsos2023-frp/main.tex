@@ -302,21 +302,21 @@ The most suitable programming approach for this
 Reactive programming is often combined with the functional programming paradigm~\cite{DBLP:journals/csur/BainomugishaCCMM13,blackheath2016frp-sodium}
 in the so-called \ac{frp}.
 
-\newcommand{\T}{\ensuremath{\mathit{Time}}}
+\newcommand{\Time}{\ensuremath{\mathit{Time}}}
 \newcommand{\Sg}{\ensuremath{\mathit{Cell}}}
 \newcommand{\St}{\ensuremath{\mathit{Stream}}}
 
 \Ac{frp} builds on few abstractions and various combinators~\cite{DBLP:conf/pldi/WanH00}.
 %
 Conceptually,
-\ac{frp} considers \emph{continuous time}, $\T = \{ t \in \mathbb{R} \mid t \geq 0 \}$.
+\ac{frp} considers \emph{continuous time}, $\Time = \{ t \in \mathbb{R} \mid t \geq 0 \}$.
 %
 Time-varying values are called \emph{cells}
- and may be conceptually modelled by generic functions of type $\Sg\:a: \T \to a$.
+ and may be conceptually modelled by generic functions of type $\Sg\:a: \Time \to a$.
 %
 Then, \emph{streams} are discrete-time values
  and may be modelled by generic functions of type
-$\St\:a: [\T] \to [a]$ (where notation $[X]$ indicates sequences of $X$s), namely, 
+$\St\:a: [\Time] \to [a]$ (where notation $[X]$ indicates sequences of $X$s), namely, 
 mapping a sequence of (increasing) sample times to a sequence of corresponding values.
 %
 While cells model state,
