@@ -98,7 +98,8 @@ Concert venues (or public event like a soccer match)
  These events can attract tens of thousands of attendees, 
  making crowd management a critical concern for both safety and enjoyment. 
 % 
-However, traditional methods of crowd control, such as barriers and security personnel, 
+However, traditional methods of crowd control, 
+ such as barriers and security personnel, 
  are increasingly proving to be inadequate in the face of evolving challenges like sudden surges or emergency situations. 
  Take, for example, the 2023 Summer Music Festival, 
  where a sudden downpour led to chaotic movements among the crowd, 
@@ -106,39 +107,86 @@ However, traditional methods of crowd control, such as barriers and security per
 
 To address this complex issue, 
  there is a growing interest in leveraging technology for more effective crowd steering. 
- One promising approach is to equip each attendee with smart bracelets or utilize their smartphones, 
+ One promising approach might be to equip each attendee with smart bracelets or utilize their smartphones, 
  both of which have computational capabilities. 
- These devices can communicate with a centralized system as well as with each other, 
+ These devices can communicate only with each other, 
  forming a dynamic and adaptive network.
 
-The system functions through real-time data exchange between the individual devices and strategically placed sensors around the venue. 
- These sensors can monitor various parameters such as crowd density, 
- movement speed, and even noise levels. 
+The system functions through real-time data exchange 
+ between the individual devices %and strategically placed sensors around the venue. 
  The individual smart devices provide a ``ground-level'' perspective, 
- allowing for a more granular understanding of crowd behaviour.
+ allowing for a granular understanding of crowd behaviour.
 
 This collaborative approach enables the system to identify potential issues before they escalate. 
  For instance, if a particular section of the venue becomes too crowded, 
  the system can send alerts or directions to the smart devices in that area, 
  advising attendees to move to less crowded sections. 
- This facilitates the proactive redistribution of the crowd, thereby averting potential safety hazards.
+ This facilitates the proactive redistribution of the crowd, 
+ thereby averting potential safety hazards.
 
 However, implementing this advanced crowd steering system is not without challenges. 
- Each smart device only has a \emph{limited} computational capacity and can provide just a \emph{partial} view of the overall crowd dynamics. 
- Therefore, sophisticated algorithms are needed to aggregate this fragmented data into a comprehensive and actionable overview. 
- Additionally, the system must be able to \emph{adapt} rapidly to changing conditions, such as sudden weather changes or unexpected incidents during the concert.
+ Each smart device only has a \emph{limited} computational capacity 
+ and can provide just a \emph{partial} view of the overall crowd dynamics. 
+Therefore, sophisticated algorithms are needed to aggregate 
+ this fragmented data into a comprehensive and actionable overview. 
+ Additionally, the system must be able to \emph{adapt} rapidly to changing conditions, 
+ such as sudden weather changes or unexpected incidents during the concert.
 
-In specific situations where immediate action is required -- such as medical emergencies or security threats -- there may be a need to send targeted alerts or instructions to specific groups of attendees. Given that smart devices have limited battery life, 
+In specific situations where immediate action is required 
+ -- such as medical emergencies or security threats -- 
+ there may be a need to send targeted alerts or instructions to specific groups of attendees. 
+ Given that smart devices have limited battery life, 
  the system must also \emph{self-organize} to prioritize critical alerts and instructions, 
  ensuring that the crowd management remains effective throughout the event.
 
 Moreover, the system must be highly responsive to real-time conditions. 
- This necessitates that each smart device should be equipped with \emph{edge computing} capabilities, allowing for localized data processing and decision-making. 
- These local analyses can then trigger collective actions, such as coordinated movements or emergency evacuations, ensuring that immediate and effective measures are taken to maintain crowd safety.
+ This necessitates that each smart device should compute locally, 
+ allowing for point-wise decision-making. 
+ These local analyses can then trigger \emph{collective} actions, 
+ such as coordinated movements or emergency evacuations, 
+ ensuring that immediate and effective measures are taken to maintain crowd safety.
 
-Through the integration of technology and real-time data analytics, 
- concert organizers aim to create a safer and more enjoyable experience for attendees, 
- effectively steering large crowds and responding proactively to any challenges that may arise.
+\subsection{Autonomous vehicles}
+In a not-so-distant future
+ where human-driven cars have become a thing of the past, 
+ cities will be bustling with \emph{swarms} of autonomous vehicles. 
+% 
+These self-driving cars have revolutionized urban transportation, 
+ offering a safer and more efficient means of getting from one place to another. 
+% TODO here put some statistic abou accidents and traffic jams  
+However, the complexity of managing these autonomous fleets is far from trivial, 
+ especially during peak hours or special events. 
+ Take, for example, the 2030 New Year's Eve celebrations, 
+ where an unprecedented number of autonomous cars will be deployed to accommodate the surge in demand, 
+ leading to several near-miss inciden ts due to system latency%~\cite{autocar:2030report}.
+
+To tackle this intricate challenge, 
+ there is a growing emphasis on the need for advanced management systems capable 
+ of steering these autonomous swarms effectively. 
+ Each vehicle in the swarm is equipped with powerful onboard computers 
+ and an array of sensors, 
+ enabling them to communicate not only with a centralized traffic management system 
+ but also with each other.
+
+The system operates through continuous data 
+ exchange between individual cars 
+ and strategically located infrastructure sensors. 
+ These sensors monitor various parameters such as traffic flow, 
+ road conditions, and even weather. 
+ The autonomous cars provide a ``street-level'' perspective, 
+ allowing for real-time adjustments to routing algorithms 
+ and speed controls.
+
+This collaborative approach enables the system to preempt potential bottlenecks and accidents. For instance, if a major sporting event ends, causing a sudden influx of ride requests, the system can dynamically reroute cars to manage the increased demand efficiently. This proactive approach minimizes congestion and enhances overall traffic flow.
+
+However, the deployment of such a sophisticated system is fraught with challenges. Each autonomous car has a \emph{limited} sensor range and can only offer a \emph{partial} view of the overall traffic landscape. Therefore, advanced machine learning algorithms are essential to integrate this fragmented data into a cohesive and actionable real-time model. Additionally, the system must be capable of \emph{adapting} quickly to changing conditions, such as road closures, accidents, or even fluctuating demand patterns.
+
+In specific scenarios where immediate action is required—like emergency vehicle passage or sudden road closures—there may be a need to prioritize certain routes or vehicles. Given that each car operates on a finite energy source, the system must \emph{self-organize} to ensure that cars with lower battery levels are routed to charging stations without disrupting the overall traffic flow.
+
+Moreover, the system must be highly responsive to real-time conditions. This necessitates that each autonomous car should be equipped with \emph{edge computing} capabilities, allowing for localized data processing and decision-making. These local analyses can then be used to trigger collective actions, such as coordinated lane changes or speed adjustments, ensuring that immediate and effective measures are taken to maintain smooth traffic flow.
+
+Through the integration of cutting-edge technology and real-time data analytics, urban planners aim to create a seamless and safe transportation network, effectively managing swarms of autonomous cars and proactively responding to the myriad challenges that come with this revolutionary shift in mobility.
+
 \section{Swarm Intelligence}
 
 Swarm Intelligence tries to apply the tactics observed in social animals in Swarm Robotics. 
