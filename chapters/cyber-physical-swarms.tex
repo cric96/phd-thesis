@@ -1,36 +1,144 @@
 %!TeX root = thesis-main.tex
 \chapter{Cyber-Physical Swarms}\label{chap:cpsw}
 \minitoc% Creating an actual minitoc
+The aim of this section is to elucidate the concept of \textit{Cyber-Physical Swarms}, 
+ distinguish systems that align with our conceptual framework, 
+ and identify research domains grappling with analogous challenges. 
+% 
+\section{Overview}
+The term refers to a network of computational nodes working in concert to address collective problems, 
+ akin to naturally occurring swarm phenomena.
 
-The goal of this section is to clarify what I mean by \textit{Cyber-Physical Swarms}, what systems are similar to our definition, and which research areas have to deal with similar problems.
-This term is used to describe many computational nodes that collaborate to solve collective problems, similarly to what we observe in natural ``swarm'' systems.
-%
-These systems have a large population of networked nodes (hundreds -- thousands), and they are typically \textit{open} (i.e. we cannot know the total node number apriori). 
-%
-Consequently, the collective behaviour should be \textit{scale-independent} (i.e. the same program must work in small networks as well as in very large networks).
-%
-Besides, nodes are associated with a \textit{physical} asset through sensors and could change the environment using actuators. 
-%
-Namely, they have an \emph{embodiment} in the world -- so the name of cyber-physical. 
-%
-The nodes could be heterogeneous, but with a \emph{homogenous} local behaviour (i.e., each node should execute the same local logic). 
-%
-Furthermore, nodes act collaboratively, and they are not selfish -- they always operate for the global collective good.
-%
-I suppose that the overall system could not use a central entity -- so I need to deal with a distributed control. 
-%
-Even if modern architectures could be used (e.g cloud/edge infrastructures), in general, the system needs to react to local problems quickly. 
-%
-Hence, moving this decision far from the physical assets could be dangerous (since they are a kind of \emph{critical systems}).
-%
-As a concluding note, I want to consider their behaviour at the \textit{macro-level}, not at the \text{micro-level}. 
-%
-Hence, I intend to describe the collective not by emergence, but by defining a global wanted structure.
+The architecture of these systems comprises a large array of interconnected nodes, 
+ numbering in the hundreds or thousands. 
+% 
+Importantly, these networks are \textit{open}, 
+ implying that the total node count is not predetermined. 
+% 
+As a result, 
+ the emergent collective behaviour should exhibit \textit{scale-independence}, 
+ ensuring that the same programmatic logic applies across small and expansive networks alike.
 
-\acp{cpsw} are kind of Complex Adaptive systems~\cite{holland1992complex}, but our vision enforces properties that are not necessarily present in standard complex systems' definition, like the large agents' number and the collaborative agents' nature.
-%%
-Collective Adaptive Systems~\cite{DBLP:journals/corr/abs-1108-5643} are near to our \acp{cpsw} description but in our definition agents pursue \emph{collective} (not individual) goals, and they have a homogenous behaviour.
+In these systems, each node is tethered to a \textit{physical} entity through sensors and can influence its environment via actuators. 
+ This integration of computational and physical elements justifies the term ``cyber-physical''. 
+ The nodes may exhibit heterogeneity in hardware or other attributes, 
+ yet they maintain a \emph{homogeneous} local behaviour, executing identical local algorithms.
 
+Nodes operate with a focus on collective goals, 
+ as opposed to individualistic or selfish objectives, 
+ thereby adhering to a collaborative ethos. 
+% 
+Given that centralization is not feasible, 
+ the architecture relies on distributed control mechanisms. 
+ While modern computing paradigms such as cloud or edge infrastructures are applicable, 
+ it is imperative that the system be capable of swift local responses. 
+ This is especially critical given that these are often \emph{critical systems}, 
+ where delays in decision-making could have severe repercussions.
+
+In concluding, 
+ it is pertinent to clarify that the focus of this study is on the \textit{macro-level} behaviours of the swarm, 
+ rather than the \textit{micro-level} interactions. 
+ Rather than characterizing the collective through emergent properties, 
+ the intention is to define a globally desirable structure.
+
+As for related concepts, 
+ \acp{cpsw} can be considered a subset of Complex Adaptive Systems~\cite{holland1992complex}. 
+ However, our framework imposes additional conditions not universally found in standard definitions of complex systems, 
+ such as many collaborative agents.
+% 
+Collective Adaptive Systems~\cite{DBLP:journals/corr/abs-1108-5643} closely resemble our definition of \acp{cpsw}, 
+ but they diverge in that agents in our framework are geared toward \emph{collective} goals 
+ and exhibit homogeneous behaviour.
+
+\section{Vision examples}
+\subsection{Wild-fire monitoring in extensive forests}
+Canada is renowned for its lush forests, 
+ which cover approximately one-third of the nation's landmass, 
+ making it one of the countries with the largest forested areas globally. 
+These green expanses are not only a source of natural beauty but also play a crucial role in maintaining ecological balance. 
+ However, the increasing impact of climate change has led to a surge in wildfires, 
+ causing widespread devastation to both local flora and fauna.
+ Consider for instance the 2023 wildfires, 
+ which burned over 43 million acres, 
+ that is about 5\% of the entire forest area of Canada~\cite{enwiki:1178342069}. 
+
+To address this pressing issue, 
+ there is a growing consensus on the need for proactive and localized interventions. 
+ Specialized monitoring systems are essential for keeping tabs on vulnerable regions, 
+ especially given the impracticality of relying solely on human observation due to the vastness of these areas. 
+ One innovative solution might be the deployment of a sophisticated network of environmental sensors, strategically placed to monitor temperature, humidity, and other fire-prone conditions. 
+ These sensors are complemented by a swarm of drones equipped with advanced imaging and data collection capabilities.
+
+The system operates through ongoing collaboration between ground-based sensors and aerial drones. 
+ The drones provide a bird's-eye view of the landscape, 
+ allowing for real-time monitoring of a wide array of nodes across large geographical expanses. 
+ This integrated approach enables the early detection of potential fire hazards, 
+ thereby facilitating the pre-emptive mobilization of emergency services.
+
+However, the implementation of such a comprehensive monitoring system comes with its own set of challenges. 
+ Each sensor or drone has a limited operational range and can only provide a \emph{partial} view of the overall system. 
+ Therefore, robust data fusion algorithms are necessary to merge information from multiple sources into a cohesive and actionable overview. 
+ Environmental conditions are also highly dynamic, requiring the system to \emph{adapt} in real-time to changing variables such as wind speed, temperature fluctuations, and precipitation levels.
+
+In specific regions where the risk is elevated
+ -- such as areas with active fires or reduced visibility due to smoke or fog—there may be a need for deploying additional sensors and drones. 
+ Given that drones have limited battery life and need to be recharged, 
+ the system must be capable of \emph{self-organizing} to ensure uninterrupted monitoring. 
+ This is particularly challenging considering that the number of deployed devices could easily exceed thousands of units across the extensive area of interest.
+
+Moreover, the system must be highly responsive to emergency conditions. 
+ This necessitates that each device, whether a sensor or a drone, 
+ should be equipped with \emph{edge computing} capabilities for performing local analyses. 
+ These local analyses can then be used to trigger collective alarms, 
+ ensuring immediate action is taken to mitigate the risk of wildfires.
+\subsection{Crowd steering}
+Concert venues (or public event like a soccer match) 
+ are often filled with an energetic and enthusiastic crowd, 
+ eager to enjoy live performances. 
+ These events can attract tens of thousands of attendees, 
+ making crowd management a critical concern for both safety and enjoyment. 
+% 
+However, traditional methods of crowd control, such as barriers and security personnel, 
+ are increasingly proving to be inadequate in the face of evolving challenges like sudden surges or emergency situations. 
+ Take, for example, the 2023 Summer Music Festival, 
+ where a sudden downpour led to chaotic movements among the crowd, 
+ resulting in several minor injuries~\cite{concertsafety:2023report}.
+
+To address this complex issue, 
+ there is a growing interest in leveraging technology for more effective crowd steering. 
+ One promising approach is to equip each attendee with smart bracelets or utilize their smartphones, 
+ both of which have computational capabilities. 
+ These devices can communicate with a centralized system as well as with each other, 
+ forming a dynamic and adaptive network.
+
+The system functions through real-time data exchange between the individual devices and strategically placed sensors around the venue. 
+ These sensors can monitor various parameters such as crowd density, 
+ movement speed, and even noise levels. 
+ The individual smart devices provide a ``ground-level'' perspective, 
+ allowing for a more granular understanding of crowd behaviour.
+
+This collaborative approach enables the system to identify potential issues before they escalate. 
+ For instance, if a particular section of the venue becomes too crowded, 
+ the system can send alerts or directions to the smart devices in that area, 
+ advising attendees to move to less crowded sections. 
+ This facilitates the proactive redistribution of the crowd, thereby averting potential safety hazards.
+
+However, implementing this advanced crowd steering system is not without challenges. 
+ Each smart device only has a \emph{limited} computational capacity and can provide just a \emph{partial} view of the overall crowd dynamics. 
+ Therefore, sophisticated algorithms are needed to aggregate this fragmented data into a comprehensive and actionable overview. 
+ Additionally, the system must be able to \emph{adapt} rapidly to changing conditions, such as sudden weather changes or unexpected incidents during the concert.
+
+In specific situations where immediate action is required -- such as medical emergencies or security threats -- there may be a need to send targeted alerts or instructions to specific groups of attendees. Given that smart devices have limited battery life, 
+ the system must also \emph{self-organize} to prioritize critical alerts and instructions, 
+ ensuring that the crowd management remains effective throughout the event.
+
+Moreover, the system must be highly responsive to real-time conditions. 
+ This necessitates that each smart device should be equipped with \emph{edge computing} capabilities, allowing for localized data processing and decision-making. 
+ These local analyses can then trigger collective actions, such as coordinated movements or emergency evacuations, ensuring that immediate and effective measures are taken to maintain crowd safety.
+
+Through the integration of technology and real-time data analytics, 
+ concert organizers aim to create a safer and more enjoyable experience for attendees, 
+ effectively steering large crowds and responding proactively to any challenges that may arise.
 \section{Swarm Intelligence}
 
 Swarm Intelligence tries to apply the tactics observed in social animals in Swarm Robotics. 
