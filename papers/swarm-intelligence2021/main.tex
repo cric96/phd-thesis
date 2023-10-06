@@ -32,20 +32,20 @@
  is the collective-level ability to solve problems
  in large groups of relatively simple agents that interact with each other locally, i.e., based on physical/logical proximity~\cite{DBLP:books/daglib/0032898}.
 %
-Swarm intelligence is a phenomenon observed both in natural systems
- (cf. social insects and animals)
- and artificial systems
- (cf. computational ecosystems)~\cite{DBLP:books/daglib/0032898}.
+%Swarm intelligence is a phenomenon observed both in natural systems
+% (cf. social insects and animals)
+% and artificial systems
+% (cf. computational ecosystems)~\cite{DBLP:books/daglib/0032898}.
 %
-In computer science and engineering,
- research fields
- like \emph{swarm robotics}~\cite{DBLP:journals/swarm/BrambillaFBD13} and self-organising systems~\cite{DBLP:series/ncs/2011SGK,DBLP:conf/saso/2007} emerged to
- study
- algorithms, models, and techniques
- for promoting swarm intelligence
- in artificial systems for a variety of contexts and applications including (but not limited to) environment monitoring \cite{demasi2020swarm-env-monitoring,DBLP:journals/fi/CasadeiPPVW20}, enterprise software service coordination \cite{DBLP:conf/saso/ClarkBP15}, crowd management~\cite{DBLP:journals/computer/BealPV15}, and most specifically control of robot swarms (groups of relatively simple robots) \cite{DBLP:journals/arobots/ShenWGC04,DBLP:journals/scirobotics/Carrillo-Zapata18}.
+%In computer science and engineering,
+% research fields
+% like \emph{swarm agentics}~\cite{DBLP:journals/swarm/BrambillaFBD13} and self-organising systems~\cite{DBLP:series/ncs/2011SGK,DBLP:conf/saso/2007} emerged to
+% study
+% algorithms, models, and techniques
+% for promoting swarm intelligence
+% in artificial systems for a variety of contexts and applications including (but not limited to) environment monitoring \cite{demasi2020swarm-env-monitoring,DBLP:journals/fi/CasadeiPPVW20}, enterprise software service coordination \cite{DBLP:conf/saso/ClarkBP15}, crowd management~\cite{DBLP:journals/computer/BealPV15}, and most specifically control of agent swarms (groups of relatively simple agents) \cite{DBLP:journals/aagents/ShenWGC04,DBLP:journals/sciagentics/Carrillo-Zapata18}.
 %
-A common distinction is between \emph{behaviour-based} and \emph{automatic} design methods~\cite{DBLP:journals/swarm/BrambillaFBD13}: the former is based on a manual specification of individual behaviour, whereas in the latter the individual behaviour is generated automatically, by searching, adapting, or evolving individual behaviours for effective collective behaviour.
+%A common distinction is between \emph{behaviour-based} and \emph{automatic} design methods~\cite{DBLP:journals/swarm/BrambillaFBD13}: the former is based on a manual specification of individual behaviour, whereas in the latter the individual behaviour is generated automatically, by searching, adapting, or evolving individual behaviours for effective collective behaviour.
 %
 Common but not exhaustive classes of collective behaviours
  include spatial organization (e.g., pattern formation),
@@ -70,10 +70,12 @@ Typical clustering approaches may consider
  or the goals of the individuals to define clusters
  \rev{that represent, e.g.,} teams or interaction domains.
 %
-In this paper, we focus on \emph{sensing-based clustering}~\cite{DBLP:conf/ccnc/LinM07}, namely
+In this chapter, 
+ we focus on \emph{sensing-based clustering}~\cite{DBLP:conf/ccnc/LinM07}, namely
  a clustering problem
  that considers both the spatial distribution of individuals
  and the environmental values sensed by these individuals (through sensors).
+ This is essential for \ac{cpsw} applications due to the tight integration with the physical world.
 %
 That is, the goal is to seek for clusters of neighbour individuals with a similar perception of some sensed value.
 %
@@ -100,8 +102,7 @@ Additionally, we look for solutions featuring \emph{resilience}, namely,
 Accordingly, we present and address the \emph{dynamic sensing-based swarm clustering} problem.
 %
 
-Among the many approaches to express (and reason in terms of) collective behaviour featuring inherent adaptivity we shall consider the \emph{aggregate computing} approach~\cite{DBLP:journals/jlap/ViroliBDACP19},
- for its suitability in addressing dynamic problems by fostering ``controlled self-organization''.
+Among the many approaches to express (and reason in terms of) collective behaviour featuring inherent adaptivity we shall consider the \emph{aggregate computing} approach~\cite{DBLP:journals/jlap/ViroliBDACP19} as our language-based approach roots on it.
 %
 %In this approach, computations
 % leverage an execution model based on repeated computation
@@ -117,12 +118,12 @@ Among the many approaches to express (and reason in terms of) collective behavio
 %Notice, however, that in our viewpoint, the computational fields assign values to agents rather than to environment (space-time) positions as in e.g. \emph{artificial potential fields}~\cite{DBLP:conf/icra/Warren89},
 % though the approaches are similar and related.
 %
-We adopt this approach as it has shown to conveniently express
- a variety of \rev{resilient} collective swarm-like behaviour including
- self-healing distance estimation (\emph{gradient})~\cite{DBLP:conf/saso/AudritoCDV17},
- self-stabilising leader election~\cite{DBLP:conf/saso/MoBD18},
- distributed collection~\cite{audrito2021jcee-distributed-collection},
- and team creation and coordination~\cite{DBLP:journals/eaai/CasadeiVAPD21}---and to scale with complexity up to high-level composite patterns~\cite{DBLP:journals/fgcs/PianiniCVN21}.
+%It has shown to conveniently express
+% a variety of \rev{resilient} collective swarm-like behaviour including
+% self-healing distance estimation (\emph{gradient})~\cite{DBLP:conf/saso/AudritoCDV17},
+% self-stabilising leader election~\cite{DBLP:conf/saso/MoBD18},
+ %distributed collection~\cite{audrito2021jcee-distributed-collection},
+% and team creation and coordination~\cite{DBLP:journals/eaai/CasadeiVAPD21}---and to scale with complexity up to high-level composite patterns~\cite{DBLP:journals/fgcs/PianiniCVN21}.
 
 Essentially, the core idea of our clustering approach is to make agents
  in local \rev{minima (or maxima)} of the sensed value \rev{(depending on whether lowest or highest values are most significant)} spawn a spatial process of gathering for neighbour devices until finding the proper size of the cluster,
@@ -142,7 +143,7 @@ Essentially, the core idea of our clustering approach is to make agents
 %\begin{itemize}
 %\item we provide a precise definition of the
 % dynamic sensing-based mobile swarm clustering problem;
-%\item we present a field-based approach to address the problem, and describe a novel configurable meta-algorithm for inducing self-organised clustering in a system of neighbouring-interacting robots;
+%\item we present a field-based approach to address the problem, and describe a novel configurable meta-algorithm for inducing self-organised clustering in a system of neighbouring-interacting agents;
 %\item we provide a publicly available and reproducible simulation framework for evaluating the algorithm on a set of diverse environment configurations, from which  we observe that our solution can identify various cluster shapes and cope with a certain degree of node mobility and changes in sensed phenomena.
 %\end{itemize}
 %
@@ -246,13 +247,13 @@ and is subject to the constraints exerted by the underlying physical network.
 %
 A typical neighbouring rule
  is the one that mimics physical connectivity;
- so, e.g., a robot is a neighbour of another robot if it manages to send a message to the latter over the wireless channel.
+ so, e.g., a agent is a neighbour of another agent if it manages to send a message to the latter over the wireless channel.
 %
 %\meta{FD: @MIRKO is this rule used later in the paper? If no, why we mention it here? RC: @FD this is a useful example to also explain the following rule, which is the one we adopt.}
 Another typical neighbouring rule is the one
  based on spatial vicinity;
- so, e.g., a robot is a neighbour of another robot if the infrastructure manages to deliver a message from the former to the latter (e.g., using other robots as relays)
-  and these two robots are at an estimated distance smaller than a certain threshold
+ so, e.g., a agent is a neighbour of another agent if the infrastructure manages to deliver a message from the former to the latter (e.g., using other agents as relays)
+  and these two agents are at an estimated distance smaller than a certain threshold
   (assuming a distance can be estimated through a proper technology).
 
 \subparagraph*{Interaction}
@@ -469,7 +470,7 @@ def spawn[K,A,R](process: K => A => (R,Boolean),
                  args: A): Map[K,R]
 \end{lstlisting}
 %
-The generic type \lstinline|K| instantiates to the type of a \emph{process key}, also called a \emph{process identifier (PID)}, which also works as construction parameter;
+The generic type \lstinline|K| instantiates to the type of \emph{process key}, also called a \emph{process identifier (PID)}, which also works as construction parameter;
  the generic type \lstinline|A| instantiates to the type of runtime parameters for the currently running process instances;
  the generic type \lstinline|R| instantiates to the type of the output of the process.
 %
@@ -628,7 +629,7 @@ Our focus on resilience
 %
 This work draws motivation
  from
- (i) the relevance of the problem for situated systems (e.g., in swarm robotics),
+ (i) the relevance of the problem for \emph{situated} systems as \ac{cpsw},
  (ii) a scarcity of solutions to the problem of \emph{sensing-driven spatial clustering} in literature,
  and
  (iii) a general lack of effective field-based clustering solutions.
@@ -657,21 +658,21 @@ In this section,
 Before formally defining the problem of {\em Dynamic Sensing Based Swarm Clustering}, we summarize the assumptions about the swarm devices and the environment in which they act. Such assumptions justify both the way we define the problem, and some of the design choices we adopt for its solution.
 %
 \begin{enumerate}
-\item A {\em swarm} is composed by a set of possibly many relatively simple autonomous robots (e.g., ground, airborne, underwater).
-\item A {\em robot} can move within the environment, sense, and actuate.
-\item {\em Communication} is based on  peer-to-peer connection link, based on the proximity of robots, without relying on infrastructure (e.g., LTE network, Wi-Fi network).
-\item {\em Reliability} of robots themselves and communications are not guaranteed and, in some scenarios, failures are  quite likely.
-\item The measures of the {\em environment}, as sensed by the robots, can change over time.
+\item A {\em swarm} is composed by a set of possibly many relatively simple autonomous cyber-physical agents, %(e.g., ground, airborne, underwater).
+\item An {\em agent} can move within the environment, sense, and actuate.
+\item {\em Communication} is based on  peer-to-peer connection link, based on the proximity of agents, without relying on infrastructure (e.g., LTE network, Wi-Fi network).
+\item {\em Reliability} of agents themselves and communications are not guaranteed and, in some scenarios, failures are  quite likely.
+\item The measures of the {\em environment}, as sensed by the agents, can change over time.
 \item The measures of interest of the {\em environment} at two points in space close to each other tend to be positively correlated.
 \end{enumerate}
 %
-The above  assumptions are rather weak and, therefore, quite challenging. They encompass scenarios where a swarm of robots explores an area where multiple natural phenomena are happening.
+The above  assumptions are rather weak and, therefore, quite challenging. They encompass scenarios where a swarm of agents explores an area where multiple natural phenomena are happening.
 
-The field-based clustering algorithm for solving the {\em Dynamic Sensing Based Swarm Clustering} problem will be discussed below. For now, we just want to point out that our assumptions justify a fully distributed approach in which robots exchange information with their neighbours.
+The field-based clustering algorithm for solving the {\em Dynamic Sensing Based Swarm Clustering} problem will be discussed below. For now, we just want to point out that our assumptions justify a fully distributed approach in which agents exchange information with their neighbours.
 
-First, given the very nature of swarm systems, problems are usually better solved by distributed algorithms than centralized algorithms, e.g., \cite{hoshino:2013,DBLP:journals/asc/CruzNM17}. In particular, by our assumption that robots and communications can fail, and that there is no global communication infrastructure, a node in charge of all the computations (either a robot or a base station) would constitute a risky single-point of failure. Even if the swarm was able to recover from such failure by automatically choosing another central node, the switch would be cumbersome and potentially very costly, only to reach a again a situation with another single point of failure.
+First, given the very nature of swarm systems, problems are usually better solved by distributed algorithms than centralized algorithms, e.g., \cite{hoshino:2013,DBLP:journals/asc/CruzNM17}. In particular, by our assumption that agents and communications can fail, and that there is no global communication infrastructure, a node in charge of all the computations (either a agent or a base station) would constitute a risky single-point of failure. Even if the swarm was able to recover from such failure by automatically choosing another central node, the switch would be cumbersome and potentially very costly, only to reach a again a situation with another single point of failure.
 
-Given robots whose connection links are established and lost based on the proximity with other robots, it may be possible to build an abstraction on top of that, whereby multi-hop communications are transparent, and each robot has the illusion to be able to immediately communicate with any other robot in the swarm by specifying an appropriate ID (this is, e.g., the typical abstraction brought by the IP layer of the TCP/IP stack). While the cost of adding such additional layer may be acceptable in some situations, for the specific goal of clustering this would not bring any advantage: as we shall see in the sections below, clusters spring out, expand, and collapse following spatial vicinity---i.e., a new cluster expands first to the immediate neighbours of the robot that generated it, and then progressively spreads to further robots in an incremental way.
+Given agents whose connection links are established and lost based on the proximity with other agents, it may be possible to build an abstraction on top of that, whereby multi-hop communications are transparent, and each agent has the illusion to be able to immediately communicate with any other agent in the swarm by specifying an appropriate ID (this is, e.g., the typical abstraction brought by the IP layer of the TCP/IP stack). While the cost of adding such additional layer may be acceptable in some situations, for the specific goal of clustering this would not bring any advantage: as we shall see in the sections below, clusters spring out, expand, and collapse following spatial vicinity---i.e., a new cluster expands first to the immediate neighbours of the agent that generated it, and then progressively spreads to further agents in an incremental way.
 }
 
 \subsection{Problem Definition}\label{ssec:problem-def}
@@ -940,10 +941,10 @@ Furthermore, we assess how the algorithm works in mobile settings,
 
 \subsection{Scenario Description}\label{s:scenario-description}
 %
-A swarm group of robots is interested in identifying areas
+A swarm group of agents is interested in identifying areas
  where environmental data varies within a known range.
 %
-In particular, we assume that the robots are both
+In particular, we assume that the agents are both
  capable of sensing the environmental temperature,
  perceiving their position in space (e.g., using GPS),
  and exploring a limited area (i.e., a square with a side of \SI{1}{\kilo\metre}).
@@ -957,10 +958,10 @@ The temperature is just an arbitrary choice of
 %
 The scenarios are plausible, but we are not interested in full realism: simplifications and generalizations are introduced to study the algorithm in diverse controlled situations.
 %
-Since the absence of central authority and the limited robot communication capability,
- we suppose that the robots can only interact with their neighbours
- (i.e., the devices with which a robot manages to establish a connection).
-In particular, we imagine that each robot is equipped with a LoRa module with
+Since the absence of central authority and the limited agent communication capability,
+ we suppose that the agents can only interact with their neighbours
+ (i.e., the devices with which a agent manages to establish a connection).
+In particular, we imagine that each agent is equipped with a LoRa module with
  a connection range of \SI{100}{\metre}.
 %
 \rev{
@@ -1016,7 +1017,7 @@ We set up these simulations to:
  %our proposed algorithm against node movements.
  \item \label{goal:3} test the algorithm dynamics when the temperature distribution changes:
  \rev{
-  in a swarm robotics context, the observed phenomena could change over time.
+  in a swarm agentics context, the observed phenomena could change over time.
   Therefore, the algorithm proposed should be robust against phenomena dynamisms.}
 \end{enumerate}
 %
@@ -1031,7 +1032,7 @@ That is, these goals reflect
 We verify our sensing-driven clustering algorithm using simulations.
 The simulation experiments, resulting data, source code, and instructions for reproducibility are available at a public GitHub repository\footnote{\url{https://github.com/cric96/experiment-2021-swarm-intelligence-si}}.
 
-Among the many simulators available for swarm-like robots behaviours (e.g. ARGoS~\cite{Pinciroli:SI2012}),
+Among the many simulators available for swarm-like agents behaviours (e.g. ARGoS~\cite{Pinciroli:SI2012}),
  we choose Alchemist~\cite{DBLP:journals/jos/PianiniMV13}, a meta-simulator for pervasive-computing like applications.
 %
 Alchemist is already used in similar scenarios~\cite{DBLP:journals/eaai/CasadeiVAPD21}, and it supports the \scafi{} language~\cite{DBLP:conf/isola/CasadeiVAD20},
@@ -1367,7 +1368,7 @@ The approach proposed in this paper
 Literature on swarm-based environment monitoring
  is ample~\cite{DBLP:journals/ram/DunbabinM12}.
 %
-In particular, various works leverage mobility and sparse sampling~\cite{DBLP:conf/rss/GargA14,DBLP:journals/arobots/BestFF18,DBLP:journals/ijrr/BestCPMF19,casadei2022coord-space-fluid,DBLP:conf/icra/KemnaRNYS17}.
+In particular, various works leverage mobility and sparse sampling~\cite{DBLP:conf/rss/GargA14,DBLP:journals/aagents/BestFF18,DBLP:journals/ijrr/BestCPMF19,casadei2022coord-space-fluid,DBLP:conf/icra/KemnaRNYS17}.
 
 In \cite{DBLP:conf/rss/GargA14},
  a persistent monitoring approach
@@ -1381,20 +1382,20 @@ It is
  sensing locations
  according to an evolving stochastic model of the environment.
 %
-In~\cite{DBLP:journals/arobots/BestFF18,DBLP:journals/ijrr/BestCPMF19},
- decentralized planning is used to support multi-robot active perception,
+In~\cite{DBLP:journals/aagents/BestFF18,DBLP:journals/ijrr/BestCPMF19},
+ decentralized planning is used to support multi-agent active perception,
   which leverages movement to improve the quality of information gathering through effective choice of ``viewpoints'' in space and time.
 %
 In~\cite{DBLP:conf/icra/KemnaRNYS17},
- the authors focus on multi-robot coordination for informative adaptive sampling in unknown, communication-constrained environments (like lakes or oceans).
+ the authors focus on multi-agent coordination for informative adaptive sampling in unknown, communication-constrained environments (like lakes or oceans).
 %
 Their approach is based on dynamic, decentralized Voronoi partitioning over a set of sampling locations, which are recalculated at synchronization points initiated through requests for surfacing events.
 %
 Though the approach of this paper could also be used to support \emph{sparse sampling}~\cite{casadei2022coord-space-fluid},
  it also aims at supporting the formation of spatially cohesive clusters for coordinated processing and/or action.
 %
-Moreover, we do not aim at moving robots to appropriate sampling locations,
- but rather leave the robots to move autonomously (e.g., according to exploration policies)
+Moreover, we do not aim at moving agents to appropriate sampling locations,
+ but rather leave the agents to move autonomously (e.g., according to exploration policies)
  while having the collective clustering
  reflect the underlying phenomenon
  to support decision-making possibly beyond pure environmental sampling.
@@ -1403,7 +1404,7 @@ The use of Voronoi partitions in \cite{DBLP:conf/icra/KemnaRNYS17} differs from 
  in that they leverage regions to limit
  the prospective sampling locations
  to be visited by each vehicle,
- while we actually want to define \emph{groups} of coordinating robots.
+ while we actually want to define \emph{groups} of coordinating agents.
 }
 
 \subsection{Related Clustering Models and Problems}
@@ -1424,11 +1425,11 @@ There are, however, several works that address swarm-based clustering, using swa
  It is important to note that such methods (both those based on particle swarm optimization (PSO), and those based on ant colony systems (ACS)) exploit swarms just as a computational means for finding clusters in a data set.
  Their goal is not to cluster the elements of the swarm itself, as it is the case for the present work, but to simulate a virtual swarm to find good quality clusters.
 
-Some works directly address the clustering of swarms. In~\cite{DBLP:journals/trob/HuBJAL21}, the clustering of a team of special robots (i.e., aerial drones) is part of a larger process that,
- after cluster formation, also involves formation tracking (i.e., tracking a target through a suitable formation), and containment control (i.e., surround ground robots cooperating in the mission).
+Some works directly address the clustering of swarms. In~\cite{DBLP:journals/trob/HuBJAL21}, the clustering of a team of special agents (i.e., aerial drones) is part of a larger process that,
+ after cluster formation, also involves formation tracking (i.e., tracking a target through a suitable formation), and containment control (i.e., surround ground agents cooperating in the mission).
  The method proposed to form clusters is based on a game-theoretic framework named GRAPE. A significant difference w.r.t. the present work is that the number (and nature) of clusters is determined by a given set of targets,
  while we do not assume such a priori knowledge.
-Another significant work with similar goals is~\cite{DBLP:journals/tie/GeHZ18}, where a team of robots must be partitioned into clusters organized as suitable {\em formations} (i.e., geometric spatial patterns).
+Another significant work with similar goals is~\cite{DBLP:journals/tie/GeHZ18}, where a team of agents must be partitioned into clusters organized as suitable {\em formations} (i.e., geometric spatial patterns).
  The proposed solution inter-mixes the determination of clusters and their formation (based, among other things, on the agents' dynamics), assuming that the number and nature of such formations is known a priori.
 
 Since we consider clustering over a given topology (network), the problem can be related to graph-based clustering \cite{Zheng:2010}.
@@ -1553,7 +1554,7 @@ Most specifically,
  we use the field-based paradigm
  to develop a novel configurable meta-algorithm
  promoting self-organised clustering in a swarm
- of neighbouring-interacting robots.
+ of neighbouring-interacting agents.
 %
 The algorithm is evaluated on a set of synthetic environment configurations.
 %

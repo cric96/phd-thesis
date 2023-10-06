@@ -1,6 +1,8 @@
 
 \chapter{Macro-programming}\label{chap:macro-programming}
 \minitoc% Creating an actual minitoc
+
+%% TODO REMEMBER TO DISCUSS THE GRADIENT
 Macroprogramming, as a paradigm, 
  has emerged as a pivotal approach in the realm of distributed systems. 
 %
@@ -371,6 +373,91 @@ Last but not least, we would like to evaluate our algorithms on real use cases, 
 on actual drones or robots.
 \subsection{ScaFi}
 \input{papers/softwarex2021/main.tex}
+
+\subsection{Alchemist}\label{coordination2023:alchemist}
+
+Alchemist\footnote{\url{http://alchemistsimulator.github.io/}}~\cite{DBLP:journals/jos/PianiniMV13} is meta-simulator
+ mainly designed for simulating complex distributed systems 
+ in a rich variety of scenarios like swarm robotics~\cite{Casadei2021},
+ large-scale sensor networks~\cite{Aguzzi_2022}, crowd simulation~\cite{Beal2015},
+ path planning, and even morphogenesis of multi-cellular systems.
+
+The simulator is \emph{meta} in nature, 
+ as it is based on general abstractions 
+ that can be mapped to specific use cases (i.e., \emph{incarnations}).
+% 
+Inspired by biochemistry, 
+ the meta-model consists of a set of \emph{nodes} 
+ that exist in an \emph{environment} and are linked together by \emph{relationship} rules. 
+ Each node contains a sequence of \emph{molecules} and \emph{reactions}. 
+%
+ A \emph{molecule} represents a variable, 
+ which acts as a container for data. 
+ \emph{Reactions} instead are events that occur based 
+ on a set of \emph{conditions}, 
+ and are fired according to a time distribution, 
+ producing an effect that is described as an action. 
+This abstraction allows the simulator to be flexible 
+ and adaptable to a variety of use cases and node numbers 
+ (it could support thousands of nodes), 
+ while maintaining a consistent underlying structure.
+
+ The Alchemist simulator features four incarnations: 
+  biochemistry, sapere, protelis, and \scafi{}, 
+  each with a different way of modeling molecules and actions. 
+The sapere incarnation uses a set of ground Linda-like tuples 
+ to model concentration and has been used for crowd evacuation and resource discovery simulations. 
+The protelis incarnation defines concentration as a Java Object and is commonly used in the literature for various simulations, 
+ including crowd tracking and drone coordination. 
+The \scafi{} incarnation supports the \scafi{} Scala DSL 
+ and has been used in distributed peer-to-peer chats and situated problem-solving.
+
+Alchemist offers an effortless method for loading simulations. 
+ The process requires a YAML file that includes essential parameters, 
+ such as the incarnation type, neighbour connection model, and node deployment. 
+ In \Cref{coordination2023:fig:alchemist}, we have provided an example YAML file 
+ that creates a simulation using the \scafi{} incarnation (first row). 
+ It also defines the neighbourhood relationship based on fixed distances (0.5 in this case), 
+ placing nodes in a fixed grid of size 10x10 starting at -(5,5) and ending at (5,5), 
+ with a node-to-node distance of 0.25. 
+ Finally, it loads the \scafi{} program called ``program'', 
+ which is evaluated at each node with a frequency of 1. 
+\begin{figure*}
+\centering
+\begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    %% change the listing size to small with the correct font family
+    \begin{lstlisting}[language=yaml, basicstyle=\small\ttfamily, caption={An Alchemist simulation example.}, captionpos=b, label=coordination2023:fig:alchemist-yaml]
+incarnation: scafi
+network-model:
+    type: ConnectWithinDistance
+    parameters: [0.5]
+deployments:
+    type: Grid
+    parameters: [-5,-5,5,5,0.25,0.25]
+    /*dynamics of the simulation*/
+    programs: 
+        - program:
+        - time-distribution: 1
+            type: Event
+            actions: 
+            - type: RunScafiProgram
+              parameters: [program]
+        - program: send
+\end{lstlisting}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{papers/coordination2023/imgs/alchemist.png}
+\end{subfigure}
+\caption[An Alchemist simulation example]{An Alchemist simulation example. 
+    The simulation result on the right is obtained 
+    by running the simulation described on the left.
+    }
+\label{coordination2023:fig:alchemist}
+\end{figure*}
+
 \section{Wrap up}
 
 Macroprogramming, with its focus on the macroscopic behaviour of systems, 
