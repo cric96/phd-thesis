@@ -3,6 +3,7 @@
 \usepackage{titlesec}
 
 % common utilities
+\usepackage{seqsplit}
 \usepackage{comment}
 \usepackage{hyperref}
 \usepackage{graphicx}
@@ -40,6 +41,7 @@
 \makeatother
 
 \newcommand{\scafi}{{ScaFi}}
+\newcommand{\textttb}[1]{\seqsplit{\texttt{#1}}}
 \newcommand{\scafiweb}[0]{{ScaFi-Web}}
 \newcommand{\rev}[1]{{#1}}
 \newcommand{\meta}[1]{{\color{blue}#1}}

@@ -63,16 +63,16 @@ of a collection of agents or devices}---a goal also referred to through terms li
 This problem can be reduced to the definition of the control program
  that each agent has to execute~\cite{DBLP:journals/tib/MartiusH12}.
 %
-The problem can be addressed
- through \emph{automatic} approaches
-(e.g., multi-agent reinforcement learning~\cite{DBLP:journals/corr/abs-1911-10635})
- or \emph{manual} approaches~\cite{DBLP:journals/tib/MartiusH12}
- based on the definition of control rules or 
- designs in terms of patterns involving, e.g.,
-information flows and control loops~\cite{DBLP:conf/saso/WolfH07}.
+%The problem can be addressed
+% through \emph{automatic} approaches
+%(e.g., multi-agent reinforcement learning~\cite{DBLP:journals/corr/abs-1911-10635})
+% or \emph{manual} approaches~\cite{DBLP:journals/tib/MartiusH12}
+% based on the definition of control rules or 
+% designs in terms of patterns involving, e.g.,
+%information flows and control loops~\cite{DBLP:conf/saso/WolfH07}.
 %
-Hybrid approaches are also possible where (parts of) programs
-are generated or improved through learning~\cite{DBLP:conf/coordination/AguzziCV22}.
+%Hybrid approaches are also possible where (parts of) programs
+%are generated or improved through learning~\cite{DBLP:conf/coordination/AguzziCV22}.
 
 In this work, we focus on the \emph{programming language-based} approach to self-organization,
  where the developer writes the self-organising control program
@@ -80,7 +80,7 @@ In this work, we focus on the \emph{programming language-based} approach to self
 %
 Specifically, our high-level goal
  is to devise a programming language
- for self-organising systems
+ for self-organising \acp{cpsw}
  that is \emph{expressive}, \emph{practical},
  and \emph{declarative}---in the sense that it should allow the programmer to abstract from
 many operational details, to be dealt with automatically by the underlying middleware/platform~\cite{DBLP:conf/iotdi/NoorTGS19,CPPVW-FI2020}.
@@ -96,7 +96,7 @@ This approach is simple to reason about but
  and management of sub-activities (and response to contextual changes).
 %
 Motivated by this, and inspired by the functional reactive paradigm,
- in this work 
+ in this chapter 
  \emph{we propose a reactive self-organization programming language
  that enables the decoupling of program logic from its scheduling}.
 % 
@@ -115,47 +115,6 @@ The result is a functional reactive self-organization programming model,
 and whereby each sub-expression is amenable to independent scheduling:
  overall, we maintain the same expressiveness and benefits of aggregate programming~\cite{bpv:aggregate:programming,vbdacp:ac:survey:jlamp}
  while enabling significant improvements in terms of scheduling controllability, flexibility in the sensing/actuation model, and execution efficiency. %sec:contrib
-
-%A relevant class of approaches
-% is given by programming models
-% where the developer specifies
-% the control program of the agents
-% of the system, which is scheduled
-% in a time-driven or proactive way
-% to sustain the self-organisation dynamics.
-%%
-%The typical computational model leverages 
-% collections of devices,
-% interacting with neighbours by exchanging messages,
-% and working at synchronous or asynchronous
-% sense--compute--interact rounds.
-%%
-%Similarly to natural systems,
-% the self-organising behaviour
-% of such systems 
-% is based on the repetition of rounds involving three main steps: 
-% context assessment (e.g., reading sensors and collecting messages from neighbours),
-% decision-making (i.e., evaluation of a program against the current context),
-% and interaction (e.g., running actuators and sending messages to neighbours).
-%
-%The model abstracts from the scheduling of rounds: concrete policies are application-specific, and may be time-driven, reactive, or based on learned heuristics.
-%
-%However, often 
-% rounds are considered atomically,
-% which means that all the possible source of changes are continuously considered,
-% and it is not possible to perform fine-grained scheduling of parts of the control program---which would be desirable to make collective computations more time- and energy-efficient.
-
-The rest of the article is organized as follows.
-%
-\Cref{acsos2023-frp:sec:background} covers background on self-organization programming and the functional reactive paradigm.
-%
-\Cref{acsos2023-frp:sec:contrib} presents the \ac{langname} programming model.
-%
-\Cref{acsos2023-frp:sec:impl} details the implementation.
-%
-\Cref{acsos2023-frp:sec:eval} describes the experimental setup and results.
-%
-\Cref{acsos2023-frp:sec:conc} draws conclusions and future research work.
  
 \section{Background and Motivation}\label{acsos2023-frp:sec:background}
 
@@ -178,25 +137,7 @@ Then, we provide background on \ac{frp} (\Cref{acsos2023-frp:sec:background:frp}
 
 %\section{Related Work}
 
-%\meta{Plan: we may briefly recall the kinds of approaches as per the Intro. And then cover a few approaches for programming self-org, such as: TOTA as representative for reactive models, and AC as representative for proactive models?}
-
-The first distinction in approaches for self-organization engineering
- is between automatic 
- and manual approaches.
-%
-In the former category, 
- the control logic of the agents
- is learned, synthesized, or evolved automatically---as e.g., in multi-agent reinforcement learning~\cite{DBLP:journals/corr/abs-1911-10635},
- Collective Intelligence~\cite{tumer2004collectives,casadei2023artl-ci-survey},
- and evolutionary swarm robotics~\cite{trianni2008evolutionary-swarm}.
-%
-The latter category, instead,
- involves explicit engineering of the activity
- by a developer,
- e.g., by reusing patterns of behaviour~\cite{FDMVA-NACO2013}, by directly coding the individual logic of each type of device,
- or by using mechanisms provided by a so-called \emph{macroprogramming language}\cite{casadei2023macro,DBLP:journals/jisa/JuniorSBP21}.
-%
-The rest of the section covers prominent approaches in this category (i.e.\ programming models)---distinguishing between reactive and round-based ones.
+%\meta{Plan: we may briefly recall the kinds of approaches as per the Intro. And then cover a few approaches for programming self-org, such as: TOTA as representative for reactive models, and AC as representativ
 
 Among reactive approaches is \emph{Tuples On The Air (TOTA)}~\cite{tota},
  a programming model for decentralized peer-to-peer networks of mobile nodes or agents.
@@ -219,40 +160,12 @@ Other reactive approaches exist, such as the \emph{Higher-Order Chemical Languag
 %% in terms of chemical solutions
 %% consisting of \emph{molecules} (data) interacting according to \emph{reactive rules}.
 %
-
 On the other side, there are programming models 
  based on a \emph{round-based} execution model
  whereby 
  each device repeatedly performs a complete evaluation of its control program
- (e.g., wrapped in a loop or scheduled in a periodic, time-driven fashion).
-%  involved in \emph{sense--compute--interact} rounds, scheduled in a time-driven fashion,
-% and the languages provide a convenient way to express the \emph{compute} step, which typically involves the overall self-organising system to be executed.
+ (e.g., wrapped in a loop or scheduled in a periodic, time-driven fashion) as aggregate computing -- our language of reference.
 %
-Aggregate computing~\cite{bpv:aggregate:programming,vbdacp:ac:survey:jlamp}
-is one such approach,
-  where each round is atomically composed of \emph{sense--compute--interact} steps,
-  and a language is used to express the \emph{compute} step conveniently.
-%
-Indeed, it emerged as 
- a prominent approach for programming
- self-organization~\cite{vbdacp:ac:survey:jlamp},
- with the benefits of formality,
- abstraction, compositionality, and pragmatism.
-%
-Formality stems from building the approach
- over \emph{field calculi}~\cite{vbdacp:ac:survey:jlamp} with well-defined language semantics.
-%
-Abstraction comes from the declarativity of the \emph{functional} programming model,
- promoting different scheduling strategies~\cite{DBLP:conf/acsos/AguzziCV22,DBLP:journals/lmcs/PianiniCVMZ21} 
- and deployments~\cite{CPPVW-FI2020}, possibly applied automatically to different sub-activities concurrently running.
-%
-Compositionality comes from adopting the functional paradigm and the \emph{field abstraction}~\cite{DBLP:journals/pervasive/MameiZL04,vbdacp:ac:survey:jlamp}
-(a field is a map from a domain of devices to computational values---e.g., a field of temperatures, or a field of velocity vectors).
-%
-Finally,
-pragmatism is supported by the language design and its separation of concerns,
- which enables modular \acp{dsl} and toolkits~\cite{DBLP:journals/softx/CasadeiVAP22}.
-
 Though conceptually simple,
  the round-based models could be more efficient,
  because they fully re-evaluate the context
@@ -266,7 +179,7 @@ Indeed,
 the round-based approach seems to be a legacy of imperative languages or solutions featuring limited compositionality.
 Instead, more compositional languages like, e.g., aggregate computing languages~\cite{vbdacp:ac:survey:jlamp,DBLP:journals/nca/BachrachBM10,DBLP:conf/ecoop/AudritoCDSV22} and Buzz~\cite{DBLP:conf/iros/PinciroliB16},
  allow building complex self-organising behaviour
- by composing \emph{blocks} of simpler self-organising behaviours---see \Cref{acsos2023-frp:paradigmatic-examples} for examples.
+ by composing \emph{blocks} of simpler self-organising behaviours.
 % reactivity also makes sense for self-organisation,
 % because the idea is to steer behaviour
 % as a response to (local) change.
@@ -339,7 +252,7 @@ An example of such a library %  language
 
  
 
-\paragraph*{Background: Sodium}
+\subsubsection{Background: Sodium}
 Sodium is primarily based on two types:
 %
 \begin{itemize}
@@ -397,7 +310,7 @@ Stream<Integer> merged = left.merge(right, (l, r) -> l + r);
 \end{lstlisting}
 
 \paragraph{Hold}
-A stream \texttt{s} can be converted into a cell through method \texttt{s.hold(init)}: the cell, holding \texttt{init} before the first event, will keep the value of the most recent event.
+A stream \texttt{s} can be converted into a cell through method \lstinline[breaklines=true]|s.hold(init)|: the cell, holding \texttt{init} before the first event, will keep the value of the most recent event.
 %
 \begin{lstlisting}[frame=single, language=java]
 Stream<Integer> events = ...;
@@ -426,7 +339,7 @@ Stream<Integer> out = events.filter(x -> x > 0);
 \end{lstlisting}
 
 \paragraph{Lift}
-Two cells can be combined into one through a method \texttt{c1.lift(c2,f)}, where \texttt{f} is a combining function.
+Two cells can be combined into one through a method \lstinline[breaklines=true]|c1.lift(c2,f)|, where \texttt{f} is a combining function.
 %
 \begin{lstlisting}[frame=single, language=java]
 Cell<Integer> left = ...;
@@ -485,47 +398,7 @@ First, we explain the system and execution model (\Cref{acsos2023-frp:sec:sys-mo
 
 \subsection{System Model and (Reactive) Execution Model}
 \label{acsos2023-frp:sec:sys-model}
-
-%\meta{devices, sensors, actuators, neighborhoods
-%
-%NEED TO explain the execution model which is driven reactively from changes in the context (explain that context is given by msgs, sensors, etc.)
-%}
-
-We shall program the self-organising behaviour of a \emph{system} of \emph{devices}.
-%
-A \emph{device} 
- has a \emph{unique identifier (ID)},
- as well as
- \emph{sensors} and \emph{actuators}
- that allow it to perceive and act upon its surrounding \emph{environment}.
-%
-A device can interact with other devices (its \emph{neighbours}, forming a dynamic set)
- by exchanging messages asynchronously.
-%
-A device has an associated \emph{program}
- that defines its behaviour.
-
-The program that a device runs
- can be defined compositionally, and it
- generally computes over
- its \emph{local context},
- which consists of 
- (i) a sampling of its sensor values
- and 
- (ii) the data provided by neighbours through messages.
-%
-Without loss of generality, we assume that all the data provided by a neighbour is consolidated into a single object
-(i.e., \emph{one object per neighbour})
-and that neighbour data may \emph{expire}
-(i.e., it may be set to be valid for a configurable, limited lifetime).
-%
-The execution of a program (computation) provides an \emph{output} object
- and defines what data has to be packed into a message, also called an \emph{export}, to be sent to all the neighbours.
-%
-The export can be thought of as an associative map of keys and values,
-where keys denote different sub-computations and values the data relevant to those sub-computations.
-
-In general, the \emph{scheduling} of a program execution 
+In general, in aggregate computing, the \emph{scheduling} of a program execution 
 is asynchronous w.r.t.\ other devices
   and may be periodic (time-triggered)
   or reactive.
@@ -891,33 +764,18 @@ explicitly dictating the pace of the stateful computation
 \subsection{Paradigmatic Examples: Self-Healing Gradient \& Channel}
 \label{acsos2023-frp:paradigmatic-examples}
 
-In this section, we cover two fundamental self-organising behaviours
+In this section, we cover the two fundamental self-organising behaviours already introduced in the \Cref{part:background}
 that will be exercised in the evaluation in \Cref{acsos2023-frp:sec:eval}.
 %
-Firstly, we introduce the \emph{gradient}~\cite{DBLP:conf/ipsn/NagpalSB03,audrito2017ULT}, a versatile
- self-organization pattern
- that supports a wide range of more complex self-organising behaviours.
+Firstly, we re-implement the \emph{gradient} building block with the reactive extension, and we show how it can be used to implement a \emph{channel} computation.
 %
 
 \begin{example}[Self-Healing Gradient]\label{acsos2023-frp:ex:g}
 %
-A \emph{(self-healing) gradient} is a distributed behaviour 
- that \emph{self-stabilises}~\cite{dolev}, in each device  of the distributed system, 
- to a value denoting its minimum distance
- from the closest \emph{source} node (e.g., computed by summing the neighbour-to-neighbour distances along the shortest path to the source),
- adapting to changes in the source set and distances.
-%
-By following the neighbours of maximum decrease (resp. increase) of the gradient value, i.e., by descending (resp. ascending) the gradient,
- it is possible to implement efficient hop-by-hop information flows~\cite{DBLP:conf/saso/WolfH07},  e.g., useful for data propagation and collection.
-%
-%
-%It generally takes multiple rounds to stabilise.
-%%
-%A \emph{self-healing} gradient can correct the collective output after a change in its inputs (i.e., the source set and the distances).
-%
 \Cref{acsos2023-frp:fig:scenario-g} provides a representation of a gradient.
  
-Multiple gradient computation algorithms exist~\cite{audrito2017ULT}. A basic algorithm can be implemented in \ac{langname} as follows.
+Multiple gradient computation algorithms exist~\cite{audrito2017ULT} as previous outlined. 
+A basic algorithm can be implemented in \ac{langname} as follows.
 
 \begin{lstlisting}
 def gradient(source: Flow[Boolean]): Flow[Double] =
@@ -954,17 +812,9 @@ The following example showcases the \emph{compositionality} of the programming m
 
 \begin{example}[Self-Healing Channel]\label{acsos2023-frp:ex:channel}
 %
-A \emph{channel} computation aims to build the shortest path
-from a \emph{source} node to a \emph{destination} node.
-%
-Each node has to yield a Boolean value that should eventually be \lstinline|true| if the node belongs to the shortest path
-and \lstinline|false| otherwise.
-%
-The basic idea for its implementation is to exploit the triangular inequality property, i.e., that the ``distance to the source'' plus the ``distance to the destination'' is less than or equal to the ``distance between the source and the destination''.
-%$\mathit{distanceToSource}+\mathit{distanceToDestination} \leq \mathit{distanceBetweenSourceAndDestination}$.
-%
+
 Therefore, an implementation in \ac{langname} is as follows.
-%
+
 \begin{minipage}{\columnwidth}
 \begin{lstlisting}[escapechar=\%,numbers=left,xleftmargin=0.3cm,numbersep=4pt]
 def broadcast[T](
@@ -1010,7 +860,7 @@ def channel(
 % NB: it should actually be liftTwice(distances, nbrRange(), values)(_ + _)
 \end{minipage}
 %
-This self-organising data structure can be implemented by leveraging two \lstinline|gradient|s (one from the source and one from the destination---cf. \Cref{acsos2023-frp:chan:g:src,acsos2023-frp:chan:g:dest})
+This self-organising data structure can be implemented by leveraging two reactive \lstinline|gradient|s (one from the source and one from the destination---cf. \Cref{acsos2023-frp:chan:g:src,acsos2023-frp:chan:g:dest})
  and a \lstinline|broadcast(v,s)| (which is a way to propagate a value \texttt{v} hop-by-hop from a source \texttt{s} outwards along the  minimum paths of its gradient---indeed,
 a structure similar to the \lstinline|gradient| implementation in \Cref{acsos2023-frp:ex:g}) that supports the computation of \lstinline|distanceBetween|.
 %
@@ -1179,14 +1029,13 @@ Access to neighbour-related data is mediated by a \texttt{NeighborField} abstrac
 %}
 
 To evaluate the proposed approach, 
- we prepared several publicly available and reproducible simulations
-(see \Cref{acsos2023-frp:footnote:eval}) using the \emph{Alchemist} simulator for large-scale pervasive systems\footnote{\url{https://alchemistsimulator.github.io/}}~\cite{PianiniJOS2013}.
+ we prepared several publicly available and reproducible Alchemist simulations.
 %
 In particular, 
  we released \ac{langname}\footnote{\url{https://central.sonatype.com/artifact/io.github.cric96/distributed-frp_3/0.1.3}} and integrated it into Alchemist.
 %
-The choice of Alchemist allowed us to leverage the already integrated \emph{\scafi{}} aggregate programming language~\cite{DBLP:journals/softx/CasadeiVAP22}
-as a reference for round-based computations (cf. \Cref{acsos2023-frp:sec:background:selforg}).
+%The choice of Alchemist allowed us to leverage the already integrated \emph{\scafi{}} aggregate programming language~\cite{DBLP:journals/softx/CasadeiVAP22}
+%as a reference for round-based computations (cf. \Cref{acsos2023-frp:sec:background:selforg}).
 
 \subsection{Goals}\label{acsos2023-frp:eval:goals}
 %
@@ -1270,7 +1119,7 @@ Finally, the round-based policy is driven by a $\gamma$ parameter
 
 \subsubsection{Scenarios}
 
-In the above setup, the two programs introduced in \Cref{acsos2023-frp:sec:contrib},
+In the above setup, the two programs discussed in \Cref{acsos2023-frp:sec:contrib},
  i.e., the self-healing gradient (\emph{scenario G}---cf. \Cref{acsos2023-frp:fig:scenario-g}) and channel (\emph{scenario C}---cf.~\Cref{acsos2023-frp:fig:scenario-c}),
  are executed for 300 simulated time units. 
 %
@@ -1584,10 +1433,7 @@ This chapter proposes \ac{langname},
  for expressing self-organising behaviour}.
 %
 The language is designed by taking inspiration 
- from the aggregate programming approach,
- which is based on a proactive execution model,
- and reactive approaches to self-organization like TOTA,
- and adopting \ac{frp} as a reference paradigm for its design and implementation.
+ from the aggregate programming approach and can be seen as an extension of it.
 %
 As experimentally verified,
  \ac{langname} allows \emph{tunable, fine-grained reactivity},
@@ -1600,11 +1446,12 @@ Indeed, in \ac{langname},
  where distinct sub-computations may execute independently 
  depending on whether their context has changed.
 
+\begin{comment}
 In future work,
  we would like to formalize a core calculus capturing behaviour and properties of \ac{langname} (similarly to field calculi and related formal languages \cite{vbdacp:ac:survey:jlamp,DBLP:conf/ecoop/AudritoCDSV22,DBLP:journals/lmcs/AudritoCDV23}),
  and explore how to support flexibility in actuation models (cf. swarm robotics).
 Also, it would be interesting 
   to study the deployment of \ac{langname} applications, e.g.\ by considering how reactive dynamics and consumption profiles may interact with application partitioning strategies like the pulverization model~\cite{CPPVW-FI2020} and deployment options.
-
+\end{comment}
 
 %\printbibliography
