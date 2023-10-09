@@ -9,14 +9,49 @@
 \newcommand{\RE}{\mathbb{E}}
 
 \section{Introduction}
-Modern AI applications are transitioning from mere feature recognition, like identifying a cat in an image, to decision-making processes, such as safely navigating a traffic intersection. In these scenarios, interactions among multiple agents are inevitable. This requires each agent to act strategically, especially since current decisions can impact future outcomes.
+The concept of intelligence is as complex as it is intriguing, 
+ and it has been a subject of philosophical inquiry, scientific exploration, and cultural curiosity for centuries. 
+ Philosophers have debated on what constitutes intelligence, 
+ linking it to \emph{reason}, \emph{wisdom}, and even \emph{morality}. 
+%
+Despite these varied interpretations, 
+ defining intelligence remains a challenge, even in the field of psychology. 
+%
+Several standardized tests and scales attempt to measure intelligence, 
+ but none manage to capture the complete essence of what it means to be ``intelligent''. 
+ Intelligence is often understood as the ability to \emph{learn}, \emph{reason}, and \emph{adapt}, among other cognitive abilities.
 
-Machine learning is essentially the transformation of data into knowledge. For instance, a learning algorithm might take training data (like images of cats) and produce knowledge (rules to detect cats in images). Over the past decade, there has been significant advancement in a specific machine learning technique called deep learning. One of its primary manifestations is various types of deep neural networks (DNNs).
+Among the myriad of perspectives on intelligence, learning stands out as a \emph{fundamental} component. 
+ From an evolutionary point of view, the ability to learn is essential for survival. 
+ An organism that can adapt to its environment and learn from experiences is likely to survive and reproduce. 
+ In the human context, learning has been the cornerstone of development, be it mastering a language, solving complex problems, or creating art.
 
-Reinforcement Learning (RL) is a subset of machine learning where agents learn optimal behaviours through a trial-and-error process as they interact with their environment. Unlike supervised learning, which uses labelled data (e.g., an image labelled with "cat"), RL is goal-driven. It aims to develop a learning model that strives to achieve the best long-term goal by refining its approach through trial and error, without relying on labelled data for knowledge acquisition.
+ This notion of learning is crucial in the realm of Artificial Intelligence (AI). 
+%
+ If intelligence involves learning, 
+ then replicating intelligence artificially would necessarily entail enabling machines to learn. 
+ This hypothesis leads us to the exciting and rapidly evolving domain of machine learning---
+ a subset of AI that allows computers to learn from data, rather than requiring them to be explicitly programmed for specific tasks.
+
+Machine learning is not monolithic; 
+ it encompasses various approaches and techniques that aim to make machines learn. 
+ Broadly, these approaches can be categorized into supervised learning, unsupervised learning, semi-supervised learning, and reinforcement learning.
+%
+Particularly, the first three approaches are based on the idea of learning from data, 
+ where the data is either labeled or unlabeled:
+\begin{itemize}
+  \item \emph{supervised learning}: this is the most straightforward approach, where a model is trained on a labeled dataset. 
+  The model makes predictions or decisions based on input data and is corrected when its predictions are incorrect. Typical examples include classification and regression problems;
+  \item \emph{unsupervised learning}: unlike supervised learning, this approach does not involve labeled data. 
+  The machine tries to learng the patterns and the structure from the data without any supervision (e.g., clustering algorithms);
+  \item \emph{semi-supervised}: A middle-ground between supervised and unsupervised learning, this approach utilizes both labeled and unlabeled data for training. The model learns to improve its predictions gradually.
+\end{itemize}
+Reinforcement learning sets itself apart from other methodologies by operating without the need for labeled data or supervision. 
+ It employs a trial-and-error strategy, mirroring the way humans acquire knowledge. 
+ Subsequent sections will delve into the nuances of this distinctive approach.
 \section{Single-agent}
-\acl{rl}~\cite{sutton2018reinforcement-learning} is a generic framework 
- %-- inspired by how humans learn -- 
+\Acl{rl}~\cite{sutton2018reinforcement-learning} is a generic framework 
+ inspired by how humans learn
  used to structure \emph{control problems}. 
 %
 The focus is on \emph{sequential} interactions between \emph{agents}
