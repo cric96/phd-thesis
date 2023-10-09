@@ -82,7 +82,7 @@ The idea is to let an aggregate system
  achieving the same functionality
  (defined in terms of the eventual collective outcome). 
 %
-Our thesis is exposed through a case study, in which \ac{RL} -- and in particular Q-Learning~\cite{DBLP:conf/icml/LauerR00} -- is successfully applied to reduce system-wide power consumption without modifying the aggregate program.   
+Our thesis is exposed through a case study, in which \ac{RL} -- and in particular a variant multi-agent Q-Learning~\cite{DBLP:conf/icml/LauerR00} -- is successfully applied to reduce system-wide power consumption without modifying the aggregate program.   
 
 %The paper is structured as follows.
 %
@@ -444,7 +444,7 @@ One way to improve efficiency would be to act at the level of scheduling
 However, our work is quite different from the previous. 
  We aim to leverage learning to improve a \emph{general} collective computation 
  expressed in \ac{AC}-like execution model 
- (i.e, asynchronous and iterative evaluation of \revision{rounds} eventually lead to collective behaviours--see \Cref{acsos2022:s:background:ac})
+ (i.e, asynchronous and iterative evaluation of \revision{rounds} eventually lead to collective behaviours--see \Cref{part:background})
  and not a specific application as is often the case (e.g. distributed sensing in WSN).
 For example, consider a typical AC application, 
  namely the management of crowds of people equipped with smart devices~\cite{DBLP:journals/computer/BealPV15}. 
@@ -470,11 +470,11 @@ In such contexts, \ac{RL} can be instrumental in determining
  thereby reducing the number of messages transmitted 
  while still achieving the intended application objective.
 }
-\section{Aggregate Platform Improvement Through \acl{RL}}\label{acsos2022:sec:contribution}
-In \ac{AC}, collective behaviour 
+\section{Aggregate Platform Improvement Through \Acl{RL}}\label{acsos2022:sec:contribution}
+In \ac{ac}, collective behaviour 
  is the result of both
- an aggregate program
- and an execution protocol
+ an \emph{aggregate} program
+ and an \emph{execution} protocol
  whose details may vary within certain limits
  without affecting the desired functionality.
 %
@@ -492,26 +492,19 @@ Other non-functional goals such as computational efficiency and bandwidth consum
  as well as 
  (ii) fine-tuned configuration of the \emph{execution platform}, namely of the software middleware, daemon, or simulator responsible for supporting the execution of aggregate applications. 
 %
-%However, non-functional properties may be key---cf. energy-constrained settings. % (cf. low-cost sensors).
-%
-%So, typically, the execution platform is manually configured to fix execution details  like the frequency at which the devices perform rounds.
-%
 For instance, the designer could configure the platform 
  to schedule computation rounds 
  at a given frequency
  that is somewhat related to the desired reactivity
  and expected environmental dynamics.
-%
+
 Recent work~\cite{danilo2021lmcs} has also proposed the use of rule-based and reactive policies to let a system \emph{adapt} its execution based on change in inputs or the environment.
 %
 However, such rules are still hand-crafted: they may be highly suboptimal or require to be adjusted when porting the application to different environments.
-%
+
 In this chapter we explore the possibility of \emph{learning} 
  how to improve aggregate applications from a non-functional point of view, 
  leveraging the \ac{RL} framework.
-%
-%Indeed, \ac{RL} has already been applied for similar goals~\cite{DBLP:conf/iccad/TanLQ09, DBLP:journals/corr/abs-1910-07421}, 
-% but the solutions produced are typically application-specific. 
 %
 Particularly, in our idea \ac{RL} enhances general aggregate programs, 
  making it possible to reuse the same application logic in different contexts.
@@ -543,7 +536,7 @@ This situation is difficult to handle with handcraft algorithms, that require a 
 \end{figure}
 \revision{
 In the \ac{AC} framework, 
- we can assume homogenous collective behaviours---
+ we can assume \emph{homogenous} collective behaviours---
  i.e., agents which participate in the aggregate system should execute the same program. 
  In terms of the \ac{RL} process, this means that we could find a single policy for the entire system even if we are in multi-agent settings---as pointed out in previous work~\cite{DBLP:conf/acsos/Aguzzi21, aguzzi2022coord-ac-rl,aguzzi2022roadmap-ac-rl}.}
 Specifically, we aim at using a global $Q$-table during the learning time, 
@@ -561,11 +554,6 @@ At the end of the learning phase then,
 %
 In doing so, the policy works for small networks as well as large networks  (i.e, scales with the agent's population size).
 
-%\ac{RL} was already combined with the \ac{AC} model 
-% to yield behavioural variations~\cite{DBLP:conf/acsos/Aguzzi21}, namely different aggregate programs.
-%
-%However, in this work, \ac{RL} does not change the aggregate program; 
-% rather, it changes the orchestration logic of the \ac{AC} execution platform (\Cref{acsos2022:fig:rl-and-ac}). 
 %
 The agent, however, could \emph{inspect} the learning and evaluation process. 
  Therefore, the agent state should depend on locally produced export and output, 
@@ -589,8 +577,6 @@ such as global functions (i.e., the reward signal is received after collective a
 }
 
 \subsection{\Acl{RL} to Reduce Energy Consumption}\label{acsos2022:acrl-energy-goal}
-
-
 Among the non-functional goals that \ac{RL} could face, 
  this study %analyses the application of Distributed Q-Learning 
  focusses on reducing the \emph{energy consumption} of aggregate computations,
@@ -616,9 +602,8 @@ In particular, the algorithm should learn how to reduce the round frequency in s
  the message exchange between neighbours 
  (which typically involves non-negligible power consumption).}
 
-\revision{Even if we consider the whole aggregate computing context as a state (cf. \Cref{acsos2022:s:background:ac}), 
- in this work the agent observation space is based on the local output 
- produced by an aggregate program evaluation.} 
+\revision{Even if we consider the whole aggregate computing context as a state, 
+ in this work the agent observation space is based on the local output produced by an aggregate program evaluation.} 
  Following the self-stabilisation assumptions, an agent state encodes the variation of the output history, \revision{thus we constrain the output to be a numeric value}.
  At each time step $t$, it is computed the local output $o_t$ and $\delta_t$, which consists of three possible values, \texttt{Stable} ($o_t = o_{t-1}$), \texttt{Rising} ($o_t > o_{t-1}$), and \texttt{Decreasing} ($o_ t < o_{t-1}$).
 Also, in order to consider the evolution of $\delta$, each agent stacks the last $w$ values of $\delta$ in its state: $s_t =(\delta_t, \delta_{t-1}, \dots, \delta_{t-w})$.
@@ -649,16 +634,16 @@ Otherwise, the reward function is evaluated as:
 r_t = (1 - \theta) * (1 - \Delta / T)
 \end{equation}
 That is the inverse of the case of non-stable conditions. 
- Thus, this reduces the consumption as much as possible, so the reward is maximized when $\Delta = T$. 
- %This is a general zero-based scheme, where the agent tends to reach a condition where the reward is zero.
+ Thus, this reduces the consumption as much as possible, so the reward is maximized when $\Delta = T$.
 
 Notice that these settings do not depend on a particular aggregate program, 
  but they can be used in any program with continuous output and an eventually stable field. 
 %
-Besides, thanks to the local reward function, this learning setting could be also employed for online learning.
+Besides, thanks to the local reward function, 
+ this learning setting could be also employed for online learning.
 \revision{However, we would highlight that in this case, 
  we exploited offline learning. 
- In this way, we could consider the cost of RL at runtime negligible concerning power consumption.}
+ In this way, we could consider the cost of \ac{rl} at runtime negligible concerning power consumption.}
 
 \newcommand{\rlsol}{{\sc{}Rl}}
 \newcommand{\periodicsol}{{\sc{}Periodic}}
@@ -673,7 +658,7 @@ Our \ac{RL} approach combined with \ac{AC} is evaluated through a set of simulat
 %
 To this purpose, we adopt \scafi{}~\cite{DBLP:conf/isola/CasadeiVAD20}, 
  which bundles, together with the language previously discussed, a simulator to execute aggregate programs.
- 
+
 %
 For the sake of reproducibility, the code and the instructions to run simulations and produce the charts are open-sourced and available at a public repository\footnote{\url{https://github.com/cric96/experiment-2022-acsos-round-rl}}.
 \begin{table}[t]
@@ -691,100 +676,87 @@ For the sake of reproducibility, the code and the instructions to run simulation
     \label{acsos2022:tab:parameters}
 \end{table}
 \subsection{Simulation Setup}\label{acsos2022:s:simulation-setup}
-In these experiments, the nodes are arranged in a grid large 100x100 meters containing $N=100$ nodes. 
- An entire simulation episode lasts 80 seconds of simulated time.
- The training phase is performed for $L=1000$ episodes using the $\epsilon$-greedy policy.
- In each episode $k$, the $\epsilon$ is decayed in order to balance the exploitation/exploration trade-off:
-\begin{equation}
-\epsilon_k = \epsilon_0 - (\epsilon_0 / L * k)
-\end{equation}
-Where $\epsilon_0$ is set as the initial condition.
-In the training phases, we consider only one global Q-table that each agent updates 
- using local ($s_t, a_t, r_{t+1}$) trajectory items.
-Then, the performance is evaluated in the last $T=50$ episodes, by deploying the greedy policy.
-In that case, each agent owns a copy of the local Q-table as resulting after the training phases.
- %Each node has four neighbours at most. 
- The actions available to each node are four, respectively with next-wake uptimes equal to 100ms, 200ms, 500ms and 1s.
- The programs that will be tuned with our scheduling policy are the ones described in \Cref{acsos2022:sec:background},
-  namely the gradient-cast (G) and the converge-cast (C) building blocks.
+In the experimental setup, we configure the network to consist of a 100x100 meter grid populated with $N=100$ nodes. 
+ Each simulation episode is designed to last for 80 seconds of simulated time. 
+ For the training phase, we conduct $L=1000$ episodes using an $\epsilon$-greedy policy. 
+ The value of $\epsilon$ is dynamically adjusted in each episode $k$ according to the formula:
 
-To introduce variability in the dynamics, we consider a variation in the source set. 
-%
-Indeed, 
- when the source set changes, 
- the field has to adjust towards the correct fix-point, 
- and if the nodes do not react quickly, 
- the convergence time can considerably lengthen.
-%
-If only small changes are considered 
- %(e.g., removal of a non-critical node), 
- then learning could promote solutions in which the nodes always 
- use the greatest next wake-up time. %(i.e., 1 second).
-%
-To introduce such elements of variability, 
- we devise two scenarios. 
- In the first one (\swapscen{}), 
- only one source device exists at the beginning---i.e., the leftmost node in the grid. 
-%
-At the time 40, 
- the rightmost device becomes a source node:
- this induces a perturbation in the system
- that would 
- be received by the aggregate computation,
- eventually correcting the output computational field.
-%
-The other scenario involves five sources (\multiswap{}):
- at the initial phase, only one source exists (the central node);
- at time 30, four new nodes become sources (the ones on the border of the grid); finally, 
- at time 60, the latter nodes switch back to non-source nodes.
+\begin{equation}
+\epsilon_k = \epsilon_0 - (\epsilon_0 / L \times k)
+\end{equation}
 
-Several parameters should be considered to evaluate the performance of the \ac{RL}-based solution (\rlsol{}). 
-%
-We launch a simulation batch for each tuple shown in \Cref{acsos2022:tab:parameters}.
-%
-To decide what configuration is the best, 
- the \rlsol{} solution was compared with fixed-rate scheduling (\periodicsol{}) 
- with the wake-up time equal to 100ms (the lowest),
- and a heuristic that leads the system to consume as little as possible (\adhocsol{}).
-%
-In particular, in \adhocsol{} the nodes check if the current output is different from the previous one; 
- in that case, then they double the next wake-up time (up to the maximum value),
- otherwise, they keep it fixed at the minimum value of the action set (i.e, 100ms).
-%
-We analyse the influence of the parameters on the learning dynamics, 
- and evaluate the error of each solution as the mean squared error 
- at each time step, between the \periodicsol{} solution and our \rlsol{} solution:
-%
-\begin{equation}
-    MRSE_t = \sum_{i \leftarrow 0}^N (\mtext{output}_t(i)^{Periodic} - \mtext{output}_t(i)^{Rl})
-\end{equation}
-In the equation, 
- $t$ is the time step when the error is evaluated 
- (each second) and $i$ is the index that selects a particular node.
-%
-We also consider the total rounds fired in the entire system:
-\begin{equation}
-    \mtext{ticks}_t = \sum_{i \leftarrow 0}^N (\mtext{rounds}(i))
-\end{equation}
-\texttt{rounds} is a local function that counts how many times the node computes the aggregate program. 
-%
-Another metric extracted is the total ticks per seconds, computed as the difference between two \texttt{ticks} instants: 
-\begin{equation}
-    \mtext{ticks}^{seconds}_t = \mtext{ticks}_t - \mtext{ticks}_{t-1}    
-\end{equation}
-%
-To directly compare \rlsol{} and \adhocsol{}, 
- we also extract the \emph{error percentage} and the \emph{energy saving percentage}.
-%
-The error percentage tells to what extent the computational field differs from the \periodicsol{}. 
- So we want to minimize this value at each time step. 
- The energy saving percentage is computed as: 
-\begin{equation}
-(\mtext{ticks}^{Periodic}_t - \mtext{ticks}_t) / (\mtext{ticks}^{Periodic}_t)
-\end{equation}
-%
-This value should be maximized, since the greater it is, the greater the power saving.
+Here, $\epsilon_0$ serves as the initial value of $\epsilon$. 
+ This decay mechanism is implemented to strike an effective balance between exploitation and exploration as the training progresses.
 
+In terms of learning, 
+ a single global Q-table is maintained, 
+ which each agent updates using local trajectory tuples of the form ($s_t, a_t, r_{t+1}$). 
+ Following the training phase, we evaluate the system's performance over the final $T=50$ episodes, 
+ employing a greedy policy for this assessment. 
+ At this stage, each agent operates with a localized copy of the Q-table, reflecting the state of the system post-training.
+
+The nodes in the grid have the option of executing four distinct actions, corresponding to different next-wake uptimes: 
+ 100ms, 200ms, 500ms, and 1s. 
+ The focus of the training will be on optimizing scheduling policies for two specific programs, 
+ referred to as the gradient-cast (G) and the converge-cast (C) building blocks, which are detailed in \Cref{part:background}.
+
+To explore the impact of dynamic changes on the system, 
+ we introduce variability in the set of source nodes. 
+ When the source set changes, the computational field must recalibrate to a new stable state. 
+ Slow response from nodes can significantly extend the convergence time. 
+ In scenarios with minor changes, 
+ learning algorithms could favor solutions where nodes opt for the longest next wake-up time, thereby reducing responsiveness.
+
+ To induce this variability, 
+ we design two specific scenarios. 
+ In the first scenario, referred to as \swapscen{}, a single source node is initially placed at the grid's leftmost corner. At time 40, the rightmost node becomes the new source, causing a ripple effect in the system that is eventually stabilized by the aggregate computation.
+ 
+The second scenario, termed \multiswap{}, 
+ starts with a central node as the single source. 
+ At time 30, four nodes at the grid corners become new sources. 
+ At time 60, these corner nodes revert to being non-source nodes.
+ 
+To assess the performance of our RL-based solution (\rlsol{}), 
+ we conduct simulations for each parameter set as shown in \Cref{acsos2022:tab:parameters}. 
+ We compare \rlsol{} against two alternatives: a fixed-rate scheduling approach (\periodicsol{}) with the minimum wake-up time of 100ms, and a power-minimizing heuristic (\adhocsol{}).
+ 
+Specifically, in \adhocsol{}, nodes adjust their next wake-up time based on output changes. 
+ If the output differs from the previous step, 
+ they double the next wake-up time, up to a maximum limit. Otherwise, they keep it at the minimum action set value of 100ms.
+ 
+We examine how different parameters influence learning dynamics and quantify the solution error using mean squared error (MRSE) between \periodicsol{} and \rlsol{} as follows:
+ 
+ \begin{equation}
+     MRSE_t = \sum_{i=0}^{N} (\text{output}_t(i)^{\text{Periodic}} - \text{output}_t(i)^{\text{RL}})
+ \end{equation}
+ 
+ In the above equation, $t$ is the time step at which the error is evaluated, and $i$ indexes individual nodes. 
+  We also count the total number of computation rounds (or ``ticks'') across the entire system:
+ 
+ \begin{equation}
+     \text{TotalTicks}_t = \sum_{i=0}^{N} (\text{rounds}(i))
+ \end{equation}
+ 
+ Here, \texttt{rounds} is a local function that tallies how many times a node has executed the aggregate program. 
+  Another metric we consider is the rate of ticks per second:
+ 
+ \begin{equation}
+     \text{TicksPerSecond}_t = \text{TotalTicks}_t - \text{TotalTicks}_{t-1}
+ \end{equation}
+ 
+For a direct comparison between \rlsol{} and \adhocsol{}, 
+ we calculate two additional metrics: 
+ the \emph{error percentage} and the \emph{energy saving percentage}. 
+% 
+The error percentage indicates how much the computational field of \rlsol{} diverges from that of \periodicsol{}. 
+ The aim is to minimize this value. 
+ The energy saving percentage is calculated as:
+ \begin{equation}
+     \text{EnergySaving}_t = \frac{\text{TotalTicks}^{\text{Periodic}}_t - \text{TotalTicks}_t}{\text{TotalTicks}^{\text{Periodic}}_t}
+ \end{equation}
+ 
+This metric is intended to be maximized, 
+ as a higher value indicates more significant power savings.
 \subsection{Discussion and Results}\label{acsos2022:s:discussion:ac}
 \begin{figure}
     \centering
