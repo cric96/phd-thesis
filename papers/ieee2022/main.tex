@@ -595,8 +595,7 @@ decentralizedRecognitionAndResponse(sensing,response)
 
 Consider the \casename{} case study introduced in \Cref*{decentralized-sr} as a reference scenario.
 %
-We assume that several pluviometers, deployed in the city, can communicate with each other. 
-%(either through cloud or directly).
+We assume that several pluviometers, deployed in the city, can communicate with each other (either through cloud or directly).
 %
 We want to monitor the progression of a storm hitting the city,
 adjusting the granularity at runtime:
@@ -676,7 +675,7 @@ the heaviest in the available data.
 %
 We used data from OpenStreetMap\footnote{using Overpass \ac{api} \url{https://overpass-turbo.eu/}} to position 24 fire stations.
 
-We implemented the proposed \ac{api} in the \scafi{} aggregate programming toolkit~\cite{DBLP:conf/isola/CasadeiVAD20}
+We implemented the proposed \ac{api} in the \scafi{} aggregate programming toolkit
 and simulated the scenario using the Alchemist simulator~\cite{Pianini2013}.
 %
 In the experiment, devices compute their programs unsynchronized at a frequency of 1Hz.
@@ -730,7 +729,6 @@ and permanently archived~\cite{simulation-doi}. %for future reference
 \end{figure}
 
 \subsection{Results and discussion}\label{s:result-and-discussion}
-
 \Cref{fig:simulation-plots} shows
 that, when conditions change, \acp{dd} adapt by
 changing their shape and extension to track the underlying phenomenon coherently;
@@ -767,17 +765,8 @@ Regarding applicability and generality,
 %
 Details on quantitative cost/performance considerations on this kind of paradigm,
  can be found in~\cite{DBLP:journals/fgcs/PianiniCVN21,DBLP:journals/eaai/CasadeiVAPD21}: 
-the focus of this article is on programming abstractions for decentralized systems,
+the focus of this article is on programming abstractions for \ac{cpsw}
  following a language-based software engineering approach~\cite{DBLP:journals/scp/Gupta15}.
-%
-% We observe, however, 
-%  that the dynamic and limited domains of \acp{cct}, and
-%  the flexible partitioning into \acp{dd},
-%  provides a way to control the level of decentralization and hence trade-offs considering e.g. scalability, reactivity, and monitoring/control granularity. 
-% %
-% A deep discussion of related work is also beyond the scope of this paper:
-% the interested reader can look at \Cref{sec:motiv} for the main references.
-%
 
 \begin{figure*}[t]
   \begin{subfigure}[b]{0.49\linewidth}
@@ -834,19 +823,17 @@ the focus of this article is on programming abstractions for decentralized syste
   \label{fig:risk-evolution}
 \end{figure*}
 
-\section{Conclusion and Outlook}\label{sec:conc}
+\section{Final Remarks}\label{sec:conc}
 
 %\meta{
 %BUDGET: ca. 250 words
 %% CURRENT: 226 words
 %}
-
 Mechanisms based on decentralization and self-organization
  are intensely researched
  and expected to play crucial roles in 
  next-generation applications
- involving %running on top of 
- cyber-physical collectives.
+ involving \ac{cpsw}.
 %
 In this work,
  to turn decentralized activities into actionable notions,
@@ -885,12 +872,7 @@ We believe that this level of control
  collective adaptive behaviour
  to steer desired emergents.
 %
-Yet, contributions to patterns and programming abstractions
- for this class of systems
- are still quite fragmented.
-%
-Further, their integration with automatic design approaches
-% e.g., based on machine learning or program synthesis,
- may be a fertile path for future research.
-
-%\printbibliography
+Building upon these foundational abstractions, 
+ it becomes feasible to develop more intricate, high-level, and domain-specific constructs. 
+ In the following chapter, we introduce MacroSwarm, 
+ a macro-programming API tailored for swarm robotics and similar applications.
