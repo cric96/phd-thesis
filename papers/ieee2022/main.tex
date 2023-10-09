@@ -474,52 +474,10 @@ Overall, the contribution of this work
 }
 \end{comment}
 \section{Dynamic Decentralization Domains in Practice}\label{sec:contrib}
-\begin{comment}
-\subsection{\revise{Programming Model}}
-\label{ssec:programming-model}
-
-\revise{
-We assume a programming model
- where abstractions drive
-%  the adaptive response 
-%  of
-an entire system of devices.
-%
-So, we aim at a \emph{macro}-programming model~\cite{DBLP:journals/corr/abs-2201-03473},
- where a single program
- defines the behaviour of the whole system
- by a global perspective.
-%
-%Following recent trends in \emph{collective adaptive systems} engineering~\cite{DBLP:journals/sttt/NicolaJW20},
-% the programs do not specify low-level execution details like scheduling and messaging patterns
-% but rather assume a 
-In particular, we assume
-% a ``self-organisation-like''
-distributed execution protocol
- consisting of \emph{repeated} rounds of
-%  (in the sense of frequent)
-\emph{sensing, processing, and neighbour-based communication},
-and let the program specify what data has to be sensed and exchanged and what processing has to be applied to it.
-%
-We also want the \ac{api} to be \emph{declarative},
- characterizing the rules
- promoting the behaviour of the abstractions
- identified in the previous section,
- and abstracting from low-level details
- like the details of scheduling, networking, or deployment.
-%
-In particular,
-the program may be deployed and evaluated on all the devices constituting the system,
-or may be computed on behalf of them by a distinct managing system---following the approach of~\cite{DBLP:journals/fi/CasadeiPPVW20}.
-}
-\end{comment}
-%req-concurrency,req-flexible-dec,req-feedback
-
-\subsection{From Requirements to an \ac{api}}
 \label{ssec:reqs-to-api}
 
 From the previous discussion,
-we further refine the
+\revise{we further refine the}
 requirements and extrapolate the design elements of an \ac{api}
 supporting the decentralized computation we need:
 %
@@ -563,9 +521,10 @@ which will be presented and used in the experiments in next section.
 \revisetwo{Specifically, class \texttt{DistributedSensing} denotes \acp{dd}; types \texttt{Perception}, \texttt{SituatedRecognition}, and \texttt{Action} model sensing, reasoning, and acting operations, respectively; and \texttt{decentralisedRecognitionAndResponse} encapsulates the logic that creates multiple \acp{cct} and manages their dynamic partitioning into \acp{dd}.}
 
 \begin{figure*}
-  \begin{subfigure}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.9\linewidth}
     \centering
-    \begin{lstlisting}[language=scafi]
+    %% use small and tt as a font size
+    \begin{lstlisting}[language=scafi, basicstyle=\footnotesize\ttfamily]
 /* Configuration of  a distributed sensing task */
 class DistributedSensing[Leadership,Distance,Data](
   perceptionCenter: () => Leadership,
@@ -573,41 +532,33 @@ class DistributedSensing[Leadership,Distance,Data](
   metric: Data => Distance,
   accumulate: UnivariateStatistics[Data],
   limit: Distance
-){ 
-  def compute(): Data = /* API implementation */ 
-}
+){ def compute(): Data = /* API implementation */ }
 
 type Perception[Data] =// Collective sensing result
-  Map[DistributedSensing[?, ?, Data], Data]
+Map[DistributedSensing[?, ?, Data], Data]
 type Action = () => Unit // Response action type
 
 /* Situation recognition: perception to action */
-type SituatedRecognition[Data] =
-  Perception[Data] => Set[Action]
+type SituatedRecognition[Data] = Perception[Data] => Set[Action]
 
 // Actual high level API
 def decentralizedRecognitionAndResponse[Data](
     sensing: Set[DistributedSensing[?, ?, Data]],
     situatedRecognition: SituatedRecognition[Data]
-): Unit = { 
-  /* CCT creation and Action execution */ 
-}
+): Unit = { /* CCT creation and Action execution */ }
     
 \end{lstlisting}
   \subcaption{Scala API for decentralized situation recognition}
   \label{code:api}
   \end{subfigure}
   \hfill
-  \begin{subfigure}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.9\linewidth}
     \centering
-\begin{lstlisting}[language=scafi]
+\begin{lstlisting}[language=scafi,basicstyle=\footnotesize\ttfamily]
 // FloodWatch program
-type FloodWatchSensing = 
-  DistributedSensing[ID, Double, Double]
-val altimetry: FloodWatchSensing = 
-  new DistributedSensing(/**/)
-val rainIntensity: FloodWatchSensing = 
-  new DistributedSensing(/**/)
+type FloodWatchSensing = DistributedSensing[ID, Double, Double]
+val altimetry: FloodWatchSensing = new DistributedSensing(/**/)
+val rainInnensity: FloodWatchSensing = new DistributedSensing(/**/)
 val sensing = Set(altimetry, rainIntensity)
 
 def propagateAlarm(): Action = ???
@@ -621,12 +572,8 @@ val response: SituatedRecognition[Double] =
     val call: Set[Action] = ???
     alarm ++ call
 }
-
 // Actual API usage
-decentralizedRecognitionAndResponse(
-  sensing,
-  response
-)
+decentralizedRecognitionAndResponse(sensing,response)
 \end{lstlisting}
 \subcaption{Example use of the API for the case study}
 \label{code:example}
