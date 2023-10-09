@@ -1047,12 +1047,14 @@ In~\cite{DBLP:journals/aagents/BestFF18,DBLP:journals/ijrr/BestCPMF19},
 In~\cite{DBLP:conf/icra/KemnaRNYS17},
  the authors focus on multi-agent coordination for informative adaptive sampling in unknown, communication-constrained environments (like lakes or oceans).
 %
-Their approach is based on dynamic, decentralized Voronoi partitioning over a set of sampling locations, which are recalculated at synchronization points initiated through requests for surfacing events.
+Their approach is based on dynamic, 
+ decentralized Voronoi partitioning over a set of sampling locations, which are recalculated at synchronization points initiated through requests for surfacing events.
 %
 Though the approach of this paper could also be used to support \emph{sparse sampling}~\cite{casadei2022coord-space-fluid},
  it also aims at supporting the formation of spatially cohesive clusters for coordinated processing and/or action.
 %
-Moreover, we do not aim at moving agents to appropriate sampling locations,
+Moreover, 
+ we do not aim at moving agents to appropriate sampling locations,
  but rather leave the agents to move autonomously (e.g., according to exploration policies)
  while having the collective clustering
  reflect the underlying phenomenon
@@ -1068,32 +1070,44 @@ The use of Voronoi partitions in \cite{DBLP:conf/icra/KemnaRNYS17} differs from 
 \subsection{Related Clustering Models and Problems}
 \label{s:rw:related-problems}
 
-%\meta{RC: @GT In my opinion, here we should cite surveys on ``general clustering'', and then immediately focus on the most related clustering models (e.g., graph-based, agent-based..)}
+Clustering is a well-known problem in data analysis and machine learning, 
+ and has been widely studied in the literature~\cite{Jain:1999,DBLP:journals/sigkdd/Estivill-Castro02,Jain:2010}.
+In a classical setting, the data to be clustered is stored in a single dataset, and a single algorithm (or agent) is in charge of finding the ``best'' clusters according to some optimization criteria.
+ Each data point in the input data set is described by the values of a fixed set of {\em features}; 
+ the number of such features constitutes the dimensionality of the data set and, typically, high dimensional data is harder to cluster meaningfully.
 
-Clustering is a well-known problem in data analysis and machine learning, and has been widely studied in the literature~\cite{Jain:1999,DBLP:journals/sigkdd/Estivill-Castro02,Jain:2010}.
- In a classical setting, the data to be clustered is stored in a single dataset, and a single algorithm (or agent) is in charge of finding the ``best'' clusters according to some optimization criteria.
- Each data point in the input data set is described by the values of a fixed set of {\em features}; the number of such features constitutes the dimensionality of the data set and, typically, high dimensional data is harder to cluster meaningfully.
-
-A characteristic of the clustering tasks considered in the present paper (and in general, of sensing-based methods, see the next section), is that besides the sensed data,
- a main source of information is the spatial distance between the agents. In~\cite{Thrun:2021}, the authors consider high-dimensional data sets that exhibit {\em natural clusters}, characterized by distances and/or density-based structures.
+A characteristic of the clustering tasks considered in the present paper (and in general, of sensing-based methods, see the next section), 
+ is that besides the sensed data,
+ a main source of information is the spatial distance between the agents. 
+ In~\cite{Thrun:2021}, the authors consider high-dimensional data sets that exhibit {\em natural clusters}, characterized by distances and/or density-based structures.
  They propose a semi-automated method whereby the clusters are automatically proposed and manually selected starting from a topographic visualization of the high-dimensional data.
- Notably, they use swarm intelligence for computing the topographic map, while other techniques are adopted for the interactive process of clusters computation.
+ Notably, they use swarm intelligence for computing the topographic map, 
+ while other techniques are adopted for the interactive process of clusters computation.
 
-There are, however, several works that address swarm-based clustering, using swarm intelligence for the clustering task itself~\cite{Martens:2011}.
+There are, however, several works that address swarm-based clustering, 
+ using swarm intelligence for the clustering task itself~\cite{Martens:2011}.
  It is important to note that such methods (both those based on particle swarm optimization (PSO), and those based on ant colony systems (ACS)) exploit swarms just as a computational means for finding clusters in a data set.
- Their goal is not to cluster the elements of the swarm itself, as it is the case for the present work, but to simulate a virtual swarm to find good quality clusters.
+ Their goal is not to cluster the elements of the swarm itself, 
+  as it is the case for the present work, but to simulate a virtual swarm to find good quality clusters.
 
-Some works directly address the clustering of swarms. In~\cite{DBLP:journals/trob/HuBJAL21}, the clustering of a team of special agents (i.e., aerial drones) is part of a larger process that,
+Some works directly address the clustering of swarms. 
+ In~\cite{DBLP:journals/trob/HuBJAL21}, the clustering of a team of special agents (i.e., aerial drones) is part of a larger process that,
  after cluster formation, also involves formation tracking (i.e., tracking a target through a suitable formation), and containment control (i.e., surround ground agents cooperating in the mission).
- The method proposed to form clusters is based on a game-theoretic framework named GRAPE. A significant difference w.r.t. the present work is that the number (and nature) of clusters is determined by a given set of targets,
+ The method proposed to form clusters is based on a \emph{game-theoretic} framework named GRAPE. 
+ A significant difference w.r.t. the present work is that the number (and nature) of clusters is determined by a given set of targets,
  while we do not assume such a priori knowledge.
-Another significant work with similar goals is~\cite{DBLP:journals/tie/GeHZ18}, where a team of agents must be partitioned into clusters organized as suitable {\em formations} (i.e., geometric spatial patterns).
- The proposed solution inter-mixes the determination of clusters and their formation (based, among other things, on the agents' dynamics), assuming that the number and nature of such formations is known a priori.
+Another significant work with similar goals is~\cite{DBLP:journals/tie/GeHZ18}, 
+ where a team of agents must be partitioned into clusters organized as suitable {\em formations} (i.e., geometric spatial patterns).
+ The proposed solution inter-mixes the determination of clusters and their formation (based, among other things, on the agents' dynamics), 
+ assuming that the number and nature of such formations is known a priori.
 
-Since we consider clustering over a given topology (network), the problem can be related to graph-based clustering \cite{Zheng:2010}.
+Since we consider clustering over a given topology (network), 
+ the problem can be related to graph-based clustering \cite{Zheng:2010}.
 Graph-based clustering, however, assumes that the given graph can be partitioned into densely connected subgraphs that are sparsely connected to each other; i.e.,
 it assumes that all the similarity information is expressed by the presence of edges between nodes (and, possibly, by their weights).
-This is not necessarily the case with the networks formed by our swarms, where connections are just determined by spatial distance, and the clustering is strongly influenced by the sensed data.
+This is not necessarily the case with the networks formed by our swarms, 
+ where connections are just determined by spatial distance, 
+ and the clustering is strongly influenced by the sensed data.
 Also, community detection methods can be viewed as clustering of the nodes of a graph representing a network of relations (e.g. a social network)~\cite{DBLP:journals/jnca/JavedYLQB18}.
 Interestingly, unlike in generic graph-based clustering, communities can easily overlap, since a node (e.g., user) may belong to several communities at once.
 
@@ -1104,33 +1118,48 @@ Sensing-based clustering typically applies to sensor networks that are distribut
  The role played by sensing a (possibly dynamic) geographic environment makes such problem and the proposed approaches to solve it relevant to the present work,
  although the agents considered here are themselves dynamic entities moving and acting across the space.
 
-In \cite{DBLP:conf/ccnc/LinM07}, the goal is to partition sensors for indoor monitoring and control. The cluster heads are predetermined (based on the sources to be monitored and controlled),
+In \cite{DBLP:conf/ccnc/LinM07}, 
+ the goal is to partition sensors for indoor monitoring and control. 
+ The cluster heads are predetermined (based on the sources to be monitored and controlled),
  while cluster formation is periodically scheduled in order to adapt to changes in the sensed data.
 %
 In our work, instead, the cluster heads are not a priori given:
- they are determined according to the sensed data
+ they are determined according to the \emph{sensed data}
  (e.g., the agents perceiving local minima)
- and can change dynamically
+ and can change \emph{dynamically}
  (e.g., because a candidate withdraws and joins a different cluster).
 
-The goal of \cite{DBLP:journals/tpds/GedikLY07} is, instead, to obtain energy savings in data collection from a wireless sensor network (WSN) by receiving values from only a subset of selected representatives and predicting the other valuer through automatically generated statistical models.
- Cluster heads are chosen (probabilistically) based on the amount of energy they have. Cluster formation is periodically scheduled, and the assignment of a sensor to a cluster is based on the distance from the head and the similarity of the sensed value with the head's value.
+The goal of \cite{DBLP:journals/tpds/GedikLY07} is, 
+ instead, to obtain energy savings in data collection from a wireless sensor network by receiving values from only a subset of selected representatives and predicting the other valuer through automatically generated statistical models.
+Cluster heads are chosen (probabilistically) based on the amount of energy they have. 
+ Cluster formation is periodically scheduled, and the assignment of a sensor to a cluster is based on the distance from the head and the similarity of the sensed value with the head's value.
 %
-A work with similar goals is~\cite{DBLP:journals/ijdsn/CaiZ18}, where again energy savings in a WSN is the primary motivation. Here, the cluster heads are chosen based on residual energy level and data gradient.
+A work with similar goals is~\cite{DBLP:journals/ijdsn/CaiZ18}, 
+ where again energy savings in a WSN is the primary motivation. 
+ Here, the cluster heads are chosen based on residual energy level and data gradient.
  Moreover, an autoregressive prediction model for sensory data is maintained by each head to self-adjust temporal sampling intervals within the cluster.
-% SKIP similar to previous two
-%maybe also \cite{DBLP:journals/ijcomsys/PhamLPC10}}
 
-A sensing-based clustering problem is also studied in~\cite{DBLP:journals/jaihc/KucukBSK20} where, however, instead of being a high energy-constrained WSN, the deployed system involves sensorized units and mobile phones able to upload all the relevant data to the cloud, through cellular and Wi-Fi connections. In a disaster scenario, the mobile phones data is used to centrally compute density-based clusters that can inform the SAR (Search and Rescue) teams about the location of people in the area.
+A sensing-based clustering problem is also studied in~\cite{DBLP:journals/jaihc/KucukBSK20} where, 
+ however, instead of being a high energy-constrained WSN, 
+ the deployed system involves sensorized units and mobile phones able to upload all the relevant data to the cloud, through cellular and Wi-Fi connections. 
+ In a disaster scenario, the mobile phones data is used to centrally compute density-based clusters that can inform the SAR (Search and Rescue) teams about the location of people in the area.
 
-The {\em DyClee} approach described in~\cite{DBLP:journals/pr/RoaTG19} is also centralized. The authors assume that streams of sensors observations (e.g. in an Industrial IoT) are continually tracked by their system, and are classified (e.g., as healthy or faulty) based on a set of clusters that capture the patterns corresponding to different states. The main focus is on the novelty detection problem, or concept drift, which implies the ability to update the clusters as new behaviour is learned, while ignoring noise and occasional outliers. The online clustering algorithm consists of two stages based, respectively, on distance and density, and is {\em fully dynamic} in that it is able to create, eliminate, drift, merge, and split clusters as data is processed.
-
-
+The {\em DyClee} approach described in~\cite{DBLP:journals/pr/RoaTG19} is also centralized. 
+ The authors assume that streams of sensors observations (e.g. in an Industrial IoT) 
+ are continually tracked by their system, 
+ and are classified (e.g., as healthy or faulty) 
+ based on a set of clusters that capture the patterns corresponding to different states. 
+% 
+The main focus is on the novelty detection problem, 
+ or concept drift, which implies the ability to update the clusters as new behaviour is learned, while ignoring noise and occasional outliers. 
+ The online clustering algorithm consists of two stages based, 
+ respectively, on distance and density, and is {\em fully dynamic} in that it is able to create, eliminate, drift, merge, and split clusters as data is processed.
 
 \subsection{Related Approaches and Programming Models}
 \label{s:rw:related-approaches}
 
-Programming swarms of agents is a difficult task, because of the need of coordinating their local behaviours to achieve global, swarm-level goals.
+Programming swarms of agents is a difficult task, 
+ because of the need of coordinating their local behaviours to achieve global, swarm-level goals.
 %
 In this work, we adopt the field-based computing and programming approach~\cite{DBLP:journals/jlap/ViroliBDACP19}
  for expressing self-organising, collective behaviour of swarms.
@@ -1140,9 +1169,12 @@ Our focus is on decentralized behaviour-based approaches (rather than automatic 
  and briefly in the following.
 
 %
-An approach to the problem that has proven to be quite effective is generative communication through tuple-based coordination models, as offered, e.g., in the Linda language~\cite{linda} and its descendants; essentially, several processes running on the same system can synchronize by writing and retrieving information in a shared (tuple-)space.
+An approach to the problem that has proven to be quite effective is generative communication through tuple-based coordination models, 
+ as offered, e.g., in the Linda language~\cite{linda} and its descendants; 
+ essentially, several processes running on the same system can synchronize by writing and retrieving information in a shared (tuple-)space.
 A derived idea is that of allowing programmability of the tuple space itself, so that the coordination logic of processes can be embedded in the communication medium--see, e.g.,~\cite{respect-scico2001}.
-An obvious limitation of the mentioned approaches for the task of swarm programming is that they assume a central memory accessible by all the agents/processes. However, the idea of tuple-spaces has been extended also to distributed systems, e.g., in the IBM TSpaces framework~\cite{Wyckoff:1998}.
+An obvious limitation of the mentioned approaches for the task of swarm programming is that they assume a central memory accessible by all the agents/processes. 
+ However, the idea of tuple-spaces has been extended also to distributed systems, e.g., in the IBM TSpaces framework~\cite{Wyckoff:1998}.
 
 An important feature of swarm systems is their adaptivity achieved through self-organization.
 %
@@ -1167,11 +1199,8 @@ For instance, a prominent related macro approach to swarm programming
  is Buzz~\cite{DBLP:journals/software/PinciroliB16},
  where swarms are first-class collection-like abstractions.
 
-\subsection{Related Field-based Algorithms}
+\subsection{Related Field-based Algorithms} %% TODO THESIS -- undestand if something might be introduced before this discussion or it could be ok to put everything here!! 
 \label{s:rw:related-ac-algorithms}
-
-%\meta{Essentially, S, SCR, and other algorithmic combinations}
-
 The field-based computing approach adopted has been applied for
  programming several swarm intelligence algorithms
  such as robust distance estimation (\emph{gradient})~\cite{DBLP:conf/saso/AudritoCDV17},
@@ -1192,8 +1221,18 @@ Roughly, the sensing-based clustering algorithm
  covered in this work could replace the initial C-G composition
  that determines the system regions.
 
-Similarly to a clustering algorithm, the S block~\cite{DBLP:conf/saso/MoBD18} provides a distributed mechanism to elect leaders from a set of candidates, and to assign each remaining {\em user} node to a leader, thus partitioning the system into regions. The approach presented here is different in several respects: first, the candidate leaders are determined by a characteristic of a sensed measure (e.g., local minimum); second, each candidate cluster head spawns an aggregate process to recruit other nodes within the cluster; finally, the other nodes can join more than one cluster, based on the similarity of their sensed values with the ones sensed by leaders.
-
+Similarly to a clustering algorithm, 
+ the S block~\cite{DBLP:conf/saso/MoBD18} provides a distributed mechanism to elect leaders from a set of candidates, 
+ and to assign each remaining {\em user} node to a leader, 
+ thus partitioning the system into regions. 
+% 
+The approach presented here is different in several respects: 
+%
+ first, the candidate leaders are determined by a characteristic of a \emph{sensed} measure (e.g., local minimum); 
+%
+ second, each candidate cluster head spawns an aggregate process to recruit other nodes within the cluster; 
+% 
+ finally, the other nodes can join more than one cluster, based on the similarity of their sensed values with the ones sensed by leaders.
 
 %% However, few solutions have been devised for effective creation of clusters,
 %%  often based on combining space-based  and : a gradient field is created with G by considering as sources the leaders given by S, and any given device in the system ``belongs'' to the cluster defined by the distance field pointing to the closest leader.
@@ -1220,6 +1259,10 @@ In particular, we show that a swarm can autonomously
  create clusters reflecting the underlying dynamics of the  perceptible target phenomenon in the environment,
  and is able to deal with a certain degree of change in the swarm topology and environment.
 %
-In order to perform the evaluation, we have implemented our algorithms using the \scafi{} Scala framework for field-based computing.
+In order to perform the evaluation, 
+ we have implemented our algorithms using the \scafi{} Scala framework for field-based computing.
+%
+This algorithm could serve as a foundational solution for organizing collective tasks based on environmental sensing data in the context of Cyber-Physical Social Wearable Systems (\ac{cpsws}), as discussed in \Cref{chap:cpsw:vision}.
+
 
 %\printbibliography
