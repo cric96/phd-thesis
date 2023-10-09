@@ -240,7 +240,9 @@ every node/.style={scale=.7}
 @multitier object IoTSystem extends PulverisedSystem {
   // Definition of device kinds and possible network connections
   @peer type Thin <: { type Tie <: Multiple[Thick] }
-  @peer type Thick <: { type Tie <: Multiple[Thick] with Multiple[Thin]}
+  @peer type Thick <: { 
+    type Tie <: Multiple[Thick] with Multiple[Thin]
+  }
   // Pulverised component allocation on devices
   @peer type SensorComponent <: Thin
   @peer type ActuatorComponent <: Thin

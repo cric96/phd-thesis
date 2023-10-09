@@ -5,118 +5,25 @@
 \newcommand{\scalaloci}{{ScalaLoci}}
 \newcommand{\scafiloci}{{ScaFiLoci}}
 \newcommand{\scalainline}[1]{\mintinline[fontsize=\small]{scala}{#1}}
-
-% Revisors comments:
-%   a) add citations because the article is self-referential
-%   b) hard-to-follow, rev 2 says: I would suggest a more thorough discussion on the potential benefits of using such a way to program and describe collective adaptive systems. 
-% %   c) case study, rev 3 says: The paper has some interesting message to convey, its originality is however limited and would have benefited by a thorough case study to let the reader appreciate the proposed approach. 
-% \begin{abstract}
-% %Engineering collective adaptive systems is challenging,
-% % for many issues have to be addressed,
-% % both functional (e.g., specification of collective adaptive behaviour)
-% % and non-functional (e.g., robust and efficient operation on available infrastructure).
-% %%
-% Engineering large-scale \emph{Cyber-Physical Systems} -- like robot swarms, augmented crowds, and smart cities -- is challenging, for many issues have to be addressed, including specifying their collective adaptive behaviour and managing the connection of the digital and physical parts.
-% In particular, some approaches propose \emph{self-organising} mechanisms 
-%  to actually \emph{program} global behaviour
-%  while fostering decentralised, asynchronous execution. 
-%  %A way to handle them is to describe the collective behaviour leveraging \emph{self-organisation}.
-% However, most of these approaches couple behavioural specifications to specific network architectures (e.g., peer-to-peer), 
-% %which nowadays is hard to find in real systems. 
-% % which does not capture the variety and complexity of available architectures.
-%  and therefore do not promote flexible exploitation of the underlying infrastructure. 
-% %
-% %Indeed, IT infrastructures are becoming increasingly complex, layered, and heterogeneous, 
-% %and applications should exploit these possibilities
-% % while avoiding excessive coupling to specific deployments.
-% %
-% %Good engineering practice suggests to separate 
-% % logical concerns from deployment concerns, so that
-% % applications can be flexibly distributed over available infrastructures.
-% %
-% Conversely, \emph{pulverisation} is a recent approach that enables self-organising behaviour to be defined independently of the available infrastructure
-% % . %multiple infrastructural and application devices.
-% %
-% % It applies to approaches that
-% %  such as aggregate computing,
-% %  capable of describing the self-organising logic independently of deployment details,  
-% %  and defines partitioning and placement schemas whereby the task carrying out global behaviour can be split and placed on different nodes of the network,
-%  while retaining functional correctness. 
-% % while retaining their logical relationships. 
-% %
-% However, there are currently no tools
-% %no reference architectures exist to guide the implementation of a platform for pulverised applications,
-% %and much less frameworks that enable declarative specification of the infrastructure and formal verification of its correctness.
-%   to formally
-%   specify and verify concrete architectures
-%   for pulverised applications. 
-% %
-% %On the other hand,
-% % multi-tier programming
-% % supports the specification of the
-% % the architecture of distributed systems
-% % in a single code base, 
-% % and enables static checks for the correctness
-% % of actual deployments.
-% %
-% Therefore, 
-% %, in this work,
-%  we propose to combine pulverisation
-% % (as enabled by the \scafi{} aggregate computing tool-chain)
-%  with multi-tier programming,
-%  a paradigm that supports the specification of 
-%  the architecture of distributed systems
-%  in a single code base, and enables static checks for the correctness of actual deployments.
-% %
-% %The result is a software layer
-% % that integrates the \scafi{} aggregate computing tool-chain
-% % with the \scalaloci{} multi-tier programming language,
-% The approach can be implemented
-%  by combining the \scafi{} aggregate computing tool-chain
-%  with the \scalaloci{} 
-%  % compile time % to remove  
-%  multi-tier programming language,
-%  paving the path to support 
-%  the development of self-organising cyber-physical systems,
-%  addressing both functional (behaviour) and non-functional concerns (deployment) in a single code base and modular fashion.
-% % 
-% % (through \scalaloci{}).
-% %
-% %The result is \scafiloci{},
-% % a library of notable architectural models
-% % for 
-% % leaving to the compiler the burden of 
-% % checking a computation is correctly partitioned 
-% % on a set of tiers.
-% %This work explores the combination of the pulverisation (exploiting the \scafi{} tool-chain) with the multi-tier techniques (using \scalaloci{}) to describe and place collective behaviour onto a variety of concrete distributed system architectures.
-% \end{abstract}
-
-Current socio-technical developments
- foster a vision of worlds
- populated by large-scale Cyber-Physical Systems (CPSs)---such as robot swarms, 
- crowds of augmented people, and 
- ecosystems of smart devices.
-%
-Such systems are typically required 
+\ac{cpsw} are typically required 
  to act as coordinated collectives
  and to be able to adapt to dynamic
- environmental conditions and inputs---i.e., they are meant to be Collective Adaptive Systems (CASs).
+ environmental conditions and inputs.
 %
-However, engineering CASs is a challenging task.
 %
-Generally, reliance on a centralized device is not allowed,
+As discussed in \Cref{part:background} reliance on a centralized device is not allowed,
 and the system is expected to reach global goals based 
  on the coordinated (inter-)actions of the individual entities that compose the system.
 %& Check whether we should leave it or keep it.
-Practical solutions, such as the Buzz language~\cite{DBLP:journals/computer/PinciroliB16}, use a so-called ``meet-in-the-middle'' method by which developers can use individual and global viewpoints (through \scalainline{swarm} operator) as needed.
+%Practical solutions, such as the Buzz language~\cite{DBLP:journals/computer/PinciroliB16}, use a so-called ``meet-in-the-middle'' method by which developers can use individual and global viewpoints (through \scalainline{swarm} operator) as needed.
 %
 %Instead, other 
-Recent approaches such as aggregate computing~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19}, 
- DEECo~\cite{DBLP:conf/cbse/BuresGHKKP13},
- SmartSociety~\cite{DBLP:conf/soca/ScekicMSDHCTRCD15},
- and attribute-based coordination~\cite{DBLP:journals/scp/AlrahmanNL20},
+%Recent approaches such as aggregate computing~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19}, 
+ %DEECo~\cite{DBLP:conf/cbse/BuresGHKKP13},
+ %SmartSociety~\cite{DBLP:conf/soca/ScekicMSDHCTRCD15},
+ %and attribute-based coordination~\cite{DBLP:journals/scp/AlrahmanNL20},
 %\todo[inline]{Roby enrich the list here, maybe Deeco? Something else that works top-down? Dana et similia from Barry Porter?}
-foster the adoption of \emph{global-to-local} techniques,
+aggregate computing foster the adoption of \emph{global-to-local} techniques,
 by which the behaviour of the ensemble of devices is designed top-down,
 and interactions among devices (i.e., protocols) are generated automatically and implicitly.
 %
@@ -125,7 +32,7 @@ in other words, the approach often dictates how the network should be structured
 %
 In turn, this creates a tension between the network structure the language reasons upon and the actual way devices communicate.
 %
-Since in CASs the challenging case in which no controllers exist must typically be supported, a purely \emph{peer-to-peer (P2P)} network is usually considered the paradigmatic setup.
+Since in \acp{cpsw} the challenging case in which no controllers exist must typically be supported, a purely \emph{peer-to-peer (P2P)} network is usually considered the paradigmatic setup.
 %
 However, real-world networks are usually structured hierarchically, and the ability to target multiple infrastructural setups can help to achieve non-functional benefits.
 
@@ -147,7 +54,7 @@ ideally, such a specification should be declarative
  and possibly guided and checked by static analysis
  to lower the risk of failures at runtime.
 
-This work discusses the initial research effort to fill the gap between a pulverized system and its actual deployment and execution on multiple different network structures,
+This work discusses how a pulverized system and can be actually deployed and executed on multiple different network structures,
 by leveraging a recent approach known as \emph{multi-tier programming}~\cite{DBLP:journals/csur/WeisenburgerWS20}.
 %
 In multi-tier programming, a distributed system is \emph{declaratively} described, in terms of components and admissible interactions \emph{in a single code base}.
@@ -158,13 +65,6 @@ it also relieves the developer from low-level concerns %many of the tasks relate
 by offloading to the compiler
 the responsibility of breaking the computation into deployment units %peers, 
  enforcing the contract defined in the code.
-
-The remainder of this paper is as follows:
-\Cref{background} introduces the current state of the art, discussing pulverization in the context of aggregate computing and multi-tier programming;
-\Cref{multitier+pulverisation} discusses the possible integration of pulverized aggregate computing systems and multi-tier programming and shows initial experiments leveraging the \scafi{} and \scalaloci{} Scala domain-specific languages (DSLs);
-\Cref{implicitation} exposes and discusses the short and long term implications of this integration;
-finally,
-\Cref{conclusion} concludes and discusses the next research steps.
 
 \section{Background}
 \label{background}
