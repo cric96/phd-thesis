@@ -189,11 +189,15 @@ Multi-agent systems can be categorized based on various criteria:
 Recent advancements in MARL have led to the development of algorithms that can handle complex interactions between agents. Some state-of-the-art algorithms include Proximal Policy Optimization (PPO) for multi-agent settings, MADDPG (Multi-Agent Deep Deterministic Policy Gradient), and QMIX.
 
 \section{Many-agent}
-In particular, in this work, we consider \emph{homogeneous \ac{MAARL}}~\cite{yang2021many}, 
+The \ac{marl} framework, even if consider multiple agents,
+  still assumes that the number of agents is small (i.e. $N \leq 2$).
+  For that reason, solutions that work well in \ac{marl} settings may not be suitable for \emph{many-agent} scenarios.
+
+In this thesis, we consider \emph{homogeneous \ac{MAARL}}~\cite{yang2021many}, 
  where the set of agents is large ($N \gg 2$) and each agent is \emph{interchangeable} and \emph{indistinguishable}.
 %
 This research area is relevant in the context of large-scale systems 
- where collective intelligence emerges from local and repeated interaction of simple entities, like in swarm robotics.
+ where collective intelligence emerges from local and repeated interaction of simple entities, like in \ac{cpsw}.
 %
 In such many-agent scenarios, 
  the implementation of fully decentralized learning is often unfeasible due to the large number of learning agents, 
@@ -226,14 +230,6 @@ Some known approaches using mean-field reinforcement learning include Q-mean,
 %
 These approaches have shown promising results in various domains, such as multi-agent coordination 
  and decentralized control, and are actively being researched and developed for further applications.
-\subsection{Motivating applications}
-Many-agent systems, a subset of multi-agent systems, involve a large number of agents interacting in an environment. These systems are particularly relevant in:
-
-\begin{itemize}
-    \item \textbf{Traffic Management}: Managing a large number of vehicles in urban settings.
-    \item \textbf{Swarm Robotics}: Coordinating a swarm of robots to achieve a common goal.
-    \item \textbf{Financial Markets}: Modeling the behavior of numerous traders in a market.
-\end{itemize}
 
 \subsection{Formalization}
 \subsubsection{SwarMDP}
