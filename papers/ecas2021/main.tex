@@ -405,20 +405,20 @@ object Peer extends App {
 }
 \end{minted}
 
-\subsection{Integration with Aggregate Programming}
+\subsection{Integration with aggregate programming}
 \label{scafiloci}
 
 The design described so far is entirely independent of the specific aggregate programming language of choice:
 due to pulverization, the way the logic is expressed only concerns the behavioural component ($\LComp$).
 %
-Currently, there are three choices for practical aggregate programming:
+Currently, there are three choices for practical aggregate programming as outlined in \Cref{part:background}:
 Protelis~\cite{PianiniSAC2015}, a stand-alone, JVM-hosted domain-specific language (DSL);
 FCPP~\cite{DBLP:conf/acsos/Audrito20}, a high-performance, low-memory footprint C++ implementation;
 and \scafi{}~\cite{DBLP:conf/isola/CasadeiVAD20}, a Scala internal DSL that can run on the JVM or in the browser~\cite{DBLP:conf/coordination/AguzziCMPV21}.
 %
 Among the three, we picked \scafi{} for our prototype,
 mainly because it shares the language of choice with \scalaloci{},
-and thus it could be the foundation stone of a unified framework living in the Scala ecosystem.  A full account of \scafi{} can be found in~\cite{DBLP:journals/eaai/CasadeiVAPD21}.
+and thus it could be the foundation stone of a unified framework living in the Scala ecosystem.  A full account of \scafi{} can be found in~\Cref{part:background}.
 
 In order to perform a collective computation, \scafi{} requires to define an \scalainline{AggregateProgram} (i.e. an object containing the aggregate application logic) and 
 a \scalainline{Context} (i.e., the set of information required to evaluate an \scalainline{AggregateProgram}, such as the previous state, sensors' data, and messages received from neighbours).
@@ -476,7 +476,7 @@ A different yet intriguing research direction would be to understand if and how 
 % put an aggregate program in Loci?
 \section{Conclusion}
 \label{conclusion}
-In this article, we propose an approach 
+In this chapter, we propose an approach 
  to bridge pulverized architectures 
  and verified deployment of aggregate systems,
 leveraging multi-tier programming to foster 
@@ -488,10 +488,10 @@ and then mapped onto a concrete deployment.
 Finally, we show how aggregate computations can be easily soldered into the infrastructure,
 by drafting the implementation of the behavioural part of the system using the \scafi{} aggregate computing toolkit.
 
-Even though the present work is preliminary,
-we show that the approach is general enough to support different deployment architectures:
-we exemplify peer-to-peer and IoT edge-cloud architecture with thick or thin end devices,
+%Even though the present work is preliminary,
+%we show that the approach is general enough to support different deployment architectures:
+%we exemplify peer-to-peer and IoT edge-cloud architecture with %thick or thin end devices,
 but of course, the design space in this context is huge.
 %
-We believe that the integration between multi-tier programming and pulverized aggregate programming is a promising approach for the design and implementation of collective adaptive systems that can execute independently of the underlying infrastructure,
+We believe that the integration between multi-tier programming and pulverized aggregate programming is a promising approach for the design and implementation of \ac{cpsw} that can execute independently of the underlying infrastructure,
 preserving the business logic.
