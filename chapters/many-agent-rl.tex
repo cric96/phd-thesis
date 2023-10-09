@@ -26,7 +26,7 @@ Among the myriad of perspectives on intelligence, learning stands out as a \emph
  An organism that can adapt to its environment and learn from experiences is likely to survive and reproduce. 
  In the human context, learning has been the cornerstone of development, be it mastering a language, solving complex problems, or creating art.
 
- This notion of learning is crucial in the realm of Artificial Intelligence (AI). 
+This notion of learning is crucial in the realm of Artificial Intelligence (AI). 
 %
  If intelligence involves learning, 
  then replicating intelligence artificially would necessarily entail enabling machines to learn. 
@@ -50,24 +50,27 @@ Reinforcement learning sets itself apart from other methodologies by operating w
  It employs a \emph{trial-and-error} strategy, mirroring the way humans acquire knowledge. 
  Subsequent sections will delve into the nuances of this distinctive approach, starting from single agent settings and then moving to multi-agent and many-agent systems---the focus of this thesis.
 \section{Single-agent}
-\Acl{rl}~\cite{sutton2018reinforcement-learning} is a generic framework 
- inspired by how humans learn
- used to structure \emph{control problems}. 
+\Acl{rl}~\cite{sutton2018reinforcement-learning} serves as a universal framework that has been inspired by the cognitive processes underlying human learning. 
+ This paradigm has proven to be highly effective for addressing \emph{control problems}, which are essentially tasks that require decision-making to achieve a particular outcome.
 %
-The focus is on \emph{sequential} interactions between \emph{agents}
- (i.e. entity able to act) and an \emph{environment} 
- (i.e. anything outside the control of agents). 
-%
-At each discrete time step $t$, an agent observes the current environment \emph{state} $s_t$ 
- (i.e. the information perceivable by an agent) and selects an \emph{action} $a_t$ through a \emph{policy} $\pi$ (i.e. a probabilistic mapping between state and action). 
-%
-Partly as a consequence of its action, at the next time step $t+1$ the agent finds itself in state $s_{t+1}$ and receives a \emph{reward} $r_{t+1}$, 
- i.e. a scalar signal quantifying how good the action was against the given environment configuration. 
-%
-The goal of \ac{rl} is to \emph{learn} a policy \emph{$\pi^*$} that maximizes the long-term return $G$ (i.e. the cumulative reward) through a \emph{trial-and-error} process. 
-%
-Different problems can be devised in these settings, like video games~\cite{DBLP:journals/spm/ArulkumaranDBB17}, robotics~\cite{DBLP:journals/ijrr/KoberBP13}, routing~\cite{DBLP:journals/comsur/LuongHGNWLK19}, etc.
+The core focus of \ac{rl} is on the \emph{sequential} interactions that occur between \emph{agents} and an \emph{environment}. 
+ Agents are defined as entities capable of performing \emph{actions}, while the environment constitutes everything that is external to the agents and beyond their immediate control.
 
+During each discrete time step, 
+ denoted as $t$, 
+an agent observes the current state of the environment, $s_t$. 
+This state encapsulates the set of all observable information at that particular moment. 
+The agent then proceeds to select an \emph{action} $a_t$ in accordance with its \emph{policy} $\pi$. 
+A policy serves as a probabilistic mapping that guides the agent in choosing actions based on the current state.
+
+As a result of taking this action, 
+ the environment transitions to a new state $s_{t+1}$ at the next time step $t+1$. 
+ Simultaneously, the agent receives a \emph{reward} $r_{t+1}$, which is a quantitative measure of the efficacy of the action taken, given the state of the environment.
+
+The overarching objective of \ac{rl} is to discover an optimal policy, denoted as $\pi^*$, that aims to maximize the long-term return, or cumulative reward, $G$. This is generally achieved through a \emph{trial-and-error} learning process, where agents continually adapt their policies based on the rewards received.
+
+This framework has found extensive applications in a diverse array of domains. For example, \ac{rl} has been used to create advanced algorithms for video games~\cite{DBLP:journals/spm/ArulkumaranDBB17}, allowing for AI agents that can outperform human players. In robotics~\cite{DBLP:journals/ijrr/KoberBP13}, \ac{rl} algorithms are enabling machines to learn complex tasks autonomously, from simple object manipulation to navigation in unstructured environments. It is also making significant inroads in networking, particularly in routing algorithms where dynamic decision-making is crucial~\cite{DBLP:journals/comsur/LuongHGNWLK19}.
+\subsection{Markov Decision Process}
 This general framework is supported by \ac{mdp}, 
  a mathematical model that describes the environment evolution in sequential decision problems. 
 %
@@ -147,6 +150,17 @@ Nowadays, Q-Learning is applied in various fields, ranging from robotics to wire
 %
 However, one of the most challenging settings in which Q-Learning could be applied is when the learning process has to deal with multiple concurrent learners, namely a multi-agent system.
 \section{Multi-agent}
+In the evolving landscape of \ac{rl}, the concept of \ac{marl} stands as a natural extension of the foundational \ac{rl} principles. 
+ While traditional \ac{rl} generally focuses on the interactions between a single agent and an environment, 
+ \ac{marl} broadens the scope to include multiple agents, 
+ each with their own objectives, policies, and decision-making processes.
+
+The basic setting in \ac{marl} comprises multiple agents interacting either \emph{cooperatively}, \emph{competitively}, or in a \emph{mixed} fashion within a shared environment---more details in the following sections. 
+ Each agent $i$ continues to observe its own state $s_{t}^{i}$, select actions $a_{t}^{i}$ according to its policy $\pi^{i}$, and receive rewards $r_{t+1}^{i}$.
+ However, in \ac{marl}, 
+ an agent's actions can directly or indirectly influence the states and rewards of other agents, 
+ thereby increasing the complexity of the learning problem.
+The key challenge in \ac{marl} is to develop robust algorithms that enable agents to learn optimal policies in these complex, often non-stationary, environments. Classic \ac{rl} algorithms often require modifications to accommodate the multi-agent setting. For instance, the concept of a joint action space, a state space extended to multiple agents, and a composite reward function are essential considerations.
 \subsection{Formalization}
 In the realm of reinforcement learning, multi-agent systems refer to environments where multiple agents interact with each other and the environment simultaneously. The formalization of multi-agent reinforcement learning (MARL) typically extends the standard Markov Decision Process (MDP) framework to account for multiple agents. Each agent has its own state, action, and reward function, and the joint actions of all agents determine the transition dynamics and rewards.
 
