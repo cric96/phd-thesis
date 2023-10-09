@@ -38,9 +38,10 @@
 \frontmatter
 
 \input{front.tex}
+\input{acronyms.tex}
 
 \begin{abstract}	
-This thesis addresses the burgeoning field of Cyber-Physical Swarm Systems (CPSWs), 
+This thesis addresses the burgeoning field of \ac{cpsw}, 
  which are large-scale ensembles of locally interacting computational devices deeply integrated into the physical world exposing collective behaviours. 
 Driven by the explosion of IoT devices and advances in edge-cloud computing, 
  these systems represent a transformative phase in information technology. 
@@ -71,8 +72,7 @@ Curiositas mater scientiae.
 \lstlistoflistings % (optional) comment if empty
 %----------------------------------------------------------------------------------------
 
-\input{acronyms.tex}
-
+\acresetall
 \mainmatter
 
 \begin{refsection}\input{chapters/introduction.tex}\end{refsection}
@@ -93,8 +93,7 @@ Curiositas mater scientiae.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \part{Engineering Cyber-Physical Swarms}\label{part:engineering}
-\begin{refsection}
-%\input{papers/mdpi2020/main.tex}%\end{refsection}
+\begin{refsection}%\input{papers/mdpi2020/main.tex}%\end{refsection}
 \input{papers/swarm-intelligence2021/main.tex}%\end{refsection}
 \input{papers/ieee2022/main.tex}%\end{refsection}
 \input{papers/coordination2023-macro/main.tex}%\end{refsection}

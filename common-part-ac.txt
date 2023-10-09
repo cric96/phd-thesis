@@ -408,3 +408,261 @@ Secondly, it could be interesting to compare (or combine) the meta-algorithm aga
 %
 Last but not least, we would like to evaluate our algorithms on real use cases, e.g. in smart logistics and precision agriculture scenarios, by implementing them %using the FCPP field-based computing language and deploying them
 on actual drones or robots.
+
+\begin{comment}
+The background of this work
+ includes field-based computing (\Cref{s:background-fieldcomp})
+ and the problem of clustering in swarms (\Cref{s:background-clustering}).
+
+\subsection{Field-based Computing}
+\label{s:background-fieldcomp}
+
+\emph{Field-based computing}~\cite{DBLP:journals/jlap/ViroliBDACP19}
+ is an approach
+ where computation leverages
+ a notion of \emph{computational fields} (\emph{fields} for short)~\cite{DBLP:conf/icra/Warren89,DBLP:journals/pervasive/MameiZL04,DBLP:journals/jlap/ViroliBDACP19}, namely
+ distributed data structures evolving in time and associating locations with values.
+%
+The approach originates from previous work
+ like
+ Warren's \emph{artificial potential fields}~\cite{DBLP:conf/icra/Warren89}
+ and
+ \emph{co-fields} from Mamei et al.~\cite{DBLP:journals/pervasive/MameiZL04}.
+%
+In particular, in co-fields, computational fields represent contextual information, locally sensed by the agents and repeatedly distributed by the agents themselves or the infrastructure according to a propagation rule.
+%moreover, they are associated with a propagation rule that determines how they should change as they are distributed.
+
+In this work, by field-based computing we mean a specific programming and computational model,
+ also known as \emph{aggregate computing} in literature~\cite{DBLP:journals/computer/BealPV15},
+ which is surveyed in~\cite{DBLP:journals/jlap/ViroliBDACP19}.
+% and that we recap in the following.
+%%
+%In particular, we mean an approach
+%  where
+In this model,  collective and self-organising behaviour
+ is programmed through a composition
+ of functions operating on fields
+% \emph{computational fields}~\cite{DBLP:journals/jlap/ViroliBDACP19},
+% namely distributed data structures, evolving in time,
+ mapping a set of individual agents (rather than environment locations)
+ to computational values.
+%
+Therefore, fields can be used to associate a certain domain of agents
+ with what they sense, the information they process, and actuation instructions for operating on the environment.
+%
+Fields are computed locally to the agents
+ but are subject to a global viewpoint:
+ so, e.g., a field of velocity vectors can be seen as a movement command for an entire swarm, or
+ a field of reals can denote what an entire swarm perceives in a certain environment.
+%
+To understand field-based computing,
+ two essential parts have to be considered: the system model
+ and the programming model.
+ Their interplay is what allows the local actions of the agents
+ to yield emergent collective behaviour.
+
+\subsubsection{System Model}
+\label{ssec:background:sysmodel}
+
+We consider a network of computing and interacting \emph{agents} situated in some \emph{environment}.
+
+\subparagraph*{Structure.}
+%
+An \emph{agent} is an autonomous entity
+ equipped with \emph{sensors} and \emph{actuators}, which serve as the interface towards a logical or physical \emph{environment}.
+%
+By a logical point of view\footnote{Actually, such requirements may be relaxed by considering different execution strategies on available infrastructure~\cite{DBLP:journals/fi/CasadeiPPVW20}.}, it also has \emph{state}, a support for \emph{communicating} with other agents, and support for \emph{computing} simple programs.
+%
+An agent is connected with other \emph{neighbour} agents which collectively form its \emph{neighbourhood}.
+%
+The set of neighbours depends on a \emph{neighbouring relationship}, which is defined by designers according to the application at hand
+and is subject to the constraints exerted by the underlying physical network.
+%
+A typical neighbouring rule
+ is the one that mimics physical connectivity;
+ so, e.g., a agent is a neighbour of another agent if it manages to send a message to the latter over the wireless channel.
+%
+%\meta{FD: @MIRKO is this rule used later in the paper? If no, why we mention it here? RC: @FD this is a useful example to also explain the following rule, which is the one we adopt.}
+Another typical neighbouring rule is the one
+ based on spatial vicinity;
+ so, e.g., a agent is a neighbour of another agent if the infrastructure manages to deliver a message from the former to the latter (e.g., using other agents as relays)
+  and these two agents are at an estimated distance smaller than a certain threshold
+  (assuming a distance can be estimated through a proper technology).
+
+\subparagraph*{Interaction}
+%
+Interaction happens by sending messages
+ to neighbours, asynchronously.
+%
+Interaction can also happen in a stigmergic way, by perceiving and acting upon the environment through sensors and actuators.
+%
+The content of messages and when they are sent and received depend on the agent behaviour.
+%
+However, in general, as our goal is to model continuous collective behaviours, or self-organising systems,
+ we remark that interaction would typically be frequent (in relation to the problem and environment dynamics).
+
+\subparagraph{Behaviour}
+%
+As per the above consideration,
+ the behaviour of any individual agent is best understood
+ in terms of repeated enaction of \emph{execution rounds}, where each round consists of the following steps (though some flexibility exists especially in the actuation part):
+%
+\begin{enumerate}
+\item \emph{Context acquisition.} The agent gathers its context by considering its previous state as well as the most recent sensor readings and messages from neighbours.
+\item \emph{Computation.} The agent runs a computation against the acquired context, yielding (i) an \emph{output} describing potential actuations; and (ii) a \emph{coordination message} containing all the information to be sent to neighbours for the purpose of coordination at a collective level.
+\item \emph{Actuation \rev{and communication}.} The agent performs the actuations described by the program output and dispatches the coordination message to the entire neighbourhood.
+\end{enumerate}
+%
+\rev{
+By having every agent repeatedly
+ run these sense-compute-act rounds,
+ the whole system
+ fosters a self-organization process
+ whereby
+ up-to-date information
+ (from the environment and from the agents)
+ is continuously incorporated
+ and processed,
+ typically in a self-stabilising manner~\cite{DBLP:books/mit/Dolev2000}.
+}
+
+This system model provides a basic machinery for collective adaptive behaviour, which however requires a proper description of the ``local computation step'': this is fostered by the \emph{field-based programming model} (discussed in \Cref{sec:field-based-programming-model}).
+%
+\rev{
+A \emph{field-based program}
+ steers the collective adaptive behaviour of a system,
+ which unfolds by having each agent in the system
+ evaluate that program
+ according to the discussed round-based execution model.
+%
+Notice that such a program
+ specifies both what local processing the agents
+ must perform
+ and what data they must share with neighbours;
+ also, notice that generally the program does not affect the round-based execution protocol---unless advanced forms of scheduling are desired~\cite{lmcs-timefluid}.
+%
+The distributed execution protocol
+ may be provided by a \emph{middleware},
+ which will ensure that
+ messages are exchanged
+ and rounds properly scheduled.
+%
+The reader can refer to
+ \cite{lmcs-timefluid}
+ and
+ \cite{casadei2022applsci}, respectively,
+for a more comprehensive discussion on
+ execution and deployment aspects.
+}
+
+
+\subsubsection{Field-based Programming Model}
+\label{sec:field-based-programming-model}
+
+Field-based programs can be encoded with field-based programming languages like \scafi{}~\cite{DBLP:conf/isola/CasadeiVAD20}, \rev{which are implementations of \emph{field calculi}~\cite{DBLP:journals/jlap/ViroliBDACP19,scafi-lmcs}, i.e., functional core languages that provide the minimal set of constructs for programming with fields and enable formal analysis}.
+%
+\scafi{} is a domain-specific language (DSL) embedded in Scala
+ which supports field-based constructs
+ and offers a library of reusable functions\rev{, some of which are covered in the following}.
+%
+
+
+A field-based expression or program (e.g., programmed in \scafi{}) can be subject
+ to a local or global interpretation.
+%
+Locally, an integer value like \texttt{7} has the usual meaning;
+ globally, a \texttt{7} denotes a field where each agent is mapped to a local \texttt{7} (a uniform, constant field).
+%
+\rev{
+For instance, querying a local temperature sensor
+ would yield a \emph{field of temperature readings},
+ associating space-time events
+ (i.e., all the rounds of a network of agents)
+ to values denoting the temperatures
+ at those locations.
+}
+
+Locally, an integer expression \texttt{add(a,b)}, or \texttt{a+b}, has the usual meaning, given by the sum of \texttt{a} with \texttt{b};
+ globally, it denotes the application of a field of functions \texttt{add}, or \texttt{+},
+ on a field \texttt{a} and a field \texttt{b},
+ yielding a field given by the sum of \texttt{a} and \texttt{b}
+ in an agent-wise fashion (notice that \texttt{a} may be a non-uniform non-constant field having different local values for different agents over time).
+
+The programming model does not deal directly with global fields (which are essentially a denotational construct),
+ but it deals only with \emph{neighbouring fields},
+ which enable one agent to collect data from its neighbours.
+
+\rev{
+Generally, field calculi feature constructs to
+ (i) evolve values across time, by transforming a value computed at a previous round into a new value;
+ (ii) exchange data with neighbours, where received data is reified by neighbouring fields;
+ (iii) conditionally break a computation into parts,
+ defining distinct domains of collective computation.
+}
+%
+\rev{However,} in the following, we \rev{only} briefly present a subset of the field-based computing building blocks used for sensing-based clustering\rev{, as the details of field calculi are not required to understand the contribution of this manuscript}.
+%
+See~\cite{DBLP:journals/jlap/ViroliBDACP19} for more details on how these blocks are actually developed.
+
+Typically, in field-based computing applications, we are dealing with sharing and collecting information from/to a device.
+
+To do this, the \lstinline|gradient| is an essential construct~\cite{DBLP:conf/saso/AudritoCDV17}.
+%
+This block produces a numeric field that expresses the minimum distance from a source zone following a certain metric (e.g., Euclidean distance).
+%
+Hence, it maps a Boolean field (\lstinline|true| where a node is a source, \lstinline|false| otherwise) into a distance field from the closest source. The signature of the function is defined as\footnote{\rev{In Scala, keyword \lstinline|def| introduces a named function; after the name, it follows a list of parameters of the form \lstinline|name:Type|; after the parameter list, the return type of the function is specified.}}:
+%
+\begin{lstlisting}
+def gradient(source: Boolean, metric: Metric): Double
+\end{lstlisting}
+%
+\rev{This function is resilient to changes in the source field and metric field, self-stabilising to the correct field of minimum distances to the closest source once input fields stabilize.}
+%
+\rev{Gradients support \emph{information flows}, which are fundamental constructs for designing self-organising systems~\cite{DBLP:conf/saso/WolfH07}.}
+%
+\rev{Indeed, t}hrough this construct, it is possible to share generic data (a position, a temperature, etc.) towards this resulting distance field.
+%
+Such propagation of data from a source of a gradient outwards
+ is captured by a
+\lstinline|broadcast| function \rev{(generic in type parameter \lstinline|D)|}:
+\begin{lstlisting}
+def broadcast[D](source: Boolean, data: D): D
+\end{lstlisting}
+%
+%The information in these two previous operators flow from the source nodes to the others nodes.
+When we want to aggregate data in source agents, we use the block \lstinline|C| (collect) instead~\cite{audrito2021jcee-distributed-collection}:
+\begin{lstlisting}
+def C[V](p: Double, acc: (V, V) => V, local: V, null: V): V
+\end{lstlisting}
+%
+In this signature, \lstinline|p| is a potential field usually computed through \lstinline|gradient|; \lstinline|acc| is the logic that combines \rev{locally perceived data with that received from neighbours}; \lstinline|local| is the local data we want to collect at a point in space (e.g. a position); and \lstinline|null| is the null data for the \lstinline|acc| operation (e.g. if we collect a real value, the \lstinline|null| value could be 0).
+%
+This is also an essential operation for the definition of collective behaviours: it enables, e.g. computation of the average temperature in a certain zone covered by agents.
+
+\rev{
+As an example, consider a network of agents
+ where a sparse set of leaders have been elected.
+%
+Suppose that we want to break the system
+ into several regions, each one ruled by one leader,
+ and that we want every agent
+ to know how many members are in their region.
+%
+This can be coded as follows:
+}
+\begin{lstlisting}
+val leader: Boolean = // true on leader devices
+val potential: Double = gradient(leader, metric())
+val collect: Int = C[Int](potential, (sum,v)=>sum+v, 1, 0)
+val count: Int = broadcast[Int](leader, collect)
+\end{lstlisting}
+\rev{
+A region is indirectly defined by the corresponding leader; each agent has to simply descend the gradient to locate its leader (and hence its region).
+%
+Along the \lstinline|potential| towards leaders,
+ a contribution of \lstinline|1| is accumulated
+ for each agent.
+%
+To propagate the complete count on the whole region, it is then sufficient to \lstinline|broadcast| the \lstinline|leader|'s \lstinline|collect| value outwards.
+}
+\end{comment}
