@@ -444,33 +444,40 @@ def compute(
 \end{minted}
 \section{Implications}
 \label{implicitation}
-The construction of a pulverized platform for aggregate computing through multi-tier programming has several interesting applications that we analyse in this section.
+The construction of a pulverized platform for aggregate computing via multi-tier programming introduces a plethora of intriguing applications, 
+ each with its unique impact and significance. 
+ In this section, we delve deeper into these applications, 
+ examining their technical intricacies and their broader implications for both academia and industry.
 
-\paragraph*{Programmability and compile-time safety of deployment architectures for pulverized systems}
-%
-A type-annotated definition of a pulverized system deployment can be used to statically enforce consistency between the intended architecture and its deployment implementation.
-%
-Access to data that cannot be reached by a certain component will not be possible as it will be checked by the compiler.
-% So we have the guarantee that the aggregate program semantics remains unchanged in any concrete deployment. 
-%  This would not be guaranteed -- at least at compile time -- using other languages/technologies for developing distributed systems.
-% tackling the CPS development end-to-end by a single code-line, enable a development safer, error-less and easier. 
- Indeed, engineering should only concern about functional aspects of the application --- namely, write an aggregate computing program. 
- We note that this research direction could be seen as a part of a larger effort to encapsulate the \emph{functional} part of the application (i.e., writing the aggregate computing program),
- isolating \emph{non-functional} concerns and tackling them separately, possibly through dedicated techniques and languages.
+\paragraph*{Programmability and Compile-Time Safety in Deployment Architectures for Pulverized Systems}
+The use of type-annotated definitions in the deployment of a pulverized system confers robustness and reliability to the architectural integrity of the system. 
+ This approach facilitates static consistency checks between the planned architecture and its deployed instantiation, 
+ enabling the compiler to enforce constraints. 
+ As a result, unauthorized access to data that is not within the scope of a specific component is precluded by design. 
+ This dramatically enhances system security and diminishes runtime errors. 
 
-\paragraph*{Opportunistic deployment and reconfiguration of pulverized systems}
-As a matter of principle, the pulverization approach supports self-adaptive application deployment. 
-  Indeed, nothing prevents moving components of a logical device across physical nodes (e.g. $\LComp$ component can be placed into the cloud if the device has a low battery level). 
-  This direction, however, is not currently supported by \scalaloci{}, which assumes static data placement. 
-  The influence of our design could lead to an extension of the languages in which the placed type could be moved data between peers, while still leaving the system specification type-safe.
- 
-\paragraph*{Placement types in aggregate programming} Currently, \scalaloci{} and \scafi{} had been \emph{intentionally} combined in such a way that the aggregate program is completely agnostic about the usage of a multi-tier language for deployment. 
-A different yet intriguing research direction would be to understand if and how placement types 
-  (along with the other concepts introduced by the peculiar interpretation of multi-tier programming in \scalaloci{})
-  could be leveraged in an aggregate setting.
-  %
-  At the moment, the implications of manipulating placement types at the aggregate computing level are unclear,
-  but we glimpse some potential for the definition of evolving networked systems that are worth exploring.
+From an engineering standpoint, 
+ the focus then squarely shifts to addressing the functional aspects of the application. 
+ In this context, the functional aspect refers to crafting the core logic of an aggregate computing program. 
+ We posit that this approach can be subsumed under a broader research paradigm aimed at modularizing functional and non-functional concerns. 
+ The latter could then be managed using specialized techniques and languages tailored for those specific challenges.
+
+\paragraph*{Opportunistic Deployment and Dynamic Reconfiguration of Pulverized Systems}
+The inherent flexibility of the pulverized architecture enables dynamic adaptability in application deployment. 
+ Essentially, it is conceivable to reposition components of a logical device across multiple physical nodes dynamically. 
+ For instance, a $\LComp$ component could be offloaded to the cloud to conserve battery life on the original device. 
+ While this concept is conceptually supported by the pulverization methodology, its practical implementation is currently limited due to \scalaloci{}'s focus on static data placement.
+
+Nonetheless, 
+ our research opens the door to future developments that could extend existing languages to support dynamic data placement between peers. 
+ Such an extension would not only augment system flexibility but also maintain type safety in the system specification.
+
+\paragraph*{Incorporation of Placement Types in aggregate programming}
+As it stands, \scalaloci{} and \scafi{} have been designed to function in tandem in such a way that the aggregate program remains blissfully unaware of its multi-tier deployment architecture. However, another avenue for exploration is how placement types, along with other novelties introduced by \scalaloci{}'s unique take on multi-tier programming, could be strategically utilized within aggregate computing systems.
+
+At present, the specific implications and potential benefits of manipulating placement types at the level of aggregate computing are not yet fully understood. 
+ Nonetheless, we see emerging opportunities for developing adaptive networked systems capable of dynamic evolution. 
+ These preliminary insights suggest a fertile ground for further research and development in this area.
 
   % binding the logical component in tier?
 % put an aggregate program in Loci?
@@ -488,9 +495,6 @@ and then mapped onto a concrete deployment.
 Finally, we show how aggregate computations can be easily soldered into the infrastructure,
 by drafting the implementation of the behavioural part of the system using the \scafi{} aggregate computing toolkit.
 
-%Even though the present work is preliminary,
-%we show that the approach is general enough to support different deployment architectures:
-%we exemplify peer-to-peer and IoT edge-cloud architecture with %thick or thin end devices,
 but of course, the design space in this context is huge.
 %
 We believe that the integration between multi-tier programming and pulverized aggregate programming is a promising approach for the design and implementation of \ac{cpsw} that can execute independently of the underlying infrastructure,
