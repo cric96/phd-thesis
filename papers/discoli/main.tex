@@ -74,13 +74,12 @@ In particular, we observe that
  of the \ac{ac} ``engineering stack''.
 %
 The integration of \ac{ac} and \ac{ml} done during this thesis, 
- which we refer to as \ac{acml},
+ which we refer to as \ac{acml} or \emph{hybrid} aggregate computing,
  is provided a lot of opportunities and challenges, 
  fostering a long-term record of research contributions.
 %
 In this chapter, we discuss a research roadmap followed during the thesis,
  for achieving the vision of \ac{acml}.
-
 
 \begin{figure}[h]
 \centering
@@ -177,7 +176,7 @@ The field calculus, then, provides a set of operators
  (which can be reified through \emph{neighbouring fields}).
 %
 %
-The field calculus is implemented by so-called \emph{aggregate programming languages} such as \scafi{}, a Scala internal \ac{dsl}.
+%The field calculus is implemented by so-called \emph{aggregate programming languages} such as \scafi{}, a Scala internal \ac{dsl}.
 %
 So, in \ac{ac}, a collective adaptive behaviour
  is the result of an algorithm (a function from fields to fields) expressed e.g. in \scafi{}
@@ -185,9 +184,9 @@ So, in \ac{ac}, a collective adaptive behaviour
  in a system of devices.
 %
 
-A typical example is the \emph{gradient algorithm}~\cite{DBLP:conf/saso/AudritoCDV17},
- which is essentially a function mapping a Boolean field of sources (i.e. the devices where the field is \emph{true})
- to the field of minimum distances from those sources.
+%A typical example is the \emph{gradient algorithm}~\cite{DBLP:conf/saso/AudritoCDV17},
+ %which is essentially a function mapping a Boolean field of sources (i.e. the devices where the field is \emph{true})
+ %to the field of minimum distances from those sources.
 %
 Usually, algorithms are \emph{progressive} -- they take time (computation rounds and communications) to converge to the ``correct'' value --
 and \emph{self-healing}, i.e., they can adjust their output following changes in its inputs and the system topology.
@@ -195,7 +194,7 @@ and \emph{self-healing}, i.e., they can adjust their output following changes in
 For instance, a gradient algorithm progressively corrects the field of distances after the set of sources change, or nodes move (hence changing the distances between neighbour nodes) or enter/leave the system.
 %
 
-So, different gradient algorithms may achieve the same functionality (i.e., the eventual computation of the field of minimum distances from sources)
+So, different gradient algorithms may achieve the \emph{same} functionality (i.e., the eventual computation of the field of minimum distances from sources)
  with different non-functional outcomes.
 %
 Indeed, they may:
@@ -220,7 +219,7 @@ With this approach,
  the designer could provide an algorithm template
  with holes corresponding to actions
  to be learnt by the agents or the whole collective,
- e.g., through Reinforcement Learning.
+ e.g., through reinforcement learning.
 %
 In this case, learning would be used to \emph{search}
  for an optimal policy.
@@ -229,7 +228,7 @@ The resulting algorithm, then, would need extensive testing (e.g. by simulation)
 %
 In this regard, research is needed to identify what synthesis techniques, learning algorithms, frameworks, and methodologies can support the learning of algorithms able to achieve performance similar or better than state-of-the-art solutions.
 %
-First effort in this direction has been done in~\cite{DBLP:conf/coordination/CasadeiPVN19}, where a gradient algorithm has been learnt through a reinforcement learning approach. %TODO add reference to the right chapter.
+First effort in this direction has been done in~\cite{DBLP:conf/coordination/CasadeiPVN19}, where a gradient algorithm has been learnt through a reinforcement learning approach~\Cref{chap:learning:sketching}.
 
 \subsection{Learning execution strategies and adaptations}
 
@@ -311,16 +310,16 @@ Different deployments
  (cf. addition or removal of new nodes, blackouts, etc.).
  
 
-In previous research, aggregate application partitioning and deployment have been done manually at design time~\cite{DBLP:journals/fi/CasadeiPPVW20}.
+In previous research, aggregate application partitioning and deployment have been done manually at design time~\cite{DBLP:journals/fi/CasadeiPPVW20}---as showed in \Cref{chap:eng:multitier}.
 %
-However, for a given set of infrastructures, it is not easy to determine an effective mapping.
+However, for a given set of infrastructures, it is not easy to determine an \emph{effective} mapping.
 %
 The usual approach consists of manually generating different deployments,
  simulating these for the same set of applications,
  collecting various cost metrics,
  and evaluating results to determine trade-offs and guidelines.
 %
-However, \ac{ml} could be injected into 
+However, \ac{ml} could be \emph{injected} into 
  such a methodology
  to have the system learn by itself what is a
  (locally) optimal deployment for an aggregate application.
@@ -338,7 +337,7 @@ Additionally,
 %
 In this respect,
  a challenge would be to determine
- how, when, and where 
+ \emph{how}, \emph{when}, and \emph{where} 
  virtual devices
  should be spawned or removed
  from the system.
