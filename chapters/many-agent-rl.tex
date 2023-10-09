@@ -161,13 +161,12 @@ The basic setting in \ac{marl} comprises multiple agents interacting either \emp
  an agent's actions can directly or indirectly influence the states and rewards of other agents, 
  thereby increasing the complexity of the learning problem.
 The key challenge in \ac{marl} is to develop robust algorithms that enable agents to learn optimal policies in these complex, often non-stationary, environments. Classic \ac{rl} algorithms often require modifications to accommodate the multi-agent setting. For instance, the concept of a joint action space, a state space extended to multiple agents, and a composite reward function are essential considerations.
-\subsection{Formalization}
-In the realm of reinforcement learning, multi-agent systems refer to environments where multiple agents interact with each other and the environment simultaneously. The formalization of multi-agent reinforcement learning (MARL) typically extends the standard Markov Decision Process (MDP) framework to account for multiple agents. Each agent has its own state, action, and reward function, and the joint actions of all agents determine the transition dynamics and rewards.
-
+\subsection{Markov Games}
+The formalization of multi-agent reinforcement learning (MARL) typically extends the standard Markov Decision Process (MDP) framework to account for multiple agent. One of the most straightforward extensions is the Markov Game. 
+ In this formalization, each agent has its own state, action, and reward function, and the joint actions of all agents determine the transition dynamics and rewards: 
 \begin{equation}
-MARL = \langle \mathcal{N}, \mathcal{S}, \mathcal{A}_1, \ldots, \mathcal{A}_N, \mathcal{P}, \mathcal{R}_1, \ldots, \mathcal{R}_N \rangle
+Markov\_Game = \langle \mathcal{N}, \mathcal{S}, \mathcal{A}_1, \ldots, \mathcal{A}_N, \mathcal{P}, \mathcal{R}_1, \ldots, \mathcal{R}_N \rangle
 \end{equation}
-
 Where:
 \begin{itemize}
     \item $\mathcal{N}$ is the number of agents.
