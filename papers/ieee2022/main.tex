@@ -6,56 +6,6 @@
 \newcommand{\revisetwo}[1]{{#1}}
 
 
-% <= 150 WORDS
-% CURR COUNT: 150
-%\begin{abstract}
-%The Internet of Things and edge computing are fostering a future 
-% of ecosystems hosting complex decentralized computations, 
-% deeply integrated with our very dynamic %living and working 
-% environments. 
-%
-%Digitalized buildings, communities of people, and cities will be the next-generation ``hardware and platform'',
-% counting myriads of interconnected devices, %and agents, 
-% on top of which intrinsically-distributed computational processes will run and self-organize. 
-%
-%They will spontaneously spawn, 
-% diffuse to pertinent logical/physical regions, 
-% cooperate and compete,
-% opportunistically summon
-%  required resources, 
-%  collect and analyze data,
-%  compute results, 
-%  trigger distributed actions, % over the environment, 
-%  and eventually \revise{decay}. 
-
-% How would a programming model for such ecosystems look like? 
-% %
-% Based on research findings
-%  on self-adaptive/self-organizing systems,
-%  this paper proposes design abstractions
-%  based on
-%  ``dynamic decentralization domains'': regions of space 
-%  opportunistically 
-%  formed to support situated recognition and action.
-%  %identified as the distributed loci for situated recognition and action.
-% %
-% We embody the approach into a Scala \ac{api} 
-%  enacting distributed execution
-%  and show its applicability in a
-%  case study of environmental monitoring.
-% \end{abstract}
-
-%\meta{
-%\begin{itemize}
-%\item abstract: 150 words
-%\item paper limit: 5000 words
-%\item 250 words for each figure and table
-%\item bib: max 20 refs
-%\item Use American English
-%\end{itemize}
-%}
-
-%\meta{INTRO: budget = ca. 250 words ; currently ca. 350 words}
 \chapter[Dynamic Decentralization Domains]{Dynamic Decentralization Domains for \acf{cpsw}}
 \minitoc% Creating an actual minitoc
 Edge computing
@@ -78,7 +28,7 @@ The complexity and volume in terms of devices, communications, failures, and cha
  that can %embrace these challenges
 %  to
  adequately address both functional
- and non-functional concerns:
+ and non-functional of \ac{cpsw} that concerns of:
 \begin{itemize}
   \item \emph{decentralization} for scalability and delegation;
   \item \emph{autonomic computing} and \emph{self-organization}~\cite{DBLP:journals/computer/KephartC03} for operational effectiveness and adaptation;
@@ -86,15 +36,7 @@ The complexity and volume in terms of devices, communications, failures, and cha
   \item \emph{collective computing}~\cite{DBLP:journals/eaai/CasadeiVAPD21} for coordination and collaboration.
 \end{itemize}
 
-We envision environments (bodies, rooms, buildings, communities, cities)
- populated by myriads of devices
- whose ensemble will be abstracted as a single programmable \ac{cps}.
-%
-These entities may or may not be coordinated in a centralized fashion,
-namely,
-we cannot assume a central coordinator (e.g., the cloud) exists when designing the system.
-%
-They form the platform % hardware and platforms 
+Specifically, they form the platform % hardware and platforms 
  upon which several concurrent
  \emph{\acp{dcp}} 
  would run, carrying on transient activities
@@ -119,43 +61,17 @@ Hence, \acp{dcp}
  distributed sensing and actuation;
 eventually, they may vanish once the activity is done.
  
-In this paper, we address the problem of capturing the right abstractions for modelling \acp{dcp},
-abstracting from the specific communication technologies, %taking inspiration from the analogous 
-%approach taken in map-reduce frameworks for big data, where the declarative concept of \emph{stream} is adopted.
+In this chapter, 
+ we address the problem of capturing the right abstractions for modelling \acp{dcp},
+ abstracting from the specific communication technologies, 
+ taking inspiration from the analogous 
+ approach taken in map-reduce frameworks for big data, 
+ where the declarative concept of \emph{stream} is adopted.
 %
-and propose the concepts of \emph{concurrent collective tasks} and \emph{decentralization domains}, % and \emph{region partitioning}, 
+and propose the concepts of \emph{concurrent collective tasks} 
+ and \emph{decentralization domains}, % and \emph{region partitioning}, 
  which can be exploited in combination to provide distributed situated recognition and action.
 %
-%So, in \Cref{sec:motiv}, we detail our proposal,
-% that leverages 
-% the new notion of a \emph{dynamic decentralization domain},
-% which comes in two flavors: \emph{overlapping}
-% (for task decentralization)
-% or \emph{exclusive} (for operational decentralization).
-
-%In \Cref{sec:motiv},
-% we motivate the proposal,
-% identify three essential requirements,
-% and briefly summarize the state of the art.
-%
-%In \Cref{sec:contrib}, we 
-% detail the technical solution,
-% providing a declarative \ac{api}.
-%
-%In \Cref{sec:eval}, we functionally evaluate the proposal through simulation
-% in an environmental monitoring case study.
-%
-%Our finding and perspective, detailed in \Cref{sec:conc},
-% is that the programming model
-% provides a high-level yet expressive framework
-% for \acp{dcp},
-% with fine-grained control over 
-% decentralization.
-
- 
-%\meta{We'll surely cite \cite{DBLP:journals/eaai/CasadeiVAPD21,DBLP:journals/fgcs/PianiniCVN21,DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19}}
- 
- 
 \section{Motivation}\label{sec:motiv}
 
 %\meta{
@@ -248,7 +164,7 @@ We aim to apply the same principle to self-organizing systems,
 primarily to realize decentralized situation recognition and action.
 
 \end{comment}
-CPSW are increasingly tasked with monitoring and acting upon dynamically changing environments, 
+\acp{cpsw} are increasingly tasked with monitoring and acting upon dynamically changing environments, 
  often without the availability of a central coordinator.% Examples of such systems include crowd tracking and steering, environmental monitoring for landslides, flooding, and fires, and the coordination of robot swarms.
 
 The recurrent approach in computer/software engineering 
@@ -264,11 +180,6 @@ As an analogy, consider database management systems:
 
 \section{Decentralized situation recognition and action: a case study}
 \label{decentralized-sr}
-
-%\meta{
-%*) Our goal is to proceed in an analogous way for what we believe is an important problem in the future IoT, dynamically and opportunistically identify corrections regions for decentralised situated recognition and action. Consider the following case study... -- here we can anticipate something of the case study, and illustrate various (3) examples of different things we want to do. 
-%}
-
 A \ac{cpsw} system
  should ideally determine autonomously
  \emph{what} has to be done,
@@ -294,11 +205,11 @@ The system
  pursue
  the desired state of affairs.
 %
-% These two phases do not need to be sequential but can be performed continuously in a feedback loop, gradually steering the system towards a correct and stable configuration.
+These two phases do not need to be sequential but can be performed continuously in a feedback loop, gradually steering the system towards a correct and stable configuration.
 %
-% Also, the system should \emph{opportunistically} 
-%  exploit available resources
-%  accordingly to the current context and goals---which may change dynamically.
+Also, the system should \emph{opportunistically} 
+  exploit available resources
+  accordingly to the current context and goals---which may change dynamically.
 %
 Also,
 we cannot assume the existence of a centralized coordinator
@@ -336,21 +247,6 @@ irregularly shaped in space,
 and/or hard-to-predict at a fine grain.
 
 \subsection{Requirements and abstractions}
-
-
-%\meta{
-%As a general comment on how to come up with those reqs and abstractions, I would not just say ``we need abstractions such that...'' because then the step to design would seem to big. Rather I would say:
-%1) we need an abstraction of system partitioning that is fully dynamic, and such that devices automatically perceive only others in the same region
-%2) regions are created/resised/destroyed in a fully opportunistic way (and go in some details about how we do this)
-%3) the behavior of each region is expressed in a declarative way in terms of its ultimate sense-decide-and act goals, where actions only influence shape of regions in a sort of feedback loop
-%4) ...
-%}
-
-
-%\meta{
-%*) Based on those desiderata we can then identify the following requirements, and corresponding abstractions...
-%}
-
 Given the high-level vision and goals discussed in the previous sections, and with the help of \casename{},
  we delineate some \revisetwo{\emph{needs}
  together with \emph{abstractions} and corresponding \emph{requirements}, for a programming model 
@@ -369,25 +265,22 @@ there is the need to coordinate
   hence leveraging \acp{dcp} for sensing, computation, and actuation
   at a collective level.
 %
-% One may also devise a more complex case study and platform
-%  for environmental monitoring
-%  where there is a distributed process for \casename{},
-%  another process for critical infrastructure monitoring,
-% waste management,
-% surveillance, etc.;
-% these processes may run independently or,
-% possibly,
-% interact.
+ One may also devise a more complex case study and platform
+  for environmental monitoring
+  where there is a distributed process for \casename{},
+  another process for critical infrastructure monitoring,
+ waste management,
+ surveillance, etc.;
+ these processes may run independently or,
+ possibly,
+ interact.
 
-% In general, any
-Most complex systems
-% is not limited to a single activity
-% but
-% usually
-involve several activities running concurrently.
+In general, most complex systems
+ is not limited to a single activity
+ but usually involve several activities running concurrently.
 %
 Furthermore,
-these activities could be collective, i.e.,
+these activities could be \emph{collective}, i.e.,
 involve a collaboration of multiple agents with partial perception of the environment.
 %We call each concurrent collective task instance a \emph{\ac{oca}}.
 We call these \emph{\acp{cct}},
@@ -397,8 +290,8 @@ We call these \emph{\acp{cct}},
 %
 Notice that \acp{cct} may 
  have a limited and dynamic domain:
- a subset of devices %in the system
-%  (sometimes also called \emph{team} or \emph{ensemble})
+ a subset of devices in the system
+ (sometimes also called \emph{team} or \emph{ensemble})
  which may change over time.
 
 %\item[\enlabel{req-flexible-dec}{R2})] 
@@ -437,38 +330,6 @@ We call each region a \emph{\ac{dd}} since it represents a non-overlapping bound
 Multiple \acp{dd} can also \emph{compete} to gather resources exclusively within the domain defined by a \ac{cct}
 (at whose level cross-domain interaction could happen, instead).
 
-%\item[\enlabel{req-domain}{R3})] \emph{Hierarchical decentralization domains.}
-%%
-% Indeed, each region should work as a domain
-%  where interaction is possible 
-%  only among the devices 
-%  belonging in the same domain.
-%If we consider a hierarchical partitioning, cross-domain interaction 
-% could happen at the level of the parent domain.
-%So, each \ac{dd} can be further organized in sub-domains.
-%
-%\item[\enlabel{req-feedback}{R3})] %\emph{Hierarchical decentralization domains.}
-
-%\subsubsection{\reqlabel{req-feedback}{R3} Feedback-regulated collective task generation and domain partitioning.}
-%%
-%\casename{} \meta{TODO}
-%
-%The \acp{dd} are expected to autonomously carry out distributed sensing activities,
-%which may trigger actions 
-% affecting the very processes creating them
-% (and hence the overall partitioning into \acp{dd}) or 
-% generating new \acp{cct}
-% for further services and activities.
-%
-%\item[\enlabel{req-decl}{R4}]
-%\emph{Declarative specification.}
-%The behavior of each region is expressed in a declarative way in terms of its ultimate sense-decide-act goals, where actions can also affect the shape of regions in a sort of feedback loop.
-
-%\item[\enlabel{req-scalability}{R3})] \emph{Scalability and in recognition and action.}
-%\item[\enlabel{req-efficiency}{R4})] \emph{Efficiency in recognition and action.}
-%\end{enumerate}
-%
-
 \subsubsection{\reqlabel{req-feedback}{R3} Feedback-regulated activity within decentralized domains.}
 %
 In \casename{}, each region
@@ -487,16 +348,16 @@ In general, \acp{dd} are expected to autonomously carry out distributed sensing 
  followed by processing and decision-making,
 which may trigger actions 
  affecting the environment
-%  (cf. actuations, for a kind of indirect feedback)
+ (cf. actuations, for a kind of indirect feedback)
  or spawning new \acp{cct} (e.g., to connect with other services).
 %
-%Often, in order to simplify and guarantee consistency at the level of \acp{dd}, 
-%decisions might be taken centrally in a \ac{dd} 
-% by a leader. 
-%This could also be seen as a feedback loop: contributions are collected at the leader,
-% the leader performs the decision-making
-% and spreads the decisions which are then carried out,
-% producing new data to be gathered and so on.
+Often, in order to simplify and guarantee consistency at the level of \acp{dd}, 
+decisions might be taken centrally in a \ac{dd} 
+ by a leader. 
+This could also be seen as a feedback loop: contributions are collected at the leader,
+ the leader performs the decision-making
+ and spreads the decisions which are then carried out,
+ producing new data to be gathered and so on.
 
 \subsubsection{Summary of requirements.}
 \begin{figure*}
@@ -522,8 +383,7 @@ which may trigger actions
 \end{figure*}
 
 The rationale of the above requirements %, %in a nutshell,
- is to 
- promote abstractions 
+ is to promote abstractions 
  supporting concurrent, system-spanning, and possibly overlapping activities (\ref{req-concurrency}),
  dynamic creation and maintenance of non-overlapping regions (\ref{req-flexible-dec}),
  and 
@@ -614,7 +474,7 @@ Overall, the contribution of this work
 }
 \end{comment}
 \section{Dynamic Decentralization Domains in Practice}\label{sec:contrib}
-
+\begin{comment}
 \subsection{\revise{Programming Model}}
 \label{ssec:programming-model}
 
@@ -652,14 +512,14 @@ In particular,
 the program may be deployed and evaluated on all the devices constituting the system,
 or may be computed on behalf of them by a distinct managing system---following the approach of~\cite{DBLP:journals/fi/CasadeiPPVW20}.
 }
-
+\end{comment}
 %req-concurrency,req-flexible-dec,req-feedback
 
-\subsection{\revise{From Requirements to an \ac{api}}}
+\subsection{From Requirements to an \ac{api}}
 \label{ssec:reqs-to-api}
 
 From the previous discussion,
-\revise{we further refine the}
+we further refine the
 requirements and extrapolate the design elements of an \ac{api}
 supporting the decentralized computation we need:
 %

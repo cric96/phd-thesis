@@ -930,7 +930,7 @@ The simulation results underscore the algorithm's capability to effectively part
  As demonstrated in \Cref{fig:overview-results}, 
  our algorithm stabilizes to produce the correct number of clusters after a certain settling period. 
 In the sections that follow, we concentrate on discussing the outcomes in relation to the evaluation goals outlined in \Cref{s:eval-goal}.
-\paragraph*{Goal 1 (\ref{goal:1}): static sensing/spatial-based clustering}
+\paragraph*{Goal \ref{goal:1}: static sensing/spatial-based clustering}
 Running the simulations of scenarios 1-5 we verified how much the clusters extracted follow the underlying temperature distribution in the static context.
  \Cref{fig:overview-results} shows that the algorithm correctly extracts the cluster number -- with the optimal parameters' configuration.
  Furthermore, observing \Cref{fig:good-simulation-results}, we can deduce that the cluster shape is correct too.
@@ -943,7 +943,7 @@ Here, $\theta$ plays a key role. Observing the behaviour of scenario 4 in \Cref{
 
 Finally, Another important aspect is the density ($\alpha$) of the system.
  With a few nodes, candidate nodes may be positioned far from the cluster centre, thus identifying wider areas than expected.
-\paragraph*{Goal 2 (\ref{goal:2}): robustness against node mobility \emph{and failures}}
+\paragraph*{Goal \ref{goal:2}: robustness against node mobility \emph{and failures}}
 When nodes have a low mobility and exploration range, the system is robust to node movements (\Cref{fig:good-simulation-results}).
  The exploring policy introduces errors, but the results are comparable to solutions where the nodes are stationary.
 Moreover, even in case of failures, the clustering process is practically not affected at all.
@@ -952,7 +952,7 @@ However, in the worst case, mobility and failures lead to false positives (\Cref
  Therefore, that process approximately covers the whole area (and hence produces a high error rate).
 \rev{Scenario 8 is mainly influenced by the low-density situation.
  Indeed, in that case, removing nodes lead to not covering the whole system. }
-\paragraph*{Goal 3 (\ref{goal:3}): robustness against temperature changes}
+\paragraph*{Goal \ref{goal:3}: robustness against temperature changes}
 The result of scenario 7 is comparable to the static scenario.
  Indeed, \Cref{fig:good-simulation-results} shows that the cluster number is correct, and \Cref{fig:good-simulation-results} shows that the error rate is low, and the shape is accurate.
  The solution suffers from low-density values and wrong $\theta$ values as scenarios 1-5 (\Cref{fig:bad-simulation-results}).
@@ -1262,7 +1262,7 @@ In particular, we show that a swarm can autonomously
 In order to perform the evaluation, 
  we have implemented our algorithms using the \scafi{} Scala framework for field-based computing.
 %
-This algorithm could serve as a foundational solution for organizing collective tasks based on environmental sensing data in the context of Cyber-Physical Social Wearable Systems (\ac{cpsws}), as discussed in \Cref{chap:cpsw:vision}.
+This algorithm could serve as a foundational solution for organizing collective tasks based on environmental sensing data in the context of \ac{cpsw}, as discussed in \Cref{chap:cpsw:vision}.
 
 
 %\printbibliography
