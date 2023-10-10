@@ -49,7 +49,7 @@ Particularly, the first three approaches are based on the idea of learning from 
 Reinforcement learning sets itself apart from other methodologies by operating without the need for labeled data or supervision and through a sequential decisions. 
  It employs a \emph{trial-and-error} strategy, mirroring the way humans acquire knowledge. 
  Subsequent sections will delve into the nuances of this distinctive approach, starting from single agent settings and then moving to multi-agent and many-agent systems---the focus of this thesis.
-\section{Single-agent}
+\section{Single-agent}\label{chap:rl:single}
 \Acl{rl}~\cite{sutton2018reinforcement-learning} serves as a universal framework that has been inspired by the cognitive processes underlying human learning. 
  This paradigm has proven to be highly effective for addressing \emph{control problems}, which are essentially tasks that require decision-making to achieve a particular outcome.
 %
@@ -81,7 +81,7 @@ A \ac{mdp} consists of a tuple $<\RS, \RA, \RP, \RR>$ in which:
   \item $\RP(s_{t + 1} | s_t, a_t)$ define the probability to reach some state $s_{t + 1}$ starting from $s_t$ and performing $a_t$ (i.e. transition probability function);
   \item $\RR(s_t, a_t, s_{t+1})$ devise a probabilistic reward function.
 \end{itemize}
-In \ac{mdp}, $\RR$ is memory-less, namely the next environment state depends only on the current state. 
+In \ac{mdp}, $\RR$ is \emph{memory-less}, namely the next environment state depends only on the current state. 
 %%
 Typically, in RL problems, agents do not have access to $\RR$ or $\RP$ but they can rely only on the experience $(s_t, a_t, r_t)$ sampled at a time step. 
 %%

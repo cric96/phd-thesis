@@ -80,13 +80,13 @@ The tool comes with two types of systems already implemented that are very commo
 i.e., centralized training and decentralized execution (\texttt{CTDESystem}) and decentralized training and execution (\texttt{DTDESystem}).
 Furthermore, an implementation of the DQN algorithm \cite{Mnih2015} is provided and used to train agents. 
 The end-user who wants to run a learning process only has to implement four elements
-in order to define his own system with the desired collective goal, which are:
-\begin{itemize}
-    \item the environment, 
-    \item the agent state space, 
-    \item the action space and,
-    \item the reward function.
-\end{itemize} 
+in order to define his own system with the desired \emph{collective} goal, which are:
+\begin{enumerate}
+    \item the \emph{environment}: that is the place where the agents live, 
+    \item the \emph{agent state space}: namely the information that the agent can perceive from the environment, 
+    \item the \emph{action space}: namely the actions that the agent can perform in that environment, and
+    \item the \emph{reward function}: that is the function that the agent has to maximize.
+\end{enumerate} 
 Only by using this module, 
  it is possible to run a simple learning process in a simulated environment based on our platform.
 
@@ -95,7 +95,7 @@ Only by using this module,
     \includegraphics[width=\textwidth]{papers/coordination2023/imgs/core-architecture.pdf}
     \caption{\scarlib{} core architecture}
     \label{coordination2023:fig:arc}
-\end{figure} %% TODO increase the font in this figure
+\end{figure} 
 To gain a deeper comprehension of the system dynamics, 
  a discussion of the underlying mechanisms is warranted.
 %
@@ -189,10 +189,9 @@ This is a key part of this contribution.
  \emph{rigid}, \emph{untested}, and had \emph{interoperability issues} between Alchemist 
  and the chosen native libraries.
 With this integration, 
- we want to provide a usable system once and for all, 
- to bring the many-agent RL community closer 
- to the use of this simulator and this paradigm, 
- which has proven flexible in describing the most diverse environments outlined in \Cref{part:background}.
+ we aim to deliver a robust and user-friendly system that will serve as a long-term solution, 
+ fostering greater engagement within the multi-agent reinforcement learning community. 
+ This simulator and paradigm have already demonstrated their versatility in representing a wide range of environments, as discussed in \Cref{part:background}.
 
 The specification of a learning system does not change, only two new elements are added: 
  the specification of the Alchemist simulation and the implementation of the \scafi{}-based logic.
@@ -215,23 +214,17 @@ Specifically,
 \end{figure}
 
 \subsection{DSL for learning configurations} 
-the latest module developed
- is an internal DSL that allows for agile 
- and flexible creation of \ac{cmarl} training systems. 
- We made this choice to bridge the gap between the \ac{marl} system designer's 
- idea and the actual training system. 
- Additionally, by using a system like Scala, 
- creating a typed \ac{dsl} allows for capturing errors during compilation, 
- rather than waiting for the actual system runs 
- to intercept simple configuration errors.
+Finally, we developed an internal \ac{dsl} designed to streamline the development of \ac{MAARL} training systems. 
+ This approach aims to seamlessly translate the concepts envisioned by a \ac{MAARL} system designer into a functional training system. 
+ Utilizing a strongly-typed language like Scala for our DSL enables error detection at compile-time, 
+ thereby preempting simple configuration errors that might otherwise only be caught during runtime.
 
-The exposed \ac{dsl} is a simple facade 
- to the abstractions shown in the \texttt{scarlib-core} module. 
-Therefore, if a developer wants to start their simulation 
- (let's say in Alchemist), 
- they must first define a reward function that indicates 
- how good the current state of a certain agent 
- is compared to the current environmental condition.
+The public-facing DSL serves as a simplified interface to the underlying abstractions encapsulated in the \texttt{scarlib-core} module. 
+ Consequently, when a developer wishes to initiate a simulation 
+ (for example, in Alchemist), 
+ they must first specify a reward function. 
+ This function serves as a metric for evaluating the performance of a particular agent in relation to the current state of the environment.
+
 \begin{lstlisting}
 class MyRewardFunction extends CollectiveRewardFunction:
     override def computeReward(
@@ -243,7 +236,7 @@ class MyRewardFunction extends CollectiveRewardFunction:
 Consequently, they must decide which actions are supported 
  by the agents living in the chosen system. 
 %
-Since we are talking about \ac{cmarl} systems, 
+Since we are talking about \ac{MAARL} systems, 
  we suppose that each agent has the same action space. 
  Thus, it is possible to define a set of actions as a product type:
 \begin{lstlisting}
@@ -255,10 +248,12 @@ object MyAction:
     def all: Seq[MyAction] = Seq(A, B, C)
 \end{lstlisting}
 Final refinements required include: 
-i) choosing the class of the Alchemist environment to instantiate, 
-ii) defining the number of agents living in the chosen environment, and 
-iii) defining the size of the buffer in which the memory will be stored,
-expressed as follows:
+\begin{itemize}
+    \item choosing the class of the Alchemist environment to instantiate, 
+    \item defining the number of agents living in the chosen environment, and 
+    \item defining the size of the buffer in which the memory will be stored.
+\end{itemize}
+This can be expressed as follows:
 \begin{lstlisting}
 val system = learningSystem {
     rewardFunction { new MyRewardFunction() }
@@ -438,7 +433,7 @@ Given the flexibility of \scarlib{},
 With the homogeneous policies found (i.e., the one extracted from the CTDE process), 
  we verified that the system's behaviour 
  was consistent with what was learned by varying the initial seed 
- in 16 simulations
+ in 16 simulations.
 %
 With the CDTE policy, 
  since we considered the system homogeneous, 
@@ -446,7 +441,7 @@ With the CDTE policy,
  expecting similar performance as the nodes increased.
 
 The graphs shown in \Cref{coordination2023:fig:cc-results} 
- demonstrate the multi-objective nature of the problem. 
+ demonstrate the \emph{multi-objective} nature of the problem. 
 In fact, cohesion and collision are two contrasting signals, 
  and the system had to find a balance between these two values. 
  The graphs show that DQN can generally optimize one signal at a time, 
@@ -466,7 +461,7 @@ During the testing phase
  both in the CDTE and DTDE cases. 
  Most specifically, 
  we note that the homogeneous policy is generally 
- a winning choice for homogeneous \ac{cmarl} tasks. 
+ a winning choice for homogeneous \ac{MAARL} tasks. 
 %
 Increasing the number of agents (from 50 to 200), 
  we can observe that collective performances are similar to those with few agents (\Cref{coordination2023:fig:test}).
@@ -593,24 +588,6 @@ The average distance (orange line) stays close to 2 * $\delta$ (after convergenc
 }
 \label{coordination2023:fig:test}
 \end{figure*}
-%\subsection*{Cleaning Robot}
-%\paragraph{Description}
-%This environment consists of N agents operating in a 2D world represented by a grid. 
-% The world is discrete, and agents can move one step north, west, east, or south. 
-% The world has a fixed size, so agents cannot move beyond the boundaries of the grid.
-% The environment contains M dirty areas that need to be cleaned. 
-%% The agents must learn to clean these areas efficiently and avoid unnecessarily 
- %cleaning areas that are already clean.
- %The agents will receive a reward for cleaning dirty areas and a penalty for cleaning clean areas.
- %More precisely, the reward function is:
-%\begin{equation} % TODO: Update the reward function
-%    r = \begin{cases}
-%            +1 & \text{if the agent cleans a dirty area} \\
-%            -1 & \text{if the agent cleans a clean area} \\
-%            +100 & \text{if the room is clean} 
-%    \end{cases}
-%\end{equation}
-
 
 %\paragraph{Results}
 %Here you should show the result of the cleaning robot experiment
@@ -640,7 +617,7 @@ Vectorized Multi-agent Simulator~\cite{bettini2022vmas} is another promising sol
 While \scarlib is not directly linked to any simulator, 
  its main abstraction can be potentially linked 
  to both JVM-based simulators and gym-based Python environments. 
- Our choice of Alchemist was mainly due to its ability to express \ac{cmarl} settings easily, but potentially it can be used with any of the above-described solutions.
+ Our choice of Alchemist was mainly due to its ability to express \ac{MAARL} settings easily, but potentially it can be used with any of the above-described solutions.
 \subsection{Multi-Agent Deep RL libraries:}
 since the importance of multi-agent settings several libraries have been developed in recent years. 
 Ray~\cite{ray} is one of the most comprehensive frameworks, 
@@ -657,16 +634,16 @@ PyMARL~\cite{samvelyan19smac} is one of the first solutions in Python for MARL,
 \scarlib{} is more similar to the first framework, 
  even though it is primarily designed for cooperative applications. 
 %
-However, since it was developed specifically for \ac{cmarl}, 
+However, since it was developed specifically for \ac{MAARL}, 
  it includes some abstractions and configurations that are not present in Ray, 
  such as the concept of a collective reward function and the configuration for CTDE. 
 %
 This reduces the time required to use \scarlib{} compared to Ray. 
  Additionally, \scarlib{} has a simple DSL that is easier to use than Ray's configuration system and is aided by the type system.
 
-Finally, some innovative approaches aim to scale solutions to large populations of cooperative agents, such as mean-field RL. However, only a few implementations currently exist, and they are not considered to be general-purpose. \scarlib{}, on the other hand, offers a practical, simple implementation that can be leveraged in \ac{cmarl} settings.
+Finally, some innovative approaches aim to scale solutions to large populations of cooperative agents, such as mean-field RL. However, only a few implementations currently exist, and they are not considered to be general-purpose. \scarlib{}, on the other hand, offers a practical, simple implementation that can be leveraged in \ac{MAARL} settings.
 
-Overall, \ac{cmarl} is a high-level framework that reduces the effort required for developers and practitioners to define and implement \ac{cmarl} problems when compared to current state-of-the-art solutions.
+Overall, \ac{MAARL} is a high-level framework that reduces the effort required for developers and practitioners to define and implement \ac{MAARL} problems when compared to current state-of-the-art solutions.
 
 \subsection{Many-Agent Proof of Concept:}
 The above RL library solutions are mainly created for multi-agent systems, 
@@ -679,7 +656,7 @@ In particular, mean-field RL~\cite{meanfield} is probably one of the
 %
 Currently, however, only a few implementations 
  exist~\footnote{\url{https://github.com/mlii/mfrl}} and they are not considered to be general-purpose. 
- \scarlib{} instead is practical and already provides a simple implementation that can be leveraged in \ac{cmarl} settings. 
+ \scarlib{} instead is practical and already provides a simple implementation that can be leveraged in \ac{MAARL} settings. 
 \section{Wrap up}\label{coordination2023:conclusion}
 In this chapter, we presented \scarlib{}: 
  a collaborative many-agent deep reinforcement learning framework that integrates the functionalities of \scafi{} and Alchemist.
@@ -689,28 +666,10 @@ In this chapter, we presented \scarlib{}:
 % 
 With \scarlib{}, developers can effectively and efficiently simulate and experiment with different reinforcement learning algorithms, 
  thereby providing a valuable tool for the advancement of coordination and multi-agent systems research.
-This tool is essential in the view presented in this thesis: the development of Cyber-Physical Swarms applications need both a foundational theory and a practical tool to test and validate the theory.
+This tool is essential in the view presented in this thesis: 
+ the development of Cyber-Physical Swarms applications need both a foundational theory and a practical tool to test and validate the theory.
 %
-This is the reason why we developed \scarlib{} and why we used it in the experiments presented in the next chapter.
-\begin{comment}
-Looking forward, \scarlib{} presents a promising solution 
- for expressing collaborative multi-agent reinforcement learning applications -- like hybrid aggregate computing solutions~\cite{Aguzzi2021,Aguzzi2022,Aguzzi2022-Roadmap,DBLP:conf/acsos/AguzziCV22}.
- However, further development and integration is necessary for it to be more easily adopted by non-expert users. 
- One area of improvement would be to integrate additional learning algorithms such as MAPPO~\cite{mappo} and mean field reinforcement learning~\cite{meanfield}, 
- as DQN is only a baseline approach.
-%
-Another aspect to be considered is the potential bottleneck that Alchemist may create during the learning phase since it is a JVM-based systems. 
-%
-To address this, we propose integrating a new environment, FLAME GPU~\cite{flame}, 
-which has the ability to run entirely on GPU, 
-thus providing faster learning and reducing the computational load. 
-%
-This integration would further enhance the capabilities of \scarlib{} and make it a more practical and efficient tool for \ac{cmarl} research.
 
-%\subsubsection{Acknowledgements} Please place your acknowledgments at
-%the end of the paper, preceded by an unnumbered run-in heading (i.e.
-%3rd-level heading).
-\end{comment}
 
 %
 % ---- Bibliography ----
