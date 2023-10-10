@@ -16,40 +16,21 @@
 %
 \minitoc% Creating an actual minitoc
 %
-%\acresetall
-\begin{comment}
-Recent advances in machine learning 
- have led to the development of \ac{marl}~\cite{Busoniu2008}, 
- which involves multiple agents learning simultaneously 
- in a shared environment to optimize a global or local reward signal. 
-% 
-This area of research has gained significant interest in recent years 
- due to its successful applications in various domains, 
- such as robotics~\cite{Long2018}, IoT~\cite{Lei2020}, and traffic control~\cite{https://doi.org/10.48550/arxiv.1903.04527}. 
-%
-\ac{marl} provides a powerful approach to tackling complex problems 
- that cannot be easily solved by single-agent reinforcement learning. 
-%
-\end{comment}
-\Ac{cmarl}~\cite{yang2021many,https://doi.org/10.48550/arxiv.2106.09825}
- is a relevant subclass of \ac{marl}, 
- where thousands of agents work together to achieve a common coordination goal. 
-\ac{cmarl} finds several applications in contexts like swarm robotics~\cite{huttenrauch2019deep}, wireless sensor networks, and smart grid management. 
-%
-\ac{cmarl} offers significant opportunities in the design of large-scale systems
+\Ac{MAARL}~\cite{yang2021many,https://doi.org/10.48550/arxiv.2106.09825}
+ offers significant opportunities in the design of large-scale systems
  requiring agents to coordinate and collaborate effectively, 
  even in environments with partial observability and intrinsic unpredictability. 
 %
-Therefore, there is a need for effective frameworks (and tools) that can foster \ac{cmarl} adoption.
+Therefore, there is a need for effective frameworks (and tools) that can foster \ac{MAARL} adoption.
 
 %However, existing the design of effective CMARL algorithms and frameworks that can handle a large number of agents and complex environments remains a challenging research problem.
 % 
-However, although several frameworks exist both for describing and solving \ac{cmarl} problems (Ray~\cite{ray}) 
+However, although several frameworks exist both for describing and solving \ac{MAARL} problems (Ray~\cite{ray}) 
 and for using and defining multi-agent environments (PettingZoo~\cite{NEURIPS2021_7ed2d345}) 
 they generally lack the following aspects: \emph{(i)} setting up complex environments (and hence simulation scenarios) is particularly difficult, and 
 \emph{(ii)} they are typically tailored for handling a limited number of agents, and for non-collaborative tasks.
 
-To start addressing these problems, in this work we present \scarlib{}, a framework for the design of effective \ac{cmarl} systems, that 
+To start addressing these problems, in this work we present \scarlib{}, a framework for the design of effective \ac{MAARL} systems, that 
  provides the following set of features:
  support for centralized training and decentralized execution, 
  easy extensibility, 
@@ -59,137 +40,27 @@ To start addressing these problems, in this work we present \scarlib{}, a framew
 %
 With \scafi{}, in particular, \scarlib{} is provided with a high-level language for distributed computing that provides a declarative
  and compositional ways of expressing complex coordination tasks. 
-
-%The remainder of this paper is organized as follows: \Cref{coordination2023:background} provides key background in the context of learning and the Alchemist/\scafi{} toolchain, \Cref{coordination2023:contribution} presents the \scarlib{} tool, \Cref{coordination2023:experiments} presents demos of \scarlib{}, \Cref{coordination2023:sec:related} discuss some state-of-the-art solutions, and finally \Cref{coordination2023:conclusion} concludes and presents future works.
-%
 %% TODO probably here we should add a discussion about why the DSL is important, or in general why this framework is better w.r.t. the others
 %% Here we should add the outline of the paper
-\section{Background}\label{coordination2023:background}
-\begin{comment}
-\section{Background}\label{coordination2023:background} %% Or background??
-%\meta{This section should provide a brief overview of the related work (in this case I would say that there should be a discussion about the other libraries)}
-
-\subsection{Reinforcement Learning}
-\ac{rl} is a subfield of machine learning, other than supervised and unsupervised learning,
- that focuses on solving sequential decision problems: 
- giving an \emph{agent} that can interact with an \emph{environment}, the \ac{rl} goal is to \emph{learn} a policy (i.e., the action to take in a certain \emph{state} of the environment) that maximizes a reward signal.
- %The general framework of RL is composed around a bunch of very simple concepts: %(\Cref{coordination2023:fig:rl}): 
- %there is a learner called \emph{agent} and the thing it interacts with is called \emph{environment}. 
- Most specifically, the dynamics of these agent-environment interactions are modelled in discrete steps (i.e., $t=0,1,2,\dots$). 
- At each step, the agent receives an \emph{observation} $S_t \in \mathcal{S}$ ($\mathcal{S}$ is the
- set of all the possible states) from the environment and takes an action $A_t \in \mathcal{A}(S_t)$ 
- ($\mathcal{A}(S_t)$ is the action space from the state $S_t$).
- One time step later, the agent receives a reward $R_{t+1} \in \mathbb{R}$ and the new state $S_{t+1}$.
- The agent decisions are based on a \emph{probabilistic policy} $\pi_t(a | s)$, which indicates 
- the probability of choosing action $a$ from the state $s$ at time $t$.
-%\begin{figure}[h]
-%     \centering
-%     \includegraphics[width=0.6\textwidth]{papers/coordination2023/imgs/RL.pdf}
-%     \caption{RL Framework}
-%     \label{coordination2023:fig:rl}
-%\end{figure}
-In order for \ac{rl} to be effective, two conditions are fundamental: \emph(i) all is meant by \emph{goals/purposes/success} can be well thought of as the maximization of the expected 
-    value of the cumulative sum of the reward (i.e., a scalar signal) -- called \emph{the reward hypothesis}; and \emph{(ii)} the environment state should summarize the past compactly, so that future states only depend on the current state (and not on past states) -- 
-    \emph{the markov property}.
-
-In literature, several algorithms can be used to solve \ac{rl} problems.
- In this work, we will focus on two of them: the \emph{Q-Learning}~\cite{Watkins1992} algorithm and 
- the \emph{Deep Q-Learning}~\cite{dqn} algorithm. 
-The core part of both of these algorithms is the \emph{Q-function}, 
- which maps each state-action pair to a value that represents the expected future reward of taking that action in that state.
- Using a modified Bellman equation update, 
- the Q-function is iteratively updated based on the rewards received by the agent as it takes actions in the environment.
-%
-From the Q-function, 
- the agent can follow both an \emph{exploration} policy during the training phase and a \emph{behavioural} policy once the learning phase is complete. 
- The \emph{behavioural} policy is a greedy policy, 
- in which the agent chooses the action with the highest Q-value in a given state. 
- This policy ensures that the agent always chooses the best action to maximize its expected future reward. 
- On the other hand, during the exploration phase, 
- the agent uses an $\epsilon$-greedy policy, 
- where it chooses a random action with probability $\epsilon$
- and the best action (according to the Q-table) with probability 1-$\epsilon$. This allows the agent to explore the environment and learn from new experiences. 
- 
- The main difference between the two algorithms is that in Q-Learning
-  the Q-table is represented as a table, while in Deep Q-Learning it is approximated by a neural network.
- Therefore, the first approach works well for simple problems, 
-  but it struggles to scale to complex problems due to the explosion of the state space; the second approach, on the other hand, addresses large-scaleness but requires much data to train the neural network.
- %To overcome this problem, the Deep Q-Learning~\cite{Mnih2015} was introduced, this algorithm 
- %uses a neural network to approximate the Q-table. The neural network takes 
- %as input the state and outputs the Q-values for each action.
-
- \begin{figure*}[t]
-    \begin{subfigure}[b]{0.49\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{papers/coordination2023/imgs/q-learning.pdf}
-        \caption{Q-Learning}
-        \label{coordination2023:fig:ql}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.49\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{papers/coordination2023/imgs/deepQL.pdf}
-        \caption{Deep Q-Learning}
-        \label{coordination2023:fig:dqn}
-    \end{subfigure}
-\caption{Q-Learning and Deep Q-Learning visual comparison}\vspace{-10pt}
-\end{figure*}
-
-
-\subsection{Multi Agent Reinforcement Learning}
-\ac{marl} is an extension of \ac{rl} where multiple agents 
- interact one another and with the environment. 
- Usually, \ac{marl} is modelled as a 
- \emph{Markov Game} (or Stochastic Game $\mathcal{S}$)~\cite{LITTMAN1994157} in which we have:
- \begin{itemize}
-    \item A tuple $\mathcal{S} = <N, S, \{A^i\}, P, \{R^i\}>$ with $i \in 1 \dots N$
-    \item The number of agents $N > 1$
-    \item The action space of the i-th agent $A^i$. The global action space is defined as $\mathbb{A} = A^1 \times A^2 \times \dots \times A^N$
-    \item A function describing the transition dynamics $P: S \times \mathbb{A} \rightarrow \mathcal{P}(S)$
-    \item The reward function $R^i: S \times \mathbb{A} \times S \rightarrow \mathbb{R}$ for each agent $i$ 
- \end{itemize}
-
-Based on the reward function used by the agents, MARL can be divided into two categories:
- i) \emph{cooperative}, where all the agents trying to maximize the same reward function (e.g., a group of robots trying to clean a room);
- ii) \emph{competitive}, where, potentially, each agent has its own reward function that is conflictual with the other (e.g., a rock-paper-scissor game).
- Cooperative MARL can be further divided into two additional categories (based on the policy),
- namely:
- i) \emph{homogeneous}, where all the agents have the same capabilities, i.e., they use the same policy
- ii) \emph{heterogeneous}, where each agent may have its own policy, in this case, each agent 
-    tries to maximize the local policy following the global shared goal.   
-
-In this work, we focus on a subset of MARL, namely: \emph{many-agent reinforcement learning}~\cite{yang2021many}. 
- The only difference between the two approaches is in the number of agents involved. Typically, in many-agent reinforcement learning the number of agents
- may range from a hundred to one or two thousands whereas, in Multi Agent Reinforcement Learning, there are only a few tens~\cite{smac,marl-curricula}.
- %(i.e., $N \gg 2$, typically less than one or two thousands ~\cite{smac,marl-curricula}).
- Moreover, we focus on cooperative homogeneous and heterogeneous learning.
-\end{comment}
 
 %\input{papers/softwarex2021/main.tex}
 \section{Software Description}\label{coordination2023:contribution}
-%\meta{This section should provide a description of the framework, including the main features and the architecture.}
-%\newline
-%\begin{itemize}
-%    \item Main features
-%    \item Library Modules schema and discussion
-%    \item Core module architecture
-%    \item Alchemist-Scafi module architecture
-%    \item CTDE and DTDE schema
-%\end{itemize}
-
-\scarlib{} \footnote{Tool available on GitHub at \url{https://github.com/ScaRLib-group/ScaRLib}}~\footnote{demo video at: \url{https://github.com/ScaRLib-group/ScaRLib-demo-video}} Is a research Scala framework designed to support
-the development of \ac{cmarl} systems by JVM-based high-level specification, and with learning performed under the hood by PyTorch\footnote{\url{https://pytorch.org/}}.
+\scarlib{} \footnote{Tool available on GitHub at \url{https://github.com/ScaRLib-group/ScaRLib}}~\footnote{demo video at: \url{https://github.com/ScaRLib-group/ScaRLib-demo-video}} is a research Scala framework designed to support
+the development of \ac{MAARL} systems by JVM-based high-level specification, and with learning performed under the hood by PyTorch\footnote{\url{https://pytorch.org/}}.
 %
 This project aims to provide a tool that allows easy and powerful system specification.
 %
-To meet this purpose we have designed many abstractions, that model high-level aspects of the MARL domain, 
+To meet this purpose we have designed many abstractions, that model high-level aspects of the \ac{MAARL} domain, 
  without caring about low-level implementation details.
 Basically, \scarlib{} is composed of three main modules (\Cref{coordination2023:fig:modules}), namely: 
-    i) \texttt{scarlib-core} that implements the main abstractions over the CMARL domain,
-    ii) \texttt{dsl-core} that provides a high-level language to specify the system, and
-    iii) \texttt{alchemist-scafi} that provides bindings between \scarlib{} and the two tools Alchemist and \scafi{}.
+\begin{itemize}
+    \item \texttt{scarlib-core} that implements the main abstractions over the \ac{MAARL} domain,
+    \item \texttt{dsl-core} that provides a high-level language to specify the system, and
+    \item \texttt{alchemist-scafi} that provides bindings between \scarlib{} and the two tools Alchemist and \scafi{}.
     It is important to note that \scarlib{} is not limited to the Alchemist-\scafi{} combination, that module is 
     already implemented due to the actual need, however, it is possible to implement other bindings to other tools
     (e.g., by replacing Alchemist with some other simulator, for example, FLAME GPU~\cite{flame}).
+\end{itemize}
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.7\textwidth]{papers/coordination2023/imgs/scarlib-modules.pdf}
@@ -197,20 +68,25 @@ Basically, \scarlib{} is composed of three main modules (\Cref{coordination2023:
     \label{coordination2023:fig:modules}
 \end{figure}
 
-\subsection{Core abstraction} The module \texttt{scarlib-core} implements the core functionalities and abstractions of the framework, such as the definition of the main data structures and the implementation of the main algorithms. 
+\subsection{Core abstraction} The module \texttt{scarlib-core} implements the core functionalities and abstractions of the framework, 
+such as the definition of the main data structures and the implementation of the main algorithms. 
 %
-All the abstractions (\Cref{coordination2023:fig:arc}) are built around a bunch of concepts. The key element is the \texttt{System}, which is a collection of agents that interact within a shared environment and that are trained to optimize a global or local reward signal
+All the abstractions (\Cref{coordination2023:fig:arc}) are built around a bunch of concepts. 
+ The key element is the \texttt{System}, 
+ which is a collection of agents that interact within a shared environment and that are trained to optimize a global or local reward signal
 expressed by a reward function. 
 %
 The tool comes with two types of systems already implemented that are very common in literature~\cite{Du2020},
 i.e., centralized training and decentralized execution (\texttt{CTDESystem}) and decentralized training and execution (\texttt{DTDESystem}).
 Furthermore, an implementation of the DQN algorithm \cite{Mnih2015} is provided and used to train agents. 
 The end-user who wants to run a learning process only has to implement four elements
-in order to define his own system with the desired collective goal, which are: 
- i) the environment, 
- ii) the agent state space, 
- iii) the action space and,
- iv) the reward function.
+in order to define his own system with the desired collective goal, which are:
+\begin{itemize}
+    \item the environment, 
+    \item the agent state space, 
+    \item the action space and,
+    \item the reward function.
+\end{itemize} 
 Only by using this module, 
  it is possible to run a simple learning process in a simulated environment based on our platform.
 
@@ -220,19 +96,18 @@ Only by using this module,
     \caption{\scarlib{} core architecture}
     \label{coordination2023:fig:arc}
 \end{figure} %% TODO increase the font in this figure
-
-To better understand the dynamics of the system it is useful to explain some internals.
+To gain a deeper comprehension of the system dynamics, 
+ a discussion of the underlying mechanisms is warranted.
 %
-Both systems utilize a training process that consists of multiple \emph{epochs}, 
- with each epoch comprising a set of \emph{episodes}. 
- During each episode, 
- the agents receive the current state as input and 
- execute an action based on that state. 
-This collective action causes 
- the environment to move to the next state, 
- advancing the simulation to the next episode.
-At the end of an epoch, 
- the environment is reset, and the agents are trained using the collected experience.
+Both systems employ a training algorithm characterized by a sequence of \emph{epochs}, 
+ each encompassing a collection of \emph{episodes}.
+Within each episode, 
+ agents are presented with the current state, which serves as an input for action selection.
+%
+The collective action executed by the agents prompts a state transition in the environment, 
+ thereby facilitating the progression to the subsequent episode.
+Upon completion of an epoch, the environment is reinitialized, 
+ and the agents undergo training based on the aggregated experience.
 
 Most specifically,
  if the chosen system is a \texttt{CTDESystem} (\Cref{coordination2023:fig:ctde}) the agents are trained in a centralized way, 
@@ -242,8 +117,10 @@ Most specifically,
  and for the improvement of the policy neural network.
 % 
 The system is also responsible 
- for the execution of all the agents and the notification of the updated policy. 
- In this way, it is possible to easily extend the system in order to modify the execution flow, e.g., if a concurrent and distributed execution is needed. 
+ for the execution of all the agents and the notification of the updated policy.
+% 
+In this way, it is possible to easily extend the system in order to modify the execution flow, e.g., 
+ if a concurrent and distributed execution is needed. 
 %
 The \texttt{DTDESystem} (\Cref{coordination2023:fig:dtde}) works similarly, 
  the only difference is that every agent has its own dataset and learner.
@@ -260,7 +137,7 @@ Regarding the training process,
  
 %
 One way to integrate this library into a JVM environment could be 
- to rely on its native core (LibTorch) using JNI -- 
+ to rely on its native core (LibTorch) using Java Native Interface (JNI) -- 
  as was done in \texttt{scala\_torch}~\footnote{\url{https://github.com/microsoft/scala_torch}} project. 
  In \scarlib{}, we chose a convenient approach 
  that allowed us not only to access PyTorch 
@@ -270,9 +147,12 @@ One way to integrate this library into a JVM environment could be
  of these libraries.
 %
 This integration generally involves:
-i) setting up a Python environment in which the libraries of interest are instantiated, and
-ii) creating a Scala API that isolates what is necessary to access the Python ecosystem.
-In this case, we have isolated everything in DQN, which is therefore the entry point for accessing Torch.
+\begin{enumerate}
+    \item setting up a Python environment in which the libraries of interest are instantiated;
+    \item creating a Scala API that isolates what is necessary to access the Python ecosystem.
+\end{enumerate}
+In this case, we have isolated everything in DQN, 
+ which is therefore the entry point for accessing PyTorch.
 \begin{figure*}[t]
     \centering
     \begin{subfigure}[b]{0.49\textwidth}
@@ -287,7 +167,7 @@ In this case, we have isolated everything in DQN, which is therefore the entry p
         \caption{DTDE System}
         \label{coordination2023:fig:dtde}
     \end{subfigure}
-\caption[Examples of developed System dynamics in \scarlib{}]{Examples of developed System dynamics. 
+\caption[Examples of developed System dynamics in \scarlib{}]{Examples of developed system dynamics. 
 On the left, there is the centralized system, 
 where a learner with a global view of the system 
 updates the policy shared with all agents. 
@@ -296,39 +176,34 @@ On the right, there is a decentralized system,
 where each agent has a local policy and a local policy.}
 \end{figure*}
 
-\subsection{\scafi{}-Alchemist integration} In addition to the core, we have implemented another module called \texttt{alchemist-scafi} (\Cref{coordination2023:fig:alchemist-arc}) 
+\subsection{\scafi{}-Alchemist integration} In addition to the core, 
+ we have implemented another module called \texttt{alchemist-scafi} (\Cref{coordination2023:fig:alchemist-arc}) 
  in which there is the integration with the two tools: 
  Alchemist \cite{DBLP:journals/jos/PianiniMV13} and \scafi{} \cite{Casadei2022}.
 %
 Such integration enables the possibility to run the learning process 
  in an aggregate computing context.
 This is a key part of this contribution. 
- In fact, although Alchemist has been used for \ac{cmarl} with \scafi{} in the past~\cite{Aguzzi2022,DBLP:conf/acsos/AguzziCV22}, 
+ In fact, although Alchemist has been used for cooperative many-agent reinforcement learning with \scafi{} in the past~\cite{Aguzzi2022,DBLP:conf/acsos/AguzziCV22}, 
  ad-hoc solutions were always created that were difficult to \emph{reuse}, 
  \emph{rigid}, \emph{untested}, and had \emph{interoperability issues} between Alchemist 
  and the chosen native libraries.
 With this integration, 
  we want to provide a usable system once and for all, 
- to bring the Many-agent RL community closer 
+ to bring the many-agent RL community closer 
  to the use of this simulator and this paradigm, 
- which has proven flexible in describing the most diverse environments -- 
- from robotic swarms~\cite{Casadei2021} to data centres.
+ which has proven flexible in describing the most diverse environments outlined in \Cref{part:background}.
 
 The specification of a learning system does not change, only two new elements are added: 
  the specification of the Alchemist simulation and the implementation of the \scafi{}-based logic.
 %
-In particular, 
- the Alchemist simulation will be defined as shown in \Cref{coordination2023:fig:alchemist}, 
- by passing a \scafi{} class as a program, which contains aggregate programming code. 
- In order to advance the training process, 
- a molecule with the current action to be taken (a subtype of \texttt{Action} class) 
- will be present in the \scafi{} program. 
- This will be injected by a learner that contains the \ac{rl} policy.
- Moreover, the aggregate program will evaluate 
- the environment state (which must be a subtype of \texttt{State})
- using \texttt{computeState} 
- and insert it into the \texttt{state} molecule, that will be 
- used by the learner to update the policy.
+Specifically, 
+ the Alchemist simulation is configured as depicted in \Cref{coordination2023:fig:alchemist}, 
+ where a \scafi{} class, encapsulating the aggregate programming code, is passed as a program. 
+ To facilitate the training progression, a molecule containing the current action--a subclass of the \texttt{Action} class--is integrated within the \scafi{} program. 
+ This molecule is injected by a learner governing the \ac{rl} policy. Additionally, the aggregate program evaluates the environment state, which is required to be a subtype of the \texttt{State} class, 
+ via the \texttt{computeState} method. 
+ This computed state is subsequently encapsulated in the \texttt{state} molecule, serving as input for the learner to refine the policy.
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{papers/coordination2023/imgs/alchemist-scafi-arc.pdf}
@@ -396,20 +271,7 @@ val system = learningSystem {
     }
 }
 \end{lstlisting}
-%The last module: \texttt{dsl-core}, provides a handy way for defining the learning system. 
-%Basically, it is composed of six composable elements, an example is provided in \ref{coordination2023:lst:sysdef}.
 
-%begin{lstlisting}[caption={CTDE system definition} ,label={lst:sysdef},language=scala]
-%val system = learningSystem {
-%    rewardFunction { new CohesionRewardFunction() }
-%    actions { CohesionActions.toSeq() }
-%    dataset { ReplayBuffer[State, Action](10000) }
-%    agents { 50 }
-%    environment {
-%        "it.unibo.scarlib.experiments.CohesionEnvironment"
-%    }
-%}
-%\end{lstlisting}
 \subsection{Tool usage}
 The tool is published on Maven Central 
  and it is possible to include it in your project, 

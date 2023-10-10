@@ -121,7 +121,8 @@ every node/.style={scale=.6}
 \begin{minipage}[b]{0.7\textwidth}\centering
 \begin{minted}[fontsize=\footnotesize,frame=none]{scala}
 @multitier object BrokerBased extends PulverisedSystem {
-  // Definition of device kinds and possible network connections
+  // Definition of device kinds 
+  // and possible network connections
   @peer type Node <: { type Tie <: Single[Broker] }
   @peer type Broker <: { 
     type Tie <: Multiple[Node] with Multiple[Broker] 
@@ -238,7 +239,8 @@ every node/.style={scale=.7}
 \begin{minipage}[b][0.19\textheight][b]{0.70\textwidth}\centering
 \begin{minted}[fontsize=\footnotesize,frame=none]{scala}
 @multitier object IoTSystem extends PulverisedSystem {
-  // Definition of device kinds and possible network connections
+  // Definition of device kinds 
+  // and possible network connections
   @peer type Thin <: { type Tie <: Multiple[Thick] }
   @peer type Thick <: { 
     type Tie <: Multiple[Thick] with Multiple[Thin]
