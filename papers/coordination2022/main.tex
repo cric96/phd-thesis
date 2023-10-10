@@ -9,7 +9,7 @@
 \sloppypar
 
 %\chapter{Towards Reinforcement Learning-based Aggregate Computing}
-\chapter{Program Sketching with Aggregate Computing}\label{chap:learning:sketching}
+\chapter[Collective Program Sketching]{Program Sketching with Aggregate Computing}\label{chap:learning:sketching}
 \minitoc% Creating an actual minitoc
 \begin{comment}
 The pervasiveness of computing and networking
@@ -133,19 +133,12 @@ As a learning framework,
  we deal with systems of agents 
  performing ongoing activities 
  by interacting with one another and the environment. 
- %it makes it possible to exploit learning even in cases where we do not know the optimal result for a certain program, but we can only evaluate its performance under certain circumstances (either with simulations or directly in concrete systems). 
-% 
-%From a local viewpoint, 
-% an \ac{ac} device is an agent acting based on the local context it perceives (sensor readings, device state, and messages from neighbours), 
-% and this matches the \ac{rl} execution model very well.
-
-%So, our long-term goal is to integrate \ac{rl} into the \ac{ac} ``stack'' (i.e., across the platform, language, and library levels) to improve the collective behaviour defined by \scafi{} aggregate programs in terms of \emph{efficiency} (i.e., reducing the resource usage maintaining the same functional interface), \emph{efficacy} (i.e., synthesizing more stable and faster converging behaviours) and \emph{adaptability} (i.e., the same program works against different environments).
 %
-
-As a first contribution, summarized in \Cref{coordination2022:fig:ac-and-rl}, in this work we integrate \ac{rl} within the \ac{ac} control architecture in order to support learning of good collective behaviour sketched by a given aggregate program.
+Specifically we integrate \ac{rl} within the \ac{ac} control architecture in order to support learning of good collective behaviour sketched by a given aggregate program (\Cref{coordination2022:fig:ac-and-rl}).
 %
 Specifically, 
- we focus on improving \ac{ac} building blocks (such as the gradient algorithm covered in \Cref{coordination2022:sec:gradient}) through learning, leading toward a so-called \emph{Reinforcement Learning-based Aggregate Computing}. 
+ we focus on improving \ac{ac} building blocks (such as the gradient algorithm covered in \Cref{part:background}) through learning, 
+ leading toward a so-called \emph{reinforcement learning-based aggregate computing}. 
 %
 Learning, thus, does not replace the \ac{ac} methodology for defining the programs, 
  but it is best understood as a technique that supports and improves the \ac{ac} algorithm design process. 
@@ -154,8 +147,6 @@ A major advantage of \ac{ac} as a programming model is its \emph{compositionalit
 %
 Since building blocks are fundamental bricks of behaviour that often recur in programs, 
  their bad and good qualities (cf., convergence speed, stability, etc.) tend to amplify and affect behaviours that depend on them.
-%
-%Even if AC is independent of IT infrastructure, several behaviours tend to have a long self-stabilisation time in some deployments w.r.t the idealised convergence time, leading to non-stable and unpredictable aggregate programs.
 %
 Therefore, research tends to investigate refined variants of building blocks that provide the same functionality but are more \emph{effective} or \emph{efficient} under specific assumptions or contexts (e.g., high mobility, situations where stability is more important than precision, etc.)~\cite{DBLP:conf/saso/AudritoCDV17,DBLP:journals/cee/AudritoCDPV21}.
 %
@@ -179,19 +170,19 @@ Our idea is that it should not be the designer who codes a particular block to b
 
 \input{papers/coordination2022/general-learning-schema.tex}
 
-The continuous and variable state problems are typically tackled using Deep Learning to learn the right state representation for a given problem~\cite{DBLP:journals/corr/abs-1806-08894}. %and Graph Neural Networks (to regulate variable-size inputs). 
+The continuous and variable state problems are typically tackled using deep learning to learn the right state representation for a given problem~\cite{DBLP:journals/corr/abs-1806-08894}. %and Graph Neural Networks (to regulate variable-size inputs). 
 %
 In this case, instead, we used a handcraft feature engineering process since we are more interested in devising a general design process.
 
-Concerning the \emph{multi-agent credit assignment problem}, we decided to use offline learning 
+Concerning the \emph{multi-agent credit assignment problem}, 
+we decided to use offline learning 
 %based on simulation and then the policy is deployed in a concrete system 
 in a typical \ac{ctde} setting (\Cref{coordination2022:fig:learning-scheme}).
 %
-This way, we assess the influence of an individual in comparison to the entire system, which cannot be done in online learning due to the difficulty of achieving global snapshots of the system in a reasonable time.
-
+This way, we assess the influence of an individual in comparison to the entire system, 
+which cannot be done in online learning due to the difficulty of achieving global snapshots of the system in a reasonable time.
 
 \section{Learning Schema} 
-
 The learning algorithm is seen as a state ($s_t$) evolution function in which the nodes try to apply a correction factor (\lstinline|update|) following a policy ($\pi^Q_{target}$ or $\pi^Q_{behavioral}$) refined by learning.
 %
 The state is built from a neighbourhood field of the building block generic output ($o_t$) passed as input.
@@ -202,7 +193,8 @@ The branching operator (\lstinline|branch|) on \lstinline|learn| condition makes
 %
 The Q table is gathered using \lstinline|sense|, a \scafi{} operator used to query sensors and collect data from them. 
 %
-At simulation time, Q is a shared object, but at runtime each agent owns a local table.
+At simulation time, Q is a shared object, 
+ but at runtime each agent owns a local table.
 %
 \input{papers/coordination2022/learning-based-opt-block.tex}
 %
@@ -212,22 +204,15 @@ In this case, we encoded the learning process with \ac{ac} itself.
 %
 Though we could have extracted the learning process from the \ac{ac} program, %producing a policy usable in \ac{ac},
  we took this decision because: 
-  (i) it allows us to extend learning by exploiting neighbourhood Q table fields -- so we can think of doing non-homogeneous learning in different areas of the system;
-  (ii) the scheme for taking state and choosing actions is the same as the one we would need for learning, so the only difference is in the branch; and
-  (iii) it can simply be extended to online learning.
+\begin{itemize}
+  \item it allows us to extend learning by exploiting neighbourhood Q table fields -- so we can think of doing non-homogeneous learning in different areas of the system;
+  \item the scheme for taking state and choosing actions is the same as the one we would need for learning, so the only difference is in the branch; and
+  \item it can simply be extended to online learning.
+\end{itemize}
 %
 %In the next section, we describe an incarnation of this algorithm applied to the gradient block.
 
-\section{Reinforcement Learning-based gradient block}
-%\meta{
-%  \begin{itemize}
-%    \item describe the block G -- why it is important, for what is used 
-%    \item G problems -- stable results, count-to-infinity, speed bias
-%    \item try to describe a general G block that accept an optimisation/correction strategy
-%    \item define the Reinforcement Learning as an optimisation block
-%  \end{itemize}
-%}
-
+\section{Reinforcement learning-based gradient block}
 %\meta{@GA to @All: another way to generalise G?}
 The gradient block could be generalized as follows:
 \begin{lstlisting}
@@ -237,30 +222,42 @@ def gradientOpt(source, metric, opt) {
 \end{lstlisting}
 where \lstinline|opt| is a function that determines how to evolve the gradient based on the field of current gradient values \lstinline|g| and current \lstinline|metric| (estimation of distances to neighbour). 
 %In this way, the correction factor applied to the gradient could be composed, creating a gradient block that handles several scenarios.
-In this article, we consider \lstinline|opt| as a \emph{hole} that a \ac{rl} algorithm will fill through raw experience
- with actions aiming at incrementally constructing a gradient field, hopefully mitigating the \emph{rising-value} issue (cf. \Cref{coordination2022:sec:gradient}).
-%
-To frame our learning problem, we adopt the above-described general schema (\Cref{coordination2022:fig:learning-scheme}). The state and action functions are inspired by the CRF algorithm.
-%
-The \lstinline|state| function must hold enough information to know when agents should speed up the local rising of values.
-%
-In this case, we encode the state as the difference between the output perceived by a node and the minimum and maximum gradient received by its neighbours: $s_t = (|min_t - o_t|, |max_t - o_t|)$. 
-%
-These data have to be discretized; otherwise, the search space would be too big and the solution could suffer from overfitting. 
-%
-The discretization is ruled by two variables, $maxBound$ and $buckets$. 
-%
-The former constrains the output to be between $ - radius * maxBound$ and $ radius * maxBound $ (where $radius$ is the maximum communication range of the nodes). 
-%
-The values outside that range will be considered as the same state.
-%
-The $buckets$ variable rules the division count of the given range. 
-Finally, we stack two time steps in order to encode history inside the agent state:
-$h_t = [(s_{t - 1}, s_t)]$. $h_t$ is used as the state function for our \ac{rl} algorithm.
-Hence, the cardinality of the state space of $|s_t| * |s_t| = buckets^4$. 
-%
-The action space is divided into two action types: \texttt{ConsiderNeighbourhood} is the action that will produce the classic gradient evaluation, while 
- \texttt{Ignore(velocity)} ignores the neighbour data and increases the gradient at a given \texttt{velocity}. So, the \texttt{update} function is defined as:
+In this chapter, we examine \lstinline|opt| as an \emph{hole}, 
+ a placeholder that a reinforcement learning (\ac{rl}) algorithm fills based on raw experiential interactions. 
+ The primary objective is the incremental construction of a gradient field, while also aiming to mitigate the \emph{rising-value} issue. 
+ This issue is also known as the \emph{count to infinity} problem in the domain of field-based coordination. 
+ It manifests as the system's inefficiency in rapidly responding to an increase in output needs (e.g., when a source node deactivates), 
+ despite its proficiency in handling situations requiring a reduction in output (e.g., when a new source is introduced).
+
+The literature provides various heuristic solutions to overcome the limitations of traditional gradient methods~\cite{DBLP:conf/saso/AudritoCDV17}. 
+ One notable technique is the Constraint and Restoring Force (CRF)~\cite{DBLP:conf/sac/BealBVT08}, 
+ designed to enforce a uniform rate of increase in the gradient field when nodes detect a local, slow ascent. 
+ In this context, each node is influenced by a set of constraints, specifically, nodes that possess lower gradient values. 
+ If a node identifies a sluggish increase and finds itself unconstrained, it elevates its output at a fixed rate, independent of its neighbors. 
+ Otherwise, it adheres to the traditional gradient formula. 
+ Our proposed learning algorithm aims to emulate this behavior while eliminating the necessity for manual algorithmic design.
+
+To articulate our learning problem, 
+ we employ the general schema depicted in \Cref{coordination2022:fig:learning-scheme}. 
+ The \lstinline|state| function captures sufficient information for agents to dynamically accelerate local value increases. 
+ Specifically, we define the state \( s_t \) as the difference between a node's perceived output and the minimum and maximum gradient values received from its neighbors: \( s_t = (|min_t - o_t|, |max_t - o_t|) \). 
+ To manage the high dimensionality of this state space, we employ discretization, thereby mitigating the risk of overfitting. 
+ The discretization is governed by two parameters: 
+ \( maxBound \) and \( buckets \). 
+ \( maxBound \) constrains the output to a range between \( - radius \times maxBound \) and \( radius \times maxBound \), where \( radius \) is the maximum communication range of the nodes. 
+ Values outside this range are considered equivalent states. 
+ \( buckets \) defines the granularity of the discretization within this specified range.
+
+To incorporate historical data, 
+ we stack the states from two successive time steps to form \( h_t = [(s_{t - 1}, s_t)] \). 
+ This composite state \( h_t \) serves as the input state for our \ac{rl} algorithm, 
+ resulting in a state space cardinality of \( |s_t| \times |s_t| = buckets^4 \).
+
+The action space is bifurcated into two categories: 
+ \texttt{ConsiderNeighbourhood}, 
+ which executes the traditional gradient evaluation, and \texttt{Ignore(velocity)}, 
+ which disregards neighboring data to adjust the gradient at a designated \texttt{velocity}. 
+ The corresponding \texttt{update} function is defined accordingly:
 \begin{lstlisting}[mathescape]
 def update($o_{t-1}$, $a_{t-1}$, metric) = // $o_{t-1}$ is the previous gradient output
   val $g_{classic}$ = minHoodPlus(nbr($o_{t-1}$) + metric())
@@ -275,14 +272,11 @@ def reward($o_t$, simulation) {
   if($o_t$ - simulation.rightValueFor(mid()) $\sim$= 0) { 0 } { -1 }
 }
 \end{lstlisting}
-where \lstinline|mid| returns the field of node identifiers. 
-%%
-The idea is to push the nodes to produce an output that is very close to the ideal, correct gradient value as provided by an oracle (\lstinline|simulation.rightValuefor()|).
-%%
-When this is the case, we provide a value equals to $0$;
-instead, when the value is different from the expected one, 
- we provide a small negative reward, $-1$, in order to push the nodes to quickly seek the situation where the actual and ideal value match.
+In this context, the function \lstinline|mid| retrieves the corresponding field of node identifiers. 
+ The overarching goal is to compel the nodes to generate output values that closely approximate the ideal gradient values as stipulated by a trusted oracle, represented by the function \lstinline|simulation.rightValuefor()|.
 
+When the output aligns with the expected ideal value, a reward of $0$ is issued. Conversely, if the output diverges from the expected value, 
+ a minor punitive measure in the form of a negative reward, $-1$, is administered. This is designed to expedite the nodes' convergence toward a state where the actual output closely mirrors the ideal value.
 \section{Evaluation}\label{coordination2022:s:eval}
 
 \begin{table}[t]
@@ -305,126 +299,96 @@ instead, when the value is different from the expected one,
   \label{coordination2022:table:parameters}
 \end{table}
 
-To evaluate our approach, we run a set of simulated experiments and verify that an aggregate system
- can successfully learn an improved way to compute a gradient field (cf. the gradient block described in \Cref{coordination2022:sec:gradient}).
-%
-To this purpose, we adopt Alchemist~\cite{DBLP:journals/jos/PianiniMV13},
- a flexible simulator 
- for pervasive and networked systems
- that comes with a support for aggregate systems 
- programmed with \scafi{}~\cite{DBLP:conf/isola/CasadeiVAD20}. 
+To evaluate our approach, we run a set of Alchemist simulated experiments and verify that an aggregate system
+ can successfully learn an improved way to compute a gradient field (cf. the gradient block described in \Cref{part:background}).
 %
 The source code, data, and instructions for running the experiments have been made fully available at a public repository\footnote{\url{https://github.com/cric96/experiment-2022-coordination}}, to promote reproducibility of results.
 
 \subsection{Simulation setup}
 
-The simulated system consists of $N$ devices deployed in a grid. 
-%
-We use two kinds of grid-like environments. 
-%
-They both have the same width (\SI{200}{\metre}) and distance between nodes (\SI{5}{\metre}), but they differ in the row count. 
-%
-In one case, only one row exists (so the nodes are placed in a line). 
-%
-In the other case, there are five rows. 
-%
-The total number ($N$) of agents is then defined as $ 200 / 5 * rows $. 
-%
-So in the first case, we have a total of 40 agents, in the second case we have 200 agents. 
-%
-Each node asynchronously fires the round evaluation at \SI{1}{\hertz}.
-%
-The leftmost and the rightmost agents are marked as source nodes. 
-%
-Each simulated episode lasts \SI{85}{\second} ($T$).
-%
-For simulating the slow rising problem, we drop the left source at \SI{35}{\second} ($C_s$), and so the left part of the system starts to rise until eventually stabilizing to the correct computational field.
-%
-An entire simulation lasts $N_E = 1200$ episodes, in which in the first $N_L = 1000$ the system uses \ac{rl} to improve a shared Q table, and then in the last $N_T = 200$, the system deploys the Q table found in each agent. 
-%
-In these last runs, the agents act following the greedy policy.
+The simulation comprises $N$ devices, 
+ organized within a structured grid. 
+ The grid environments employed for this study fall into two categories, 
+ each having identical dimensions with respect to width (\SI{200}{\metre}) and inter-node spacing (\SI{5}{\metre}). 
+ However, they differ in the number of rows: 
+ the first scenario features a single row (essentially aligning the nodes linearly), while the second includes five rows.
 
-As learning algorithm, we used Hysteretic Q-Learning (cf. \Cref{coordination2022:s:background:rl}). %, since it tackles environments stochasticity.
-%
-As behavioural policy, we use an $\epsilon$-greedy with an exponential decay to balance the exploration-exploitation.
-%
-We make this choice because without using the decay the policy found tends to be not optimized (i.e. the exploration is preferred w.r.t exploitation).
-%
-At each episode $i$, the $\epsilon$ value is updated as $\epsilon_i = \epsilon_0 \cdot e^{{i} / \theta}$.
+The total number of agents, denoted by $N$, 
+ is calculated using the formula \(N = \frac{200}{5} \times \text{rows}\). Consequently, the first and second scenarios comprise 40 and 200 agents, respectively. 
+ Each node initiates its round evaluation asynchronously at a frequency of \SI{1}{\hertz}. 
+ The nodes positioned at the extreme left and right ends serve as source nodes. 
+ A single simulated episode has a duration of \SI{85}{\second}, denoted as $T$.
 
-Several variables are used, summarized in \Cref{coordination2022:table:parameters}, so we perform a grid search to find the optimal combination.
-%
-To evaluate a particular configuration, we verified the total error performed in the last $N_T$ episodes.
-%
-This is calculated from the error performed by each node $i$ at each time step $t$:
+To simulate a gradually escalating issue, 
+ we deactivate the left source node at \(t = \SI{35}{\second}\), 
+ denoted as $C_s$. Subsequently, the system experiences an ascent in computational field values before ultimately stabilizing.
+
+An entire simulation spans $N_E = 1200$ episodes. 
+ For the initial $N_L = 1000$ episodes, the system employs \ac{rl} to enhance a globally shared Q-table. 
+ During the subsequent $N_T = 200$ episodes, 
+ each agent utilizes the optimized Q-table, adhering to a greedy policy for action selection.
+
+The Hysteretic Q-Learning algorithm serves as the learning mechanism (refer to \Cref{chap:rl:single}). 
+ The behavioral policy adopts an $\epsilon$-greedy strategy with exponential decay, optimizing the balance between exploration and exploitation. 
+ The decay rate is formulated as \(\epsilon_i = \epsilon_0 \cdot e^{{i} / \theta}\) for each episode $i$.
+
+To determine the most effective configuration, 
+ we performed a grid search across various parameters, summarized in \Cref{coordination2022:table:parameters}. 
+ The efficacy of each configuration is ascertained by calculating the total error during the final $N_T$ episodes, which is derived as follows:
+
 \begin{equation}
+\label{eq:individual_error}
 error_i^{t} = |gradient_i^{t} - simulated_i^t|
 \end{equation}
-Then for each time step $t$, we evaluate the average system error as:
+
+Subsequently, the system-wide average error for each time step $t$ is computed:
 \begin{equation}
-error_{t} = \frac{1}{n}\sum_{i = 0}^N error_i^t
+\label{eq:average_error}
+error_{t} = \frac{1}{N}\sum_{i = 0}^N error_i^t
 \end{equation}
-And finally, the error of each episode is evaluated as:
+
+Finally, the cumulative error for each episode is given by:
+
 \begin{equation}
+\label{eq:episode_error}
 error_{episode} = \sum_{t = 0}^T error_{t}
 \end{equation}
-We choose the configuration by observing the box plots (\Cref{coordination2022:subfig:boxplot}) and taking the lowest average error in the last $N_T$ episodes.
+
+We finalize the optimal configuration based on box plot analyses (\Cref{coordination2022:subfig:boxplot}), 
+ selecting the one that minimizes the average error during the last $N_T$ episodes.
 
 \input{papers/coordination2022/simulation-result.tex}
 \subsection{Results and Discussion}
+\Cref{coordination2022:fig:eval} provides a comprehensive performance analysis of our \acl{rl}-based gradient algorithm. 
+ The best-performing configuration, characterized by parameters \(\gamma = 0.9\), \(\epsilon_0 = 0.5\), \(\theta = 200\), \(\alpha = 0.3\), and \(\beta = 0.05\), was selected based on \Cref{coordination2022:subfig:boxplot}. 
+ The trend of the mean error across episodes is illustrated in \Cref{coordination2022:subfig:mean-error-over-episode}, where the shaded region represents the standard deviation and the dashed vertical line marks the time of source alteration.
 
-\Cref{coordination2022:fig:eval} shows the performance of our \acl{rl}-based gradient algorithm.
-%
-\Cref{coordination2022:subfig:boxplot} was used to choose which configuration was the best.
-%
-\Cref{coordination2022:subfig:mean-error-over-episode} shows the error trend as the episodes change. 
-%
-The second row shows the trend of the mean error over the last $N_T$ episodes. 
-%
-The coloured area under the curve defines the standard deviation. 
-%
-The dashed vertical line is the time at which the source change occurs. 
-%
-Finally, the last row shows the average output of the various algorithms. 
-%
-In the following we discuss the result reached with the best configuration, that has $\gamma = 0.9$, $\epsilon_0 = 0.5$, $\theta = 200)$, $\alpha=0.3$ and $\beta=0.05$. 
+The principal objective of this research was to develop an algorithm that offers a superior performance against the rising-value problem when compared to traditional gradient methods. 
+ This is corroborated by \Cref{coordination2022:subfig:mean-error-over-episode}, which demonstrates that our algorithm successfully reduces the \(error_{episode}\) compared to conventional approaches. 
+ Specifically, the agents adaptively learn when to disregard the neighboring nodes and accelerate the output through the \lstinline|Ignore| action.
 
-Our goal was to create a solution that outperforms the classic gradient against the rising-value problem.
-%
-In fact, the system eventually learns how to speed up the gradient rising: observing the \Cref{coordination2022:subfig:mean-error-over-episode} the $error_{episode}$ of the new algorithm is lower than the error produced by the standard solution. 
-%
-In particular, this means that the agents learn the moment when they should ignore their neighbourhood and increase the output with a certain velocity (i.e. using the \lstinline|Ignore| action).
+This adaptive behavior is further substantiated by \Cref{coordination2022:subfig:error-few,coordination2022:subfig:error-many,coordination2022:subfig:output-few,coordination2022:subfig:output-many}. Especially in \Cref{coordination2022:subfig:error-few,coordination2022:subfig:output-few}, 
+ where the agent count is fewer, the rapid decline in error (and corresponding quick output increase) is evident when the source node is deactivated. 
+ In addition, our algorithm's performance closely parallels that of the manually crafted CRF solution for the rising-value problem. 
+ Both exhibit an initial acceleration phase followed by a transient period of overestimation, eventually leading the system to the accurate gradient field values.
 
-This intuition is enforced by \Cref{coordination2022:subfig:error-few,coordination2022:subfig:error-many,coordination2022:subfig:output-few,coordination2022:subfig:output-many}.
-% 
-In particular, in \Cref{coordination2022:subfig:error-few,coordination2022:subfig:output-few} the behaviour is more evident due to the reduced number of agents: when the error is maximized (due to the source that disappears), the error decreased faster than the naive gradient (and, consequently, the output is faster growing).
-%
-Furthermore, we can also observe that the overall algorithm behaviour is comparable with the CRF handcrafted solution for the rising problem. 
-%
-Indeed, both have a phase of speed up followed by another phase of overestimation (i.e. the system-wide output is greater than the true gradient field output) that eventually brings the system to slowly reaches the correct value.
-%
-Moreover, not only the \ac{rl}-based solution has similar behaviour to CRF, but also it has comparable performance -- it means that the aggregate reaches a near-optimal policy with these state-action-reward settings.
+Another noteworthy aspect is the system-wide applicability of the learned policy. The policy is universally shared among the nodes, 
+ thereby enabling straightforward scalability across deployments with varying node counts. 
+ Moreover, the policy outperforms the baseline across different system configurations.
 
-We want also to underline that the policy learned is \emph{one} and shared with the whole system.  
-%
-Thereby, the policy can be easily scaled in deployments with different node counts. 
-%
-In this case, the \emph{same} function outperforms our baseline in a system with different nodes and deployment configurations. 
-%
-%The current issue is, however, that we cannot prove that this policy works with any possible deployment: this needs to be evaluated in future work.
-
-Finally, we want to stress that the nodes do not fire synchronously, and thus there is not any kind of global and shared clock: any node round evaluation order reaches the same behaviour in our test deployments. 
-%
-This, again, makes it possible to use the same policy in different scenarios due to the unknown local aggregate programs evaluation order.
-
+We would also like to emphasize that the asynchronous nature of node activation eliminates the need for a global synchronized clock. 
+ This feature enhances the policy's adaptability, as it remains effective regardless of the local order in which aggregate programs are evaluated. Consequently, the learned policy is versatile enough to be employed in a wide range of deployment scenarios.
 \section{Wrap up}\label{coordination2022:s:conc}
 
-This chapter discusses the integration of \acl{ac} -- a programming approach for \aclp{cas} -- and \acl{rl}, with the goal of fostering the design of collective adaptive behaviour.
+This chapter discusses the integration of \acl{ac} and \acl{rl} with the goal of fostering the design of collective adaptive behaviour.
 % 
 In particular, we propose to use \ac{rl} as a means to improve building block \ac{ac} algorithms. %- in a similar way to what is done in program synthesis. 
 %
 Our approach is applied to improving the gradient algorithm, one of the key \ac{ac} algorithms, where learning is performed through Hysteretic Q-Learning.
 %
 We evaluate the approach through synthetic experiments comparing the reactivity of different gradient algorithms in dealing with the rising value problem.
-
+%
+The first two approaches can be succinctly described as ``RL for AC'', 
+ where reinforcement learning is employed to enhance various facets of aggregate computing. 
+ Conversely, the final approach can be characterized as ``AC for RL'', in which aggregate computing techniques are utilized to inform and optimize the reinforcement learning process.
 %\printbibliography
