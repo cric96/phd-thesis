@@ -365,11 +365,13 @@ Here, \(\tau\) represents a trajectory sampled from the policy \(\pi_\theta\), a
 
 The REINFORCE algorithm operates in an episodic setting, 
  meaning it waits until the end of each episode to update the policy. 
- This makes it well-suited for tasks where the episode termination is natural, such as games or tasks with a fixed time horizon. 
+ This makes it well-suited for tasks where the episode termination is natural, such as games or tasks with a fixed time horizon.
+ REINFORCE is particularly useful when the action space is high-dimensional or continuous, where traditional value-based methods like Q-Learning may struggle.  
  However, one drawback of REINFORCE is that it can have high variance in its updates, which can make the training process unstable. 
  Various techniques, such as using a \emph{baseline} or employing advanced variance reduction methods, have been developed to mitigate this issue.
-
-REINFORCE is particularly useful when the action space is high-dimensional or continuous, where traditional value-based methods like Q-Learning may struggle. 
+ Particularly, the \emph{actor-critic} architecture is a popular approach that combines the advantages of both value-based and policy-based methods.
+ In this paradigm, the policy is referred to as the \emph{actor}, while the value function is referred to as the \emph{critic}.
+The actor is responsible for selecting actions, while the critic evaluates the actions taken by the actor.
 
 \subsection{Approximate Solutions}
 
@@ -400,8 +402,37 @@ Given these challenges, approximate solutions become not just desirable but ofte
 In contemporary applications, neural networks have emerged as the go-to function approximators due to their exceptional capability to approximate complex, 
  high-dimensional functions. 
  Particularly, the combination of Deep learning and Reinforcement learning has led to significant advancements in the field, in the so-called area of \emph{Deep Reinforcement Learning}.
- One of the first and most influential works in this area was the Deep Q-Network (DQN) algorithm~\cite{DBLP:journals/nature/MnihKSRVBGRFOPB15}, that will be discussed in the next section.
-\subsubsection{Deep Q Learning}
+ One of the first and most influential works in this area was the Deep Q-Network (DQN) algorithm~\cite{DBLP:journals/corr/MnihKSGAWR13}, that will be discussed in the next section.
+ \subsubsection{Deep Q-Networks (DQN)}
+
+ Deep Q-Networks (DQN) represent a landmark innovation in the field of Deep Reinforcement Learning, effectively combining the strengths of Q-Learning with the function approximation capabilities of deep neural networks. Introduced by Mnih et al.~\cite{DBLP:journals/corr/MnihKSGAWR13}, DQN was initially designed to master a variety of Atari 2600 games and has since been adapted for various complex tasks.
+ 
+ The core idea behind DQN is to use a neural network as a function approximator for the Q-function in Q-Learning. The neural network, often referred to as the Q-network, takes the environment state as input and outputs Q-values for each action. Mathematically, the Q-network aims to approximate the optimal Q-function \(Q^*(s, a)\) as closely as possible.
+ 
+ \begin{equation}
+ Q(s, a; \theta) \approx Q^*(s, a)
+ \end{equation}
+ 
+ where \(\theta\) represents the parameters of the neural network.
+ 
+ However, directly applying neural networks to Q-Learning presents challenges, primarily due to the correlation between consecutive experiences and the non-stationary nature of the data. DQN addresses these issues through two key innovations:
+ 
+ \begin{itemize}
+   \item \textbf{Experience Replay}: DQN stores past experiences \((s, a, r, s')\) in a replay buffer and samples mini-batches randomly during training. This decorrelates the data and leads to more stable training.
+   \item \textbf{Target Network}: DQN introduces a separate, slowly-updated target network to calculate the target Q-values, reducing the overestimation bias and improving stability.
+ \end{itemize}
+ 
+ The Q-value update equation in DQN is:
+ 
+ \begin{equation}
+ Q(s, a; \theta) \leftarrow Q(s, a; \theta) + \alpha \Big[ r + \gamma \max_{a'} Q(s', a'; \theta^-) - Q(s, a; \theta) \Big]
+ \end{equation}
+ 
+ where \(\theta^-\) are the parameters of the target network.
+ 
+ DQN has been extended and improved through various techniques such as Double DQN, Dueling DQN, and Prioritized Experience Replay, among others. These enhancements aim to address specific challenges like overestimation bias and efficient learning from rare but important experiences.
+ 
+ Due to its effectiveness and versatility, DQN has found applications in various domains, including robotics, natural language processing, and healthcare, serving as a foundational algorithm in the rapidly evolving field of Deep Reinforcement Learning.
 
 
 \section{Multi-agent}
