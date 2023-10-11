@@ -228,9 +228,13 @@ While dynamic programming methods like value iteration and policy iteration offe
  In the following sections, we will discuss two such algorithms' family: 
  Monte Carlo methods and Temporal Difference methods.
 \subsubsection{Monte Carlo methods}
-Monte Carlo methods offer a way to find an optimal policy \(\pi^*\) without requiring a model of the environment. These methods rely on sampling sequences of states, actions, and rewards from actual or simulated interactions with the environment. By averaging these samples, the agent can estimate the value functions \(V(s)\) and \(Q(s, a)\), which can then be used to improve the policy.
+Monte Carlo methods offer a way to find an optimal policy \(\pi^*\) without requiring a model of the environment. 
+ These methods rely on sampling sequences of states, actions, and rewards from actual or simulated interactions with the environment. 
+ By averaging these samples, the agent can estimate the value functions \(V(s)\) and \(Q(s, a)\), which can then be used to improve the policy.
 
-The core idea is to run multiple episodes, from start to finish, and then update the value estimates based on the returns observed. The value of a state \(s\) or a state-action pair \((s, a)\) is estimated as the average of the returns that have followed that state or state-action pair across multiple episodes.
+The core idea is to run multiple episodes, 
+ from start to finish, and then update the value estimates based on the returns observed. 
+ The value of a state \(s\) or a state-action pair \((s, a)\) is estimated as the average of the returns that have followed that state or state-action pair across multiple episodes.
 
 \begin{equation}
 V(s) = \frac{1}{N} \sum_{i=1}^{N} G_t^{(i)}
@@ -242,9 +246,28 @@ Q(s, a) = \frac{1}{N} \sum_{i=1}^{N} G_t^{(i)}
 
 Where \(N\) is the number of times the state or state-action pair has been visited, and \(G_t^{(i)}\) is the return following the \(i\)-th visit.
 
-Once the value functions are estimated, the policy can be improved by making it greedy with respect to these estimated values. Monte Carlo methods are particularly useful when the state and action spaces are large, making it impractical to enumerate all possible state-action pairs. However, they do require the episodes to be finite and can be computationally expensive due to the need for multiple samples to obtain accurate estimates.
+Once the value functions are estimated, 
+ the policy can be improved by making it greedy with respect to these estimated values. 
+%
+In this context, the \emph{exploration-exploitation} trade-off is crucial.
+%
+In fact, the agent should explore the environment to discover new states and actions that could lead to higher rewards,
+  but it should also exploit the knowledge it has already acquired to maximize the expected return.
+%
+Monte Carlo methods are particularly useful when the state and action spaces are large, making it impractical to enumerate all possible state-action pairs. However, they do require the episodes to be finite and can be computationally expensive due to the need for multiple samples to obtain accurate estimates.
 
-Monte Carlo methods have been applied in various domains, including game playing, robotics, and healthcare, offering a flexible and powerful approach to solving complex decision-making problems.
+\paragraph{Exploration-Exploration dilemma}
+In these algorithms, the agent should explore the environment to discover new states and actions that could lead to higher rewards,
+  but it should also exploit the knowledge it has already acquired to maximize the expected return.
+  This is the so-called \emph{exploration-exploitation} trade-off.
+%
+There are several ways to address this dilemma, 
+ but the most common approach is to use an \emph{$\epsilon$-greedy} policy. 
+ This policy selects a random action with probability \(\epsilon\) and the greedy action with probability \(1 - \epsilon\). 
+ The value of \(\epsilon\) is typically set to a small value, 
+ such as 0.1 or 0.2, 
+ to ensure that the agent explores the environment sufficiently.
+%
 
 \subsubsection{Temporal difference methods}
 Temporal Difference methods are a class of \emph{model-free} and \emph{value-based} algorithms 
