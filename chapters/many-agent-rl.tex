@@ -256,10 +256,11 @@ In fact, the agent should explore the environment to discover new states and act
 %
 Monte Carlo methods are particularly useful when the state and action spaces are large, making it impractical to enumerate all possible state-action pairs. However, they do require the episodes to be finite and can be computationally expensive due to the need for multiple samples to obtain accurate estimates.
 
-\paragraph{Exploration-Exploration dilemma}
+\paragraph*{Exploration-Exploration dilemma}
 In these algorithms, the agent should explore the environment to discover new states and actions that could lead to higher rewards,
   but it should also exploit the knowledge it has already acquired to maximize the expected return.
   This is the so-called \emph{exploration-exploitation} trade-off.
+  This is not only a matter in Monte Carlo methods, but it is a general problem in model-free algorithms, in which agent should learn a policy without a model of the environment.
 %
 There are several ways to address this dilemma, 
  but the most common approach is to use an \emph{$\epsilon$-greedy} policy. 
