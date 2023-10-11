@@ -371,6 +371,38 @@ The REINFORCE algorithm operates in an episodic setting,
 
 REINFORCE is particularly useful when the action space is high-dimensional or continuous, where traditional value-based methods like Q-Learning may struggle. 
 
+\subsection{Approximate Solutions}
+
+While the fundamental algorithms discussed in previous sections provide a strong theoretical foundation for model-free RL, 
+ they often fall short in real-world applications. 
+ The primary challenges they face are:
+
+\begin{itemize}
+  \item \textbf{Curse of Dimensionality}: The state and action spaces in practical problems can be so large that enumerating them becomes computationally infeasible.
+  \item \textbf{Partial Observability}: In many scenarios, the agent cannot fully observe the entire state of the environment, 
+  making it difficult to make optimal decisions.
+\end{itemize}
+To illustrate the curse of dimensionality, 
+ consider the seemingly simple game of Go. 
+ The game's state space consists of \(2^{170}\) possible states, 
+ a number so astronomical that it exceeds computational capabilities—especially when compared to the estimated \(10^{80}\) atoms in the observable universe.
+
+Similarly, partial observability is a pervasive issue in real-world applications. 
+ For example, a self-driving car perceives its environment through sensors, 
+ offering only a limited, partial view of the world. 
+ This restricted perspective can significantly impact the agent's ability to make optimal decisions.
+
+Given these challenges, approximate solutions become not just desirable but often necessary. 
+ These solutions leverage function approximation techniques to estimate value functions or policies. 
+ While they may sacrifice some theoretical convergence guarantees, 
+ they offer a more practical approach to tackling complex, high-dimensional, and partially observable problems commonly encountered in real-world applications.
+%
+In contemporary applications, neural networks have emerged as the go-to function approximators due to their exceptional capability to approximate complex, 
+ high-dimensional functions. 
+ Particularly, the combination of Deep learning and Reinforcement learning has led to significant advancements in the field, in the so-called area of \emph{Deep Reinforcement Learning}.
+ One of the first and most influential works in this area was the Deep Q-Network (DQN) algorithm~\cite{DBLP:journals/nature/MnihKSRVBGRFOPB15}, that will be discussed in the next section.
+\subsubsection{Deep Q Learning}
+
 
 \section{Multi-agent}
 \begin{figure}
