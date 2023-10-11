@@ -162,46 +162,42 @@ Q(s, a) = \sum_{s' \in \RS} \RP(s'|s, a) \Big[ \RR(s, a, s') + \gamma \sum_{a' \
 \end{equation}
 %
 The Bellman equation is the basis for many dynamic programming algorithms, 
- including value iteration and policy iteration.
- \subsection{Value Iteration}
+including \emph{value iteration} and \emph{policy iteration}.
+\subsection{Value Iteration}
 
- Value Iteration is an iterative algorithm used to compute the optimal value function \(V^*\) and, consequently, the optimal policy \(\pi^*\). The algorithm iteratively updates the value of each state \(s\) until the value function converges to \(V^*\).
- 
- The update rule for Value Iteration is given by:
- 
- \begin{equation}
- V_{k+1}(s) = \max_{a \in \mathcal{A}} \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V_k(s') \Big]
- \end{equation}
- 
- After convergence, the optimal policy \(\pi^*\) can be extracted as:
- 
- \begin{equation}
- \pi^*(s) = \arg \max_{a} \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V^*(s') \Big]
- \end{equation}
- 
- \subsection{Policy Iteration}
- 
- Policy Iteration is another dynamic programming algorithm used for finding the optimal policy \(\pi^*\). Unlike Value Iteration, Policy Iteration consists of two main steps: Policy Evaluation and Policy Improvement, which are repeated iteratively until the policy converges to \(\pi^*\).
- 
- \subsubsection{Policy Evaluation}
- 
- In this step, the value function \(V^\pi\) for the current policy \(\pi\) is computed until it stabilizes. The update rule is:
- 
- \begin{equation}
- V_{k+1}(s) = \sum_{a \in \mathcal{A}} \pi(a|s) \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V_k(s') \Big]
- \end{equation}
- 
- \subsubsection{Policy Improvement}
- 
- After evaluating \(V^\pi\), the policy is updated to be greedy with respect to \(V^\pi\):
- 
- \begin{equation}
- \pi'(s) = \arg \max_{a} \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V^\pi(s') \Big]
- \end{equation}
- 
- The algorithm then returns to the Policy Evaluation step, using the new policy \(\pi'\), and continues until the policy no longer changes.
- 
- Both Value Iteration and Policy Iteration have their own advantages and disadvantages, and the choice between them often depends on the specific characteristics of the problem being solved.
+Value Iteration is an iterative algorithm used to compute the optimal value function \(V^*\) and, consequently, the optimal policy \(\pi^*\). The algorithm iteratively updates the value of each state \(s\) until the value function converges to \(V^*\).
+
+The update rule for Value Iteration is given by:
+
+\begin{equation}
+V_{k+1}(s) = \max_{a \in \mathcal{A}} \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V_k(s') \Big]
+\end{equation}
+
+After convergence, the optimal policy \(\pi^*\) can be extracted as:
+
+\begin{equation}
+\pi^*(s) = \arg \max_{a} \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V^*(s') \Big]
+\end{equation}
+
+\subsection{Policy Iteration}
+
+Policy Iteration is another dynamic programming algorithm used for finding the optimal policy \(\pi^*\). Unlike Value Iteration, Policy Iteration consists of two main steps: Policy Evaluation and Policy Improvement, which are repeated iteratively until the policy converges to \(\pi^*\).
+
+\subsubsection{Policy Evaluation}
+
+In this step, the value function \(V^\pi\) for the current policy \(\pi\) is computed until it stabilizes. The update rule is:
+
+\begin{equation}
+V_{k+1}(s) = \sum_{a \in \mathcal{A}} \pi(a|s) \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V_k(s') \Big]
+\end{equation}
+
+\subsubsection{Policy Improvement}
+After evaluating \(V^\pi\), the policy is updated to be greedy with respect to \(V^\pi\):
+\begin{equation}
+\pi'(s) = \arg \max_{a} \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V^\pi(s') \Big]
+\end{equation}
+
+The algorithm then returns to the policy evaluation step, using the new policy \(\pi'\), and continues until the policy no longer changes.
  
 %The objective in value-based methods is to find the best value function (whether $Q$ or $V$), defined as:
 %\begin{iequation}
