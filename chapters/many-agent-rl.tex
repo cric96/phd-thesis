@@ -334,6 +334,43 @@ Starting from this intuition two main approaches have been developed:
  Both Q-Learning and SARSA have their own advantages and disadvantages. 
   Q-Learning tends to find the optimal policy faster but may be more sensitive to noise. SARSA, being an on-policy method, is more conservative and tends to find safer policies, especially when the policy involves some level of risk or uncertainty.
 
+\subsection{Policy Gradient Methods}
+
+While temporal difference methods and monte carlo methods focus on learning value functions to derive optimal policies, \emph{policy gradient} methods take a different approach. 
+  They aim to directly optimize the policy \(\pi\) itself, 
+  rather than first estimating value functions. 
+  This is particularly useful in environments with high-dimensional action spaces or continuous action spaces, where value-based methods may struggle.
+  Moreover, in this way, it is possible to learn stochastic policies,
+    which are often more robust and flexible than deterministic policies.
+
+Policy gradient methods optimize the policy by ascending the gradient of the expected return with respect to the policy parameters \(\theta\). 
+Mathematically, this can be expressed as:
+\begin{equation}
+\theta \leftarrow \theta + \alpha \nabla_\theta J(\theta)
+\end{equation}
+where \(J(\theta)\) is the expected return when following policy \(\pi_\theta\), and \(\alpha\) is the learning rate.
+
+One of the foundational algorithms in this category is the REINFORCE algorithm~\cite{DBLP:conf/nips/SuttonMSM99}: it is one of the earliest and most straightforward policy gradient methods. 
+It estimates the gradient of the expected return by sampling trajectories from the current policy \(\pi_\theta\). 
+After each episode, the algorithm adjusts the policy parameters \(\theta\) in the direction that increases the expected return.
+%
+The core equation for the REINFORCE algorithm is:
+\begin{equation}
+\nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} \left[ \sum_{t=0}^{\infty} \nabla_\theta \log \pi_\theta(a_t | s_t) G_t \right]
+\end{equation}
+
+Here, \(\tau\) represents a trajectory sampled from the policy \(\pi_\theta\), and \(G_t\) is the return from time \(t\). 
+ The term \(\nabla_\theta \log \pi_\theta(a_t | s_t)\) is the log-likelihood gradient, 
+ and \(G_t\) serves as a sample estimate for how good the action \(a_t\) is in state \(s_t\).
+
+The REINFORCE algorithm operates in an episodic setting, 
+ meaning it waits until the end of each episode to update the policy. 
+ This makes it well-suited for tasks where the episode termination is natural, such as games or tasks with a fixed time horizon. 
+ However, one drawback of REINFORCE is that it can have high variance in its updates, which can make the training process unstable. 
+ Various techniques, such as using a \emph{baseline} or employing advanced variance reduction methods, have been developed to mitigate this issue.
+
+REINFORCE is particularly useful when the action space is high-dimensional or continuous, where traditional value-based methods like Q-Learning may struggle. 
+
 
 \section{Multi-agent}
 \begin{figure}
