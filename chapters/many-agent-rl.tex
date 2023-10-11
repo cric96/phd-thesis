@@ -8,7 +8,6 @@
 \newcommand{\RR}{\mathcal{R}}
 \newcommand{\RE}{\mathbb{E}}
 
-\section{Introduction}
 The concept of intelligence is as complex as it is intriguing, 
  and it has been a subject of philosophical inquiry, 
  scientific exploration, and cultural curiosity for centuries. 
@@ -59,28 +58,48 @@ Reinforcement learning sets itself apart from other methodologies by operating w
   \includegraphics[width=\textwidth]{chapters/img/single-agent-rl.drawio.pdf}
   \caption{Overview of the \ac{rl} framework.}\label{fig:rl:overview}
 \end{figure}
-\Acl{rl}~\cite{sutton2018reinforcement-learning} serves as a universal framework that has been inspired by the cognitive processes underlying human learning. 
- This paradigm has proven to be highly effective for addressing \emph{control problems}, which are essentially tasks that require decision-making to achieve a particular outcome.
+\Acl{rl}~\cite{sutton2018reinforcement-learning} serves as a universal framework that h
+ as been inspired by the cognitive processes underlying human learning. 
+ This paradigm has proven to be highly effective for addressing \emph{control problems}, 
+ which are essentially tasks that require decision-making to achieve a particular outcome.
 %
-The core focus of \ac{rl} is on the \emph{sequential} interactions that occur between \emph{agents} and an \emph{environment} (summarized in \Cref{fig:rl:overview}). 
- Agents are defined as entities capable of performing \emph{actions}, while the environment constitutes everything that is external to the agents and beyond their immediate control.
+The core focus of \ac{rl} is on the \emph{sequential} interactions that occur between \emph{agents} 
+ and an \emph{environment} (summarized in \Cref{fig:rl:overview}). 
+ Agents are defined as entities capable of performing \emph{actions}, 
+ while the environment constitutes everything that is external to the agents 
+ and beyond their immediate control.
 
 During each discrete time step, 
- denoted as $t$, 
-an agent observes the current state of the environment, $s_t$ (e.g., the robot position according to a GPS sensor). 
+ denoted as $t$, an agent observes the current state of the environment, 
+ $s_t$ (e.g., the robot position according to a GPS sensor). 
 This state encapsulates the set of all observable information at that particular moment. 
-The agent then proceeds to select an \emph{action} (e.g., the torque to be applied to engines) $a_t$ in accordance with its \emph{policy} $\pi$. 
-A policy serves as a probabilistic mapping that guides the agent in choosing actions based on the current state. 
+The agent then proceeds to select an \emph{action} 
+ (e.g., the torque to be applied to engines) 
+ $a_t$ in accordance with its \emph{policy} $\pi$. 
+A policy serves as a probabilistic mapping that guides the agent in choosing actions 
+ based on the current state. 
  Policies can be simple lookup tables or complex neural networks.
 
 As a result of taking this action, 
  the environment transitions to a new state $s_{t+1}$ at the next time step $t+1$. 
- Simultaneously, the agent receives a \emph{reward} $r_{t+1}$, which is a quantitative measure of the efficacy of the action taken, given the state of the environment.
+ Simultaneously, the agent receives a \emph{reward} $r_{t+1}$, 
+ which is a quantitative measure of the efficacy of the action taken, 
+ given the state of the environment.
 
-The overarching objective of \ac{rl} is to discover an \emph{optimal} policy, denoted as $\pi^*$, that aims to maximize the long-term return, or cumulative reward, $G$. 
- This is generally achieved through a \emph{trial-and-error} learning process, where agents continually adapt their policies based on the rewards received.
+The overarching objective of \ac{rl} is to discover an \emph{optimal} policy, 
+ denoted as $\pi^*$, that aims to maximize the long-term return, or cumulative reward, $G$. 
+ This is generally achieved through a \emph{trial-and-error} learning process, 
+ where agents continually adapt their policies based on the rewards received.
 
-This framework has found extensive applications in a diverse array of domains. For example, \ac{rl} has been used to create advanced algorithms for video games~\cite{DBLP:journals/spm/ArulkumaranDBB17}, allowing for AI agents that can outperform human players. In robotics~\cite{DBLP:journals/ijrr/KoberBP13}, \ac{rl} algorithms are enabling machines to learn complex tasks autonomously, from simple object manipulation to navigation in unstructured environments. It is also making significant inroads in networking, particularly in routing algorithms where dynamic decision-making is crucial~\cite{DBLP:journals/comsur/LuongHGNWLK19}.
+This framework has found extensive applications in a diverse array of domains. 
+ For example, \ac{rl} has been used to create advanced algorithms for video games~\cite{DBLP:journals/spm/ArulkumaranDBB17}, 
+ allowing for AI agents that can outperform human players. 
+% 
+In robotics~\cite{DBLP:journals/ijrr/KoberBP13}, 
+ \ac{rl} algorithms are enabling machines to learn complex tasks autonomously, 
+ from simple object manipulation to navigation in unstructured environments. 
+ It is also making significant inroads in networking, 
+ particularly in routing algorithms where dynamic decision-making is crucial~\cite{DBLP:journals/comsur/LuongHGNWLK19}.
 
 \subsection{Markov Decision Process}
 This general framework is supported by \ac{mdp}, 
@@ -94,25 +113,30 @@ A \ac{mdp} consists of a tuple $<\RS, \RA, \RP, \RR>$ in which:
   \item $\RR(s_t, a_t, s_{t+1})$ devise a probabilistic reward function.
 \end{itemize}
 In \ac{mdp}, $\RP$ is \emph{memory-less}, 
- namely the next environment state depends only on the current state---that is the \emph{Markov property}.
+ namely the next environment state depends only on the current state---
+ that is the \emph{Markov property}.
 %%
-Typically, in RL problems, agents do not have access to $\RR$ or $\RP$, 
- but they can rely only on the experience $(s_t, a_t, r_t)$ sampled at a time step. 
+%Typically, in \ac{rl} problems, agents do not have access to $\RR$ or $\RP$, 
+% but they can rely only on the experience $(s_t, a_t, r_t)$ sampled at a time step. 
 %%
-Therefore, 
- $G$ is defined as the discounted sum of reward a possible future trajectory $\tau$ (i.e. a sequence of time steps):
+Another important concept in \ac{mdp} is the return 
+ $G$ defined as the discounted sum of reward a possible future trajectory $\tau$ (i.e. a sequence of time steps):
 %%
 \begin{equation}
 G_{t} = r_t + \gamma r_{t + 1} + \gamma^2 r_{t + 2} + \dots + \gamma^T r_{t + T} = \sum_{k = t}^T \gamma^{k-t} r_k
 \end{equation}
 %%
-Where $0 \leq \gamma \leq 1$ is the \emph{discount factor}, that is how much the future reward impacts the long-term return.
+Where $0 \leq \gamma \leq 1$ is the \emph{discount factor}, 
+ that is how much the future reward impacts the long-term return.
 %%
-Based on the value of $T$, we can distinguish between \emph{episodic} and \emph{continuing} tasks.
- The foster ones are characterized by a finite number of time steps (e.g., a match of chess), while the latter ones are infinite (e.g., a robot that should wander in an unknown environment).
+Based on the value of $T$, we can distinguish between \emph{episodic} and \emph{continuous} tasks.
+ The foster ones are characterized by a finite number of time steps
+  (e.g., a match of chess), while the latter ones are infinite 
+  (e.g., a robot that should wander in an unknown environment).
 %%
 \subsubsection*{Reinforcement Learning Goal}
-The \ac{rl} goal can be expressed as the maximization of the \emph{expected} long-term return following a policy $\pi$:
+The \ac{rl} goal can be expressed as the maximization of the \emph{expected} 
+ long-term return following a policy $\pi$:
 %%
 \begin{equation}
 J = \mathbb{E_\pi}\Big[ G_t \Big] = \RE_\pi \Big[ \sum_{k = t}^T \gamma^{t-k} r_k \Big] 
@@ -123,12 +147,16 @@ Particularly, in \ac{RL} we want to find the optimal policy $\pi^*$ that maximiz
 \begin{equation}
 \pi^* = \arg \max_{\pi} J
 \end{equation}
-The equation essentially captures the trade-off between immediate and future rewards. The agent aims to select actions based on the policy \(\pi\) that will maximize this expected long-term return. 
- The discount factor \(\gamma\) allows us to model the agent's consideration for future rewards and is a hyperparameter that can be tuned based on the specific problem being solved.
+The equation essentially captures the trade-off between immediate and future rewards. 
+ The agent aims to select actions based on the policy \(\pi\) 
+ that will maximize this expected long-term return. 
+ The discount factor \(\gamma\) allows us to model the agent's consideration 
+ for future rewards and is a hyperparameter that can be tuned based on the specific problem being solved.
 
 \subsection{Find a policy given a MDP}
 
-$V^\pi$ is the value function that evaluates how good (or bad) a \emph{state} is according to the long-term return following the policy $\pi$ (\emph{expected value}).
+$V^\pi$ is the value function that evaluates how good (or bad) a \emph{state} 
+ is according to the long-term return following the policy $\pi$ (\emph{expected value}).
 % 
 It is defined as:
 %%
@@ -141,7 +169,9 @@ $Q^\pi$ is the corresponding value function that evaluates \emph{state-action} p
 \begin{equation}
 Q(s, a)^\pi = \RE_\pi \Big[ G_t | s_t = s, a_t = a \Big]
 \end{equation}
-Policies could be defined through value functions. In particular, a greedy policy based on $Q$ function is the one that always chooses the action with the highest value in a certain state:
+Policies could be defined through value functions. 
+ In particular, a greedy policy based on $Q$ function is the one that always chooses 
+ the action with the highest value in a certain state:
 \begin{equation}
 \pi(s) = \arg \max_{a}(Q(s, a))
 \end{equation}
@@ -151,7 +181,8 @@ Policies could be defined through value functions. In particular, a greedy polic
   \includegraphics[width=0.65\textwidth]{chapters/img/value-iteration.png}
   \caption{General schema of policy iteration (left) and value iteration (right).}\label{fig:rl:dp}
 \end{figure}
-Dynamic programming is a family of algorithms that can be used to compute optimal policies given a model of the environment as a \ac{mdp}.
+Dynamic programming is a family of algorithms that can be used to compute optimal policies 
+ given a model of the environment as a \ac{mdp}.
 %
 In particular, the \emph{Bellman equation} is a fundamental concept in dynamic programming. 
  It is a recursive equation that decomposes the value function into two parts: 
