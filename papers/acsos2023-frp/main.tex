@@ -777,7 +777,7 @@ Firstly, we re-implement the \emph{gradient} building block with the reactive ex
 Multiple gradient computation algorithms exist~\cite{audrito2017ULT} as previous outlined. 
 A basic algorithm can be implemented in \ac{langname} as follows.
 
-\begin{lstlisting}[caption="Gradient implemented with FRASP", label=acsos2023-frp:lst:gradients]
+\begin{lstlisting}[caption=Gradient implemented with FRASP, label=acsos2023-frp:lst:gradients]
 def gradient(source: Flow[Boolean]): Flow[Double] =
   loop(Double.PositiveInfinity) { g => {
     mux(source) {
@@ -816,7 +816,7 @@ The following example showcases the \emph{compositionality} of the programming m
 Therefore, an implementation in \ac{langname} is as follows.
 
 \begin{minipage}{\columnwidth}
-\begin{lstlisting}[escapechar=\%,numbers=left,xleftmargin=0.3cm,numbersep=4pt]
+\begin{lstlisting}[escapechar=\%,numbers=left,xleftmargin=0.3cm,numbersep=4pt, caption=Channel implemented with FRASP]
 def broadcast[T](
   source: Flow[Boolean], value: Flow[T]
 ): Flow[T] =
