@@ -145,8 +145,13 @@ Policies could be defined through value functions. In particular, a greedy polic
 \begin{equation}
 \pi(s) = \arg \max_{a}(Q(s, a))
 \end{equation}
-\subsubsection{Dynamic Programming}
-Dynamic programming is a family of algorithms that can be used to compute optimal policies given a perfect model of the environment as a \ac{mdp}.
+\subsubsection{Dynamic programming}
+\begin{figure}
+  \includegraphics[width=0.3\textwidth]{chapters/img/generalized-policy-improvement.png}
+  \includegraphics[width=0.65\textwidth]{chapters/img/value-iteration.png}
+  \caption{General schema of policy iteration (left) and value iteration (right).}\label{fig:rl:dp}
+\end{figure}
+Dynamic programming is a family of algorithms that can be used to compute optimal policies given a model of the environment as a \ac{mdp}.
 %
 In particular, the \emph{Bellman equation} is a fundamental concept in dynamic programming. 
  It is a recursive equation that decomposes the value function into two parts: 
@@ -161,42 +166,48 @@ Similarly, the Bellman equation for the $Q$ function is defined as:
 Q(s, a) = \sum_{s' \in \RS} \RP(s'|s, a) \Big[ \RR(s, a, s') + \gamma \sum_{a' \in \RA} \pi(a'|s') Q(s', a') \Big]
 \end{equation}
 %
-The Bellman equation is the basis for many dynamic programming algorithms, 
-including \emph{value iteration} and \emph{policy iteration}.
-\subsection{Value Iteration}
+The Bellman equation is the basis for many algorithms that solve \ac{mdp},
+two most notable are \emph{value iteration} and \emph{policy iteration} (\Cref{fig:rl:dp}).
+\subsection{Value iteration}
+Value iteration is an iterative algorithm used to compute the optimal value function \(V^*\) and, consequently, the optimal policy \(\pi^*\). 
+ The algorithm is particularly useful when the state and action spaces are too large to solve directly through analytical methods. 
+ It is based on the principle of optimality, which states that if an optimal policy \(\pi^*\) exists, then it must satisfy the Bellman optimality equation.
 
-Value Iteration is an iterative algorithm used to compute the optimal value function \(V^*\) and, consequently, the optimal policy \(\pi^*\). The algorithm iteratively updates the value of each state \(s\) until the value function converges to \(V^*\).
-
-The update rule for Value Iteration is given by:
-
+The algorithm starts by initializing \(V(s)\) for all states \(s\) to some arbitrary values, often zeros. 
+ It then iteratively updates the value of each state \(s\) using the Bellman optimality equation until the value function converges to \(V^*\). 
+ The convergence is usually checked by measuring the difference between successive value functions and comparing it against a small threshold \(\epsilon\):
 \begin{equation}
-V_{k+1}(s) = \max_{a \in \mathcal{A}} \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V_k(s') \Big]
+V_{k+1}(s) = \max_{a \in \mathcal{A}} \sum_{s' \in \mathcal{S}} \RP(s'|s, a) \Big[ \RR(s, a, s') + \gamma V_k(s') \Big]
 \end{equation}
 
-After convergence, the optimal policy \(\pi^*\) can be extracted as:
+The \(\max\) operation ensures that the value function is updated to reflect the best possible action at each state. 
+ The term \(\gamma V_k(s')\) represents the discounted future rewards, and \(R(s, a, s')\) is the immediate reward. 
+ The transition probability \(P(s'|s, a)\) models the uncertainty in the environment.
+
+After the value function has converged to \(V^*\), the optimal policy \(\pi^*\) can be extracted. The policy is determined by selecting the action that maximizes the expected return in each state, as given by:
 
 \begin{equation}
 \pi^*(s) = \arg \max_{a} \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V^*(s') \Big]
 \end{equation}
+This policy is guaranteed to be optimal with respect to the original MDP.
+
 
 \subsection{Policy Iteration}
+Policy iteration is another dynamic programming algorithm used for finding the optimal policy \(\pi^*\). 
+ Unlike value iteration, policy iteration consists of two main steps: 
+ \emph{policy evaluation} and \emph{policy improvement}, 
+ which are repeated iteratively until the policy converges to \(\pi^*\):
+\begin{itemize}
+  \item policy evaluation: in this step, the value function \(V^\pi\) for the current policy \(\pi\) is computed until it stabilizes. The update rule is:
 
-Policy Iteration is another dynamic programming algorithm used for finding the optimal policy \(\pi^*\). Unlike Value Iteration, Policy Iteration consists of two main steps: Policy Evaluation and Policy Improvement, which are repeated iteratively until the policy converges to \(\pi^*\).
-
-\subsubsection{Policy Evaluation}
-
-In this step, the value function \(V^\pi\) for the current policy \(\pi\) is computed until it stabilizes. The update rule is:
-
-\begin{equation}
-V_{k+1}(s) = \sum_{a \in \mathcal{A}} \pi(a|s) \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V_k(s') \Big]
-\end{equation}
-
-\subsubsection{Policy Improvement}
-After evaluating \(V^\pi\), the policy is updated to be greedy with respect to \(V^\pi\):
-\begin{equation}
-\pi'(s) = \arg \max_{a} \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V^\pi(s') \Big]
-\end{equation}
-
+  \begin{equation}
+  V_{k+1}(s) = \sum_{a \in \mathcal{A}} \pi(a|s) \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V_k(s') \Big]
+  \end{equation}
+  \item policy improvement: after evaluating \(V^\pi\), the policy is updated to be greedy with respect to \(V^\pi\):
+  \begin{equation}
+  \pi'(s) = \arg \max_{a} \sum_{s' \in \mathcal{S}} P(s'|s, a) \Big[ R(s, a, s') + \gamma V^\pi(s') \Big]
+  \end{equation}
+\end{itemize}
 The algorithm then returns to the policy evaluation step, using the new policy \(\pi'\), and continues until the policy no longer changes.
  
 %The objective in value-based methods is to find the best value function (whether $Q$ or $V$), defined as:
@@ -207,12 +218,44 @@ The algorithm then returns to the policy evaluation step, using the new policy \
 %\begin{equation}
 %\pi^*(s) = \underset{a}{\text{argmax}}(Q^*(s, a))
 %\end{equation}
-\section{Temporal difference algorithms}
-Understanding this goal is crucial for the development and evaluation of RL algorithms, 
- as it serves as the foundation upon which various strategies and techniques are built to find the optimal policy \(\pi^*\).
-%% TODO today you have to improve this!
-The \ac{rl} algorithms classification depends on how we derive the $\pi^*$ (i.e. the optimal policy) according to $J$.
-%
+\subsection{Find a policy without an MDP}
+While dynamic programming methods like value iteration and policy iteration offer powerful ways to find the optimal policy \(\pi^*\), 
+ they come with a significant limitation: 
+ the need for a complete model of the environment. 
+ Specifically, these algorithms require knowledge of the transition probability function \(\RP\) and the reward function \(\RR\). 
+ In many real-world applications, these functions are either unknown or too complex to model accurately. 
+ This is where \emph{model-free} algorithms come into play.
+ In the following sections, we will discuss two such algorithms' family: 
+ Monte Carlo methods and Temporal Difference methods.
+\subsubsection{Monte Carlo methods}
+Monte Carlo methods offer a way to find an optimal policy \(\pi^*\) without requiring a model of the environment. These methods rely on sampling sequences of states, actions, and rewards from actual or simulated interactions with the environment. By averaging these samples, the agent can estimate the value functions \(V(s)\) and \(Q(s, a)\), which can then be used to improve the policy.
+
+The core idea is to run multiple episodes, from start to finish, and then update the value estimates based on the returns observed. The value of a state \(s\) or a state-action pair \((s, a)\) is estimated as the average of the returns that have followed that state or state-action pair across multiple episodes.
+
+\begin{equation}
+V(s) = \frac{1}{N} \sum_{i=1}^{N} G_t^{(i)}
+\end{equation}
+
+\begin{equation}
+Q(s, a) = \frac{1}{N} \sum_{i=1}^{N} G_t^{(i)}
+\end{equation}
+
+Where \(N\) is the number of times the state or state-action pair has been visited, and \(G_t^{(i)}\) is the return following the \(i\)-th visit.
+
+Once the value functions are estimated, the policy can be improved by making it greedy with respect to these estimated values. Monte Carlo methods are particularly useful when the state and action spaces are large, making it impractical to enumerate all possible state-action pairs. However, they do require the episodes to be finite and can be computationally expensive due to the need for multiple samples to obtain accurate estimates.
+
+Monte Carlo methods have been applied in various domains, including game playing, robotics, and healthcare, offering a flexible and powerful approach to solving complex decision-making problems.
+
+\subsubsection{Temporal difference methods}
+Temporal Difference methods are a class of \emph{model-free} and \emph{value-based} algorithms 
+ that allow the agent to learn optimal behaviour directly from its interactions with the environment, without requiring a model. 
+ TD methods combine ideas from both Monte Carlo methods and dynamic programming to provide a flexible and powerful approach to reinforcement learning.
+
+One of the simplest TD methods is \emph{TD-Learning}~\cite{DBLP:journals/ml/Sutton88}, 
+ which updates the value function \(V(s)\) based on the temporal difference error \(\delta\), 
+ defined as \( \delta = R(s, a, s') + \gamma V(s') - V(s) \). 
+ The value function is then updated using \( V(s) \leftarrow V(s) + \alpha \delta \), where \(\alpha\) is the learning rate.
+
 %\emph{Policy-gradient} methods aim at directly learning the policy through gradient descents algorithms. 
 %
 In particular, \emph{value-based} methods learn one further function ($Q^\pi$ or $V^\pi$) to derive $\pi^*$.
