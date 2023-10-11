@@ -311,28 +311,30 @@ One of the simplest TD methods is \emph{TD-Learning}~\cite{DBLP:journals/ml/Sutt
  defined as \( \delta = R(s, a, s') + \gamma V(s') - V(s) \). 
  The value function is then updated using \( V(s) \leftarrow V(s) + \alpha \delta \), where \(\alpha\) is the learning rate.
 
-%\emph{Policy-gradient} methods aim at directly learning the policy through gradient descents algorithms. 
-%
-In particular, \emph{value-based} methods learn one further function ($Q^\pi$ or $V^\pi$) to derive $\pi^*$.
-%
-Q-Learning~\cite{DBLP:journals/ml/WatkinsD92} is one of the most famous value-based algorithms. 
- It aims at finding the $Q^*$ (i.e. the $Q$ function associated with $\pi^*$) by incrementally refining a $Q$ table directly sampling from an unknown environment.
-%
-Particularly, this is done through a temporal difference update performed at each time step:
-\begin{equation}
-Q(s_t, a_t) = Q(s_t, a_t) + \alpha *  [r_t + \gamma * \arg \max_{a}(Q(s_{t+1}, a)) - Q(s_t, a_t)]
-\end{equation}
-Where $\alpha$ is the learning rate (i.e. how much new information will influence the learned $Q$ at each update). 
-%
-The agent typically follows a $\epsilon$-greedy policy (\emph{behavioural} policy, the function chooses a random action with a $\epsilon$ probability) to balance the \emph{exploitation} and \emph{exploration} trade-off. 
+Starting from this intuition two main approaches have been developed: 
+ \emph{Q-learning}~\cite{DBLP:journals/ml/WatkinsD92} and \emph{SARSA}~\cite{10.5555/3312046}. 
 
-This algorithm is proven to eventually learn $Q^*$ under the assumption of a \emph{stationary} environment (i.e. the internal dynamics does not change over time).
-%
-Using $Q^*$ we could extract the $\pi^*$ greedy policy (\emph{target} policy).
+ \paragraph*{Q-Learning}
 
-Nowadays, Q-Learning is applied in various fields, ranging from robotics to wireless sensor networks and smart grids~\cite{DBLP:journals/access/JangKHK19}.
-%
-However, one of the most challenging settings in which Q-Learning could be applied is when the learning process has to deal with multiple concurrent learners, namely a multi-agent system.
+ Q-Learning is an off-policy TD algorithm that focuses on learning the action-value function \(Q(s, a)\). The update rule for Q-Learning is:
+ \begin{equation}
+ Q(s, a) \leftarrow Q(s, a) + \alpha \Big[ R(s, a, s') + \gamma \max_{a'} Q(s', a') - Q(s, a) \Big]
+ \end{equation}
+ The algorithm is termed ``off-policy'' because it learns the value of the optimal policy regardless of the policy being followed, 
+  thanks to the \(\max_{a'}\) term in the update rule.
+ 
+ \paragraph*{SARSA}
+ SARSA (State-Action-Reward-State-Action) is an on-policy TD algorithm. 
+  Unlike Q-Learning, SARSA takes into account the current policy \(\pi\) during the learning process. The update rule for SARSA is:
+ \begin{equation}
+ Q(s, a) \leftarrow Q(s, a) + \alpha \Big[ R(s, a, s') + \gamma Q(s', a') - Q(s, a) \Big]
+ \end{equation}
+ where \(a'\) is the action taken under the current policy \(\pi\).
+ 
+ Both Q-Learning and SARSA have their own advantages and disadvantages. 
+  Q-Learning tends to find the optimal policy faster but may be more sensitive to noise. SARSA, being an on-policy method, is more conservative and tends to find safer policies, especially when the policy involves some level of risk or uncertainty.
+
+
 \section{Multi-agent}
 In the evolving landscape of \ac{rl}, the concept of \ac{marl} stands as a natural extension of the foundational \ac{rl} principles. 
  While traditional \ac{rl} generally focuses on the interactions between a single agent and an environment, 
