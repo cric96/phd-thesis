@@ -1,9 +1,7 @@
 %!TeX root = thesis-main.tex
-
 Proper software tooling
-is essential to support these phases
-and hence the investigation of new self-organising algorithms
-and variants or extensions of the programming model,
+is essential to new self-organising algorithms
+and variants or extensions of the aggregate programming model,
 promoting scientific and technological progress.
 
 In the following, we present the
@@ -16,28 +14,14 @@ In the following, we present the
 
 \subsubsection{Software description}
 \label{}
-
-%\meta{
-%Describe the software in as much as is necessary to establish a vocabulary needed to explain its impact. 
-%}
-
 \scafi{} is a multi-module Scala project hosted on GitHub\footnote{\url{https://github.com/scafi/scafi}}.
 %
 It provides a DSL and API modules for 
  writing, testing, and running aggregate programs, namely programs expressed according to the aggregate programming paradigm~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19}.
 %
-Stable versions of \scafi{} are delivered through the \emph{Maven Central Repository}. %, a de-facto standard for the open-source community revolving around Java, Scala, Android, and related software tools.
+%the open-source community revolving around Java, Scala, Android, and related software tools.
 %
 %Notably, Maven Central has a strict no-retract policy, meaning that all the past releases of \scafi{} will be available for as long as the repository will live.
-%
-All the artefacts %of \scafi{} and its related toolkit 
- are collected under group
-\texttt{it.unibo.scafi}.
-%
-\scafi{}'s build process and dependency management leverages the \emph{Simple Build Tool (SBT)},
-and a continuous integration/delivery pipeline on \emph{GitHub Actions (GHA)} is in place to ensure that changes do not break existing functionality.
-%
-\scafi{} cross-compiles for Scala 2.11, 2.12, 2.13 and targets both the JVM and the JavaScript platform (through \emph{Scala.js}).
 %
 \paragraph{Software Architecture}
 \label{sec:scafi-arch-design}
@@ -47,14 +31,14 @@ and a continuous integration/delivery pipeline on \emph{GitHub Actions (GHA)} is
 %}
 
 The high-level architecture of \scafi{} is depicted in \Cref{fig:scafi-arch}.
-It consists of the following main components (where each component is an SBT module and deployable artifact):
+It consists of the following main components: %(where each component is an SBT module and deployable artifact):
 \begin{itemize}
 \item \texttt{scafi-commons} | provides basic abstractions and utilities (e.g., spatial and temporal abstractions);
 \item \texttt{scafi-core} | provides an aggregate programming DSL (syntax, semantics, and a virtual machine for evaluation of programs), together with a ``standard library'' of reusable functions;
 \item \texttt{scafi-stdlib-ext} | provides extra library functionality that requires external dependencies and is hence kept separated from the minimalist \texttt{scafi-core};
 \item \texttt{scafi-simulator}: provides basic support for simulating aggregate systems;
-\item \texttt{scafi-simulator-gui} | provides a GUI for visualising and interacting with simulations of aggregate systems;
-\item \texttt{spala} (``spatial Scala''---i.e., a general Aggregate Computing platform\footnote{Aggregate computing is rooted in spatial computing~\cite{DBLP:journals/corr/abs-1202-5509}.}) | provides an actor-based aggregate computing middleware
+\item \texttt{scafi-simulator-gui} | provides a GUI for visualizing and interacting with simulations of aggregate systems;
+\item \texttt{spala} (``spatial Scala''---i.e., a general aggregate computing platform\footnote{aggregate computing is rooted in spatial computing~\cite{DBLP:journals/corr/abs-1202-5509}.}) | provides an actor-based aggregate computing middleware
 (independent of the \scafi{} DSL and potentially applicable to other aggregate programming languages as well)
 based on the Akka toolkit~\cite{akka};
 \item \texttt{scafi-distributed} | ScaFi integration-layer for \texttt{spala},
@@ -109,12 +93,6 @@ The \texttt{StandardLibrary} is provided by leveraging
 \paragraph{Software Functionalities}
 \label{}
 
-%\meta{
-%Present the major functionalities of the software.
-%}
-%
-%\scafi{} provides the following main functionalities.
-
 \paragraph*{Expressing aggregate programs through a Scala DSL}
 \label{sec:express-programs}
 %
@@ -147,12 +125,9 @@ Several such traits are available
  or experimental language features
  (e.g., the \texttt{spawn} function for concurrent aggregate processes~\revision{\cite{DBLP:journals/eaai/CasadeiVAPD21,testa2022processes}}\revision{, for modelling independent and overlapping aggregate computations}).
 %
-Even more functionality is available in module \texttt{scafi-stdlib-ext}, which currently provides Shapeless-leveraging~\cite{gurnell2017shapeless} typeclasses to extend \texttt{Bounded}ness constraints 
- (required by some library functions) to arbitrary product types.
-
 \paragraph*{Virtual machine for the local execution of aggregate programs}
 %
-An AggregateProgram instance 
+An \texttt{AggregateProgram} instance 
  is a function
  mapping a \texttt{Context}
  (the set of inputs needed by an individual device
@@ -183,16 +158,19 @@ independently of the program.
 In order to simulate an ``aggregate system'',
  it is necessary 
  to 
- (i) define the set of computational devices that make up the aggregate, including their sensors and actuators;
- (ii) define the aggregate topology, i.e., 
+\begin{enumerate}
+  \item define the set of computational devices that make up the aggregate, including their sensors and actuators;
+  \item define the aggregate topology, i.e., 
   some application-specific \emph{neighbouring relationship}
   from which the set of \emph{neighbours}
   of each device can be determined;
- (iii) define the aggregate program to be executed;
- (iv) define a certain dynamics of the system
+  \item define the aggregate program to be executed;
+  \item define a certain dynamics of the system
   by proper scheduling of computation rounds,
   and the environment
   by proper scheduling of changes in sensor values.
+\end{enumerate}
+
 %
 Module \texttt{scafi-simulator}
  provides this basic support.
@@ -214,7 +192,8 @@ We remark that these modules
  
 \paragraph*{Experimental or work-in-progress features: 3D simulation frontend and actor-based middleware}
 %
-\scafi{} also includes a front-end for 3D simulations (\texttt{renderer-3d}), which are already supported by an execution perspective.
+\scafi{} also includes a front-end for 3D simulations (\texttt{renderer-3d}), 
+ which are already supported by an execution perspective.
 
 Regarding the construction of actual systems, 
  \scafi{}
@@ -245,20 +224,13 @@ The main abstraction
  an individual logical node of the aggregate system.
 %
 Then, an object-oriented façade API is provided to set up a system of middleware-level actors. 
-% supporting services like 
-% scheduling, discovery, and communication between different (possibly remote) devices.
-%
 
 %\paragraph{Sample code snippets analysis (optional)}
 %\label{}
 
-
 \subsubsection{Illustrative Examples}
 \label{sec:examples}
-
-
 \paragraph{Hello \scafi{}: building an aggregate system that computes a gradient, from scratch}
-Impact
 This complete example, shown in \Cref{fig:example-full} and available online\footnote{\url{https://github.com/scafi/hello-scafi}}, illustrates how it \scafi{} can be used
  to program a (simulated) aggregate system
  for computing a self-stabilising \emph{gradient} field~\cite{DBLP:conf/sac/BealBVT08,DBLP:journals/tomacs/ViroliABDP18}
@@ -266,11 +238,12 @@ This complete example, shown in \Cref{fig:example-full} and available online\foo
  its minimum distance from an appointed \emph{source} device.
 %
 Development comes into two parts:
- (i) definition of the aggregate program,
- namely the logic of collective behaviour (\Cref{fig:example-full1})\footnote{For a detailed explanation of this gradient implementation, please refer to e.g. \cite{DBLP:journals/eaai/CasadeiVAPD21}.}~\footnote{Concerning source code listings, we highlight symbols as follows: we use blue for Scala keywords, red for \scafi{} DSL constructs, purple for \scafi{} library functions, and brown for other \scafi{} API symbols (e.g., types, objects, constants, and methods).};
- and (ii) definition of an ``aggregate execution protocol''
- determining how devices communicate and act upon their environment (\Cref{fig:example-full2}).
-%
+\begin{enumerate}
+  \item definition of the aggregate program,
+  namely the logic of collective behaviour (\Cref{fig:example-full1})\footnote{For a detailed explanation of this gradient implementation, please refer to e.g. \cite{DBLP:journals/eaai/CasadeiVAPD21}.}~\footnote{Concerning source code listings, we highlight symbols as follows: we use blue for Scala keywords, red for \scafi{} DSL constructs, purple for \scafi{} library functions, and brown for other \scafi{} API symbols (e.g., types, objects, constants, and methods).};
+  \item definition of an ``aggregate execution protocol''
+  determining how devices communicate and act upon their environment (\Cref{fig:example-full2}).
+\end{enumerate}
 
 \begin{figure}
 \newsavebox{\exoprogram}
@@ -364,30 +337,6 @@ This pattern can be easily implemented in \scafi{}
  using its standard library functions,
  and simulated through the feature provided by \texttt{scafi-simulator}. 
 %
-%In the following, for instance, it is described the general SCR program schema:
-%%
-%\begin{lstlisting}
-%// zone center, where information are collected
-%val leader = S(radius, nbrRange)
-%// field used to bring information from leaves to leaders
-%val potential = distanceTo(leader)
-%/* collect localValue following the potential field using 
-%  aggregate binary operator, nullValue is the idempotent value 
-%  of the aggregate function (e.g., for the sum is 0) */
-%val collectedInformation = C(
-%  potential, 
-%  (acc, value) => aggregate(acc, value), 
-%  localValue, 
-%  nullValue
-%) 
-%/* leaders perform a decision using the area collected information and share 
-%  its decision to the zone in which it leads */
-%val leaderDecision = broadcast(leader, leaderPolicy(collectedInformation))
-%// slaves perform action following the leader decision
-%localPolicy(leaderDecision)
-%\end{lstlisting}
-%
-
 For instance, consider the following scenario: 
  temperature monitoring and control in a large environment. 
 %
@@ -443,21 +392,6 @@ class SCR extends AggregateProgram
   
 \subsubsection{Features}
 \label{s:impact}
-
-%\meta{
-%\textbf{This is the main section of the article and the reviewers weight the description here appropriately}
-%
-%Indicate in what way new research questions can be pursued as a result of the software (if any).
-%
-%Indicate in what way, and to what extent, the pursuit of existing research questions is improved (if so).
-%
-%Indicate in what way the software has changed the daily practice of its users (if so).
-%
-%Indicate how widespread the use of the software is within and outside the intended user group.
-%
-%Indicate in what way the software is used in commercial settings and/or how it led to the creation of spin-off companies (if so).
-%}
-
 \scafi{}
  has been used 
  in aggregate computing-related research~\cite{DBLP:journals/eaai/CasadeiVAPD21,audrito2022ecoop-xc,DBLP:conf/coordination/AguzziCV22,
@@ -466,18 +400,6 @@ class SCR extends AggregateProgram
   software engineering, 
   computational models, and
   distributed systems/algorithms.
-%
-This thread
- has also several intersections
- with fields like
- multi-agent systems, 
- self-organization,
- %computational 
- collective intelligence,
- and scenarios like the Internet of Things, cyber-physical systems, and  edge computing. 
-%
-Artefacts published on permanent repositories (like Zenodo) using \scafi{} 
- include~\cite{zenodo-xc-scala,zenodo-smartc-scala,artifact-ieee-decentralised-systems}.
 %
 Aggregate programming languages 
  have been used in industry~\cite{DBLP:conf/saso/PaulosDBMHBPSSS19,DBLP:journals/taas/BealULRM18}.
@@ -504,8 +426,8 @@ which provides a way to specify a dynamic number of collective computations runn
 Another extension is the \texttt{exchange} primitive~\cite{audrito2022ecoop-xc,zenodo-xc-scala}, which subsumes previous communication primitives (\revision{like \lstinline|nbr|}~\cite{DBLP:journals/tocl/AudritoVDPB19}) and enables differentiated messages for neighbours.
 %
 In general, 
- as the aggregate programming DSL is exposed as a ``plain-old library'', it is arguably easier
- to implement new features,
+ as the aggregate programming DSL is exposed as a ``plain-old library'', 
+ it is arguably easier to implement new features,
  as the developer does not need to deal 
  with parser, compilers, type systems, or language workbenches---of course, at the expense of (syntactic and analytic) constraints exerted by the host language.
 %
@@ -540,26 +462,7 @@ By leveraging Scala.js~\cite{DBLP:conf/scala/Doeraene18}, \scafi{} can be easily
 This paved the path 
  to \scafiweb{}~\cite{DBLP:conf/coordination/AguzziCMPV21},
  a web playground for aggregate programming.
- 
-\paragraph*{Developer-friendliness}
 %
-With respect to other programming frameworks for aggregate computing like Proto~\revision{\cite{DBLP:journals/expert/BealB06}}, 
- Protelis~\cite{DBLP:conf/sac/PianiniVB15}, 
- and FCPP~\cite{DBLP:conf/acsos/Audrito20}, 
-the \scafi{} toolkit provides a privileged environment
-for developers.
-%
-Proto has been discontinued.
-%
-Its successor, Protelis, is a standalone DSL 
-with duck typing and no support for the definition of new data structures,
-and whose support for syntax highlighting and code completion is only available for the Eclipse IDE
-(being based on the Xtext framework~\cite{XtextBook2016}).
-%
-Relatively to FCPP, which is based on C++, \scafi{} benefits from the higher level of abstraction provided by Scala and the integration with the Java ecosystem.
-%
-A more detailed account of this comparison between aggregate programming languages can be found in~\cite{DBLP:journals/jlap/ViroliBDACP19,arxiv2020scafi-nc}.
-
 \paragraph*{Engineering of complex systems and collective intelligence (and related research)}
 %
 The paradigm embodied by \scafi{}
@@ -581,17 +484,3 @@ In~\cite{DBLP:conf/coordination/AguzziCV22},
  for determining what actions to execute, in ``holes'' of \scafi{} programs,
  to improve the dynamics of collective algorithms.
 %
-%Positive impact can be in two directions:
-% (i) by simulating models of existing systems,
-%  it becomes possible to understand them more deeply;
-%  and
-% (ii) by experimenting novel mechanisms,
-% it becomes possible to promote 
-% engineering of complex and collective adaptive systems.
-%
-We foresee that 
- accessible software toolkits
- such as \scafi{}
- aimed at programming 
- collective adaptive systems
- could have an important role in these research threads.
