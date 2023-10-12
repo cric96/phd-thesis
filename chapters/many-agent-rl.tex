@@ -401,13 +401,13 @@ Given these challenges, approximate solutions become not just desirable but ofte
 %
 In contemporary applications, neural networks have emerged as the go-to function approximators due to their exceptional capability to approximate complex, 
  high-dimensional functions. 
- Particularly, the combination of Deep learning and Reinforcement learning has led to significant advancements in the field, in the so-called area of \emph{Deep Reinforcement Learning}.
+ Particularly, the combination of Deep learning and Reinforcement learning has led to significant advancements in the field, in the so-called area of \emph{deep reinforcement learning}.
  One of the first and most influential works in this area was the Deep Q-Network (DQN) algorithm~\cite{DBLP:journals/corr/MnihKSGAWR13}, that will be discussed in the next section.
  \subsubsection{Deep Q-Networks (DQN)}
 
- Deep Q-Networks (DQN) represent a landmark innovation in the field of Deep Reinforcement Learning, 
-  effectively combining the strengths of Q-Learning with the function approximation capabilities of deep neural networks. 
-  Introduced by Mnih et al.~\cite{DBLP:journals/corr/MnihKSGAWR13}, DQN was initially designed to master a variety of Atari 2600 games and has since been adapted for various complex tasks.
+ Deep Q-Networks (DQN) represent a landmark innovation in the field of deep reinforcement learning, 
+  effectively combining the strengths of Q-Learning with the function approximation capabilities of deep neural networks.
+  DQN was initially designed to master a variety of Atari 2600 games and has since been adapted for various complex tasks.
  
  The core idea behind DQN is to use a neural network as a function approximate for the Q-function in Q-Learning. 
   The neural network, often referred to as the Q-network, 
@@ -438,6 +438,36 @@ The Q-value update equation in DQN is:
 Q(s, a; \theta) \leftarrow Q(s, a; \theta) + \alpha \Big[ r + \gamma \max_{a'} Q(s', a'; \theta^-) - Q(s, a; \theta) \Big]
 \end{equation}
 Where \(\theta^-\) are the parameters of the target network.
+\subsection{Wrap up}
+\begin{figure}
+  \includegraphics[width=\textwidth]{chapters/img/rl-overview.drawio.pdf}
+  \caption{Overview of the \ac{rl} algorithms.}\label{fig:rl:overview}
+\end{figure}
+In conclusion, 
+ this section has provided a comprehensive overview of RL, 
+ beginning with the formulation of the problem and the underlying mathematical framework. We also explored various analytical solutions and key algorithms associated with RL. 
+
+Reinforcement learning algorithms can be categorized along multiple dimensions (summarized in \Cref{fig:rl:overview}). 
+ One primary distinction is between \emph{model-free} and \emph{model-based} algorithms. 
+ In the former, there is no need for a model of the environment, allowing the algorithm to learn directly through interaction. 
+ In contrast, model-based algorithms require an MDP to compute the optimal policy.
+%
+Another important categorization is whether an algorithm is \emph{on-policy} or \emph{off-policy}. 
+ On-policy algorithms optimize the same policy that is used for exploration, 
+ whereas off-policy algorithms utilize two separate policies during the learning process, commonly referred to as the behaviour and target policies.
+%
+RL algorithms can be broadly divided based on what they aim to learn. 
+ The primary categories here are value-based and policy gradient methods, 
+ although hybrid approaches also exist that combine elements of both, like actor critic.
+%
+Lastly, RL algorithms can be categorized based on whether they use a \emph{tabular} or \emph{approximate} approach. 
+ Tabular methods store the value function in a table, 
+ while approximate methods leverage function approximation techniques, 
+ such as neural networks, to estimate the value function.
+
+This overview serves as a basis for the multi-agent and many-agent RL algorithms,
+ because most of the algorithms that we will discuss in the following sections are based on the concepts presented here.
+
 \section{Multi-agent}
 \begin{figure}
 \includegraphics[width=\textwidth]{chapters/img/multi-agent-rl.drawio.pdf}

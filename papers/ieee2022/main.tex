@@ -524,7 +524,7 @@ which will be presented and used in the experiments in next section.
   \begin{subfigure}[b]{0.9\linewidth}
     \centering
     %% use small and tt as a font size
-    \begin{lstlisting}[language=scafi, basicstyle=\footnotesize\ttfamily]
+    \begin{lstlisting}[language=scafi, basicstyle=\footnotesize\ttfamily, caption=Scala API for decentralized situation recognition, label=code:api]
 /* Configuration of  a distributed sensing task */
 class DistributedSensing[Leadership,Distance,Data](
   perceptionCenter: () => Leadership,
@@ -548,13 +548,13 @@ def decentralizedRecognitionAndResponse[Data](
 ): Unit = { /* CCT creation and Action execution */ }
     
 \end{lstlisting}
-  \subcaption{Scala API for decentralized situation recognition}
-  \label{code:api}
+  %\subcaption{Scala API for decentralized situation recognition}
+  %\label{code:api}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.9\linewidth}
     \centering
-\begin{lstlisting}[language=scafi,basicstyle=\footnotesize\ttfamily]
+\begin{lstlisting}[language=scafi,basicstyle=\footnotesize\ttfamily, caption=Example use of the API for the case study, label=code:example]
 // FloodWatch program
 type FloodWatchSensing = DistributedSensing[ID, Double, Double]
 val altimetry: FloodWatchSensing = new DistributedSensing(/**/)
@@ -575,8 +575,7 @@ val response: SituatedRecognition[Double] =
 // Actual API usage
 decentralizedRecognitionAndResponse(sensing,response)
 \end{lstlisting}
-\subcaption{Example use of the API for the case study}
-\label{code:example}
+
 \end{subfigure}
 \caption[Scala implementation of the dynamic decentralization domains API]{
   Scala implementation of the proposed API,
