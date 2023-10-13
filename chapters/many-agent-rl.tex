@@ -426,9 +426,9 @@ However, directly applying neural networks to Q-Learning presents challenges,
  DQN addresses these issues through two key innovations:
  
 \begin{itemize}
-  \item \textbf{Experience Replay}: DQN stores past experiences \((s, a, r, s')\) in a replay buffer and samples mini-batches randomly during training. 
+  \item \textbf{Experience replay}: DQN stores past experiences \((s, a, r, s')\) in a replay buffer and samples mini-batches randomly during training. 
   This decorrelates the data and leads to more stable training.
-  \item \textbf{Target Network}: DQN introduces a separate, 
+  \item \textbf{Target network}: DQN introduces a separate, 
   slowly-updated target network to calculate the target Q-values, 
   reducing the overestimation bias and improving stability.
 \end{itemize}
@@ -525,19 +525,31 @@ Here,
  Consequently, the agents' policies are now parameterized by their respective observation spaces \(\mathcal{O}_i\) rather than the global state space \(\mathcal{S}\). 
  This alteration significantly influences both the algorithmic approaches and the complexities involved in solving POSGs.
 \subsection{Taxonomies}
+\begin{figure}
+  \includegraphics[width=\textwidth]{chapters/img/marl-taxonomy.drawio.pdf}
+  \caption{Overview of the \ac{marl} taxonomies.}\label{fig:marl:taxonomy}
+\end{figure}
 In single-agent settings, the focus of learning configurations is primarily on algorithmic aspects, 
  such as whether an approach is value-based or relies on policy search, or whether it operates on-policy or off-policy. 
 %
-However, the landscape becomes more complex when multiple agents are involved. 
+However, the landscape becomes more complex when multiple agents are involved . 
 In such multi-agent settings, 
  several dimensions must be considered to appropriately classify algorithms and approaches. 
 Various surveys have attempted to categorize the diverse classes of algorithms specifically designed for multi-agent scenarios. 
 Each of these surveys emphasizes a unique characteristic or aspect of the problem under consideration. 
 %
-This section endeavours to outline various dimensions along which multi-agent algorithms can be categorized. The objective is to provide a framework for situating the algorithms that will be discussed in subsequent sections, particularly those that pertain to the \emph{many-agent} perspective.
+This section endeavours to outline various dimensions along which multi-agent algorithms can be categorized (\Cref{fig:marl:taxonomy}). The objective is to provide a framework for situating the algorithms that will be discussed in subsequent sections, particularly those that pertain to the \emph{many-agent} perspective.
+Note that the following taxonomies are not mutually exclusive, 
+ and many algorithms can be classified along multiple dimensions.
 
-\subsubsection{Learning Paradigms in Multi-Agent Settings}
+\subsubsection{Learning Paradigms}
+\begin{figure}
+  \includegraphics[width=\textwidth]{chapters/img/marl-policy-kind.drawio.pdf}
+  \caption{Overview of the \ac{marl} learning paradigms.}\label{fig:marl:policy-kind}
+\end{figure}
 \sloppy
+One possible categorization of multi-agent algorithms is based on the learning paradigm (summarized in \Cref{fig:marl:policy-kind}). 
+ In this context, the learning paradigm refers to the way in which agents learn their policies. 
 The field of multi-agent learning has historically been dominated by two primary approaches: 
  \emph{independent learning} and \emph{centralized learning}. 
  In independent learning, 
@@ -562,6 +574,7 @@ Recognizing the limitations of both independent and centralized learning paradig
  Indeed, during execution, each agent relies solely on its own local observations to select actions. 
  This hybrid method is particularly advantageous in partially observable environments: 
  agents can learn a policy influenced by global states during the training phase while requiring only local observations for decision-making during execution.
+
 \subsubsection{Task type}
 Aside the way in which the agent learns, another important distinction involve \emph{what} the agent should learn.
 In fact, the task type can be \emph{cooperative}, \emph{competitive}, or \emph{mixed}.
@@ -611,9 +624,53 @@ Conversely, in the realm of heterogeneous policies,
  is especially useful in competitive environments, 
  where agents have disparate objectives and strive to optimize their individual rewards. 
  Employing unique policies for each agent allows for the development of diverse strategies and behaviours, accommodating the complex dynamics of competitive settings.
-\subsection{State-of-the-art}
-Recent advancements in MARL have led to the development of algorithms that can handle complex interactions between agents. Some state-of-the-art algorithms include Proximal Policy Optimization (PPO) for multi-agent settings, MADDPG (Multi-Agent Deep Deterministic Policy Gradient), and QMIX.
+\subsubsection{Communication}
+Another important dimension to consider is whether agents are allowed to communicate with each other. 
+ In many real-world scenarios, agents are capable of exchanging information with other agents in the environment. 
+ This communication can be \emph{explicit}, 
+ such as through the exchange of messages, or \emph{implicit}, 
+ such as through the observation of other agents' actions. 
 
+In contrast, in other scenarios, agents are not allowed to communicate with each other. 
+ This is often the case in competitive settings, 
+ where agents are not permitted to share information with each other. 
+ This restriction is often imposed to increase the complexity of the problem and to encourage the development of more sophisticated strategies.
+
+\subsection{Solutions for MARL}
+Addressing the challenges and nuances of \ac{marl} involves developing algorithms and frameworks that can navigate the complex landscape characterized by multi-agent interactions, various task types, and differing learning paradigms. This section delves into some of the key approaches and solutions that have shown promise in mitigating these challenges.
+
+\subsection{Decomposition Methods}
+One way to tackle the complexity in \ac{marl} is to decompose the global state and action spaces into smaller, more manageable components. Techniques like value decomposition algorithms (VDA) aim to separate the joint action-value function into individual components that can be optimized separately. This allows agents to focus on a sub-problem rather than the entire joint problem, thereby improving computational efficiency.
+
+\begin{equation}
+Q(s, a_1, \ldots, a_N) = \sum_{i=1}^{N} Q_i(s, a_i)
+\end{equation}
+
+\subsection{Multi-Agent Coordination}
+For cooperative tasks, coordinating the actions of multiple agents becomes crucial. Several techniques such as multi-agent common knowledge methods and communication channels have been introduced. In these approaches, agents share a common set of signals or even develop a communication protocol to better coordinate their policies.
+
+\subsection{Deep MARL Algorithms}
+Deep learning techniques have also been adapted to the multi-agent setting to handle the challenges of high-dimensionality and partial observability. Algorithms like MADDPG and MA3C employ neural networks to approximate complex functions for policy and value estimations, enabling agents to learn in more complicated, real-world scenarios.
+
+\subsection{Handling Non-Stationarity}
+Given that one agent's policy update can affect the learning landscape of other agents, handling non-stationarity is a core challenge. Methods like regret-based dynamics and policy ensembling offer ways to manage this by allowing agents to adapt to the evolving policies of other agents.
+
+\subsection{Centralized Training with Decentralized Execution}
+Building on the concept of Centralized Training with Decentralized Execution (CTDE), this approach involves a centralized entity during the training phase that makes use of global information. Post-training, agents operate independently, making it a scalable yet effective solution.
+
+\subsection{Ad Hoc Teamwork}
+In many real-world applications, agents must work in teams where they have not been pre-coordinated. Ad hoc teamwork algorithms allow an agent to adapt its behaviour to effectively cooperate with unknown or legacy agents.
+
+\subsection{Open Problems}
+Despite significant advances, several open problems remain in \ac{marl}:
+
+\begin{itemize}
+\item \textbf{Scalability:} How to scale existing solutions to many-agent systems without losing performance?
+\item \textbf{Real-world applicability:} Most algorithms are tested in simplified, synthetic environments. How well will they perform in more complex, real-world settings?
+\item \textbf{Inter-agent communication:} Developing more effective and natural ways for agents to communicate remains a key challenge.
+\end{itemize}
+
+This section has provided an overview of some of the existing solutions in \ac{marl}. However, it is a rapidly evolving field, and new methods and frameworks are continually being developed to tackle the inherent challenges it presents.
 \section{Many-agent}
 The \ac{marl} framework, even if consider multiple agents,
   still assumes that the number of agents is small (i.e. $N \leq 2$).
