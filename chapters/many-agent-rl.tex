@@ -515,21 +515,102 @@ The game can be described sequentially as follows:
     \item The joint action $a_t = (a_t^1, \ldots, a_t^N)$ is executed, and the environment transitions to the next state $s_{t+1}$ according to the transition probability function $\mathcal{P}$.
     \item Each agent $i$ receives a reward $r_{t+1}^i$ according to the reward function $\mathcal{R}_i$.
 \end{enumerate}
-Note that the actions of all agents are executed simultaneously, 
- and each agent's reward depends on the joint action of all agents.
- 
+It is important to note that in these games, actions from all agents are executed simultaneously, and each agent's reward is a function of the joint action taken by all agents. In many real-world scenarios, assuming the availability of a global system state is impractical. As such, an often-employed extension to the traditional Stochastic Game model is the \emph{Partially Observable Stochastic Game} (POSG). This extension can be formally represented as follows:
+\begin{equation}
+\text{POSG} = \langle \mathcal{N}, \mathcal{S}, \mathcal{A}_1, \ldots, \mathcal{A}_N, \mathcal{P}, \mathcal{R}_1, \ldots, \mathcal{R}_N, \mathcal{O}_1, \ldots, \mathcal{O}_N, \mathcal{O} \rangle
+\end{equation}
+Here, 
+ the primary divergence from the conventional Stochastic Game 
+ is the introduction of observation functions \(\mathcal{O}_i: \mathcal{S} \rightarrow \mathcal{O}_i\), which map the environment state to the observation space of agent \(i\). 
+ Consequently, the agents' policies are now parameterized by their respective observation spaces \(\mathcal{O}_i\) rather than the global state space \(\mathcal{S}\). 
+ This alteration significantly influences both the algorithmic approaches and the complexities involved in solving POSGs.
 \subsection{Taxonomies}
-Multi-agent systems can be categorized based on various criteria:
+In single-agent settings, the focus of learning configurations is primarily on algorithmic aspects, 
+ such as whether an approach is value-based or relies on policy search, or whether it operates on-policy or off-policy. 
+%
+However, the landscape becomes more complex when multiple agents are involved. 
+In such multi-agent settings, 
+ several dimensions must be considered to appropriately classify algorithms and approaches. 
+Various surveys have attempted to categorize the diverse classes of algorithms specifically designed for multi-agent scenarios. 
+Each of these surveys emphasizes a unique characteristic or aspect of the problem under consideration. 
+%
+This section endeavours to outline various dimensions along which multi-agent algorithms can be categorized. The objective is to provide a framework for situating the algorithms that will be discussed in subsequent sections, particularly those that pertain to the \emph{many-agent} perspective.
 
-\begin{itemize}
-    \item \textbf{Communication}: 
-    Agents can either communicate directly with each other or have no communication.
-    \item \textbf{Cooperation Level}: 
-    Systems can be fully cooperative, fully competitive, or mixed (both cooperative and competitive).
-    \item \textbf{Adversarial Nature}:
-     Some systems have agents with opposing goals, making them adversarial.
-\end{itemize}
+\subsubsection{Learning Paradigms in Multi-Agent Settings}
+\sloppy
+The field of multi-agent learning has historically been dominated by two primary approaches: 
+ \emph{independent learning} and \emph{centralized learning}. 
+ In independent learning, 
+ each agent learns its own policy concurrently and independently of the other agents in the environment~\cite{tan1993multi}. 
+ In contrast, centralized learning involves a single learning entity that constructs a joint policy to control all agents.
 
+Each of these approaches presents unique advantages and challenges. 
+ Independent learning excels in scalability but often results in unstable learning dynamics due to the non-stationarity of the environment. 
+ This non-stationarity stems from the concurrent learning of multiple agents, making it challenging to learn effective policies. 
+%
+On the other hand, centralized learning benefits from environmental stability owing to the global view it maintains. 
+ However, it suffers from scalability issues due to the exponential growth of the state and action spaces as the number of agents increases.
+%
+To illustrate, consider a system comprising \( N \) agents, 
+ each capable of taking \( M \) actions. 
+ In a centralized framework, the number of possible joint actions would be \( M^N \). 
+ For instance, with \( N=100 \) and \( M=2 \), the number of joint actions would be an astronomical \( 2^{100} \).
+
+Recognizing the limitations of both independent and centralized learning paradigms, 
+ recent research has proposed a compromise: Centralized Training with Decentralized Execution (CTDE)~\cite{DBLP:conf/nips/LoweWTHAM17}. 
+ In this approach, agents are trained using a \emph{global} view of the environment to learn a distributed policy. 
+ Indeed, during execution, each agent relies solely on its own local observations to select actions. 
+ This hybrid method is particularly advantageous in partially observable environments: 
+ agents can learn a policy influenced by global states during the training phase while requiring only local observations for decision-making during execution.
+\subsubsection{Task type}
+Aside the way in which the agent learns, another important distinction involve \emph{what} the agent should learn.
+In fact, the task type can be \emph{cooperative}, \emph{competitive}, or \emph{mixed}.
+\paragraph*{Cooperative}
+In cooperative tasks, agents are geared towards a common objective, 
+ aiming to maximize a shared reward. 
+ Formally, this is represented as a unified reward function for all agents, given by:
+\begin{equation}
+\mathcal{R}_0 = \mathcal{R}_1 = \ldots = \mathcal{R}_N = \mathcal{R}
+\end{equation}
+Here, the objectives of all agents are perfectly aligned, 
+ necessitating coordination and collaboration among them to achieve the shared goal. 
+ Such cooperative scenarios are often encountered in the domain of \ac{cpsw}, 
+ where inter-agent coordination is crucial for realizing collective outcomes effectively and efficiently.
+\paragraph*{Competitive}
+In competitive tasks, agents operate under divergent objectives, 
+ and the reward function is usually tailored to each agent's individual performance. 
+This can be formally expressed in two-player games as:
+\begin{equation}
+\mathcal{R}_0 = -\mathcal{R}_1
+\end{equation}
+In this framework, the agents have conflicting goals, 
+ creating a competitive landscape where each agent aims to maximize its own reward. 
+\paragraph*{Mixed}
+In mixed tasks, agents operate under both cooperative and competitive dynamics. 
+ This is often encountered in real-world scenarios, 
+ where agents may have both shared and divergent objectives. 
+ This is the most general setting, and it is often the most challenging to solve.
+
+\subsubsection{Policy type}
+Another crucial aspect to explore is the nature of the policy that an agent ought to learn. 
+Although numerous classification of policies exist---ranging from deterministic to stochastic, centralized to decentralized, and joint to individual---this thesis places special focus on distinguishing between \emph{homogeneous} and \emph{heterogeneous} policy family.
+
+\paragraph*{Homogeneous Policies}
+In the context of homogeneous policies, 
+ all agents \emph{share} a common policy. 
+ The learning process aims to identify a single, unified policy applicable to all agents. 
+ This is particularly prevalent in cooperative tasks where agents must collaborate to achieve a collective objective. 
+ Utilizing a single policy across all agents often simplifies the learning process and enhances coordination among the agents.
+ Moreover, is particularly suitable for scenarios where agents are \emph{interchangeable} and \emph{indistinguishable}, making it possible to use the same policy in different agent population.
+
+\paragraph*{Heterogeneous Policies}
+Conversely, in the realm of heterogeneous policies, 
+ each agent possesses its own distinct policy. 
+ The learning algorithm is tasked with discovering a unique policy tailored to each individual agent. 
+ This approach, even if it can be also used in the context of cooperative tasks, 
+ is especially useful in competitive environments, 
+ where agents have disparate objectives and strive to optimize their individual rewards. 
+ Employing unique policies for each agent allows for the development of diverse strategies and behaviours, accommodating the complex dynamics of competitive settings.
 \subsection{State-of-the-art}
 Recent advancements in MARL have led to the development of algorithms that can handle complex interactions between agents. Some state-of-the-art algorithms include Proximal Policy Optimization (PPO) for multi-agent settings, MADDPG (Multi-Agent Deep Deterministic Policy Gradient), and QMIX.
 
