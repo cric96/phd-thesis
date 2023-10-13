@@ -228,8 +228,8 @@ sensor types, or communication protocols, and it adds a layer of complexity to t
 Despite the diverse hardware configurations, 
  nodes within a \ac{cpsw} display consistent behaviour at the local level.
  They run the same local algorithms, thereby achieving the system's collective objectives in a standardized way. 
- However, it is important to clarify that ``homogeneous behaviour'' does not imply synchronized actions across all nodes. 
- Given the system's inherently distributed and potentially expansive nature, 
+ However, it is important to clarify that ``homogeneous behaviour'' does not imply that all nodes do the same thing at the same time.
+ Indeed, given the system's inherently distributed and potentially expansive nature, 
  the input received by one node may differ from that of another, 
  leading to variations in local behaviour.
 
@@ -371,12 +371,14 @@ Self-healing refers to the system's ability to recover from failures without hum
 Self-optimization means the system can improve its performance over time based on feedback. Self-configuration allows the system to adapt to changing conditions without requiring manual adjustments. 
 These self-* properties contribute to the system's overall \emph{resilience} and \emph{efficiency}.
 
-\ac{cpsw} can be viewed as a subset of CAS, 
- but with two distinctions: 
-  i) the entities are \emph{cyber-physical}, and 
-  ii) even though the devices are heterogeneous, the behaviour is homogeneous. 
-These two components significantly influence the design process, 
-which is why this thesis have identified this subclass of systems.
+\ac{cpsw} can be understood as a specialized subset of the broader CAS.
+This specialization arises from two key distinguishing characteristics:
+i) The involved entities are not merely digital but also have a \emph{cyber-physical} nature,
+ integrating both computational and physical elements.
+ii) Despite the heterogeneous nature of the devices within the system, 
+ their behaviour manifests uniformly.
+These unique attributes have a profound impact on the system's design methodology, 
+ which is why this thesis specifically focuses on this subclass of systems.
 %
 %\printbibliography
 
