@@ -881,6 +881,12 @@ After this brief introduction,
  starting from the formalization of the problem,
   and then we will discuss pratical solution and the gran-challenges.
 \subsection{Formalization}
+Standard stochastic games do not capture the essence of many-agent systems, 
+ as they do not consider the homogeneous nature of the agents, and the large number of agents.
+Therefore, in the context of swarm robotics, 
+ a novel framework called \emph{SwarMDP} has been proposed.
+ This is focused on the idea of having a \emph{swarming agent} that rules the entire population of agents.
+ In the follow, we will discuss the formalization of this framework.
 \subsubsection{SwarMDP}
 A SwarMDP is characterized by a \emph{swarming agent} ($\mathbb{A}$) and the dynamics of the environment ($\mathbb{E}$).
 Specifically, $\mathbb{A}$ is a tuple ($\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, \pi$) where:
@@ -896,9 +902,11 @@ Starting from this definition, the environment $\mathbb{E}$ is defined as a tupl
   \item $\mathcal{T}: \mathcal{S}^P \times \mathcal{A}^P \times \mathcal{S}^P \rightarrow \mathbb{R}$ is the transition  global function, which is influenced by the actions of the agents and returns a collective reward -- this is typically not known by the swarming agents;
   \item $\xi: \mathcal{S^P} \rightarrow \mathcal{O^P}$ is the global observation model of the systems.
 \end{itemize}
-\subsubsection{Networked Markov Decision Process}
 
-\subsection{State-of-the-art}
-In many-agent systems, the sheer number of agents makes traditional MARL techniques computationally infeasible. Recent advancements focus on scalable algorithms and techniques like mean-field theory to approximate the interactions between agents. Some notable algorithms include Mean Field Q-learning and Graph Neural Networks for many-agent systems.
-
+\subsection{Solutions for \ac{MAARL}}
+\subsubsection*{Parameter sharing}
+\subsubsection*{Experience Sharing}
+\paragraph*{Q-Learning}
+\paragraph*{Swarm Q Learning}
+\subsubsection*{Mean-Field Games}
 \section{Gran-challenges}
