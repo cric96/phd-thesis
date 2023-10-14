@@ -116,9 +116,6 @@ In \ac{mdp}, $\RP$ is \emph{memory-less},
  namely the next environment state depends only on the current state---
  that is the \emph{Markov property}.
 %%
-%Typically, in \ac{rl} problems, agents do not have access to $\RR$ or $\RP$, 
-% but they can rely only on the experience $(s_t, a_t, r_t)$ sampled at a time step. 
-%%
 Another important concept in \ac{mdp} is the return 
  $G$ defined as the discounted sum of reward a possible future trajectory $\tau$ (i.e. a sequence of time steps):
 %%
@@ -199,7 +196,7 @@ Q(s, a) = \sum_{s' \in \RS} \RP(s'|s, a) \Big[ \RR(s, a, s') + \gamma \sum_{a' \
 %
 The Bellman equation is the basis for many algorithms that solve \ac{mdp},
 two most notable are \emph{value iteration} and \emph{policy iteration} (\Cref{fig:rl:dp}).
-\subsection{Value iteration}
+\subsubsection{Value iteration}
 Value iteration is an iterative algorithm used to compute the optimal value function \(V^*\) and, consequently, the optimal policy \(\pi^*\). 
  The algorithm is particularly useful when the state and action spaces are too large to solve directly through analytical methods. 
  It is based on the principle of optimality, which states that if an optimal policy \(\pi^*\) exists, then it must satisfy the Bellman optimality equation.
@@ -222,8 +219,7 @@ After the value function has converged to \(V^*\), the optimal policy \(\pi^*\) 
 \end{equation}
 This policy is guaranteed to be optimal with respect to the original MDP.
 
-
-\subsection{Policy Iteration}
+\subsubsection{Policy Iteration}
 Policy iteration is another dynamic programming algorithm used for finding the optimal policy \(\pi^*\). 
  Unlike value iteration, policy iteration consists of two main steps: 
  \emph{policy evaluation} and \emph{policy improvement}, 
@@ -240,15 +236,7 @@ Policy iteration is another dynamic programming algorithm used for finding the o
   \end{equation}
 \end{itemize}
 The algorithm then returns to the policy evaluation step, using the new policy \(\pi'\), and continues until the policy no longer changes.
- 
-%The objective in value-based methods is to find the best value function (whether $Q$ or $V$), defined as:
-%\begin{iequation}
-%Q^* = \arg \max_{\pi}(Q^\pi(s, a)) \; \text{or} \; V^* = \arg \max_{\pi}(V^\pi(s))
-%\end{iequation}
-%Consequently, when we have found $Q^*$, an optimal policy is straightforwardly defined:
-%\begin{equation}
-%\pi^*(s) = \underset{a}{\text{argmax}}(Q^*(s, a))
-%\end{equation}
+
 \subsection{Find a policy without an MDP}
 While dynamic programming methods like value iteration and policy iteration offer powerful ways to find the optimal policy \(\pi^*\), 
  they come with a significant limitation: 
@@ -287,19 +275,35 @@ In fact, the agent should explore the environment to discover new states and act
 %
 Monte Carlo methods are particularly useful when the state and action spaces are large, making it impractical to enumerate all possible state-action pairs. However, they do require the episodes to be finite and can be computationally expensive due to the need for multiple samples to obtain accurate estimates.
 
-\paragraph*{Exploration-Exploration dilemma}
-In these algorithms, the agent should explore the environment to discover new states and actions that could lead to higher rewards,
-  but it should also exploit the knowledge it has already acquired to maximize the expected return.
-  This is the so-called \emph{exploration-exploitation} trade-off.
-  This is not only a matter in Monte Carlo methods, but it is a general problem in model-free algorithms, in which agent should learn a policy without a model of the environment.
+\paragraph*{The Exploration-Exploitation Dilemma in Reinforcement Learning}
+The exploration-exploitation trade-off is a cornerstone challenge in reinforcement learning algorithms. 
+ An agent must \emph{explore} its environment 
+ to uncover new states and actions that may yield higher rewards. 
+% 
+Simultaneously, 
+ it needs to \emph{exploit} its existing knowledge to maximize the expected return. 
+ While this challenge pervades many learning algorithms, 
+ it is especially prominent in model-free methods 
+ where the agent learns a policy without having a predefined model of the environment.
+
+Various strategies exist to navigate this dilemma. 
+ One of the most prevalent is the \emph{$\epsilon$-greedy} policy. 
+ In this approach, the agent selects a random action with probability \(\epsilon\) and 
+ the action that is currently estimated to be the best with probability \(1 - \epsilon\). 
 %
-There are several ways to address this dilemma, 
- but the most common approach is to use an \emph{$\epsilon$-greedy} policy. 
- This policy selects a random action with probability \(\epsilon\) and the greedy action with probability \(1 - \epsilon\). 
- The value of \(\epsilon\) is typically set to a small value, 
- such as 0.1 or 0.2, 
- to ensure that the agent explores the environment sufficiently.
-%
+The \(\epsilon\) value is generally initialized to a small constant, such as 0.1 or 0.2, 
+ to ensure a reasonable balance between exploration and exploitation. 
+ Mathematically, the policy is defined as follows:
+\begin{equation}
+\pi(a|s) = \begin{cases}
+\frac{\epsilon}{|\mathcal{A}|} + 1 - \epsilon & \text{if } a = \arg \max_{a \in \mathcal{A}} Q(s, a) \\
+\frac{\epsilon}{|\mathcal{A}|} & \text{otherwise}
+\end{cases}
+\end{equation}
+
+A useful refinement of the \(\epsilon\)-greedy strategy is to implement a \emph{decaying} \(\epsilon\), 
+ which starts at a higher value and is reduced over time. This adaptive approach allows the agent to initially focus on exploration to a greater extent, 
+ then gradually shift toward exploiting its accumulated knowledge as its value function estimates stabilize.
 
 \subsubsection{Temporal difference methods}
 Temporal difference methods are a class of \emph{model-free} and \emph{value-based} algorithms 
@@ -323,6 +327,32 @@ Starting from this intuition two main approaches have been developed:
  The algorithm is termed ``off-policy'' because it learns the value of the optimal policy regardless of the policy being followed, 
   thanks to the \(\max_{a'}\) term in the update rule.
  
+The Q-Learning algorithm is guaranteed to converge to the optimal action-value function \(Q^*(s, a)\) as long as all state-action pairs are visited infinitely often and the learning rate \(\alpha\) is sufficiently small.
+%
+Typically the learning rate is set to a small value, such as 0.1 or 0.2. 
+% 
+For the same reason of decay \(\epsilon\)-greedy policy,
+  it is also common to use a decaying learning rate, 
+  which starts at a higher value and is reduced over time.
+The full algorithm can be found in \Cref{alg:q-learning}.
+\begin{algorithm}
+\DontPrintSemicolon
+\caption{Q-Learning}\label{alg:q-learning}
+Initialise: $Q(s, a) = 0$ for all $s \in S$, $a \in A$\;
+\Repeat{for every episode}{
+    \For{$t = 0, 1, 2, \dots$}{
+        Observe current state $s^t$\;
+        \eIf{With probability $\epsilon$}{
+            Choose random action $a^t \in A$\;
+        }{
+            Choose action $a^t \in \arg\max_a Q(s^t, a)$\;
+        }
+        Apply action $a^t$, observe reward $r^t$ and next state $s^{t+1}$\;
+        $Q(s^t, a^t) \leftarrow Q(s^t, a^t) + \alpha \left[ r^t + \gamma \max_a Q(s^{t+1}, a) - Q(s^t, a^t) \right]$\;
+    }
+}
+\end{algorithm}
+
  \paragraph*{SARSA}
  SARSA (State-Action-Reward-State-Action) is an on-policy TD algorithm. 
   Unlike Q-Learning, SARSA takes into account the current policy \(\pi\) during the learning process. The update rule for SARSA is:
@@ -350,7 +380,8 @@ Mathematically, this can be expressed as:
 \end{equation}
 where \(J(\theta)\) is the expected return when following policy \(\pi_\theta\), and \(\alpha\) is the learning rate.
 
-One of the foundational algorithms in this category is the REINFORCE algorithm~\cite{DBLP:conf/nips/SuttonMSM99}: it is one of the earliest and most straightforward policy gradient methods. 
+One of the foundational algorithms in this category is the REINFORCE algorithm~\cite{DBLP:conf/nips/SuttonMSM99}: 
+ it is one of the earliest and most straightforward policy gradient methods. 
 It estimates the gradient of the expected return by sampling trajectories from the current policy \(\pi_\theta\). 
 After each episode, the algorithm adjusts the policy parameters \(\theta\) in the direction that increases the expected return.
 %
@@ -499,7 +530,8 @@ S = \langle \mathcal{N}, \mathcal{S}, \mathcal{A}_1, \ldots, \mathcal{A}_N, \mat
 \end{equation}
 Where:
 \begin{itemize}
-    \item $\mathcal{N}$ is the number of agents. With $N=1$ we have a single-agent setting, while with $N >> 2$ we have a many-agent setting.
+    \item $\mathcal{N}$ is the number of agents. 
+    With $N=1$ we have a single-agent setting, while with $N >> 2$ we have a many-agent setting.
     \item $\mathcal{S}$ is the environment state space. The environment is then considered to be fully observable. 
     \item $\mathcal{A}_i$ is the action space of agent $i$. We denote the joint action space as $\mathbb{A} = \mathcal{A}_1 \times \ldots \times \mathcal{A}_N$.
     \item $\mathcal{P}: \mathcal{S} \times \mathbb{A} \rightarrow \Delta(\mathbb{S})$ is the joint transition probability function. 
@@ -515,13 +547,17 @@ The game can be described sequentially as follows:
     \item The joint action $a_t = (a_t^1, \ldots, a_t^N)$ is executed, and the environment transitions to the next state $s_{t+1}$ according to the transition probability function $\mathcal{P}$.
     \item Each agent $i$ receives a reward $r_{t+1}^i$ according to the reward function $\mathcal{R}_i$.
 \end{enumerate}
-It is important to note that in these games, actions from all agents are executed simultaneously, and each agent's reward is a function of the joint action taken by all agents. In many real-world scenarios, assuming the availability of a global system state is impractical. As such, an often-employed extension to the traditional Stochastic Game model is the \emph{Partially Observable Stochastic Game} (POSG). This extension can be formally represented as follows:
+It is important to note that in these games, actions from all agents are executed simultaneously, 
+ and each agent's reward is a function of the joint action taken by all agents. 
+ In many real-world scenarios, assuming the availability of a global system state is impractical. 
+ As such, an often-employed extension to the traditional Stochastic Game model is the \emph{Partially Observable Stochastic Game} (POSG). This extension can be formally represented as follows:
 \begin{equation}
 \text{POSG} = \langle \mathcal{N}, \mathcal{S}, \mathcal{A}_1, \ldots, \mathcal{A}_N, \mathcal{P}, \mathcal{R}_1, \ldots, \mathcal{R}_N, \mathcal{O}_1, \ldots, \mathcal{O}_N, \mathcal{O} \rangle
 \end{equation}
 Here, 
  the primary divergence from the conventional Stochastic Game 
- is the introduction of observation functions \(\mathcal{O}_i: \mathcal{S} \rightarrow \mathcal{O}_i\), which map the environment state to the observation space of agent \(i\). 
+ is the introduction of observation functions \(\mathcal{O}_i: \mathcal{S} \rightarrow \mathcal{O}_i\), 
+ which map the environment state to the observation space of agent \(i\). 
  Consequently, the agents' policies are now parameterized by their respective observation spaces \(\mathcal{O}_i\) rather than the global state space \(\mathcal{S}\). 
  This alteration significantly influences both the algorithmic approaches and the complexities involved in solving POSGs.
 \subsection{Taxonomies}
@@ -532,16 +568,17 @@ Here,
 In single-agent settings, the focus of learning configurations is primarily on algorithmic aspects, 
  such as whether an approach is value-based or relies on policy search, or whether it operates on-policy or off-policy. 
 %
-However, the landscape becomes more complex when multiple agents are involved . 
+However, the landscape becomes more complex when multiple agents are involved. 
 In such multi-agent settings, 
  several dimensions must be considered to appropriately classify algorithms and approaches. 
 Various surveys have attempted to categorize the diverse classes of algorithms specifically designed for multi-agent scenarios. 
 Each of these surveys emphasizes a unique characteristic or aspect of the problem under consideration. 
 %
-This section endeavours to outline various dimensions along which multi-agent algorithms can be categorized (\Cref{fig:marl:taxonomy}). The objective is to provide a framework for situating the algorithms that will be discussed in subsequent sections, particularly those that pertain to the \emph{many-agent} perspective.
+This section endeavours to outline various dimensions along which multi-agent algorithms can be categorized (\Cref{fig:marl:taxonomy}). 
+ The objective is to provide a framework for situating the algorithms that will be discussed in subsequent sections, 
+ particularly those that pertain to the \emph{many-agent} perspective.
 Note that the following taxonomies are not mutually exclusive, 
  and many algorithms can be classified along multiple dimensions.
-
 \subsubsection{Learning Paradigms}
 \begin{figure}
   \includegraphics[width=\textwidth]{chapters/img/marl-policy-kind.drawio.pdf}
@@ -569,17 +606,21 @@ To illustrate, consider a system comprising \( N \) agents,
  For instance, with \( N=100 \) and \( M=2 \), the number of joint actions would be an astronomical \( 2^{100} \).
 
 Recognizing the limitations of both independent and centralized learning paradigms, 
- recent research has proposed a compromise: Centralized Training with Decentralized Execution (CTDE)~\cite{DBLP:conf/nips/LoweWTHAM17}. 
+ recent research has proposed a compromise: 
+ Centralized Training with Decentralized Execution (CTDE)~\cite{DBLP:conf/nips/LoweWTHAM17}. 
  In this approach, agents are trained using a \emph{global} view of the environment to learn a distributed policy. 
  Indeed, during execution, each agent relies solely on its own local observations to select actions. 
  This hybrid method is particularly advantageous in partially observable environments: 
  agents can learn a policy influenced by global states during the training phase while requiring only local observations for decision-making during execution.
 
 \subsubsection{Task type}
-Aside the way in which the agent learns, another important distinction involve \emph{what} the agent should learn.
+Aside the way in which the agent learns, 
+ another important distinction involve \emph{what} the agent should learn.
+%
 In fact, the task type can be \emph{cooperative}, \emph{competitive}, or \emph{mixed}.
 \paragraph*{Cooperative}
-In cooperative tasks, agents are geared towards a common objective, 
+In cooperative tasks, 
+ agents are geared towards a common objective, 
  aiming to maximize a shared reward. 
  Formally, this is represented as a unified reward function for all agents, given by:
 \begin{equation}
@@ -602,20 +643,21 @@ In this framework, the agents have conflicting goals,
 In mixed tasks, agents operate under both cooperative and competitive dynamics. 
  This is often encountered in real-world scenarios, 
  where agents may have both shared and divergent objectives. 
- This is the most general setting, and it is often the most challenging to solve.
-
+This is the most general setting, and it is often the most challenging to solve.
 \subsubsection{Policy type}
 Another crucial aspect to explore is the nature of the policy that an agent ought to learn. 
-Although numerous classification of policies exist---ranging from deterministic to stochastic, centralized to decentralized, and joint to individual---this thesis places special focus on distinguishing between \emph{homogeneous} and \emph{heterogeneous} policy family.
+Although numerous classification of policies exist
+ ---ranging from deterministic to stochastic, centralized to decentralized, and joint to individual---
+ this thesis places special focus on distinguishing between \emph{homogeneous} and \emph{heterogeneous} policy family.
 
 \paragraph*{Homogeneous Policies}
 In the context of homogeneous policies, 
  all agents \emph{share} a common policy. 
- The learning process aims to identify a single, unified policy applicable to all agents. 
+ The learning process aims to identify a \emph{single}, \emph{unified} policy applicable to all agents. 
  This is particularly prevalent in cooperative tasks where agents must collaborate to achieve a collective objective. 
  Utilizing a single policy across all agents often simplifies the learning process and enhances coordination among the agents.
- Moreover, is particularly suitable for scenarios where agents are \emph{interchangeable} and \emph{indistinguishable}, making it possible to use the same policy in different agent population.
-
+ Moreover, is particularly suitable for scenarios where agents are \emph{interchangeable} and \emph{indistinguishable}, 
+ making it possible to use the same policy in different agent population.
 \paragraph*{Heterogeneous Policies}
 Conversely, in the realm of heterogeneous policies, 
  each agent possesses its own distinct policy. 
@@ -623,7 +665,8 @@ Conversely, in the realm of heterogeneous policies,
  This approach, even if it can be also used in the context of cooperative tasks, 
  is especially useful in competitive environments, 
  where agents have disparate objectives and strive to optimize their individual rewards. 
- Employing unique policies for each agent allows for the development of diverse strategies and behaviours, accommodating the complex dynamics of competitive settings.
+ Employing unique policies for each agent allows for the development of diverse strategies and behaviours, 
+ accommodating the complex dynamics of competitive settings.
 \subsubsection{Communication}
 Another important dimension to consider is whether agents are allowed to communicate with each other. 
  In many real-world scenarios, agents are capable of exchanging information with other agents in the environment. 
@@ -637,40 +680,86 @@ In contrast, in other scenarios, agents are not allowed to communicate with each
  This restriction is often imposed to increase the complexity of the problem and to encourage the development of more sophisticated strategies.
 
 \subsection{Solutions for MARL}
-Addressing the challenges and nuances of \ac{marl} involves developing algorithms and frameworks that can navigate the complex landscape characterized by multi-agent interactions, various task types, and differing learning paradigms. This section delves into some of the key approaches and solutions that have shown promise in mitigating these challenges.
+Addressing the intricacies and challenges inherent in \ac{marl} requires the design and implementation of sophisticated algorithms 
+ and frameworks capable of navigating a complex landscape shaped by multi-agent interactions, 
+ a diverse range of tasks, and varied learning paradigms. 
+%
+Over the years, a plethora of methodologies have emerged to confront these obstacles. 
+ Specifically, this thesis provides a comprehensive overview of approaches rooted in the \ac{rl} domain.
 
-\subsection{Decomposition Methods}
-One way to tackle the complexity in \ac{marl} is to decompose the global state and action spaces into smaller, more manageable components. Techniques like value decomposition algorithms (VDA) aim to separate the joint action-value function into individual components that can be optimized separately. This allows agents to focus on a sub-problem rather than the entire joint problem, thereby improving computational efficiency.
+A significant body of literature instead focuses on game-theoretical perspectives, 
+ which predominantly address scenarios involving a limited number of agents engaged in competitive tasks. 
+ Such approaches often incorporate concepts of \emph{equilibrium} and \emph{convergence} towards stable policies, 
+ typically framed within the context of Nash equilibrium.
+%
+However, in practice, the pursuit of equilibrium often fails to yield satisfactory results, 
+ as it does not necessarily lead to agents learning optimal policies. 
+ Consequently, a substantial portion of the literature eschews equilibrium-centric views, 
+ opting instead to develop algorithms aimed at effective policy learning, 
+ even in the absence of formal proofs guaranteeing convergence to an equilibrium.
 
-\begin{equation}
-Q(s, a_1, \ldots, a_N) = \sum_{i=1}^{N} Q_i(s, a_i)
-\end{equation}
+ \subsubsection{Tabular Methods}
 
-\subsection{Multi-Agent Coordination}
-For cooperative tasks, coordinating the actions of multiple agents becomes crucial. Several techniques such as multi-agent common knowledge methods and communication channels have been introduced. In these approaches, agents share a common set of signals or even develop a communication protocol to better coordinate their policies.
+ The first era of \ac{MARL} 
+  algorithms primarily relied on tabular methods, based on variation of Q-Learning and SARSA. 
+  These methods are essentially extensions of single-agent tabular algorithms adapted for a multi-agent setting. 
+  In this section, we will briefly discuss some of the most popular tabular algorithms, 
+  laying the groundwork for the discussion of more advanced approaches in subsequent sections.
+ 
+ \paragraph*{Distributed Q-Learning}
+ 
+ Distributed Q-Learning is the straightforward extension of the traditional Q-Learning algorithm designed for multi-agent systems. 
+  In this approach, each agent maintains its own Q-table and updates it based on its local observations and rewards. While this method allows for decentralized learning, 
+  it often struggles with issues related to \emph{coordination} and \emph{convergence} to global optima. The algorithm is particularly useful in scenarios where communication between agents is limited or not possible.
+  However, it may not always guarantee convergence to the optimal joint policy, 
+  especially in complex environments where coordination between agents is crucial.
+ 
+ \paragraph*{Hysteretic Q-Learning}
+ 
+ Hysteretic Q-Learning is a more recent addition to the family of tabular MARL algorithms. 
+  It addresses some of the limitations of Distributed Q-Learning, 
+  particularly in the context of cooperative multi-agent systems. 
+  In Hysteretic Q-Learning, each agent employs \emph{two} learning rates for updating its Q-values, 
+  depending on whether the received reward is better or worse than expected. 
+  Formally, the update rule is:
+  \begin{align*}
+    \delta & \leftarrow r - Q_i(a_i) \\
+    Q_i(a_i) & \leftarrow 
+    \begin{cases} 
+    Q_i(a_i) + \alpha \delta & \text{if } \delta \geq 0 \\
+    Q_i(a_i) + \beta \delta & \text{else}
+    \end{cases}
+  \end{align*}
+  This dual learning rate mechanism allows for more flexible and efficient coordination among agents. 
+  Experimental results have shown that Hysteretic Q-Learning not only converges faster but also achieves comparable performance to centralized methods with significantly less computational overhead.
 
-\subsection{Deep MARL Algorithms}
-Deep learning techniques have also been adapted to the multi-agent setting to handle the challenges of high-dimensionality and partial observability. Algorithms like MADDPG and MA3C employ neural networks to approximate complex functions for policy and value estimations, enabling agents to learn in more complicated, real-world scenarios.
+ \paragraph*{QD-Learning}
+ QD-Learning, short for Collaborative Distributed Q-Learning, 
+  is a distributed version of the traditional Q-Learning algorithm tailored for multi-agent systems. 
+  Unlike centralized approaches, QD-Learning allows agents to engage in the learning process autonomously through local communication and computation. 
+  Each agent maintains a sequence of Q-matrices, 
+  and the Q-values for each state-action pair evolve in a collaborative distributed manner. 
+  Specifically, the Q-values are updated according to a formula that incorporates both local one-stage costs 
+  and information from neighboring agents.
 
-\subsection{Handling Non-Stationarity}
-Given that one agent's policy update can affect the learning landscape of other agents, handling non-stationarity is a core challenge. Methods like regret-based dynamics and policy ensembling offer ways to manage this by allowing agents to adapt to the evolving policies of other agents.
+The primary objective of QD-Learning is to minimize a network-averaged infinite horizon discounted cost. 
+ The algorithm achieves this by ensuring that each agent learns the value function based on locally accessible stochastic processes and one-stage cost processes. 
+ The agents collaborate by means of local processing and mutual information exchange, 
+ aiming to reach consensus on the desired value function and the corresponding optimal control strategy.
+ 
+ In terms of performance, QD-Learning has been shown to achieve optimal learning performance asymptotically, 
+ under minimal connectivity assumptions on the underlying communication graph. I
+ t has also been found to have a negligible asymptotic convergence rate loss compared to centralized Q-Learning, making it a robust choice for distributed multi-agent systems.
+The update rule for QD-Learning is:
+ \begin{align*}
+  Q^n_{i,u}(t+1) &= Q^n_{i,u}(t) - \beta_{i,u}(t) \sum_{l \in \Omega_n(t)} (Q^n_{i,u}(t) - Q^n_{l,u}(t)) \\
+  &\quad + \alpha_{i,u}(t) \left( c_n(x_t, u_t) + \gamma \min_{v \in U} Q^n_{x_{t+1},v}(t) - Q^n_{i,u}(t) \right)
+  \end{align*}
+ 
+ where \(\beta_{i,u}(t)\) and \(\alpha_{i,u}(t)\) are weight sequences adapted to the filtration \(\mathcal{F}_{n}(t)\), and \(c_{n}(x_{t}, u_{t})\) is the local one-stage cost.
 
-\subsection{Centralized Training with Decentralized Execution}
-Building on the concept of Centralized Training with Decentralized Execution (CTDE), this approach involves a centralized entity during the training phase that makes use of global information. Post-training, agents operate independently, making it a scalable yet effective solution.
+\subsubsection{Approximate methods}
 
-\subsection{Ad Hoc Teamwork}
-In many real-world applications, agents must work in teams where they have not been pre-coordinated. Ad hoc teamwork algorithms allow an agent to adapt its behaviour to effectively cooperate with unknown or legacy agents.
-
-\subsection{Open Problems}
-Despite significant advances, several open problems remain in \ac{marl}:
-
-\begin{itemize}
-\item \textbf{Scalability:} How to scale existing solutions to many-agent systems without losing performance?
-\item \textbf{Real-world applicability:} Most algorithms are tested in simplified, synthetic environments. How well will they perform in more complex, real-world settings?
-\item \textbf{Inter-agent communication:} Developing more effective and natural ways for agents to communicate remains a key challenge.
-\end{itemize}
-
-This section has provided an overview of some of the existing solutions in \ac{marl}. However, it is a rapidly evolving field, and new methods and frameworks are continually being developed to tackle the inherent challenges it presents.
 \section{Many-agent}
 The \ac{marl} framework, even if consider multiple agents,
   still assumes that the number of agents is small (i.e. $N \leq 2$).
