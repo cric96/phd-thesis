@@ -736,20 +736,32 @@ However, in practice, the pursuit of equilibrium often fails to yield satisfacto
  \paragraph*{QD-Learning}
  QD-Learning, short for Collaborative Distributed Q-Learning, 
   is a distributed version of the traditional Q-Learning algorithm tailored for multi-agent systems. 
-  Unlike centralized approaches, QD-Learning allows agents to engage in the learning process autonomously through local communication and computation. 
-  Each agent maintains a sequence of Q-matrices, 
+%
+Unlike centralized approaches, 
+ QD-Learning allows agents to engage in the learning process autonomously through local communication and computation.
+% 
+Each agent maintains a sequence of Q-matrices, 
   and the Q-values for each state-action pair evolve in a collaborative distributed manner. 
-  Specifically, the Q-values are updated according to a formula that incorporates both local one-stage costs 
+%
+Specifically, the Q-values are updated according to a formula that incorporates both local one-stage costs 
   and information from neighboring agents.
 
 The primary objective of QD-Learning is to minimize a network-averaged infinite horizon discounted cost. 
- The algorithm achieves this by ensuring that each agent learns the value function based on locally accessible stochastic processes and one-stage cost processes. 
- The agents collaborate by means of local processing and mutual information exchange, 
+%
+The algorithm achieves this by ensuring 
+ that each agent learns the value function based on locally 
+ accessible stochastic processes and one-stage cost processes. 
+%
+The agents collaborate by means of local processing and mutual information exchange, 
  aiming to reach consensus on the desired value function and the corresponding optimal control strategy.
- 
- In terms of performance, QD-Learning has been shown to achieve optimal learning performance asymptotically, 
- under minimal connectivity assumptions on the underlying communication graph. I
- t has also been found to have a negligible asymptotic convergence rate loss compared to centralized Q-Learning, making it a robust choice for distributed multi-agent systems.
+%
+In terms of performance, 
+ QD-Learning has been shown to achieve optimal learning performance asymptotically, 
+ under minimal connectivity assumptions on the underlying communication graph. 
+%
+It has also been found to have a negligible asymptotic
+ convergence rate loss compared to centralized Q-Learning
+ making it a robust choice for distributed multi-agent systems.
 The update rule for QD-Learning is:
  \begin{align*}
   Q^n_{i,u}(t+1) &= Q^n_{i,u}(t) - \beta_{i,u}(t) \sum_{l \in \Omega_n(t)} (Q^n_{i,u}(t) - Q^n_{l,u}(t)) \\
@@ -759,7 +771,38 @@ The update rule for QD-Learning is:
  where \(\beta_{i,u}(t)\) and \(\alpha_{i,u}(t)\) are weight sequences adapted to the filtration \(\mathcal{F}_{n}(t)\), and \(c_{n}(x_{t}, u_{t})\) is the local one-stage cost.
 
 \subsubsection{Approximate methods}
+The tabular methods discussed in the previous section are often impractical in real-world scenarios, 
+ as they require the storage of a Q-table for each agent. 
+ This can be computationally infeasible, 
+ especially in complex environments with large state and action spaces.
+%
+To address this issue, 
+ a variety of approximate methods have been developed, 
+ leveraging function approximation techniques to estimate the Q-values or policies.
+%
+The following are the most popular approximate methods for MARL, a complete overview however is out of the scope of this thesis and can be found in. %% TODO
+\paragraph*{COMA}
+Counterfactual Multi-Agent (COMA) is an actor-critic method specifically designed for cooperative multi-agent systems.
+ Unlike traditional methods that rely on decentralized policies,
+ COMA employs a centralized critic during the learning phase to estimate the Q-function. 
+ This centralized critic takes into account the global state or the joint action-observation histories, 
+ making it more effective in complex environments.
 
+One of the key innovations in COMA is the introduction of a counterfactual baseline to address the challenge of multi-agent credit assignment. 
+ In cooperative settings where joint actions produce global rewards, 
+ it becomes difficult for individual agents to understand their contribution to the team's success. 
+ The counterfactual baseline marginalizes out a single agent's action while keeping the other agents' actions fixed, 
+ thereby providing a more accurate estimate of each agent's contribution.
+Another advantage of COMA is its computational efficiency.
+ It employs a critic representation that allows the counterfactual baseline to be computed in a single forward pass, 
+ thereby reducing the computational burden.
+
+COMA has been evaluated in complex scenarios like StarCraft unit micromanagement and has shown significant improvements over other multi-agent actor-critic methods. 
+ It is particularly useful in environments with high stochasticity, 
+ large state-action spaces, and delayed rewards.
+
+\paragraph*{MAPPO}
+\paragraph*{QMIX}
 \section{Many-agent}
 The \ac{marl} framework, even if consider multiple agents,
   still assumes that the number of agents is small (i.e. $N \leq 2$).
