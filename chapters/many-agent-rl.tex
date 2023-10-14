@@ -802,50 +802,84 @@ COMA has been evaluated in complex scenarios like StarCraft unit micromanagement
  large state-action spaces, and delayed rewards.
 
 \paragraph*{MAPPO}
-\paragraph*{QMIX}
-\section{Many-agent}
-The \ac{marl} framework, even if consider multiple agents,
-  still assumes that the number of agents is small (i.e. $N \leq 2$).
-  For that reason, solutions that work well in \ac{marl} settings may not be suitable for \emph{many-agent} scenarios.
+Multi-Agent Proximal Policy Optimization (MAPPO) 
+ is an extension of the widely-used Proximal Policy Optimization (PPO) algorithm, 
+ adapted for cooperative multi-agent systems. 
+ Unlike traditional methods that often rely on off-policy learning algorithms, 
+ MAPPO is an on-policy method that has shown to be surprisingly effective in multi-agent settings.
 
-In this thesis, we consider \emph{homogeneous \ac{MAARL}}~\cite{yang2021many}, 
- where the set of agents is large ($N \gg 2$) and each agent is \emph{interchangeable} and \emph{indistinguishable}.
+MAPPO employs a centralized value function during the training phase to estimate the Q-values.
 %
-This research area is relevant in the context of large-scale systems 
- where collective intelligence emerges from local and repeated interaction of simple entities, like in \ac{cpsw}.
+ This centralized critic can take into account global state information, 
+ allowing MAPPO to follow a CTDE structure. 
 %
+ This is particularly useful in complex environments where the state and action spaces are large, 
+ as it allows for more effective policy updates.
+
+One of the standout features of MAPPO is its \emph{sample efficiency},
+ that means the ability to learn from a small number of samples. 
+ Despite being an on-policy method, 
+ MAPPO has been shown to be competitive or 
+ even superior to off-policy methods in terms of both final returns and sample efficiency. 
+%
+MAPPO also benefits from the robustness and stability of the underlying PPO algorithm. 
+ It requires minimal hyperparameter tuning and does not necessitate any domain-specific algorithmic modifications or architectures to achieve strong performance. 
+ This makes it a versatile and practical choice for a wide range of multi-agent environments.
+\paragraph*{QMIX}
+QMIX (Monotonic Value Function Factorisation for Deep Multi-Agent Reinforcement Learning) 
+ is a value-based method designed to address the challenges in multi-agent reinforcement learning (MARL). 
+
+It is based on the idea of \emph{factorisation}, 
+ which involves decomposing the joint action-value function into a set of individual value functions. 
+ This factorisation allows for the extraction of decentralized policies that are consistent with the centralized training.
+
+The architecture of QMIX consists of individual agent networks and a mixing network. 
+ Each agent network estimates an individual value function \( Q_a \), while the mixing network combines these into a joint action-value function \( Q_{\text{tot}} \). 
+ A key feature of QMIX is the \emph{monotonicity} constraint, 
+ which ensures that the joint action-value function is monotonic in the individual agent value functions. 
+ This allows for the extraction of decentralized policies that are consistent with the centralized training.
+%
+QMIX is particularly effective in environments 
+ where the joint action spaces grow exponentially with the number of agents. 
+ It employs a mixing network with positive weights to enforce the monotonicity constraint, 
+ thereby ensuring that decentralized policies can be easily extracted. 
+ This makes QMIX computationally efficient and scalable, as it avoids the need for storing a Q-table for each agent.
+
+\subsection{Wrap up}
+In this section, we have provided an overview of \ac{marl} functional for this thesis perspective,
+ beginning with the formulation of the problem and the underlying mathematical framework. 
+ We also explored various analytical solutions and key algorithms associated with \ac{marl}.
+In the follow, we will discuss the \emph{many-agent} perspective, 
+understanding the challenges and the solutions proposed in the literature.
+
+\section{Many-agent}
+\ac{cpsw} are characterized by a large number of agents, 
+ with a population that can potentially range from hundreds to millions of agents.
+%
+In such scenarios, 
+ the traditional \ac{marl} framework is no longer applicable, 
+ as the number of agents makes it computationally infeasible to learn a joint policy.
+%
+A novel approach is required to address the challenges of many-agent systems, 
+ which is the focus of this section.
+
+When we discuss about many-agent systems, 
+ we refer to a large number of agents ($N \gg 2$) that are \emph{interchangeable} and \emph{indistinguishable}.%
+%
+This means that, in general, the policy of each agent is the same, i.e., homogeneous policies.
+
 In such many-agent scenarios, 
  the implementation of fully decentralized learning is often unfeasible due to the large number of learning agents, 
- which makes the system non-stationary and difficult to manage. 
+ which makes the system \emph{non-stationary} and difficult to manage. 
 %
 Conversely, a centralized controller capable of coordinating 
  the entire system may not be a viable solution due to scalability concerns. 
- To address this challenge, a practical solution is the adoption of \emph{\ac{CTDE}} approach.
 %
-The idea is to learn a policy at simulation time when there is a collective view of the system, 
- and then at runtime use that policy but only with local observations. 
-%This approach creates policies that are influenced by global information but only require local information to function at runtime. 
-%
-The typical approach in such cases is based on actor-critic systems~\cite{DBLP:conf/nips/LoweWTHAM17,wu2022more,song2022ctds,song2022centralized},
-  where the \emph{actor} is the distributed policy (with only local information) and the critic is a neural network that takes the overall system state.
-%
-%In fact, the first works in this direction were discussed precisely swarm robotics, %\lukas{what does this mean `in the last field'?}
-% exploring new models (e.g., swarMDP~\cite{DBLP:conf/atal/SosicKZK17}) and learning algorithms capable of extrapolating a policy representing the entire system.  \lukas{This sentence still needs rework.}
-%Modern approaches, however, 
-% have started to consider the use of 
-% Recently, deep learning approaches have been considered 
-% to synthesise robust controllers capable of generalizing to new tasks. 
-%In this context, mean-field reinforcement learning~\cite{pmlr-v80-yang18d} is certainly noteworthy. 
-Mean-field RL~\cite{pmlr-v80-yang18d} is one of such concrete applications of \ac{CTDE} 
- where the interactions among the population of agents are estimated by considering either the effect of a single agent and the average impact of the entire population or the influence of neighbouring agents.
-%
-Some known approaches using mean-field reinforcement learning include Q-mean, 
- which is an extension of Q-learning to mean-field settings~\cite{yang2018mean}, 
- and actor-critic mean-field~\cite{frikha2023actor}, which combines actor-critic algorithms with mean-field approximations. 
-%
-These approaches have shown promising results in various domains, such as multi-agent coordination 
- and decentralized control, and are actively being researched and developed for further applications.
 
+After this brief introduction, 
+ we will discuss the peculiarities of many-agent systems,
+ starting from the formalization of the problem,
+  and then we will discuss pratical solution and the gran-challenges.
 \subsection{Formalization}
 \subsubsection{SwarMDP}
 A SwarMDP is characterized by a \emph{swarming agent} ($\mathbb{A}$) and the dynamics of the environment ($\mathbb{E}$).
