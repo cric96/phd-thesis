@@ -50,7 +50,9 @@ Particularly, the first three approaches are based on the idea of learning from 
   The machine tries to learn the patterns and the structure from the data without any supervision (e.g., clustering algorithms);
   \item \emph{semi-supervised}: A middle-ground between supervised and unsupervised learning, this approach utilizes both labelled and unlabelled data for training. The model learns to improve its predictions gradually.
 \end{itemize}
-Reinforcement learning sets itself apart from other methodologies by operating without the need for labelled data or supervision and through a sequential decision. 
+Reinforcement learning sets itself apart from other methodologies 
+ by operating without the need for labelled data or supervision and through a 
+ sequential decision interactions between an agent and an environment. 
  It employs a \emph{trial-and-error} strategy, mirroring the way humans acquire knowledge. 
  Subsequent sections will delve into the nuances of this distinctive approach, starting from single agent settings and then moving to multi-agent and many-agent systems---the focus of this thesis.
 \section{Single-agent}\label{chap:rl:single}
@@ -58,12 +60,12 @@ Reinforcement learning sets itself apart from other methodologies by operating w
   \includegraphics[width=\textwidth]{chapters/img/single-agent-rl.drawio.pdf}
   \caption{Overview of the \ac{rl} framework.}\label{fig:rl:overview}
 \end{figure}
-\Acl{rl}~\cite{sutton2018reinforcement-learning} serves as a universal framework that h
- as been inspired by the cognitive processes underlying human learning. 
+\Acl{rl}~\cite{sutton-book} serves as a universal framework 
+ that has been inspired by the cognitive processes underlying human learning. 
  This paradigm has proven to be highly effective for addressing \emph{control problems}, 
  which are essentially tasks that require decision-making to achieve a particular outcome.
 %
-The core focus of \ac{rl} is on the \emph{sequential} interactions that occur between \emph{agents} 
+The core focus of \ac{rl} is on the \emph{sequential} interactions that occur between an \emph{agent} 
  and an \emph{environment} (summarized in \Cref{fig:rl:overview}). 
  Agents are defined as entities capable of performing \emph{actions}, 
  while the environment constitutes everything that is external to the agents 
@@ -79,7 +81,7 @@ The agent then proceeds to select an \emph{action}
 A policy serves as a probabilistic mapping that guides the agent in choosing actions 
  based on the current state. 
  Policies can be simple lookup tables or complex neural networks.
-
+%
 As a result of taking this action, 
  the environment transitions to a new state $s_{t+1}$ at the next time step $t+1$. 
  Simultaneously, the agent receives a \emph{reward} $r_{t+1}$, 
@@ -102,7 +104,7 @@ In robotics~\cite{DBLP:journals/ijrr/KoberBP13},
  particularly in routing algorithms where dynamic decision-making is crucial~\cite{DBLP:journals/comsur/LuongHGNWLK19}.
 
 \subsection{Markov Decision Process}
-This general framework is supported by \ac{mdp}, 
+This general framework is supported by \ac{mdp}---
  a mathematical model that describes the environment evolution in sequential decision problems. 
 %
 A \ac{mdp} consists of a tuple $<\RS, \RA, \RP, \RR>$ in which:
@@ -126,12 +128,12 @@ G_{t} = r_t + \gamma r_{t + 1} + \gamma^2 r_{t + 2} + \dots + \gamma^T r_{t + T}
 Where $0 \leq \gamma \leq 1$ is the \emph{discount factor}, 
  that is how much the future reward impacts the long-term return.
 %%
-Based on the value of $T$, we can distinguish between \emph{episodic} and \emph{continuous} tasks.
- The foster ones are characterized by a finite number of time steps
-  (e.g., a match of chess), while the latter ones are infinite 
-  (e.g., a robot that should wander in an unknown environment).
+Based on the value of $T$, 
+ we can distinguish between \emph{episodic} and \emph{continuous} tasks.
+ The foster ones are characterized by a finite number of time steps (e.g., a match of chess), 
+ while the latter ones are infinite (e.g., a robot that should wander in an unknown environment).
 %%
-\subsubsection*{Reinforcement Learning Goal}
+\subsubsection*{Reinforcement learning goal}
 The \ac{rl} goal can be expressed as the maximization of the \emph{expected} 
  long-term return following a policy $\pi$:
 %%
@@ -151,7 +153,8 @@ The equation essentially captures the trade-off between immediate and future rew
  for future rewards and is a hyperparameter that can be tuned based on the specific problem being solved.
 
 \subsection{Find a policy given a MDP}
-
+In the context of MDP, evaluating policies is crucial for identifying the optimal one. 
+ Consequently, two essential concepts are introduced: the \emph{value function} and the \emph{Q-function}.
 $V^\pi$ is the value function that evaluates how good (or bad) a \emph{state} 
  is according to the long-term return following the policy $\pi$ (\emph{expected value}).
 % 
@@ -862,19 +865,13 @@ In such scenarios,
 %
 A novel approach is required to address the challenges of many-agent systems, 
  which is the focus of this section--in the so-called area of \ac{MAARL}.
-
+%
 When we discuss about many-agent systems, 
- we refer to a large number of agents ($N \gg 2$) that are \emph{interchangeable} and \emph{indistinguishable}.%
+ we refer to a large number of agents ($N \gg 2$) that are \emph{interchangeable} and \emph{indistinguishable}.
 %
-This means that, in general, the policy of each agent is the same, i.e., homogeneous policies.
-
-In such many-agent scenarios, 
- the implementation of fully decentralized learning is often unfeasible due to the large number of learning agents, 
- which makes the system \emph{non-stationary} and difficult to manage. 
-%
-Conversely, a centralized controller capable of coordinating 
- the entire system may not be a viable solution due to scalability concerns. 
-%
+In \ac{cpsw} perspective, 
+ it is still applicable, because we consider the agent to be behavioural homogeneous, 
+ even if they are not identical.
 
 After this brief introduction, 
  we will discuss the peculiarities of many-agent systems,
@@ -904,10 +901,140 @@ Starting from this definition, the environment $\mathbb{E}$ is defined as a tupl
 \end{itemize}
 
 \subsection{Solutions for \ac{MAARL}}
+In a \ac{MAARL} scenario, 
+ the concept of \emph{homogeneity} is leveraged to design algorithms that scale effectively with the number of agents. 
+ Rather than developing $N$ distinct policies for $N$ agents, 
+ the objective is to formulate a \emph{single} policy applicable to all agents.
+%
+The learning paradigm typically employed in this context is CDTE, for the following reasons:
+\begin{itemize}
+\item fully decentralized learning is impractical due to the high level of non-stationarity 
+ that arises from concurrent learning.
+\item An agent's view of the system is so limited that locally 
+ collected experiences are insufficient for capturing the full range of possible application scenarios.
+\end{itemize}
+While several CDTE algorithms, such as MAPPO and QMIX, aim to find $N$ policies, various techniques can be employed to adapt them for multi-agent settings. 
+The general learning process is then divide in a training phases performed offline, in a simulated environment, and an execution phase, performed online, in the real environment.
 
+Subsequently, we will discuss the most popular of these techniques, as well as algorithms specifically designed for many-agent systems.
 \subsubsection*{Parameter sharing}
+Parameter sharing is a pivotal technique in \ac{MAARL}, 
+ due to the strongly homogeneous agents assumptions. 
+% 
+The essence of this approach lies in the utilization of a unified set of parameter values, 
+ denoted as \( \theta_{\text{shared}} \) for the policy network and \( \phi_{\text{shared}} \) 
+ for the value network, across all agents. 
+This unified parameter set serves as the backbone for both the policy and value functions of each agent.
+This learning approach has been shown to be effective in many-agent systems, and it has several advantages:
+\begin{itemize}
+  \item \textbf{Sample efficiency}: 
+  one of the most compelling advantages is the improvement in sample efficiency. 
+  By learning a single set of parameters, 
+  the algorithm can generalize across agents, 
+  thereby utilizing a more diverse and larger set of trajectories for training.
+  \item \textbf{Computational efficiency}: 
+  parameter sharing keeps the computational load manageable by maintaining a constant number of parameters, 
+  irrespective of the number of agents. 
+  This is in stark contrast to a non-shared approach, 
+  where the number of parameters would increase linearly with the number of agents.
+\end{itemize}
+This however, comes at the cost of policy space limitation: employing parameter sharing inherently constrains the policy space to identical policies for each agent, 
+ reducing the complexity of the overall joint policy.
+ Said that, in \ac{cpsw} this is quite reasonable,
+ because complexity comes from interaction of simple agents,
+  rather than from complex agents.
+ 
+Mathematically it involves constraining the policy parameters \( \theta \) and/or value function parameters \( \phi \) across agents as follows:
+\[
+\theta_{\text{shared}} \equiv \theta_1 \equiv \theta_2 \equiv \ldots \equiv \theta_N
+\]
+\[
+\phi_{\text{shared}} \equiv \phi_1 \equiv \phi_2 \equiv \ldots \equiv \phi_N
+\]
+where \( N \) is the number of agents.
+
 \subsubsection*{Experience Sharing}
-\paragraph*{Q-Learning}
-\paragraph*{Swarm Q Learning}
-\subsubsection*{Mean-Field Games}
-\section{Gran-challenges}
+Experience sharing serves as another cornerstone in \ac{MAARL}.
+ Unlike parameter sharing, which centralizes the neural network parameters across agents, 
+ experience sharing focuses on the distribution of experiences or trajectories among agents.
+By pooling experiences from multiple agents into a shared replay buffer, 
+ each agent has the opportunity to learn from a much richer set of experiences than it could generate on its own. 
+ This not only speeds up the learning process but also ensures a more uniform learning progression across agents, which is particularly useful for tasks that require coordinated multi-agent actions.
+
+However, experience sharing comes with its own set of challenges. 
+ For instance, the approach can be computationally intensive as it increases the size of the batch used for training. Additionally, unlike parameter sharing, 
+ experience sharing allows for the possibility of agents learning diverse policies. 
+ However, these approaches can be combined to leverage the benefits of both techniques.
+
+In terms of mechanics, 
+ experience sharing typically involves storing each agent's experiences, 
+ usually denoted as \( (s, a, r, s') \), in a shared replay buffer. 
+ During the learning phase, agents sample from this shared buffer to update their individual policies and value functions. 
+
+\subsubsection*{Many-agent Q-Learning}
+Many-agent Q-Learning extends the classic Q-Learning algorithm to a multi-agent setting by incorporating the concept of experience sharing and parameter sharing. 
+ In this approach, each agent maintains a global Q-table but has the ability to learn from a shared experience replay buffer. 
+ This shared buffer contains the state-action-reward-next state tuples \( (s, a, r, s') \) from all agents, 
+ thereby enriching the learning process for each individual agent.
+ 
+The algorithm operates in a similar fashion to traditional Q-Learning, 
+ with the primary difference being the source of experiences used for updates. 
+ During each learning iteration, agents sample experiences from the shared replay buffer to update the global Q-values. 
+ The Q-value update equation remains the same as in single-agent Q-Learning, 
+ but the experiences used for the updates are drawn from the collective experiences of all agents.
+ 
+By leveraging shared experiences, 
+ this approach aims to achieve faster convergence and more robust policies. 
+ Agents benefit from the diverse set of experiences, which can be particularly useful in complex or stochastic environments where individual experiences may not provide sufficient coverage of the state-action space.
+  
+This method is especially useful in scenarios where agents are working towards a common goal but a partial observability of the environment. 
+ By sharing experiences, 
+ they can collectively learn a more comprehensive and effective strategy to achieve their objective.
+%
+This can be also extended to deep-q learning approaches, 
+ where the Q-table is replaced by a neural network.
+%
+\begin{algorithm}
+\caption{Many-agent Q-Learning}
+\label{alg:maql}
+\DontPrintSemicolon
+\KwData{Initialise a global value function with random Q}
+\KwData{Initialise a single replay $D_{\text{shared}}$ buffer for all agents}
+\KwData{Collect environment observations $o^0_1, \dots, o^0_n$}
+\For{time step $t = 0, \dots, d$}{
+    \For{agent $i = 1, \dots, n$}{
+        \eIf{with probability $\varepsilon$}{
+            choose random action $a_i$\;
+        }{
+            choose $a_i = \max_{a} Q(h_t, a_i)$\;
+        }
+        Execute actions and collect observations $o^{t+1}_i$ and rewards $r_i$\;
+        Store all transitions in replay buffer $D_{\text{shared}}$\;
+    }
+    \For{agent $i = 1, \dots, n$}{
+        Sample random mini-batch of transitions from replay buffer $D_{\text{shared}}$\;
+        Update Q by the bellman equationt
+    }
+}
+\end{algorithm}
+The algorithm is summarized in \Cref{alg:maql}.
+\subsubsection*{Mean-field reinforcement learning}
+Mean-field reinforcement learning (MFRL) offers a scalable and efficient approach to address the challenges in many-agent systems. 
+ In traditional MARL algorithm, 
+ the computational complexity can grow exponentially with the number of agents, 
+ making it impractical for systems with a large population. MFRL elegantly sidesteps this issue by approximating the many-body problem as a two-body problem. 
+ Here, each agent interacts not with all other agents, 
+ but with an average or ``mean field'' effect that represents the collective behavior of the entire population.
+ It can be resumed with this equation:
+ $$
+ Q'(s, \bm{a}) = \frac{1}{N_j} \sum_{k \in N(j)} Q'(s, a', a^k)
+ $$
+Where $N_j$ is the number of agents in the neighborhood of agent $j$, and $\bm{a}$ is the joint action space of the agents in the neighborhood of agent $j$.
+%
+This approach is particularly well-suited for \ac{cpsw} with a large number of behaviorally homogeneous agents. 
+ It aligns with the notion that complexity in such systems often arises from the interactions among simple agents,
+ rather than from the complexity of individual agents.
+ In fact, the mean field effect can be seen as a form of communication between agents, 
+ where each agent is influenced by the collective behavior of the entire population, but only through its local observations and neighborhood interactions. 
+ In MFRL, the learning process is mutually reinforced between the individual agents and the dynamics of the overall population. 
+%
