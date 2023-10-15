@@ -20,30 +20,12 @@ The coordination of a group of autonomous agents that can perceive and act in th
 Such agents need to cooperate and communicate in order to achieve a common goal, 
  while dealing with the challenges of distributed and situated intelligence. 
  These challenges include the limited and local nature of the information available to each agent and the emergence of global behaviour from local interactions. 
-
-%One domain where these challenges are particularly evident is Cyber-Physical Swarms (CPSs, or \emph{swarm-like systems}), 
-% where a large number of agents interact with each other and their environment based on spatial proximity. 
 %
-%Examples of CPSs include swarm robotics~\cite{brambilla2013swarm}, smart cities~\cite{bajovic2021marvel}, sensor networks~\cite{pianini2022collective}, and social systems~\cite{zhou2019cyber}. 
-% In these systems, agents need to adapt to dynamic and uncertain situations, while ensuring the achievement of global objectives that may not be directly observable or measurable by individual agents.
-
 A key question in designing swarm-like systems is how to create distributed controllers for the agents that enable them to perform complex \emph{collective} tasks. 
- %Two main approaches have been proposed for this problem: manual design and automatic design. 
-%
-%In manual design, programmers build the controllers directly, 
-% using domain knowledge and programming languages or frameworks that support distributed computation and communication like macro-programming approaches~\cite{DBLP:journals/corr/abs-2201-03473}. 
-%
-%In automatic design, machine learning methods like \ac{MARL} and evolutionary algorithms are used to synthesize programs or policies for the agents from the high-level task or goal descriptions.
-%
-%Both approaches have advantages and disadvantages.
-% Manual design allows programmers to specify desired properties for the system declaratively, however, it can be tedious and error-prone.
-%
-%Automatic design can overcome these limitations by learning from data and experience. 
-% However, automatic design can also suffer from several challenges, such as learning the right representation for agent communication.
 %
 In this chapter, we propose a novel hybrid approach that combines manual and automatic design of distributed controllers.
-%This follows a novel trend in which high-level declarative programming languages are mixed with machine learning techniques in order to synthesize robust collective controllers~\cite{DBLP:conf/acsos/Aguzzi21,DBLP:conf/icdcs/AguzziCV22,DBLP:conf/coordination/AguzziCV22}.
-Specifically, we propose a solution called \ac{FIRL} that utilizes aggregate computing~\cite{Beal2015Computer} together with a \ac{GNN}~\cite{Zhou2020AIOpen} in combination with a reinforcement learning approach, namely \ac{DQN}~\cite{mnih2015human}. 
+
+Specifically, we propose a solution called \ac{FIRL} that utilizes aggregate computing together with a \ac{GNN}~\cite{Zhou2020AIOpen} in combination with a reinforcement learning approach, namely \ac{DQN}~\cite{mnih2015human}. 
 % First, aggregate computing is utilized to collect information from neighbours and create a local knowledge base for each agent. Second, we utilize a \ac{GNN} within the \ac{DQN}. 
  Here the \ac{GNN} is trained on \emph{field-information} from aggregate computing and provides so-called node embeddings for each agent, serving as input for the \ac{DQN}. 
  The \ac{DQN} provides then the appropriate actions for the agent to achieve their tasks.
