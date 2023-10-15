@@ -1,8 +1,0 @@
-- author names and affiliations are correct
-- added zip code
-- 'autonomic computing' does not need emphasis
-- font colors and formatting of code elements through the whole manuscript are not necessary
-- moving footnotes to the main content is fine
-- no funding is fine
-- added info in bibliography is fine
-- very tiny issues have been fixed

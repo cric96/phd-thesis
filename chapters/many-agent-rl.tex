@@ -1,5 +1,5 @@
 %!TeX root = thesis-main.tex
-\chapter{Reinforcement Learning}\label{chap:marl}
+\chapter{Reinforcement Learning}\label{chap:marl}\mtcaddchapter
 
 \minitoc% Creating an actual minitoc
 \newcommand{\RS}{\mathcal{S}}
@@ -319,10 +319,9 @@ One of the simplest TD methods is \emph{TD-Learning}~\cite{DBLP:journals/ml/Sutt
  The value function is then updated using \( V(s) \leftarrow V(s) + \alpha \delta \), where \(\alpha\) is the learning rate.
 
 Starting from this intuition two main approaches have been developed: 
- \emph{Q-learning}~\cite{DBLP:journals/ml/WatkinsD92} and \emph{SARSA}~\cite{10.5555/3312046}. 
+ \emph{Q-learning}~\cite{DBLP:journals/ml/WatkinsD92} and \emph{SARSA}~\cite{sutton-book}. 
 
  \paragraph*{Q-Learning}
-
  Q-Learning is an off-policy TD algorithm that focuses on learning the action-value function \(Q(s, a)\). The update rule for Q-Learning is:
  \begin{equation}
  Q(s, a) \leftarrow Q(s, a) + \alpha \Big[ R(s, a, s') + \gamma \max_{a'} Q(s', a') - Q(s, a) \Big]
