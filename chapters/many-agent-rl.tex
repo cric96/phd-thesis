@@ -51,10 +51,9 @@ Particularly, the first three approaches are based on the idea of learning from 
   \item \emph{semi-supervised}: A middle-ground between supervised and unsupervised learning, this approach utilizes both labelled and unlabelled data for training. The model learns to improve its predictions gradually.
 \end{itemize}
 Reinforcement learning sets itself apart from other methodologies 
- by operating without the need for labelled data or supervision and through a 
- sequential decision interactions between an agent and an environment. 
+ by operating without the need for labelled data or supervision and through a sequential interaction between an agent and an environment. 
  It employs a \emph{trial-and-error} strategy, mirroring the way humans acquire knowledge. 
- Subsequent sections will delve into the nuances of this distinctive approach, starting from single agent settings and then moving to multi-agent and many-agent systems---the focus of this thesis.
+ Subsequent sections will delve into the nuances of this distinctive approach, starting from single-agent settings and then moving to multi-agent and many-agent systems---the focus of this thesis.
 \section{Single-agent}\label{chap:rl:single}
 \begin{figure}
   \includegraphics[width=\textwidth]{chapters/img/single-agent-rl.drawio.pdf}
@@ -247,7 +246,7 @@ While dynamic programming methods like value iteration and policy iteration offe
  Specifically, these algorithms require knowledge of the transition probability function \(\RP\) and the reward function \(\RR\). 
  In many real-world applications, these functions are either unknown or too complex to model accurately. 
  This is where \emph{model-free} algorithms come into play.
- In the following sections, we will discuss two such algorithms' family: 
+ In the following sections, we will discuss two such algorithms' families: 
  Monte Carlo methods and Temporal Difference methods.
 \subsubsection{Monte Carlo methods}
 Monte Carlo methods offer a way to find an optimal policy \(\pi^*\) without requiring a model of the environment. 
@@ -269,7 +268,7 @@ Q(s, a) = \frac{1}{N} \sum_{i=1}^{N} G_t^{(i)}
 Where \(N\) is the number of times the state or state-action pair has been visited, and \(G_t^{(i)}\) is the return following the \(i\)-th visit.
 
 Once the value functions are estimated, 
- the policy can be improved by making it greedy with respect to these estimated values. 
+ the policy can be improved by making it greedy concerning these estimated values. 
 %
 In this context, the \emph{exploration-exploitation} trade-off is crucial.
 %
@@ -368,14 +367,14 @@ Initialise: $Q(s, a) = 0$ for all $s \in S$, $a \in A$\;
 
 \subsection{Policy Gradient Methods}
 
-While temporal difference methods and monte carlo methods focus on learning value functions to derive optimal policies, \emph{policy gradient} methods take a different approach. 
+While temporal difference methods and Monte Carlo methods focus on learning value functions to derive optimal policies, \emph{policy gradient} methods take a different approach. 
   They aim to directly optimize the policy \(\pi\) itself, 
   rather than first estimating value functions. 
-  This is particularly useful in environments with high-dimensional action spaces or continuous action spaces, where value-based methods may struggle.
+  This is particularly useful in environments with high-dimensional action spaces, or continuous action spaces, where value-based methods may struggle.
   Moreover, in this way, it is possible to learn stochastic policies,
     which are often more robust and flexible than deterministic policies.
 
-Policy gradient methods optimize the policy by ascending the gradient of the expected return with respect to the policy parameters \(\theta\). 
+Policy gradient methods optimize the policy by ascending the gradient of the expected return concerning the policy parameters \(\theta\). 
 Mathematically, this can be expressed as:
 \begin{equation}
 \theta \leftarrow \theta + \alpha \nabla_\theta J(\theta)
@@ -435,14 +434,14 @@ Given these challenges, approximate solutions become not just desirable but ofte
 In contemporary applications, neural networks have emerged as the go-to function approximators due to their exceptional capability to approximate complex, 
  high-dimensional functions. 
  Particularly, the combination of Deep learning and Reinforcement learning has led to significant advancements in the field, in the so-called area of \emph{deep reinforcement learning}.
- One of the first and most influential works in this area was the Deep Q-Network (DQN) algorithm~\cite{DBLP:journals/corr/MnihKSGAWR13}, that will be discussed in the next section.
+ One of the first and most influential works in this area was the Deep Q-Network (DQN) algorithm~\cite{DBLP:journals/corr/MnihKSGAWR13}, which will be discussed in the next section.
  \subsubsection{Deep Q-Networks (DQN)}
 
  Deep Q-Networks (DQN) represent a landmark innovation in the field of deep reinforcement learning, 
   effectively combining the strengths of Q-Learning with the function approximation capabilities of deep neural networks.
   DQN was initially designed to master a variety of Atari 2600 games and has since been adapted for various complex tasks.
  
- The core idea behind DQN is to use a neural network as a function approximate for the Q-function in Q-Learning. 
+ The core idea behind DQN is to use a neural network as a function approximation for the Q-function in Q-Learning. 
   The neural network, often referred to as the Q-network, 
   takes the environment state as input and outputs Q-values for each action.
 %  
@@ -462,7 +461,7 @@ However, directly applying neural networks to Q-Learning presents challenges,
   \item \textbf{Experience replay}: DQN stores past experiences \((s, a, r, s')\) in a replay buffer and samples mini-batches randomly during training. 
   This decorrelates the data and leads to more stable training.
   \item \textbf{Target network}: DQN introduces a separate, 
-  slowly-updated target network to calculate the target Q-values, 
+  slowly updated target network to calculate the target Q-values, 
   reducing the overestimation bias and improving stability.
 \end{itemize}
  
@@ -491,7 +490,7 @@ Another important categorization is whether an algorithm is \emph{on-policy} or 
 %
 RL algorithms can be broadly divided based on what they aim to learn. 
  The primary categories here are value-based and policy gradient methods, 
- although hybrid approaches also exist that combine elements of both, like actor critic.
+ although hybrid approaches also exist that combine elements of both, like actor-critic.
 %
 Lastly, RL algorithms can be categorized based on whether they use a \emph{tabular} or \emph{approximate} approach. 
  Tabular methods store the value function in a table, 
@@ -522,7 +521,7 @@ The key challenge in \ac{marl}
  For instance, the concept of a joint action space, a state space extended to multiple agents, and a composite reward function are essential considerations.
 \subsection{Stochastic games}
 The formalization of MARL typically extends the standard Markov Decision Process (MDP) 
- framework to account for multiple agent. 
+ framework to account for multiple agents. 
  One of the most straightforward extensions is the Markov Game, also called Stochastic games. 
  In this formalization, 
 each agent has its own state, action, and reward function, 
@@ -559,7 +558,7 @@ It is important to note that in these games, actions from all agents are execute
 Here, 
  the primary divergence from the conventional Stochastic Game 
  is the introduction of observation functions \(\mathcal{O}_i: \mathcal{S} \rightarrow \mathcal{O}_i\), 
- which map the environment state to the observation space of agent \(i\). 
+ which maps the environment state to the observation space of agent \(i\). 
  Consequently, the agents' policies are now parameterized by their respective observation spaces \(\mathcal{O}_i\) rather than the global state space \(\mathcal{S}\). 
  This alteration significantly influences both the algorithmic approaches and the complexities involved in solving POSGs.
 \subsection{Taxonomies}
@@ -588,7 +587,7 @@ Note that the following taxonomies are not mutually exclusive,
 \end{figure}
 \sloppy
 One possible categorization of multi-agent algorithms is based on the learning paradigm (summarized in \Cref{fig:marl:policy-kind}). 
- In this context, the learning paradigm refers to the way in which agents learn their policies. 
+ In this context, the learning paradigm refers to how agents learn their policies. 
 The field of multi-agent learning has historically been dominated by two primary approaches: 
  \emph{independent learning} and \emph{centralized learning}. 
  In independent learning, 
@@ -616,8 +615,8 @@ Recognizing the limitations of both independent and centralized learning paradig
  agents can learn a policy influenced by global states during the training phase while requiring only local observations for decision-making during execution.
 
 \subsubsection{Task type}
-Aside the way in which the agent learns, 
- another important distinction involve \emph{what} the agent should learn.
+Aside how the agent learns, 
+ another important distinction involves \emph{what} the agent should learn.
 %
 In fact, the task type can be \emph{cooperative}, \emph{competitive}, or \emph{mixed}.
 \paragraph*{Cooperative}
@@ -648,7 +647,7 @@ In mixed tasks, agents operate under both cooperative and competitive dynamics.
 This is the most general setting, and it is often the most challenging to solve.
 \subsubsection{Policy type}
 Another crucial aspect to explore is the nature of the policy that an agent ought to learn. 
-Although numerous classification of policies exist
+Although numerous classifications of policies exist
  ---ranging from deterministic to stochastic, centralized to decentralized, and joint to individual---
  this thesis places special focus on distinguishing between \emph{homogeneous} and \emph{heterogeneous} policy family.
 
@@ -659,7 +658,7 @@ In the context of homogeneous policies,
  This is particularly prevalent in cooperative tasks where agents must collaborate to achieve a collective objective. 
  Utilizing a single policy across all agents often simplifies the learning process and enhances coordination among the agents.
  Moreover, is particularly suitable for scenarios where agents are \emph{interchangeable} and \emph{indistinguishable}, 
- making it possible to use the same policy in different agent population.
+ making it possible to use the same policy in different agent populations.
 \paragraph*{Heterogeneous Policies}
 Conversely, in the realm of heterogeneous policies, 
  each agent possesses its own distinct policy. 
@@ -710,7 +709,7 @@ However, in practice, the pursuit of equilibrium often fails to yield satisfacto
  
  \paragraph*{Distributed Q-Learning}
  
- Distributed Q-Learning is the straightforward extension of the traditional Q-Learning algorithm designed for multi-agent systems. 
+ Distributed Q-Learning is a straightforward extension of the traditional Q-Learning algorithm designed for multi-agent systems. 
   In this approach, each agent maintains its own Q-table and updates it based on its local observations and rewards. While this method allows for decentralized learning, 
   it often struggles with issues related to \emph{coordination} and \emph{convergence} to global optima. The algorithm is particularly useful in scenarios where communication between agents is limited or not possible.
   However, it may not always guarantee convergence to the optimal joint policy, 
@@ -746,7 +745,7 @@ Each agent maintains a sequence of Q-matrices,
   and the Q-values for each state-action pair evolve in a collaborative distributed manner. 
 %
 Specifically, the Q-values are updated according to a formula that incorporates both local one-stage costs 
-  and information from neighboring agents.
+  and information from neighbouring agents.
 
 The primary objective of QD-Learning is to minimize a network-averaged infinite horizon discounted cost. 
 %
@@ -754,8 +753,8 @@ The algorithm achieves this by ensuring
  that each agent learns the value function based on locally 
  accessible stochastic processes and one-stage cost processes. 
 %
-The agents collaborate by means of local processing and mutual information exchange, 
- aiming to reach consensus on the desired value function and the corresponding optimal control strategy.
+The agents collaborate using local processing and mutual information exchange, 
+ aiming to reach a consensus on the desired value function and the corresponding optimal control strategy.
 %
 In terms of performance, 
  QD-Learning has been shown to achieve optimal learning performance asymptotically, 
@@ -793,10 +792,10 @@ Counterfactual Multi-Agent (COMA) is an actor-critic method specifically designe
 One of the key innovations in COMA is the introduction of a counterfactual baseline to address the challenge of multi-agent credit assignment. 
  In cooperative settings where joint actions produce global rewards, 
  it becomes difficult for individual agents to understand their contribution to the team's success. 
- The counterfactual baseline marginalizes out a single agent's action while keeping the other agents' actions fixed, 
+ The counterfactual baseline marginalizes a single agent's action while keeping the other agents' actions fixed, 
  thereby providing a more accurate estimate of each agent's contribution.
 Another advantage of COMA is its computational efficiency.
- It employs a critic representation that allows the counterfactual baseline to be computed in a single forward pass, 
+ It employs a critic that allows the counterfactual baseline to be computed in a single forward pass, 
  thereby reducing the computational burden.
 
 COMA has been evaluated in complex scenarios like StarCraft unit micromanagement and has shown significant improvements over other multi-agent actor-critic methods. 
@@ -819,9 +818,9 @@ MAPPO employs a centralized value function during the training phase to estimate
  as it allows for more effective policy updates.
 
 One of the standout features of MAPPO is its \emph{sample efficiency},
- that means the ability to learn from a small number of samples. 
+ that means the ability to learn from a few samples. 
  Despite being an on-policy method, 
- MAPPO has been shown to be competitive or 
+ MAPPO is competitive or 
  even superior to off-policy methods in terms of both final returns and sample efficiency. 
 %
 MAPPO also benefits from the robustness and stability of the underlying PPO algorithm. 
@@ -851,7 +850,7 @@ QMIX is particularly effective in environments
 In this section, we have provided an overview of \ac{marl} functional for this thesis perspective,
  beginning with the formulation of the problem and the underlying mathematical framework. 
  We also explored various analytical solutions and key algorithms associated with \ac{marl}.
-In the follow, we will discuss the \emph{many-agent} perspective, 
+In the following, we will discuss the \emph{many-agent} perspective, 
 understanding the challenges and the solutions proposed in the literature.
 
 \section{Many-agent}
@@ -869,20 +868,20 @@ When we discuss many-agent systems,
  we refer to a large number of agents ($N \gg 2$) that are \emph{interchangeable} and \emph{indistinguishable}.
 %
 In \ac{cpsw} perspective, 
- it is still applicable, because we consider the agent to be behavioural homogeneous, 
+ it is still applicable because we consider the agent to be behavioural homogeneous, 
  even if they are not identical.
 
 After this brief introduction, 
  we will discuss the peculiarities of many-agent systems,
  starting from the formalization of the problem,
-  and then we will discuss pratical solution and the gran-challenges.
+  and then we will discuss practical solutions and the gran-challenges.
 \subsection{Formalization}
 Standard stochastic games do not capture the essence of many-agent systems, 
  as they do not consider the homogeneous nature of the agents, and the large number of agents.
 Therefore, in the context of swarm robotics, 
  a novel framework called \emph{SwarMDP} has been proposed.
  This is focused on the idea of having a \emph{swarming agent} that rules the entire population of agents.
- In the follow, we will discuss the formalization of this framework.
+ In the following, we will discuss the formalization of this framework.
 \subsubsection{SwarMDP}
 A SwarMDP is characterized by a \emph{swarming agent} ($\mathbb{A}$) and the dynamics of the environment ($\mathbb{E}$).
 Specifically, $\mathbb{A}$ is a tuple ($\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, \pi$) where:
@@ -913,18 +912,18 @@ The learning paradigm typically employed in this context is CDTE, for the follow
  collected experiences are insufficient for capturing the full range of possible application scenarios.
 \end{itemize}
 While several CDTE algorithms, such as MAPPO and QMIX, aim to find $N$ policies, various techniques can be employed to adapt them for multi-agent settings. 
-The general learning process is then divided in a training phases performed offline, in a simulated environment, and an execution phase, performed online, in the real environment.
+The general learning process is then divided into a training phase performed offline, in a simulated environment, and an execution phase, performed online, in the real environment.
 
 Subsequently, we will discuss the most popular of these techniques, as well as algorithms specifically designed for many-agent systems.
 \subsubsection*{Parameter sharing}
 Parameter sharing is a pivotal technique in \ac{MAARL}, 
- due to the strongly homogeneous agents assumptions. 
+ due to the strongly homogeneous agent assumptions. 
 % 
 The essence of this approach lies in the utilization of a unified set of parameter values, 
  denoted as \( \theta_{\text{shared}} \) for the policy network and \( \phi_{\text{shared}} \) 
  for the value network, across all agents. 
 This unified parameter set serves as the backbone for both the policy and value functions of each agent.
-This learning approach has been shown to be effective in many-agent systems, and it has several advantages:
+This learning approach is effective in many-agent systems, and it has several advantages:
 \begin{itemize}
   \item \textbf{Sample efficiency}: 
   one of the most compelling advantages is the improvement in sample efficiency. 
@@ -937,7 +936,7 @@ This learning approach has been shown to be effective in many-agent systems, and
   This is in stark contrast to a non-shared approach, 
   where the number of parameters would increase linearly with the number of agents.
 \end{itemize}
-This however, comes at the cost of policy space limitation: employing parameter sharing inherently constrains the policy space to identical policies for each agent, 
+This, however, comes at the cost of policy space limitation: employing parameter sharing inherently constrains the policy space to identical policies for each agent, 
  reducing the complexity of the overall joint policy.
  Said that, in \ac{cpsw} this is quite reasonable,
  because complexity comes from interaction of simple agents,
@@ -971,8 +970,8 @@ In terms of mechanics,
  During the learning phase, agents sample from this shared buffer to update their individual policies and value functions. 
 
 \subsubsection*{Many-agent Q-Learning}
-Many-agent Q-Learning extends the classic Q-Learning algorithm to a multi-agent setting by incorporating the concept of experience sharing and parameter sharing. 
- In this approach, each agent maintains a global Q-table but has the ability to learn from a shared experience replay buffer. 
+Many-agent Q-Learning extends the classic Q-Learning algorithm to a multi-agent setting by incorporating the concepts of experience sharing and parameter sharing. 
+ In this approach, each agent maintains a global Q-table but can learn from a shared experience replay buffer. 
  This shared buffer contains the state-action-reward-next state tuples \( (s, a, r, s') \) from all agents, 
  thereby enriching the learning process for each individual agent.
  
@@ -986,7 +985,7 @@ By leveraging shared experiences,
  this approach aims to achieve faster convergence and more robust policies. 
  Agents benefit from the diverse set of experiences, which can be particularly useful in complex or stochastic environments where individual experiences may not provide sufficient coverage of the state-action space.
   
-This method is especially useful in scenarios where agents are working towards a common goal but a partial observability of the environment. 
+This method is especially useful in scenarios where agents are working towards a common goal but partial observability of the environment. 
  By sharing experiences, 
  they can collectively learn a more comprehensive and effective strategy to achieve their objective.
 %
@@ -997,8 +996,8 @@ This can be also extended to deep-q learning approaches,
 \caption{Many-agent Q-Learning}
 \label{alg:maql}
 \DontPrintSemicolon
-\KwData{Initialise a global value function with random Q}
-\KwData{Initialise a single replay $D_{\text{shared}}$ buffer for all agents}
+\KwData{Initialize a global value function with random Q}
+\KwData{Initialize a single replay $D_{\text{shared}}$ buffer for all agents}
 \KwData{Collect environment observations $o^0_1, \dots, o^0_n$}
 \For{time step $t = 0, \dots, d$}{
     \For{agent $i = 1, \dots, n$}{
@@ -1012,14 +1011,14 @@ This can be also extended to deep-q learning approaches,
     }
     \For{agent $i = 1, \dots, n$}{
         Sample random mini-batch of transitions from replay buffer $D_{\text{shared}}$\;
-        Update Q by the bellman equationt
+        Update Q by the Bellman equation
     }
 }
 \end{algorithm}
 The algorithm is summarized in \Cref{alg:maql}.
 \subsubsection*{Mean-field reinforcement learning}
-Mean-field reinforcement learning (MFRL) offers a scalable and efficient approach to address the challenges in many-agent systems. 
- In traditional MARL algorithm, 
+Mean-field reinforcement learning (MFRL)~\cite{pmlr-v80-yang18d} offers a scalable and efficient approach to address the challenges in many-agent systems. 
+ In traditional MARL algorithms, 
  the computational complexity can grow exponentially with the number of agents, 
  making it impractical for systems with a large population. MFRL elegantly sidesteps this issue by approximating the many-body problem as a two-body problem. 
  Here, each agent interacts not with all other agents, 
@@ -1033,7 +1032,7 @@ Where $N_j$ is the number of agents in the neighbourhood of agent $j$, and $\bm{
 This approach is particularly well-suited for \ac{cpsw} with many behaviourally homogeneous agents. 
  It aligns with the notion that complexity in such systems often arises from the interactions among simple agents,
  rather than from the complexity of individual agents.
- In fact, the mean field effect can be seen as a form of communication between agents, 
+ In fact, the mean-field effect can be seen as a form of communication between agents, 
  where each agent is influenced by the collective behaviour of the entire population, but only through its local observations and neighbourhood interactions. 
  In MFRL, the learning process is mutually reinforced between the individual agents and the dynamics of the overall population. 
 %
@@ -1042,7 +1041,7 @@ This approach is particularly well-suited for \ac{cpsw} with many behaviourally 
 This chapter provides a comprehensive overview of the foundational concepts in reinforcement learning. 
  It begins by exploring the fundamental notion of intelligence and delves into key formalizations and algorithms that have shaped the field. 
  This serves as a foundational understanding for the remainder of the paper, 
- especially in relation to the concept of \ac{cpsw}.
+ especially about the concept of \ac{cpsw}.
 Indeed, we introduce swarMDP, 
  a model that formalizes the dynamics of swarm-like systems, 
  offering a theoretical framework for understanding complex agent interactions. 
