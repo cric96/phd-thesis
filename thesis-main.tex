@@ -16,7 +16,6 @@
 \addbibresource[label=acsos2022]{papers/acsos2022/biblio.bib}
 \addbibresource[label=coordination2022]{papers/coordination2022/biblio.bib}
 \addbibresource[label=coordination2023]{papers/coordination2023/biblio.bib}
-\addbibresource[label=mdpi2020]{papers/mdpi2020/bibliography.bib}
 \addbibresource[label=swarm-intellingence2021]{papers/swarm-intelligence2021/biblio.bib}
 \addbibresource[label=coordination2023-macro]{papers/coordination2023-macro/biblio.bib}
 \addbibresource[label=acsos2023-frp]{papers/acsos2023-frp/biblio.bib}
@@ -109,15 +108,16 @@ Curiositas mater scientiae.
 \acresetall
 \mainmatter
 
-\begin{refsection}\input{chapters/introduction.tex}\end{refsection}
+\input{chapters/introduction.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PART I %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 \part{Background}\label{part:background}
-\begin{refsection}\input{chapters/cyber-physical-swarms.tex}
+\begin{refsection}
+\input{chapters/cyber-physical-swarms.tex}
 \input{chapters/macro-programming.tex}
-%\input{chapters/many-agent-rl.tex}
+\input{chapters/many-agent-rl.tex}
 \printbibliography[title=References,heading=bibintoc]
 \end{refsection}
 
@@ -126,7 +126,7 @@ Curiositas mater scientiae.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \part{Engineering Cyber-Physical Swarms}\label{part:engineering}
-\begin{refsection}%\input{papers/mdpi2020/main.tex}%\end{refsection}
+\begin{refsection}
 \input{papers/swarm-intelligence2021/main.tex}%\end{refsection}
 \input{papers/ieee2022/main.tex}%\end{refsection}
 \input{papers/coordination2023-macro/main.tex}%\end{refsection}
