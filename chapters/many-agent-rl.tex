@@ -855,7 +855,7 @@ In the follow, we will discuss the \emph{many-agent} perspective,
 understanding the challenges and the solutions proposed in the literature.
 
 \section{Many-agent}
-\ac{cpsw} are characterized by a large number of agents, 
+\ac{cpsw} are characterized by a very large number of agents, 
  with a population that can potentially range from hundreds to millions of agents.
 %
 In such scenarios, 
@@ -865,7 +865,7 @@ In such scenarios,
 A novel approach is required to address the challenges of many-agent systems, 
  which is the focus of this section--in the so-called area of \ac{MAARL}.
 %
-When we discuss about many-agent systems, 
+When we discuss many-agent systems, 
  we refer to a large number of agents ($N \gg 2$) that are \emph{interchangeable} and \emph{indistinguishable}.
 %
 In \ac{cpsw} perspective, 
@@ -913,7 +913,7 @@ The learning paradigm typically employed in this context is CDTE, for the follow
  collected experiences are insufficient for capturing the full range of possible application scenarios.
 \end{itemize}
 While several CDTE algorithms, such as MAPPO and QMIX, aim to find $N$ policies, various techniques can be employed to adapt them for multi-agent settings. 
-The general learning process is then divide in a training phases performed offline, in a simulated environment, and an execution phase, performed online, in the real environment.
+The general learning process is then divided in a training phases performed offline, in a simulated environment, and an execution phase, performed online, in the real environment.
 
 Subsequently, we will discuss the most popular of these techniques, as well as algorithms specifically designed for many-agent systems.
 \subsubsection*{Parameter sharing}
@@ -976,7 +976,7 @@ Many-agent Q-Learning extends the classic Q-Learning algorithm to a multi-agent 
  This shared buffer contains the state-action-reward-next state tuples \( (s, a, r, s') \) from all agents, 
  thereby enriching the learning process for each individual agent.
  
-The algorithm operates in a similar fashion to traditional Q-Learning, 
+The algorithm operates similarly to traditional Q-Learning, 
  with the primary difference being the source of experiences used for updates. 
  During each learning iteration, agents sample experiences from the shared replay buffer to update the global Q-values. 
  The Q-value update equation remains the same as in single-agent Q-Learning, 
@@ -1023,17 +1023,35 @@ Mean-field reinforcement learning (MFRL) offers a scalable and efficient approac
  the computational complexity can grow exponentially with the number of agents, 
  making it impractical for systems with a large population. MFRL elegantly sidesteps this issue by approximating the many-body problem as a two-body problem. 
  Here, each agent interacts not with all other agents, 
- but with an average or ``mean field'' effect that represents the collective behavior of the entire population.
+ but with an average or ``mean field'' effect that represents the collective behaviour of the entire population.
  It can be resumed with this equation:
  $$
  Q'(s, \bm{a}) = \frac{1}{N_j} \sum_{k \in N(j)} Q'(s, a', a^k)
  $$
-Where $N_j$ is the number of agents in the neighborhood of agent $j$, and $\bm{a}$ is the joint action space of the agents in the neighborhood of agent $j$.
+Where $N_j$ is the number of agents in the neighbourhood of agent $j$, and $\bm{a}$ is the joint action space of the agents in the neighbourhood of agent $j$.
 %
-This approach is particularly well-suited for \ac{cpsw} with a large number of behaviorally homogeneous agents. 
+This approach is particularly well-suited for \ac{cpsw} with many behaviourally homogeneous agents. 
  It aligns with the notion that complexity in such systems often arises from the interactions among simple agents,
  rather than from the complexity of individual agents.
  In fact, the mean field effect can be seen as a form of communication between agents, 
- where each agent is influenced by the collective behavior of the entire population, but only through its local observations and neighborhood interactions. 
+ where each agent is influenced by the collective behaviour of the entire population, but only through its local observations and neighbourhood interactions. 
  In MFRL, the learning process is mutually reinforced between the individual agents and the dynamics of the overall population. 
 %
+
+\section{Final Remarks}
+This chapter provides a comprehensive overview of the foundational concepts in reinforcement learning. 
+ It begins by exploring the fundamental notion of intelligence and delves into key formalizations and algorithms that have shaped the field. 
+ This serves as a foundational understanding for the remainder of the paper, 
+ especially in relation to the concept of \ac{cpsw}.
+Indeed, we introduce swarMDP, 
+ a model that formalizes the dynamics of swarm-like systems, 
+ offering a theoretical framework for understanding complex agent interactions. 
+ Building on this, we present practical solutions to many-agent challenges 
+ through parameter sharing and experience sharing. 
+ Specifically, we introduce a unified approach known as many-agent Q-Learning.
+
+Lastly, we discuss the concept of mean-field reinforcement learning, 
+ emphasizing the critical role of neighbourhood context. 
+ Drawing parallels with aggregate computing, 
+ we argue that computation in these systems is inherently an interaction between an agent and its neighbours. 
+ This interaction fosters collective behaviours, leading to the overall system dynamics.
