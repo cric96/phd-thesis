@@ -25,7 +25,7 @@ A key question in designing swarm-like systems is how to create distributed cont
 %
 In this chapter, we propose a novel hybrid approach that combines manual and automatic design of distributed controllers.
 
-Specifically, we propose a solution called \ac{FIRL} that utilizes aggregate computing together with a \ac{GNN}~\cite{Zhou2020AIOpen} in combination with a reinforcement learning approach, namely \ac{DQN}~\cite{mnih2015human}. 
+Specifically, we propose a solution called \ac{FIRL} that utilizes aggregate computing together with a \ac{GNN}~\cite{DBLP:journals/aiopen/ZhouCHZYLWLS20} in combination with a reinforcement learning approach, namely \ac{DQN}. 
 % First, aggregate computing is utilized to collect information from neighbours and create a local knowledge base for each agent. Second, we utilize a \ac{GNN} within the \ac{DQN}. 
  Here the \ac{GNN} is trained on \emph{field-information} from aggregate computing and provides so-called node embeddings for each agent, serving as input for the \ac{DQN}. 
  The \ac{DQN} provides then the appropriate actions for the agent to achieve their tasks.
@@ -252,7 +252,7 @@ Specifically, we leveraged the property of \acp{GNN} to have a \emph{dual} inter
 i.e., to function globally over the entire graph and locally only over the neighbourhood. 
 Importantly, each agent only has local information from itself and its neighbourhood to utilize in the \ac{GNN}.
 %
-As value-based algorithm we relied on \ac{DQN}~\cite{mnih2015playing} 
+As value-based algorithm we relied on \ac{DQN}
 with two major modifications (see \Cref{chap:rl:single}): 
 \begin{enumerate}
   \item experience replay stores experiences in the form of \emph{graphs} decorated with features (e.g., observations, actions, rewards, etc.),
@@ -364,7 +364,7 @@ Initially,
   Finally, the phenomenon may have varying areas of interest, defined by an underlying distribution function. 
   This underlying distribution is utilized in the feature set of each drone's observation and guides the drones to rally over the phenomenon. 
   While we only use Guassian distributions but we can use any other distribution and shape. 
-For the \ac{GNN}, we use the implementation provided by PyTorch Geometric~\cite{Fey/Lenssen/2019}, 
+For the \ac{GNN}, we use the implementation provided by PyTorch Geometric~\cite{DBLP:journals/corr/abs-1903-02428}, 
  which is a library for deep learning on graphs built on top of PyTorch~\cite{torch}.
 Finally, we use \scafi{}~\cite{casadei2022scafi} as the aggregate programming language to support our field-informed approach.
 %

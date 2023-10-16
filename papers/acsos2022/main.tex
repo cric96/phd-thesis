@@ -217,11 +217,10 @@ This situation is difficult to handle with handcraft algorithms, that require a 
     The agent receives the state and reward from the platform and produces an action that can affect one of the platform aspects (blue circles).}
     \label{acsos2022:fig:rl-and-ac}
 \end{figure}
-\revision{
 In the \ac{AC} framework, 
  we can assume \emph{homogenous} collective behaviours---
  i.e., agents which participate in the aggregate system should execute the same program. 
- In terms of the \ac{RL} process, this means that we could find a single policy for the entire system even if we are in multi-agent settings---as pointed out in previous work~\cite{DBLP:conf/acsos/Aguzzi21, aguzzi2022coord-ac-rl,aguzzi2022roadmap-ac-rl}.}
+ In terms of the \ac{RL} process, this means that we could find a single policy for the entire system even if we are in multi-agent settings.%----as pointed out in~\Cref{chap:learning:roadmap}
 Specifically, we aim at using a global $Q$-table during the learning time, 
  by which each node uses and refines it with the local experience.
 This means that each node, after collecting the typical ($s_t, a_t, r_{t+1}$) trajectory,
@@ -659,7 +658,7 @@ In particular, this work leverages Q-Learning
 The contribution \revision{can be framed within a larger} vision in which 
  the designer could mainly focus on functionality and key non-functional aspects (e.g., resiliency)
  at design time, while the platform \revision{is programmed to or instructed to learn} how 
- to optimize less critical but still highly desired non-functional aspects\revision{---acting upon scheduling or deployment~\cite{DBLP:journals/fi/CasadeiPPVW20,casadei2022applsci-digitaltwins}}. % by exploiting simulations.
+ to optimize less critical but still highly desired non-functional aspects\revision{---acting upon scheduling or deployment~\cite{DBLP:journals/fi/CasadeiPPVW20}}. % by exploiting simulations.
 
 %\balance
 %\printbibliography

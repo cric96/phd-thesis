@@ -30,13 +30,14 @@ and for using and defining multi-agent environments (PettingZoo~\cite{NEURIPS202
 they generally lack the following aspects: \emph{(i)} setting up complex environments (and hence simulation scenarios) is particularly difficult, and 
 \emph{(ii)} they are typically tailored for handling a limited number of agents, and for non-collaborative tasks.
 
-To start addressing these problems, in this work we present \scarlib{}, a framework for the design of effective \ac{MAARL} systems, that 
+To start addressing these problems, in this work we present \scarlib{}, 
+ a framework for the design of effective \ac{MAARL} systems, that 
  provides the following set of features:
  support for centralized training and decentralized execution, 
  easy extensibility, 
  a \ac{dsl} for easily expressing complex cooperative scenarios, 
- integration with a simulator for large-scale pervasive computing systems (Alchemist)~\cite{DBLP:journals/jos/PianiniMV13},
- and the possibility to express field-based coordination problems thanks to the integration with \scafi{}~\cite{Casadei2022}.
+ integration with a simulator for large-scale pervasive computing systems (Alchemist),
+ and the possibility to express field-based coordination problems thanks to the integration with \scafi{}.
 %
 With \scafi{}, in particular, \scarlib{} is provided with a high-level language for distributed computing that provides a declarative
  and compositional ways of expressing complex coordination tasks. 
@@ -179,12 +180,12 @@ where each agent has a local policy and a local policy.}
 \subsection{\scafi{}-Alchemist integration} In addition to the core, 
  we have implemented another module called \texttt{alchemist-scafi} (\Cref{coordination2023:fig:alchemist-arc}) 
  in which there is the integration with the two tools: 
- Alchemist \cite{DBLP:journals/jos/PianiniMV13} and \scafi{} \cite{Casadei2022}.
+ Alchemist and \scafi{}.
 %
 Such integration enables the possibility to run the learning process 
  in an aggregate computing context.
 This is a key part of this contribution. 
- In fact, although Alchemist has been used for cooperative many-agent reinforcement learning with \scafi{} in the past~\cite{Aguzzi2022,DBLP:conf/acsos/AguzziCV22}, 
+ In fact, although Alchemist has been used for cooperative many-agent reinforcement learning with \scafi{} as shown in previous chapters, 
  ad-hoc solutions were always created that were difficult to \emph{reuse}, 
  \emph{rigid}, \emph{untested}, and had \emph{interoperability issues} between Alchemist 
  and the chosen native libraries.

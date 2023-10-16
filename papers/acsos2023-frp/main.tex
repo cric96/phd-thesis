@@ -21,21 +21,11 @@ A central problem lies in \emph{driving the (emergence of) self-organising behav
 of a collection of agents or devices}---a goal also referred to through terms like
 ``guided self-organization''~\cite{prokopenko2009guided-selforg},
 ``controlled self-organization''~\cite{DBLP:journals/taas/SchmeckMCMR10}, and
-``emergence steering''~\cite{Varenne2015morpho,DBLP:conf/sysose/Giammarco17a}.
+``emergence steering''~\cite{DBLP:conf/sysose/Giammarco17a}.
 %
 This problem can be reduced to the definition of the control program
  that each agent has to execute~\cite{DBLP:journals/tib/MartiusH12}.
 %
-%The problem can be addressed
-% through \emph{automatic} approaches
-%(e.g., multi-agent reinforcement learning~\cite{DBLP:journals/corr/abs-1911-10635})
-% or \emph{manual} approaches~\cite{DBLP:journals/tib/MartiusH12}
-% based on the definition of control rules or 
-% designs in terms of patterns involving, e.g.,
-%information flows and control loops~\cite{DBLP:conf/saso/WolfH07}.
-%
-%Hybrid approaches are also possible where (parts of) programs
-%are generated or improved through learning~\cite{DBLP:conf/coordination/AguzziCV22}.
 
 In this work, we focus on the \emph{programming language-based} approach to self-organization,
  where the developer writes the self-organising control program
@@ -46,7 +36,7 @@ Specifically, our high-level goal
  for self-organising \acp{cpsw}
  that is \emph{expressive}, \emph{practical},
  and \emph{declarative}---in the sense that it should allow the programmer to abstract from
-many operational details, to be dealt with automatically by the underlying middleware/platform~\cite{DBLP:conf/iotdi/NoorTGS19,CPPVW-FI2020}.
+many operational details, to be dealt with automatically by the underlying middleware/platform~\cite{DBLP:conf/iotdi/NoorTGS19}.
 %
 Specifically, we focus on the problem of concrete scheduling of the sub-activities of which a self-organising system can be composed.
 %
@@ -76,7 +66,7 @@ through an open-source, permanently available artefact with reproducible simulat
 The result is a functional reactive self-organization programming model, 
  relying on functional composition of behaviours,
 and whereby each sub-expression is amenable to independent scheduling:
- overall, we maintain the same expressiveness and benefits of aggregate programming~\cite{bpv:aggregate:programming,vbdacp:ac:survey:jlamp}
+ overall, we maintain the same expressiveness and benefits of aggregate programming
  while enabling significant improvements in terms of scheduling controllability, flexibility in the sensing/actuation model, and execution efficiency. %sec:contrib
  
 \section{Background and Motivation}\label{acsos2023-frp:sec:background}
@@ -140,7 +130,7 @@ Though it might be acceptable for predictable patterns of environmental change,
 %
 Indeed,
 the round-based approach seems to be a legacy of imperative languages or solutions featuring limited compositionality.
-Instead, more compositional languages like, e.g., aggregate computing languages~\cite{vbdacp:ac:survey:jlamp,DBLP:journals/nca/BachrachBM10,DBLP:conf/ecoop/AudritoCDSV22} and Buzz~\cite{DBLP:conf/iros/PinciroliB16},
+Instead, more compositional languages like, e.g., aggregate computing languages~\cite{aggregatecomputing,DBLP:journals/nca/BachrachBM10,DBLP:conf/ecoop/AudritoCDSV22} and Buzz~\cite{DBLP:conf/iros/PinciroliB16},
  allow building complex self-organising behaviour
  by composing \emph{blocks} of simpler self-organising behaviours.
 % reactivity also makes sense for self-organisation,
@@ -918,7 +908,7 @@ The design is organised into three packages:
         as well as extensions (\texttt{FrpExtensions}) useful for the definition of \ac{langname} constructs;
     and \texttt{simulation},
         which provides basic simulation support
-        (for more advanced support, we also integrated \ac{langname} into Alchemist~\cite{PianiniJOS2013}---see \Cref{acsos2023-frp:sec:eval}).
+        (for more advanced support, we also integrated \ac{langname} into Alchemist---see \Cref{acsos2023-frp:sec:eval}).
 
 \begin{figure}
 \includegraphics[width=\columnwidth]{papers/acsos2023-frp/imgs/architecture.pdf}
