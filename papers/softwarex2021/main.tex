@@ -1,10 +1,4 @@
 %!TeX root = thesis-main.tex
-Proper software tooling
-is essential to new self-organising algorithms
-and variants or extensions of the aggregate programming model,
-promoting scientific and technological progress.
-
-In the following, we present the
  \emph{\scafi{} (Scala-Fields)} software\footnote{\url{https://scafi.github.io}}: 
  an aggregate programming toolkit
  that comprises an internal DSL (language and virtual machine)
@@ -12,18 +6,18 @@ In the following, we present the
  and execution %deployment 
  of aggregate systems.
 
-\subsubsection{Software description}
+\subparagraph{Software description}
 \label{}
 \scafi{} is a multi-module Scala project hosted on GitHub\footnote{\url{https://github.com/scafi/scafi}}.
 %
-It provides a DSL and API modules for 
- writing, testing, and running aggregate programs, namely programs expressed according to the aggregate programming paradigm~\cite{DBLP:journals/computer/BealPV15,DBLP:journals/jlap/ViroliBDACP19}.
+It provides DSL and API modules for 
+ writing, testing, and running aggregate programs, namely programs expressed according to the aggregate programming paradigm~\cite{aggregatecomputing,DBLP:journals/jlap/ViroliBDACP19}.
 %
 %the open-source community revolving around Java, Scala, Android, and related software tools.
 %
 %Notably, Maven Central has a strict no-retract policy, meaning that all the past releases of \scafi{} will be available for as long as the repository will live.
 %
-\paragraph{Software Architecture}
+\subparagraph{Software Architecture}
 \label{sec:scafi-arch-design}
 
 %\meta{
@@ -90,10 +84,10 @@ The \texttt{StandardLibrary} is provided by leveraging
  providing traits of functionality to be mixed into \texttt{AggregateProgram}s.
 }
 
-\paragraph{Software Functionalities}
+\subparagraph{Software Functionalities}
 \label{}
 
-\paragraph*{Expressing aggregate programs through a Scala DSL}
+\subparagraph*{Expressing aggregate programs through a Scala DSL}
 \label{sec:express-programs}
 %
 Module \texttt{scafi-core}
@@ -125,7 +119,7 @@ Several such traits are available
  or experimental language features
  (e.g., the \texttt{spawn} function for concurrent aggregate processes~\revision{\cite{DBLP:journals/eaai/CasadeiVAPD21,testa2022processes}}\revision{, for modelling independent and overlapping aggregate computations}).
 %
-\paragraph*{Virtual machine for the local execution of aggregate programs}
+\subparagraph*{Virtual machine for the local execution of aggregate programs}
 %
 An \texttt{AggregateProgram} instance 
  is a function
@@ -135,7 +129,7 @@ An \texttt{AggregateProgram} instance
  to an \texttt{Export}
  (the tree of values that has to be shared 
   with neighbours to effectively coordinate and promote 
-  emergence of collective behaviours).
+  the emergence of collective behaviours).
 %
 Using this API,
  a developer can 
@@ -153,7 +147,7 @@ to properly set up their \texttt{Context}s,
 but the network protocol to be used to do so can be selected
 independently of the program.
  
-\paragraph*{Simulation support}
+\subparagraph*{Simulation support}
 %
 In order to simulate an ``aggregate system'',
  it is necessary 
@@ -184,17 +178,12 @@ Then, module \texttt{scafi-simulator-gui}
  provides a convenient graphical user interface
  to launch and visually show simulations in execution.
 %
-We remark that these modules
- currently support basic simulation scenarios
+We remark that these modules currently support basic simulation scenarios
  and are mainly meant for quick experiments
- or as a starting basis for ad-hoc simulation frameworks;
- a further option for sophisticated simulations and data analysis is to use \scafi{} within the Alchemist simulator for pervasive computing systems~\cite{alchemist,scafi-alchemist}.
+ or as a starting basis for ad-hoc simulation frameworks.
  
-\paragraph*{Experimental or work-in-progress features: 3D simulation frontend and actor-based middleware}
+\subparagraph*{Experimental or work-in-progress features: actor-based middleware}
 %
-\scafi{} also includes a front-end for 3D simulations (\texttt{renderer-3d}), 
- which are already supported by an execution perspective.
-
 Regarding the construction of actual systems, 
  \scafi{}
  provides
@@ -225,12 +214,12 @@ The main abstraction
 %
 Then, an object-oriented façade API is provided to set up a system of middleware-level actors. 
 
-%\paragraph{Sample code snippets analysis (optional)}
+%\subparagraph{Sample code snippets analysis (optional)}
 %\label{}
 
-\subsubsection{Illustrative Examples}
+%\subparagraph{Illustrative Examples}
 \label{sec:examples}
-\paragraph{Hello \scafi{}: building an aggregate system that computes a gradient, from scratch}
+\subparagraph{Hello \scafi{}: building an aggregate system that computes a gradient, from scratch}
 This complete example, shown in \Cref{fig:example-full} and available online\footnote{\url{https://github.com/scafi/hello-scafi}}, illustrates how it \scafi{} can be used
  to program a (simulated) aggregate system
  for computing a self-stabilising \emph{gradient} field~\cite{DBLP:conf/sac/BealBVT08,DBLP:journals/tomacs/ViroliABDP18}
@@ -320,8 +309,8 @@ object HelloScafi extends App {
 \caption{Complete example: an aggregate system computing a gradient.}
 \label{fig:example-full}
 \end{figure}
-
-\paragraph{Self-organising Coordination Regions in Simulation}
+\begin{comment}
+\subparagraph{Self-organising Coordination Regions in Simulation}
 %
 As a more complex example,
  consider a \scafi{} implementation of the
@@ -389,8 +378,8 @@ class SCR extends AggregateProgram
   \end{subfigure}
   \caption{SCR pattern in \scafi{}. Colours denote the temperature perceived by the devices (the redder the higher the temperature).}  \label{fig:scr}
 \end{figure}
-  
-\subsubsection{Features}
+\end{comment}
+\subparagraph{Features}
 \label{s:impact}
 \scafi{}
  has been used 
@@ -409,14 +398,14 @@ The impact of \scafi{}
  existing and prospective contributions, 
  discussed in the following.
 
-\paragraph*{Interplay between programming language design and foundational research} 
+\subparagraph*{Interplay between programming language design and foundational research} 
 %
 The implementation of the \scafi{} DSL
  has inspired a variant of the field calculus
  which arguably supports easier embeddability
  into mainstream programming languages~\cite{DBLP:conf/isola/CasadeiVAD20,arxiv2020scafi-nc}.
-
-\paragraph*{Platform for experimenting new aggregate programming language features}
+\begin{comment}
+\subparagraph*{Platform for experimenting new aggregate programming language features}
 %
 \scafi{} includes extensions to the basic field calculus.
 %
@@ -433,9 +422,9 @@ In general,
 %
 Moreover, the research orientation of Scala~\cite{Odersky04scala-overview} 
  makes it a powerful environment for experimenting new language features and mechanisms. 
+\end{comment}
 
-
-\paragraph*{High-level programming models}
+\subparagraph*{High-level programming models}
 %
 The previous discussion  
  makes the case for ``DSL stacking''~\cite{DBLP:conf/icsoft/HummE10}.
@@ -451,7 +440,7 @@ By mapping high-level specifications into aggregate programs, it is sometimes st
  to field calculus expressions
  enable seamless construction of decentralized monitors for such formulas.
 
-\paragraph*{Web-friendliness}
+\subparagraph*{Web-friendliness}
 %
 By leveraging Scala.js~\cite{DBLP:conf/scala/Doeraene18}, \scafi{} can be easily 
  accessed through JavaScript,
@@ -463,7 +452,8 @@ This paved the path
  to \scafiweb{}~\cite{DBLP:conf/coordination/AguzziCMPV21},
  a web playground for aggregate programming.
 %
-\paragraph*{Engineering of complex systems and collective intelligence (and related research)}
+\begin{comment}
+\subparagraph*{Engineering of complex systems and collective intelligence (and related research)}
 %
 The paradigm embodied by \scafi{}
  provides a means 
@@ -484,3 +474,4 @@ In~\cite{DBLP:conf/coordination/AguzziCV22},
  for determining what actions to execute, in ``holes'' of \scafi{} programs,
  to improve the dynamics of collective algorithms.
 %
+\end{comment}
