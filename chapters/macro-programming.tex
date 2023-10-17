@@ -288,7 +288,7 @@ for a more comprehensive discussion on
  execution and deployment aspects.
 }
 
-\subsubsection{Field-based Programming Model}
+\subsection{Field-based Programming Model}
 \begin{figure}
 \begin{align*}
     \boxed{
@@ -388,20 +388,59 @@ A significant implication of this is the isolated execution of the two branches 
 %
 \subsubsection{Field-based Programming Model: Examples}
 \label{sec:field-calculus-foundational-behaviour}
-The proposed model and language is quite simple and intuitive, 
+The proposed model and language are quite simple and intuitive, 
  yet it is expressive enough to capture a wide range of collective behaviours.
 In the following, we present a few examples of collective behaviours that can be expressed in this model.
 \paragraph*{Self-healing gradient}
-\paragraph*{Gradient-cast}
-\paragraph*{Collect-cast}
-\paragraph*{Sparse choice}
+A gradient is a field that associates each device in the system with its shortest distance to the nearest source device. 
+ A \emph{self-healing} gradient algorithm calculates this gradient field and autonomously 
+ updates it to reflect alterations in the source set or network connectivity. 
+ This algorithm is significant because it frequently serves as a component in more complex self-organizing algorithms, 
+ such as those used for managing information flows, gathering distributed data, and segmenting networks into regions.
+ Using the field calculus, this can be expressed as follows:
+\begin{lstlisting}[language=scafi]
+// distance from source region with nbrRange metric
+def distanceTo(source) {
+    rep (Infinity) { 
+        (dist) =>
+            mux (source) { 0 } 
+            { minHood(nbr{dist} + nbrRange()) }
+    }
+}
+\end{lstlisting}
+where \lstinline|mux| is a conditional expression, 
+ \lstinline|minHood| is a built-in function that returns the minimum value in the neighbourhood, 
+ and \lstinline|nbrRange| is a built-in function that returns neighbouring field distance.
+
+\subsubsection{Field-based programming: Main blocks}
+\paragraph*{Gradient-cast (G)}
+Various forms of aggregation 
+ can be executed along a distance gradient.
+ Essentially, a generalized operator G serves as a gradient algorithm. 
+ This algorithm is tailored based on a specific \emph{metric} used for measuring increments or distances. 
+ It enables the transfer of a particular field value from the source in an outward direction, 
+ evolving according to a specified logic as it ascends the gradient.
+\paragraph*{Collect-cast (C)}
+In essence, G facilitates the flow of information from originating devices to their broader environment, 
+ acting as a mechanism for the spread or diffusion of values. 
+ Conversely, a secondary operation enables data to flow from a widespread area to specific gathering points, 
+ aiding in decentralized sensing tasks. 
+ This is enabled by another generalized operator, C shown in Figure 7.13b. C accumulates values along a potential field, beginning at source points where the potential is highest, and aggregates these values as it moves down the parent chain, eventually converging at points where the potential is lowest.
+\paragraph*{Sparse choice (S)}
+The generic operator Sparse choice (S) 
+ allows for the selective inclusion of devices to divide the network into distinct ``responsibility zones''. Essentially, it performs a leader election procedure. 
+ In this process, a ``grain'' represents the average distance between two elected leaders, as defined by a specific metric. It can be implemented as follows:
+\subsubsection{Field-based programming: High-level patterns}
 \paragraph*{Self-Organising Coordination Regions (SCR)}
+In a more complex example, consider implementing the Self-Organising Coordination Regions (SCR) pattern using ScaFi. The SCR pattern aims to divide a distributed system into multiple spatial regions, each governed by a leader device. This leader aggregates data from devices in its region and disseminates decisions to implement area-wide policies. Utilizing ScaFi's standard library functions, this pattern can be easily implemented and simulated via the scafi-simulator.
+
+For instance, in a large-scale temperature monitoring and control scenario, we could create regions of uniform size. Devices within each region could then collectively calculate the average temperature for that area. Based on this collective data, alarms could be generated for more coarse-grained analysis and interventions. We have implemented this specific scenario in repository 
 \subsection{Tools}
 Proper software tooling
 is essential to new self-organising algorithms
 and variants or extensions of the aggregate programming model,
 promoting scientific and technological progress.
-In the following we present ScaFi--a Scala-based aggregate programming framework--and Alchemist--a meta-simulator for aggregate computing.
+In the following, we present ScaFi--a Scala-based aggregate programming framework--and Alchemist--a meta-simulator for aggregate computing.
 \subsubsection{ScaFi}\label{sec:scafi}
 \input{papers/softwarex2021/main.tex}
 
