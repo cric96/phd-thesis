@@ -386,7 +386,7 @@ This ensures accurate message correspondence,
 A significant implication of this is the isolated execution of the two branches in a \texttt{if} statement within field calculus; a
   device executing the \texttt{then} branch is unable to communicate with the \texttt{else} branch of a neighbouring device, and vice versa.
 %
-\subsubsection{Field-based Programming Model: Examples}
+\subsubsection{Examples}
 \label{sec:field-calculus-foundational-behaviour}
 The proposed model and language are quite simple and intuitive, 
  yet it is expressive enough to capture a wide range of collective behaviours.
@@ -418,7 +418,7 @@ rep(0) { local => local + 1}
 This expression initializes the state of the device to 0 and then increments it by 1 in each subsequent round, namely it simulates a counter.
 Combining these two operators, it is possible to create space-time patterns, 
  such as the following, that simulates a wave propagating in space.
- One of such pattern is the self-healing gradient.
+ One such pattern is the self-healing gradient.
 \paragraph*{Self-healing gradient (space-time)}
 A gradient is a field that associates each device in the system with its shortest distance to the nearest source device. 
  A \emph{self-healing} gradient algorithm calculates this gradient field and autonomously 
@@ -440,7 +440,13 @@ where \lstinline|mux| is a conditional expression,
  \lstinline|minHood| is a built-in function that returns the minimum value in the neighbourhood, 
  and \lstinline|nbrRange| is a built-in function that returns neighbouring field distance.
 
-\subsubsection{Field-based programming: Main blocks}
+\subsubsection{Building blocks}
+\label{sec:field-calculus-building-blocks}
+Throughout the development of aggregate computing, 
+ a consistent set of foundational building blocks has emerged over the years. 
+ These building blocks are known for their self-stabilizing properties--
+ details on which will be discussed later--
+ and they serve as the foundation for various high-level patterns in aggregate computing.
 \paragraph*{Gradient-cast (G)}
 Various forms of aggregation 
  can be executed along a distance gradient.
@@ -458,11 +464,60 @@ In essence, G facilitates the flow of information from originating devices to th
 The generic operator Sparse choice (S) 
  allows for the selective inclusion of devices to divide the network into distinct ``responsibility zones''. Essentially, it performs a leader election procedure. 
  In this process, a ``grain'' represents the average distance between two elected leaders, as defined by a specific metric. It can be implemented as follows:
-\subsubsection{Field-based programming: High-level patterns}
+
+\paragraph{Behavioural Properties}
+The field calculus is architected as a universal language specifically tailored for computations in spatially distributed systems. 
+ One of the most critical properties studied within subsets of this core language is that of \emph{self-stabilization}, 
+ which ensures the system's ability to autonomously reach a correct state~\cite{lafuente2015fixpoint}%~\cite{Dol00, LLM17, LLM15}.
+ Defined formally within the context of the transition system \( N \stackrel{\text{act}}{\rightarrow} N \) representing network evolution, self-stabilization guarantees that:
+\begin{enumerate}
+    \item the program evaluation, given an eventually constant input, 
+    will converge to a stable value at each device within a finite timeframe.
+    \item This stable value is solely determined by the current input values, 
+    thus mitigating any interference from transitory states.
+\end{enumerate}
+
+Self-stabilizing algorithms are particularly robust in dynamically evolving systems, 
+ reacting coherently to input changes without residual influence from prior states.
+
+The study in~\cite{damiani2015type}
+ identifies an initial set of self-stabilizing fragments through a `spreading operator', 
+ which performs monotonic updates on neighbouring values through a diffusion function. 
+ These fragments allow for versatile combinations with local operations, 
+ excluding explicit \texttt{rep} and \texttt{nbr} expressions. 
+ Nevertheless, this framework supports several fundamental building blocks like distance estimation and broadcast.
+
+An expanded set of self-stabilizing fragments and building blocks are covered in~\cite{viroli2018engineering}. 
+ This work proposes usage restrictions on \texttt{rep} statements to specific patterns: 
+ \emph{converging}, \emph{acyclic}, and \emph{minimising}. 
+ These correlate with the three primary building blocks: 
+ G, C, and T, each with distinct functionalities and applications. 
+ Moreover, the study delves into the notion of `equivalence and substitutability' for self-stabilizing programs. 
+ This concept not only allows for program optimization through the substitution of more efficient equivalents but also provides a new lens for understanding self-stabilizing programs by abstracting their transient behaviours.
+
+The work establishes different semantic interpretations of a given program: 
+ operational semantics (local viewpoint), denotational semantics (global viewpoint), and eventual behaviour (limit viewpoint). 
+ Another perspective, termed as the `continuous viewpoint,' is explored in~\cite{beal2017self}. 
+ This involves the convergence of output values towards a continuous function, 
+ as the density of computing devices in an area increases.
+
+Taking cues from self-stabilization principles, 
+ the notion is relaxed to define `eventually consistent' programs. 
+ These programs are expected to converge to a limit continuously, 
+ barring a transient initial period, assuming that the inputs remain constant beyond this initial period. This eventual consistency is demonstrated for all programs expressible in the GPI calculus~\cite{Aud+18}.
+
+Lastly, 
+ contemporary work is beginning to examine the real-time performance guarantees of field calculus programs~\cite{Aud+18}. 
+ Current validation approaches primarily focus on `by construction' proofs based on elementary building blocks or restricted fragments of the calculus. 
+\subsubsection{High-level patterns}
 \paragraph*{Self-Organising Coordination Regions (SCR)}
 In a more complex example, consider implementing the Self-Organising Coordination Regions (SCR) pattern using ScaFi. The SCR pattern aims to divide a distributed system into multiple spatial regions, each governed by a leader device. This leader aggregates data from devices in its region and disseminates decisions to implement area-wide policies. Utilizing ScaFi's standard library functions, this pattern can be easily implemented and simulated via the scafi-simulator.
 
-For instance, in a large-scale temperature monitoring and control scenario, we could create regions of uniform size. Devices within each region could then collectively calculate the average temperature for that area. Based on this collective data, alarms could be generated for more coarse-grained analysis and interventions. We have implemented this specific scenario in repository 
+For instance, in a large-scale temperature monitoring and control scenario, 
+ we could create regions of uniform size. 
+ Devices within each region could then collectively calculate the average temperature for that area. 
+ Based on this collective data, 
+ alarms could be generated for more coarse-grained analysis and interventions. 
 \subsection{Tools}
 Proper software tooling
 is essential to new self-organising algorithms
@@ -500,14 +555,10 @@ This abstraction allows the simulator to be flexible
  while maintaining a consistent underlying structure.
 
  The Alchemist simulator features four incarnations: 
-  biochemistry, sapere, protelis, and \scafi{}, 
-  each with a different way of modelling molecules and actions. 
-The sapere incarnation uses a set of ground Linda-like tuples 
- to model concentration and has been used for crowd evacuation and resource discovery simulations. 
-The protelis incarnation defines concentration as a Java Object and is commonly used in the literature for various simulations, 
- including crowd tracking and drone coordination. 
-The \scafi{} incarnation supports the \scafi{} Scala DSL 
- and has been used in distributed peer-to-peer chats and situated problem-solving.
+  biochemistry, Sapere, Protelis, and \scafi{},
+  each with a different way of modelling molecules and actions.
+The latter is the reference of this thesis since it supports the \scafi{} Scala DSL
+ the current reference framework for aggregate computing in Scala.
 
 Alchemist offers an effortless method for loading simulations. 
  The process requires a YAML file that includes essential parameters, 
