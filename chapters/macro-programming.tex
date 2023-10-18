@@ -391,7 +391,35 @@ A significant implication of this is the isolated execution of the two branches 
 The proposed model and language are quite simple and intuitive, 
  yet it is expressive enough to capture a wide range of collective behaviours.
 In the following, we present a few examples of collective behaviours that can be expressed in this model.
-\paragraph*{Self-healing gradient}
+\paragraph*{Direct neighbour interaction (space)}
+In the realm of aggregate computing, 
+ one can effectively calculate spatial structures by utilizing the \texttt{nbr} construct. 
+ Consider, for example, the task of computing the average temperature perceived by a device along with its neighbouring devices. 
+ This can be seamlessly implemented through the \texttt{nbr} construct as shown below:
+\begin{lstlisting}[language=scafi]
+val totalTemperature = foldhood(0.0)(_ + )(nbr{temperature()})
+val neighboursCount = foldhood(0)( + _)(nbr{1})
+val averageTemperature = totalTemperature / neighboursCount
+\end{lstlisting}
+Here, \texttt{foldhood} is a built-in function designed for the aggregation of neighbour values. 
+It takes three parameters:
+\begin{enumerate}
+\item The neutral element, which serves as the initial value for the aggregation.
+\item The aggregation function, which defines how the values should be combined.
+\item The query to neighbours, which specifies what information is to be collected from each neighbour.
+\end{enumerate} 
+\paragraph*{Local field evolution (time)}
+If with \texttt{nbr} we can collect information from the neighbourhood, 
+ with \texttt{rep} we can evolve the state of the device over time. 
+ For instance, consider the following example:
+\begin{lstlisting}[language=scafi]
+rep(0) { local => local + 1}
+\end{lstlisting}
+This expression initializes the state of the device to 0 and then increments it by 1 in each subsequent round, namely it simulates a counter.
+Combining these two operators, it is possible to create space-time patterns, 
+ such as the following, that simulates a wave propagating in space.
+ One of such pattern is the self-healing gradient.
+\paragraph*{Self-healing gradient (space-time)}
 A gradient is a field that associates each device in the system with its shortest distance to the nearest source device. 
  A \emph{self-healing} gradient algorithm calculates this gradient field and autonomously 
  updates it to reflect alterations in the source set or network connectivity. 
