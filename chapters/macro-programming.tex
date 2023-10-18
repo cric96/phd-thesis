@@ -504,9 +504,24 @@ def G(src, phi, acc, metric) =
     }
 }._2
 \end{lstlisting}
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+        \includegraphics[width=\textwidth]{chapters/img/gradient-sparse.png}
+        \caption{}\label{fig:gradient-sparse}
+    \end{subfigure}
+    \begin{subfigure}{0.4\textwidth}
+        \includegraphics[width=\textwidth]{chapters/img/gradient-full.png}
+        \caption{}\label{fig:gradient-full}
+    \end{subfigure}
+    \caption{Gradient computation in a sparse and dense network of devices, In \Cref{fig:gradient-sparse}, the output from executing a gradient program is presented, with the source node positioned in the bottom-left corner. 
+    \Cref{fig:gradient-full} displays the execution of a gradient program in a dense network, where the source node is situated in the top-left corner. The intensity of the colour serves as a gauge for proximity, with redder hues indicating closer distances.}\label{fig:gradient-computation}
+\end{figure}
+
 Where \texttt{minHoodPlus} is a built-in function that returns the minimum value in the neighbourhood, 
  and \texttt{nbr} is a built-in function that returns neighbouring field distance.
  The \lstinline|_._2| at the end of the expression is used to extract the second element of the tuple.
+\Cref{fig:gradient-computation} shows the gradient computation in a sparse and dense network of devices.
 This operator serves as the foundation for a range of gradient-based algorithms, 
  such as ``broadcast''. 
  In the broadcast method, data is disseminated along the gradient path:
@@ -620,8 +635,23 @@ Lastly,
 \subsubsection{High-level patterns}\label{sec:field-calculus-high-level-patterns}
 Starting from the previously defined building blocks, 
  it is possible to define high-level patterns that can be used to implement complex behaviours.
- In the following, we illustrate two of the most idiomatic in the context of aggregate computing, that are 
+ In the following, we illustrate two of the most idiomatic in the context of aggregate computing, which are 
  the \emph{self-healing channel} and the \emph{self-organising coordination} regions pattern.
+\paragraph*{Self-healing channel}
+The self-healing channel pattern is a distributed computation that produce a path between two points in the network. 
+ This path is resilient to the failure of intermediate nodes, 
+ and it is dynamically updated when the network topology changes.
+%
+This can be implemented leveraging mainly the G operator as follows:
+\begin{lstlisting}[language=scafi]
+def channel(source, destination, width) =
+  gradient(source) + gradient(destination) 
+    <= distanceBetween(source, destination) + width
+
+def distanceBetween(source, destination) =
+  broadcast(source, gradient(destination))
+
+\end{lstlisting}
 \paragraph*{Self-Organising Coordination Regions (SCR)}
 In a more advanced scenario, 
  one could employ the SCR design pattern. 
