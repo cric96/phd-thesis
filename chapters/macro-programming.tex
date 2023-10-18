@@ -440,7 +440,28 @@ where \lstinline|mux| is a conditional expression,
  \lstinline|minHood| is a built-in function that returns the minimum value in the neighbourhood, 
  and \lstinline|nbrRange| is a built-in function that returns neighbouring field distance.
 
-\subsubsection{Building blocks}
+ \subsubsection{Aggregate programming stack}
+Building upon both theoretical insights and pragmatic considerations, 
+ aggregate programming introduces a stratified architecture designed to significantly ease the design, development, and maintenance of intricate distributed systems. 
+ This methodology stems from three pivotal observations related to engineering sophisticated coordination schemas:
+\begin{itemize}
+    \item the composition of modules and subsystems should be straightforward and transparent.
+    \item various subsystems necessitate distinct coordination mechanisms that are context-sensitive, varying according to regions and temporal conditions.
+    \item robust coordination mechanisms should be encapsulated within abstractions, thereby obviating the need for programmers to grapple with their underlying complexities.
+\end{itemize}
+Field calculus, along with its language incarnations, 
+ offers solutions for the first two observations but falls short of ensuring resilience. 
+ Additionally, its mathematical rigour and concise syntax present challenges for straightforward programming. 
+ Consequently, supplementary methodologies are indispensable for scaling effectively with system complexity.
+ These pattern have been identified in literate~\cite{aggregatecomputing} and are called resilient coordination operators (more details in \Cref{sec:field-calculus-building-blocks} and \Cref{sec:field-calculus-behavioural-properties}).
+ Finally, on top of these operators, there are high-level patterns that can be used to implement complex behaviours (more details in \Cref{sec:field-calculus-high-level-patterns}) and high-level API for structuring domain-specific behaviour (e.g., crowd detection or coordinate movement in swarms).
+ The overall stack is shown in \Cref{fig:aggregate-programming-stack}.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/img/aggregate-programming-stack.png}
+    \caption{The aggregate programming stack}\label{fig:aggregate-programming-stack}
+\end{figure}
+\subsubsection{Resilient coordination operators}
 \label{sec:field-calculus-building-blocks}
 Throughout the development of aggregate computing, 
  a consistent set of foundational building blocks has emerged over the years. 
@@ -465,7 +486,7 @@ The generic operator Sparse choice (S)
  allows for the selective inclusion of devices to divide the network into distinct ``responsibility zones''. Essentially, it performs a leader election procedure. 
  In this process, a ``grain'' represents the average distance between two elected leaders, as defined by a specific metric. It can be implemented as follows:
 
-\paragraph{Behavioural Properties}
+\subsubsection{Behavioural Properties}\label{sec:field-calculus-behavioural-properties}
 The field calculus is architected as a universal language specifically tailored for computations in spatially distributed systems. 
  One of the most critical properties studied within subsets of this core language is that of \emph{self-stabilization}, 
  which ensures the system's ability to autonomously reach a correct state~\cite{lafuente2015fixpoint}%~\cite{Dol00, LLM17, LLM15}.
@@ -504,20 +525,30 @@ The work establishes different semantic interpretations of a given program:
 Taking cues from self-stabilization principles, 
  the notion is relaxed to define `eventually consistent' programs. 
  These programs are expected to converge to a limit continuously, 
- barring a transient initial period, assuming that the inputs remain constant beyond this initial period. This eventual consistency is demonstrated for all programs expressible in the GPI calculus~\cite{Aud+18}.
+ barring a transient initial period, assuming that the inputs remain constant beyond this initial period. This eventual consistency is demonstrated for all programs expressible in the GPI calculus~\cite{audrito2018space}.
 
 Lastly, 
- contemporary work is beginning to examine the real-time performance guarantees of field calculus programs~\cite{Aud+18}. 
+ contemporary work is beginning to examine the real-time performance guarantees of field calculus programs~\cite{audrito2018space}. 
  Current validation approaches primarily focus on `by construction' proofs based on elementary building blocks or restricted fragments of the calculus. 
-\subsubsection{High-level patterns}
+\subsubsection{High-level patterns}\label{sec:field-calculus-high-level-patterns}
+Starting from the previous defined building blocks, 
+ it is possible to define high-level patterns that can be used to implement complex behaviours.
+ One of the most promising approaches is the one based on the \emph{self-organising coordination regions} (SCR) pattern~\cite{casadei2019scr}.
 \paragraph*{Self-Organising Coordination Regions (SCR)}
-In a more complex example, consider implementing the Self-Organising Coordination Regions (SCR) pattern using ScaFi. The SCR pattern aims to divide a distributed system into multiple spatial regions, each governed by a leader device. This leader aggregates data from devices in its region and disseminates decisions to implement area-wide policies. Utilizing ScaFi's standard library functions, this pattern can be easily implemented and simulated via the scafi-simulator.
+In a more advanced scenario, 
+ one could employ the SCR design pattern. 
+ The core objective of the SCR pattern is to partition a decentralized system into distinct spatial zones, each overseen by a designated leader device. 
+ This leadership device is responsible for consolidating data from other devices within its jurisdiction,
+ and subsequently disseminating decisions that enforce policies across the entire region.
 
-For instance, in a large-scale temperature monitoring and control scenario, 
- we could create regions of uniform size. 
- Devices within each region could then collectively calculate the average temperature for that area. 
- Based on this collective data, 
- alarms could be generated for more coarse-grained analysis and interventions. 
+For example, 
+ in a large-scale project aimed at monitoring and controlling temperature, 
+ the SCR pattern allows the formation of uniformly-sized regions. 
+ Within these zones, devices collaboratively compute the area's average temperature. 
+ Using this aggregated information, the system could trigger alarms, facilitating more effective, coarse-grained analysis and intervention measures.
+%
+This pattern is implemented using the G, C and S operators as follows:
+
 \subsection{Tools}
 Proper software tooling
 is essential to new self-organising algorithms
