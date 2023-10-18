@@ -23,26 +23,6 @@
 %\input{acronyms.tex}
 %\lstset{language=scafi}
 
-\begin{comment}
-Modern distributed computing scenarios, such as the \ac{iot}, Industry 4.0, and smart cities, promote a vision in which large numbers of devices operate and interact to achieve a collective good.
-%
-Even though several modern paradigms contribute to this vision, such as \emph{autonomic}~\cite{DBLP:journals/computer/KephartC03}, \emph{pervasive}~\cite{DBLP:journals/wc/Satyanarayanan01} and \emph{collective}~\cite{DBLP:journals/computer/Abowd16} computing, engineering such large-scale distributed systems is currently an open challenge. 
-%
-Indeed, conventional device-centric programming approaches somewhat neglect the \emph{collective} dimension of systems and often fall short at addressing the challenges exposed by the aforementioned systems, which may include resiliently producing the desired emergent global behaviour, 
-addressing distributed control, dynamicity, and the managing systems and their integration~\cite{DBLP:journals/fgcs/BellmanBDEGLLNP21} across complex \ac{it} infrastructures.
-%
-To overcome these limitations, novel approaches are emerging that aim at promoting perspectives whereby collective behaviours are understood and reasoned about directly at their global or ensemble level~\cite{DBLP:journals/sttt/NicolaJW20,DBLP:conf/birthday/BucchiaroneM19,DBLP:journals/sttt/BuresGHPKVK20,DBLP:journals/jlap/ViroliBDACP19}.
-
-\ac{AC}~\cite{DBLP:journals/computer/BealPV15}
- is one such approach,
- where system-level behaviour 
- is expressed through a single \emph{aggregate program} operating on \emph{computational fields}~\cite{DBLP:journals/jlap/ViroliBDACP19}, namely collective data structures mapping devices to values over time.
-%
-In this framework,
- a programmer defines behaviours
- as functions mapping input fields to output fields.
-%
-\end{comment}
 An aggregate program is typically deployed
  to a network of neighbour-interacting devices
  that will execute it 
@@ -84,16 +64,6 @@ The idea is to let an aggregate system
 %
 Our thesis is exposed through a case study, in which \ac{RL} -- and in particular a variant multi-agent Q-Learning~\cite{DBLP:conf/icml/LauerR00} -- is successfully applied to reduce system-wide power consumption without modifying the aggregate program.   
 
-%The paper is structured as follows.
-%
-%\Cref{acsos2022:sec:background} provides background on \ac{AC} and \ac{RL}, and introduces reference examples. 
-%
-%\Cref{acsos2022:sec:contribution} describes the core contribution applying \ac{RL} to \ac{AC}. %our idea of using \ac{RL} for non-functional aspects, devising also the learning settings. 
-%
-%\Cref{acsos2022:sec:evaluation} provides experimental evaluation. %evaluates the approach. % against the goal of reducing power consumption. %the combination of \ac{AC} and \ac{RL} in the case of reduce the power consumption.
-%
-%Finally, 
-%\Cref{acsos2022:sec:conclusion} provides final thoughts and discusses future work.
 \section{Background and Related Work}
 
 \revision{
@@ -185,7 +155,7 @@ Recent work~\cite{danilo2021lmcs} has also proposed the use of rule-based and re
 %
 However, such rules are still hand-crafted: they may be highly suboptimal or require to be adjusted when porting the application to different environments.
 
-In this chapter we explore the possibility of \emph{learning} 
+In this chapter, we explore the possibility of \emph{learning} 
  how to improve aggregate applications from a non-functional point of view, 
  leveraging the \ac{RL} framework.
 %
