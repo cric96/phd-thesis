@@ -441,14 +441,18 @@ where \lstinline|mux| is a conditional expression,
  and \lstinline|nbrRange| is a built-in function that returns neighbouring field distance.
 
  \subsubsection{Aggregate programming stack}
+ \begin{wrapfigure}{r}{7.5cm}
+    \centering
+    \includegraphics[width=7.5cm]{chapters/img/aggregate-programming-stack.png}
+    \caption{The aggregate programming stack}\label{fig:aggregate-programming-stack}
+\end{wrapfigure}
 Building upon both theoretical insights and pragmatic considerations, 
  aggregate programming introduces a stratified architecture designed to significantly ease the design, development, and maintenance of intricate distributed systems. 
  This methodology stems from three pivotal observations related to engineering sophisticated coordination schemas:
-\begin{itemize}
-    \item the composition of modules and subsystems should be straightforward and transparent.
-    \item various subsystems necessitate distinct coordination mechanisms that are context-sensitive, varying according to regions and temporal conditions.
-    \item robust coordination mechanisms should be encapsulated within abstractions, thereby obviating the need for programmers to grapple with their underlying complexities.
-\end{itemize}
+i) the composition of modules and subsystems should be straightforward and transparent;
+ii) various subsystems necessitate distinct coordination mechanisms that are context-sensitive, varying according to regions and temporal conditions;
+iii) robust coordination mechanisms should be encapsulated within abstractions, thereby obviating the need for programmers to grapple with their underlying complexities.
+
 Field calculus, along with its language incarnations, 
  offers solutions for the first two observations but falls short of ensuring resilience. 
  Additionally, its mathematical rigour and concise syntax present challenges for straightforward programming. 
@@ -456,35 +460,118 @@ Field calculus, along with its language incarnations,
  These pattern have been identified in literate~\cite{aggregatecomputing} and are called resilient coordination operators (more details in \Cref{sec:field-calculus-building-blocks} and \Cref{sec:field-calculus-behavioural-properties}).
  Finally, on top of these operators, there are high-level patterns that can be used to implement complex behaviours (more details in \Cref{sec:field-calculus-high-level-patterns}) and high-level API for structuring domain-specific behaviour (e.g., crowd detection or coordinate movement in swarms).
  The overall stack is shown in \Cref{fig:aggregate-programming-stack}.
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\textwidth]{chapters/img/aggregate-programming-stack.png}
-    \caption{The aggregate programming stack}\label{fig:aggregate-programming-stack}
-\end{figure}
+
 \subsubsection{Resilient coordination operators}
 \label{sec:field-calculus-building-blocks}
 Throughout the development of aggregate computing, 
- a consistent set of foundational building blocks has emerged over the years. 
+ a consistent set of foundational building blocks has emerged over the years (\Cref{fig:resilient-coordination-operators}). 
  These building blocks are known for their self-stabilizing properties--
  details on which will be discussed later--
  and they serve as the foundation for various high-level patterns in aggregate computing.
-\paragraph*{Gradient-cast (G)}
-Various forms of aggregation 
+\begin{figure}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{chapters/img/g.drawio.pdf}
+        \caption{Gradient-cast (G)}\label{fig:gradient-cast}
+    \end{subfigure}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{chapters/img/c.drawio.pdf}
+        \caption{Collect-cast (C)}\label{fig:collect-cast}
+    \end{subfigure}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{chapters/img/s.drawio.pdf}
+        \caption{Sparse choice (S)}\label{fig:sparse-choice}
+    \end{subfigure}
+    \caption{Resilient coordination operators}\label{fig:resilient-coordination-operators}
+\end{figure}
+\paragraph*{Gradient-cast (G) --- \Cref{fig:gradient-cast}}
+various forms of aggregation 
  can be executed along a distance gradient.
  Essentially, a generalized operator G serves as a gradient algorithm. 
  This algorithm is tailored based on a specific \emph{metric} used for measuring increments or distances. 
  It enables the transfer of a particular field value from the source in an outward direction, 
- evolving according to a specified logic as it ascends the gradient.
-\paragraph*{Collect-cast (C)}
-In essence, G facilitates the flow of information from originating devices to their broader environment, 
+ evolving according to a specified logic as it ascends the gradient:
+\begin{lstlisting}
+def G(src, phi, acc, metric) =
+    rep((Double.MaxValue, phi)) { case (distance,value) => {
+        mux(src) {
+            (0.0, phi)
+        } {
+            minHoodPlus { (nbr(distance) + metric, acc(nbr(value))) }
+        }
+    }
+}._2
+\end{lstlisting}
+Where \texttt{minHoodPlus} is a built-in function that returns the minimum value in the neighbourhood, 
+ and \texttt{nbr} is a built-in function that returns neighbouring field distance.
+ The \lstinline|_._2| at the end of the expression is used to extract the second element of the tuple.
+This operator serves as the foundation for a range of gradient-based algorithms, 
+ such as ``broadcast''. 
+ In the broadcast method, data is disseminated along the gradient path:
+\begin{lstlisting}
+def broadcast(source, field) =
+    G(source, field, acc = x => x, metric = nbrRange)
+\end{lstlisting}
+\paragraph*{Collect-cast (C) --- \Cref{fig:collect-cast}}
+in essence, G facilitates the flow of information from originating devices to their broader environment, 
  acting as a mechanism for the spread or diffusion of values. 
  Conversely, a secondary operation enables data to flow from a widespread area to specific gathering points, 
  aiding in decentralized sensing tasks. 
- This is enabled by another generalized operator, C shown in Figure 7.13b. C accumulates values along a potential field, beginning at source points where the potential is highest, and aggregates these values as it moves down the parent chain, eventually converging at points where the potential is lowest.
-\paragraph*{Sparse choice (S)}
-The generic operator Sparse choice (S) 
+ This is enabled by another generalized operator C -- 
+ it accumulates values along a potential field, beginning at source points where the potential is highest, and aggregates these values as it moves down the parent chain, 
+ eventually converging at points where the potential is lowest:
+\begin{lstlisting}[language=scafi]
+def C(potential, acc, phi, Null) = {
+  rep(phi) { v =>
+    acc(phi, foldhood(Null)(acc) {
+      mux(nbr(findParent(potential)) == mid()) {
+        nbr(v)
+      } { 
+        nbr(Null)
+      }
+    })
+  }
+}
+
+def findParent(p) = {
+  mux(minHood { nbr(p) } < p) {
+    minHood { nbr { (p, mid()) } }._2
+  } { 
+    Int.MaxValue 
+  }
+}
+\end{lstlisting}
+\paragraph*{Sparse choice (S) --- \Cref{fig:sparse-choice}}
+the generic operator Sparse choice (S) 
  allows for the selective inclusion of devices to divide the network into distinct ``responsibility zones''. Essentially, it performs a leader election procedure. 
  In this process, a ``grain'' represents the average distance between two elected leaders, as defined by a specific metric. It can be implemented as follows:
+\begin{lstlisting}[language=scafi]
+def S(grain, metric) = breakUsingUids(randomUid, grain, metric)
+
+def breakUsingUids(uid, grain, metric) =
+    uid == rep(uid) { lead =>
+      val acc = (_) + metric
+      distanceCompetition(G(uid == lead, 0, acc, metric), lead, uid, grain, metric)
+    }
+
+def distanceCompetition(d, lead, uid, grain, metric) = {
+  val inf = (Double.PositiveInfinity, uid._2)
+  mux(d > grain) { uid }
+  {
+    mux(d >= (0.5 * grain)) {  // 0.5 is a constant used to avoid oscillations
+      inf 
+    } {
+      minHood {
+        mux(nbr { d } + metric >= 0.5 * grain) { 
+          nbr { inf } 
+        } { 
+          nbr { lead } 
+        }
+      }
+  }}}
+\end{lstlisting}
 
 \subsubsection{Behavioural Properties}\label{sec:field-calculus-behavioural-properties}
 The field calculus is architected as a universal language specifically tailored for computations in spatially distributed systems. 
@@ -531,9 +618,10 @@ Lastly,
  contemporary work is beginning to examine the real-time performance guarantees of field calculus programs~\cite{audrito2018space}. 
  Current validation approaches primarily focus on `by construction' proofs based on elementary building blocks or restricted fragments of the calculus. 
 \subsubsection{High-level patterns}\label{sec:field-calculus-high-level-patterns}
-Starting from the previous defined building blocks, 
+Starting from the previously defined building blocks, 
  it is possible to define high-level patterns that can be used to implement complex behaviours.
- One of the most promising approaches is the one based on the \emph{self-organising coordination regions} (SCR) pattern~\cite{casadei2019scr}.
+ In the following, we illustrate two of the most idiomatic in the context of aggregate computing, that are 
+ the \emph{self-healing channel} and the \emph{self-organising coordination} regions pattern.
 \paragraph*{Self-Organising Coordination Regions (SCR)}
 In a more advanced scenario, 
  one could employ the SCR design pattern. 
@@ -543,12 +631,20 @@ In a more advanced scenario,
 
 For example, 
  in a large-scale project aimed at monitoring and controlling temperature, 
- the SCR pattern allows the formation of uniformly-sized regions. 
+ the SCR pattern allows the formation of uniformly sized regions. 
  Within these zones, devices collaboratively compute the area's average temperature. 
  Using this aggregated information, the system could trigger alarms, facilitating more effective, coarse-grained analysis and intervention measures.
 %
 This pattern is implemented using the G, C and S operators as follows:
-
+\begin{lstlisting}[language=scafi]
+val leader = S(radius, nbrRange) 
+val potential = G(leader, 0.0, distance => distance + nbrRange)
+val totalTemperature = C(potential, _ + _, temperature(), 0)
+val nodeInArea =  C(potential, _ + _, 1, 0)
+val averageTemperature = totalTemperature / nodeInArea
+val decision = ....
+val leaderDecision = broadcast(leader, decision)
+\end{lstlisting}
 \subsection{Tools}
 Proper software tooling
 is essential to new self-organising algorithms
