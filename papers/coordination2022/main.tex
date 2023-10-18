@@ -11,51 +11,7 @@
 %\chapter{Towards Reinforcement Learning-based Aggregate Computing}
 \chapter[Collective Program Sketching]{Program Sketching with Aggregate Computing}\label{chap:learning:sketching}%\mtcaddchapter
 \minitoc% Creating an actual minitoc
-\begin{comment}
-The pervasiveness of computing and networking
- fosters applications 
- backed by large-scale cyber-physical collectives---cf. edge-fog-cloud infrastructures, robot swarms, %power grids, 
- and smart ecosystems.
-%
-Combined with the \emph{autonomic computing} vision ~\cite{DBLP:journals/computer/KephartC03}, which promotes autonomy and self-* capabilities in engineered systems,
- there is an increasing trend towards \acp{cas} and their engineering~\cite{DBLP:journals/sttt/NicolaJW20,DBLP:journals/tasm/BucchiaroneDPCS20}.
-%
-\acp{cas} are characterized 
- by a multitude of agents  
- that can produce globally coherent results (\emph{emergents}~\cite{DBLP:conf/atal/WolfH04}),
- and collective-level adaptivity to environment change
- via local decision-making and decentralized interaction.
-%
-The \emph{engineering of \acp{cas}} is an open research problem~\cite{DBLP:journals/sttt/NicolaJW20,DBLP:journals/corr/abs-1108-5643} of significance, tightly linked with the problems of ``steering'' self-organization and ``controlling'' emergence to promote desired while avoiding undesired emergents~\cite{DBLP:books/sp/08/Muller-SchloerS08}.
-%
-In general, when dealing with \acp{cas},
- there are two distinct problems:
- (i) given an initial system state and local behavioural rules, predicting what global outcomes will be produced (\emph{forward}, \emph{prediction}, or \emph{local-to-global problem});
- and
- (ii) what local behavioural rules must be assigned to the system devices to achieve certain global outcomes (\emph{inverse}, \emph{control}, or \emph{global-to-local problem}).
-%
-These two problems provide corresponding perspectives
- for \emph{designing} \acp{cas}.
-% 
-In particular, the latter perspective has promoted research on \emph{spatial} and \emph{macro-programming}~\cite{beal2013organizing-aggregate,DBLP:journals/corr/abs-2201-03473}
- aiming at expressing programs in terms of the desired global outcome
- and leaving the underlying platform to deal with the global-to-local mapping.
 
-In this work,
- we consider \emph{\ac{ac}}~\cite{DBLP:journals/computer/BealPV15}, a prominent \emph{field-based coordination} approach~\cite{DBLP:journals/jlap/ViroliBDACP19} 
-promoting macro-programming 
- by capturing \ac{cas} behaviours 
- as functions operating on \emph{computational fields}~\cite{DBLP:journals/jlap/ViroliBDACP19},
- in a system model of neighbour-interacting devices
- operating in asynchronous sense-compute-interact rounds.
-%
-A computational field is a macro-abstraction
- that maps a set of devices over time to computational values.
-%
-\ac{ac} is based on the \emph{\ac{fc}}~\cite{DBLP:journals/jlap/ViroliBDACP19}, or variants thereof,
- that define constructs for manipulating and evolving fields.
-%
-\end{comment}
 \ac{cpsw} behaviour
  can be expressed by a single \emph{aggregate program} (global perspective)
  that also defines 
@@ -87,19 +43,48 @@ In chapter we adopt a \emph{\ac{rl}-based approach}---where an agent learns from
 We devise a general methodology that somewhat resembles the notion of \emph{sketching} in program synthesis~\cite{solar2008program-synthesis-sketching}:
  a template program is given and \emph{holes} are filled with actions determined through search.
 %
-In our case, the program is the \ac{ac} specification of a coordination algorithm, and holes are filled with actions of a policy learnt through a multi-agent reinforcement learning algorithm called Hysteretic Q-Learning~\cite{DBLP:conf/iros/MatignonLF07}.
+In our case, the program is the \ac{ac} specification of a coordination algorithm, and holes are filled with actions of a policy learnt through many-agent Hysteretic Q-Learning.
 %
-We consider the case of the classic gradient algorithm, a paradigmatic and key building block of self-organising coordination \cite{DBLP:journals/jlap/ViroliBDACP19,beal2013organizing-aggregate,DBLP:journals/corr/abs-2201-03473}: we show via simulations 
+We consider the case of the classic gradient algorithm, 
+ a paradigmatic and key building block of self-organising coordination \cite{DBLP:journals/jlap/ViroliBDACP19,beal2013organizing-aggregate,DBLP:journals/corr/abs-2201-03473}: we show via simulations 
  that the system, after sufficient training,
  learns an improved way to compute and adjust gradient fields to network perturbations.
+\begin{comment}
+\section{Motivation}
+The self-healing gradient is a foundational building block, used in several applications, 
+ranging from swarm robotics to crowd engineering.
+Though working and self-stabilising,
+ this algorithm suffers some problems~\cite{DBLP:conf/saso/AudritoCDV17}.
+%
+One is the \emph{rising value problem} (also known as \emph{count to infinity}): due to the repeated minimisation of all the contributions, 
+ the system handles well the situations when the output needs to drop (e.g. a new source enters the system) but it instead reacts slowly when the output needs to rise (e.g. a source node turns off). 
+% 
+In literature, several heuristics are proposed to tackle the problems of the classical gradient~\cite{DBLP:conf/saso/AudritoCDV17}.
+%
+%FLEX~\cite{DBLP:conf/sac/Beal09} aims to increase the \emph{smoothness} by introducing a filtering function in order to maintain at the same time the output stable against local variation and the system-wide error under an $\epsilon$ value. 
+%
+One of them is CRF (Constraint and Restoring Force)~\cite{DBLP:conf/sac/BealBVT08}. Its goal is to deal with the problem by enforcing a constant rising speed when nodes recognise a local slow rising of the gradient field. 
+%
+To this end, each node is affected by a set of constraints (i.e. nodes that have a lower gradient value). 
+%
+If a node finds that it is slowly rising (i.e. there are no more constraints) then it increases its output at a fixed velocity, ignoring its neighbours.
+%
+Otherwise, the output of the gradient follows the classical formula.
+%
 
-\section{On Integrating Machine Learning and Aggregate Computing}
+Even though these methods show potential, 
+ they necessitate an intricate understanding of the environment and meticulous parameter selection for optimal performance. 
+ As a solution, we suggest employing \ac{rl} to derive a policy that enhances the gradient algorithm universally.
+
+\end{comment}
+\section{Aggregate Programs Improvement through \ac{rl}}
+\input{papers/coordination2022/rl-ac-architecture.tex}
 As anticipated in \Cref{part:background}, 
  the behaviour of an aggregate system depends on the interplay of three main ingredients:
 \begin{itemize}
   \item the aggregate program, expressing conceptually the global behaviour of the entire system, and concretely the local behaviour of each individual node in terms of local processing and data exchange with neighbours; and
-  \item the aggregate execution model, promoting a certain dynamics of the system in terms of topology management (e.g., via neighbour discovery), execution of rounds, scheduling of communications; and
-  \item  the environment dynamics.
+  \item the aggregate execution model, promoting certain dynamics of the system in terms of topology management (e.g., via neighbour discovery), execution of rounds, scheduling of communications; and
+  \item the environment dynamics.
 \end{itemize}
 %
 While the latter cannot be controlled, 
@@ -114,35 +99,24 @@ While the latter cannot be controlled,
 Since tuning programs or execution details to specific environments
  or adapting those to changing environments
  can be burdensome,
- it makes sense to consider the use of machine learning techniques
+ it makes sense to consider the use of machine-learning techniques
  to let a system \emph{learn} effective strategies for unfolding collective adaptive behaviour.
 %
-
-\section{Aggregate Programs Improvement through \ac{rl}}
-\input{papers/coordination2022/rl-ac-architecture.tex}
-
-In this work, we focus on \emph{improving aggregate programs}
+In this chapter, we focus on \emph{improving aggregate programs}
  by learning effective local actions
  within a given algorithmic schema---an approach similar to the \emph{sketching} technique for program synthesis~\cite{solar2008program-synthesis-sketching}.
 Differently from the previous chapter, 
  where we used \ac{rl} to improve the execution model, 
  here we use \ac{rl} to improve the aggregate program.
-% \meta{TODO: explain why RL and not other ML techniques}.
-As a learning framework,
- we use \ac{rl} as 
- we deal with systems of agents 
- performing ongoing activities 
- by interacting with one another and the environment. 
 %
-Specifically we integrate \ac{rl} within the \ac{ac} control architecture in order to support learning of good collective behaviour sketched by a given aggregate program (\Cref{coordination2022:fig:ac-and-rl}).
-%
-Specifically, 
+Specifically, we integrate \ac{rl} within the \ac{ac} control architecture to support learning of good collective behaviour sketched by a given aggregate program (\Cref{coordination2022:fig:ac-and-rl}): 
  we focus on improving \ac{ac} building blocks (such as the gradient algorithm covered in \Cref{part:background}) through learning, 
  leading toward a so-called \emph{reinforcement learning-based aggregate computing}. 
 %
 Learning, thus, does not replace the \ac{ac} methodology for defining the programs, 
- but it is best understood as a technique that supports and improves the \ac{ac} algorithm design process. 
-\section{Building blocks Refinement}\label{coordination2022:s:learning-gradient}
+ but it is best understood as a technique that supports and improves the \ac{ac} algorithm design process.
+
+\section{Motivation: Building blocks Refinement}\label{coordination2022:s:learning-gradient}
 A major advantage of \ac{ac} as a programming model is its \emph{compositionality}: complex collective behaviours (e.g., the maintenance of a multi-hop connectivity channel) can be expressed through a combination of building blocks capturing simpler collective behaviours (e.g., gradients).
 %
 Since building blocks are fundamental bricks of behaviour that often recur in programs, 
@@ -153,7 +127,7 @@ Therefore, research tends to investigate refined variants of building blocks tha
 With a library of algorithms, 
  the designer can choose the best combination of building blocks that are well-fitted for a given environment, 
  and even substitute a building block with a variant implementation without substantially affecting the application logic.
-%\meta{@GA to @All, in sec 4.1 I show a gradient block with opt. Probably here we need to show a general structure? With images? }
+%
 In general, a building block can be seen as a \emph{black box} (function) that takes a set of input fields (e.g. metric, perception fields, constant fields, etc.) and yields an output field. 
 %
 To increase its flexibility, 
