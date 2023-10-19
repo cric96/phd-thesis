@@ -54,7 +54,7 @@ every node/.style={scale=.8}
 \end{tikzpicture}
 \end{minipage}\hfill%
 \begin{minipage}[b]{0.7\textwidth}\centering
-\begin{minted}[fontsize=\small,frame=none]{scala}
+\begin{lstlisting}[basicstyle=\scriptsize\ttfamily, frame=none]
 @multitier object P2P extends PulverisedSystem {
   /* Definition of device 
   kinds and possible network connections */
@@ -66,7 +66,7 @@ every node/.style={scale=.8}
   @peer type BehaviourComponent <: Node
   @peer type CommunicationComponent <: Node
 }
-\end{minted}
+\end{lstlisting}
 \end{minipage}
 \subcaption{Peer-to-peer: 1-to-1 mapping between logical and physical devices.\label{img:p2p}}
 \end{minipage}
@@ -119,7 +119,7 @@ every node/.style={scale=.6}
 \end{tikzpicture}
 \end{minipage}\hfill%
 \begin{minipage}[b]{0.7\textwidth}\centering
-\begin{minted}[fontsize=\footnotesize,frame=none]{scala}
+\begin{lstlisting}[basicstyle=\scriptsize\ttfamily, frame=none]
 @multitier object BrokerBased extends PulverisedSystem {
   // Definition of device kinds 
   // and possible network connections
@@ -127,14 +127,13 @@ every node/.style={scale=.6}
   @peer type Broker <: { 
     type Tie <: Multiple[Node] with Multiple[Broker] 
   }
-  // Pulverised component allocation on devices
   @peer type SensorComponent <: Node
   @peer type ActuatorComponent <: Node
   @peer type StateComponent <: Node
   @peer type BehaviourComponent <: Node
   @peer type CommunicationComponent <: Broker
 }
-\end{minted}
+\end{lstlisting}
 \end{minipage}
 
 \subcaption{Multi-broker: the communication is offloaded in part to the edge, and in part to the cloud.\label{img:broker}}
@@ -237,14 +236,11 @@ every node/.style={scale=.7}
 \end{tikzpicture}
 \end{minipage}\hfill%
 \begin{minipage}[b][0.19\textheight][b]{0.70\textwidth}\centering
-\begin{minted}[fontsize=\footnotesize,frame=none]{scala}
+\begin{lstlisting}[basicstyle=\scriptsize\ttfamily, frame=none]
 @multitier object IoTSystem extends PulverisedSystem {
-  // Definition of device kinds 
-  // and possible network connections
+  // Definition of device kinds and possible network connections
   @peer type Thin <: { type Tie <: Multiple[Thick] }
-  @peer type Thick <: { 
-    type Tie <: Multiple[Thick] with Multiple[Thin]
-  }
+  @peer type Thick <: { type Tie <: Multiple[Thick] with Multiple[Thin] }
   // Pulverised component allocation on devices
   @peer type SensorComponent <: Thin
   @peer type ActuatorComponent <: Thin
@@ -252,7 +248,7 @@ every node/.style={scale=.7}
   @peer type BehaviourComponent <: Thick
   @peer type CommunicationComponent <: Thick
 }
-\end{minted}
+\end{lstlisting}
 \end{minipage}
 \subcaption{IoT with thin clients: end devices only host sensors and actuators, other components are offloaded either to the edge or the cloud.\label{img:thin}}
 \end{minipage}

@@ -211,7 +211,7 @@ The following code depicts a simple controller-worker architecture.
 %
 Annotation \scalainline{@multitier} denotes the \scalainline{BookingApp} as a \scalaloci{} object. 
 
-\begin{minted}{scala}
+\begin{lstlisting}
 /* Defines an application with the peers 'Controller' and 
  * and 'Worker' and a 1:n connection between them */
 @multitier object BookingApp {
@@ -224,7 +224,7 @@ Annotation \scalainline{@multitier} denotes the \scalainline{BookingApp} as a \s
   on[Controller]{ print("I am a Controller") }
   on[Worker]{ print("I am a Worker") }
 }
-\end{minted}
+\end{lstlisting}
 
 A declared \scalainline{@peer} type can have multiple instances that execute the peer's logic, e.g., multiple worker instances.
 %
@@ -233,7 +233,7 @@ In this example, the logic is replaced with simple prints.
 An instance of the controller peer may connect to multiple workers, whereas a worker instance is tied to one controller. 
 %
 The sample compiles two executables representing the controller and the worker, whose instances can be deployed and executed on different physical nodes.
-\begin{minted}{scala}
+\begin{lstlisting}
 /* accessible for workers. */
 val requests: Event[Request] on Controller = placed {...}
 // Name of the worker @Worker accessible for Controller.
@@ -246,7 +246,7 @@ val tokens : Local[Map[Long]] on Controller =
 on[Worker]{ requests.asLocal.observe{...} }
 // Error: no access to tokens outside of the Controller.
 on[Worker]{ tokens.asLocal.observe{...} }
-\end{minted}
+\end{lstlisting}
 
 Asynchronous multi-tier reactives like signals and events are used to compose non-blocking data flows that span across multiple peers. 
 %
@@ -255,7 +255,7 @@ and the visibility of placement types for remote peers can be regulated.
 %
 A \scalainline{@multitier} module can capture the controller-worker schema:
 
-\begin{minted}{scala}
+\begin{lstlisting}
 @multitier trait ControllerWorker[T] {
   @peer type Controller <: { 
     type Tie <: Multiple[Worker]
@@ -268,7 +268,7 @@ A \scalainline{@multitier} module can capture the controller-worker schema:
     on(selectWorker()) // (`selectWorker` is left out) 
       .run.capture(task) { task.process() }.asLocal
 }
-\end{minted}
+\end{lstlisting}
 The \scalainline{run} method has return type as the placement type \scalainline{Future[T] on Controller}\footnote{Scala enables infix use of binary type constructors;  i.e., \mintinline[fontsize=\scriptsize]{scala}{A on B} refers to the same type as \mintinline[fontsize=\scriptsize]{scala}{on[A,B]}.}, effectively placing \scalainline{run} on the \scalainline{Controller} peer. 
 %
 The \scalainline{Task} type is parametrized over the type \scalainline{T} of the value, which a task produces after execution. 
@@ -285,7 +285,7 @@ The module can be used to implement an application where a server offloads work
  to the connected clients. In the following code, 
 we specialize the clients to be workers and the server to be a controller:
 
-\begin{minted}{scala}
+\begin{lstlisting}
 @multitier trait VolunteerProcessing {
   val m: ControllerWorker[Int] // ref to another module
   // augmenting the peers in this module
@@ -294,7 +294,7 @@ we specialize the clients to be workers and the server to be a controller:
   @peer type Server <: m.Controller    
   on[Server] { m.run(new Task()) }
 }
-\end{minted}
+\end{lstlisting}
 
 \section{Multi-tier pulverised aggregate computing}
 \label{multitier+pulverisation}
@@ -342,9 +342,9 @@ This is done by \emph{placing} the available computations on the components that
 For instance, if our system has the notion of \scalainline{Sensor[V]},
 representing a generic sensor that upon access returns values of type \scalainline{V},
 we can enforce the requirement that the \scalainline{SensorComponent} must be able to read values from sensors via something like: 
-\begin{minted}{scala}
+\begin{lstlisting}
 def sense[V](id: SensorID): V on SensorComponent = ...
-\end{minted}
+\end{lstlisting}
 %
 This strategy decouples the \emph{structural} definition of components participating in the system from their \emph{behavioural} specification.
 
@@ -391,7 +391,7 @@ The resulting system can then be instanced by selecting a communication protocol
 %
 For example, in the following snippet, we show how this could be done for the system in \Cref{img:broker}, assuming communication via TCP and serialization via the uPickle library.
 
-\begin{minted}{scala}
+\begin{lstlisting}
 import loci.serializer.upickle._ // Serialization logic
 import loci.communicator.tcp._ // Communication protocol
 object Broker extends App { // Peer instatiation
@@ -402,7 +402,7 @@ object Peer extends App {
   val tie = connect[BrokerBased.Broker](TCP(host, port))
   multitier.start(new Instance[BrokerBased.Node](tie))
 }
-\end{minted}
+\end{lstlisting}
 
 \subsection{Integration with aggregate programming}
 \label{scafiloci}
@@ -425,7 +425,7 @@ a \scalainline{Context} (i.e., the set of information required to evaluate an \s
 \scafi{}'s \scalainline{Context}s in a pulverized architecture are embedded in the \scalainline{State} component.
 %
 Consequently, the glue code required to execute \scafi{} aggregate code over a pulverized network is minimal:
-\begin{minted}{scala}
+\begin{lstlisting}
 def compute(
   deviceIdentifier: Id,
   state: State
@@ -440,7 +440,7 @@ def compute(
   // actual execution; returns the new State
   program.round(context)
 }
-\end{minted}
+\end{lstlisting}
 \section{Implications}
 \label{implicitation}
 The construction of a pulverized platform for aggregate computing via multi-tier programming introduces a plethora of intriguing applications, 
