@@ -13,16 +13,8 @@
 It provides DSL and API modules for 
  writing, testing, and running aggregate programs, namely programs expressed according to the aggregate programming paradigm~\cite{aggregatecomputing,DBLP:journals/jlap/ViroliBDACP19}.
 %
-%the open-source community revolving around Java, Scala, Android, and related software tools.
-%
-%Notably, Maven Central has a strict no-retract policy, meaning that all the past releases of \scafi{} will be available for as long as the repository will live.
-%
 \subparagraph{Software Architecture}
 \label{sec:scafi-arch-design}
-
-%\meta{
-%Give a short overview of the overall software architecture; provide a pictorial component overview or similar (if possible). If necessary provide implementation details.
-%}
 
 The high-level architecture of \scafi{} is depicted in \Cref{fig:scafi-arch}.
 It consists of the following main components: %(where each component is an SBT module and deployable artifact):
@@ -38,7 +30,7 @@ based on the Akka toolkit~\cite{akka};
 \item \texttt{scafi-distributed} | ScaFi integration-layer for \texttt{spala},
 which can be leveraged to set up actor-based deployments of \scafi{}-programmed systems.
 \end{itemize}
-
+ 
 \begin{figure}
 \centering
 \includegraphics[width=0.8\textwidth]{papers/softwarex2021/imgs/scafi-project-org.pdf}
@@ -68,8 +60,6 @@ Trait \texttt{Core} provides the abstract fundamental types: \texttt{CNAME} for 
 \texttt{ID} for device identifiers,
 \texttt{Context} for the input environment of computation rounds,
 and \texttt{Export} for the outcomes of computation rounds.
-%
-%Indeed, a round execution can be thought of as a (pure) function from \texttt{Context} to \texttt{Export}.
 %
 Trait \texttt{Language} 
  provides the syntax of the DSL in terms of methods, through interface \texttt{Constructs}.
@@ -150,8 +140,7 @@ independently of the program.
 \subparagraph*{Simulation support}
 %
 In order to simulate an ``aggregate system'',
- it is necessary 
- to 
+ it is necessary to: 
 \begin{enumerate}
   \item define the set of computational devices that make up the aggregate, including their sensors and actuators;
   \item define the aggregate topology, i.e., 
@@ -226,7 +215,7 @@ This complete example, shown in \Cref{fig:example-full} and available online\foo
  where the output of each device self-stabilises to
  its minimum distance from an appointed \emph{source} device.
 %
-Development comes into two parts:
+Development comes in two parts:
 \begin{enumerate}
   \item definition of the aggregate program,
   namely the logic of collective behaviour (\Cref{fig:example-full1})\footnote{For a detailed explanation of this gradient implementation, please refer to e.g. \cite{DBLP:journals/eaai/CasadeiVAPD21}.}~\footnote{Concerning source code listings, we highlight symbols as follows: we use blue for Scala keywords, red for \scafi{} DSL constructs, purple for \scafi{} library functions, and brown for other \scafi{} API symbols (e.g., types, objects, constants, and methods).};
@@ -309,76 +298,6 @@ object HelloScafi extends App {
 \caption{Complete example: an aggregate system computing a gradient.}
 \label{fig:example-full}
 \end{figure}
-\begin{comment}
-\subparagraph{Self-organising Coordination Regions in Simulation}
-%
-As a more complex example,
- consider a \scafi{} implementation of the
- Self-Organising Coordination Regions (SCR) pattern~\cite{DBLP:journals/fgcs/PianiniCVN21}.
-%
-The idea of SCR is to organize a distributed activity
- into multiple spatial \emph{regions} (inducing a partition of the system),
- each one controlled by a \emph{leader} device,
- which collects data from the area members
- and spreads decisions to enact some area-wide policy.
-%
-This pattern can be easily implemented in \scafi{} 
- using its standard library functions,
- and simulated through the feature provided by \texttt{scafi-simulator}. 
-%
-For instance, consider the following scenario: 
- temperature monitoring and control in a large environment. 
-%
-For distributed summarization, 
- we could create areas of uniform sizes 
- and let 
- the devices collectively compute the area's average temperature. 
-%
-Then, we could create an alarm based on collective information, 
- for more coarse-grained analysis and intervention. % (indeed, local values could be affected by fluctuations and noise). 
-%
-We implemented this scenario in the repository\footnote{\url{https://github.com/scafi/scafi-softwarex-scr-example}}: 
- \Cref{fig:scr} shows a simple \scafi{} implementation of SCR 
- %as a \scafi{} program 
- and a snapshot taken from %a corresponding run in 
- the \scafi{} simulator.
-
- \begin{figure}
-  \centering
-  \newsavebox{\scrprogram}
-  \begin{lrbox}{\scrprogram}% Store first listing
-  \begin{lstlisting}[deletekeywords={[2]{nbr}}]
-class SCR extends AggregateProgram 
-  with BuildingBlocks 
-  with StandardSensors 
-{
-  val radius = 300 // average area of interest
-  val leader = S(radius, nbrRange) 
-  val potential = distanceTo(leader)
-  val averageTemperature = collectMean(potential, temperature) 
-  val zoneTemperature = broadcast(leader, averageTemperature)
-  (leader, zoneTemperature)
-  // Coloring following leader information
-}
-  \end{lstlisting}
-  \end{lrbox}
-  \begin{subfigure}{\textwidth}
-    \usebox{\scrprogram}
-    \caption{\label{fig:example-scr-code}\scafi{} program}
-  \end{subfigure}\\
-  \begin{subfigure}{\textwidth}
-    \centering
-    \includegraphics[width=0.8\linewidth]{papers/softwarex2021/imgs/scr-result.png}
-    \caption{\label{fig:example-scr-snapshot}Snapshot from the \scafi{} simulator (Big circles mark node as leader).}
-  \end{subfigure}\\
-  \begin{subfigure}{\textwidth}
-    \centering
-    \includegraphics[width=0.8\linewidth]{papers/softwarex2021/imgs/temperature-distribution.png}
-    \caption{\label{fig:example-temperature}Simulated temperature distribution.}
-  \end{subfigure}
-  \caption{SCR pattern in \scafi{}. Colours denote the temperature perceived by the devices (the redder the higher the temperature).}  \label{fig:scr}
-\end{figure}
-\end{comment}
 \subparagraph{Features}
 \label{s:impact}
 \scafi{}
@@ -389,9 +308,6 @@ class SCR extends AggregateProgram
   software engineering, 
   computational models, and
   distributed systems/algorithms.
-%
-Aggregate programming languages 
- have been used in industry~\cite{DBLP:conf/saso/PaulosDBMHBPSSS19,DBLP:journals/taas/BealULRM18}.
 %
 The impact of \scafi{}
  can be understood in terms of 
@@ -404,25 +320,6 @@ The implementation of the \scafi{} DSL
  has inspired a variant of the field calculus
  which arguably supports easier embeddability
  into mainstream programming languages~\cite{DBLP:conf/isola/CasadeiVAD20,arxiv2020scafi-nc}.
-\begin{comment}
-\subparagraph*{Platform for experimenting new aggregate programming language features}
-%
-\scafi{} includes extensions to the basic field calculus.
-%
-In particular, it supports the \emph{aggregate process} abstraction~\cite{DBLP:journals/eaai/CasadeiVAPD21}, enabled by the \texttt{spawn} construct~\cite{DBLP:conf/coordination/CasadeiVAPD19}, 
-which provides a way to specify a dynamic number of collective computations running on dynamic ensembles of devices.
-%
-Another extension is the \texttt{exchange} primitive~\cite{audrito2022ecoop-xc,zenodo-xc-scala}, which subsumes previous communication primitives (\revision{like \lstinline|nbr|}~\cite{DBLP:journals/tocl/AudritoVDPB19}) and enables differentiated messages for neighbours.
-%
-In general, 
- as the aggregate programming DSL is exposed as a ``plain-old library'', 
- it is arguably easier to implement new features,
- as the developer does not need to deal 
- with parser, compilers, type systems, or language workbenches---of course, at the expense of (syntactic and analytic) constraints exerted by the host language.
-%
-Moreover, the research orientation of Scala~\cite{Odersky04scala-overview} 
- makes it a powerful environment for experimenting new language features and mechanisms. 
-\end{comment}
 
 \subparagraph*{High-level programming models}
 %
@@ -452,26 +349,3 @@ This paved the path
  to \scafiweb{}~\cite{DBLP:conf/coordination/AguzziCMPV21},
  a web playground for aggregate programming.
 %
-\begin{comment}
-\subparagraph*{Engineering of complex systems and collective intelligence (and related research)}
-%
-The paradigm embodied by \scafi{}
- provides a means 
- to explore \emph{complex systems} themes~\cite{mobus2014principles-systems-science} 
- (including collective intelligence~\cite{DBLP:journals/access/HePLMC19}, self-organization~\cite{yates2012selforg}, socio-technical collectives~\cite{miorandi2014social-collective-intelligence}, emergence~\cite{DBLP:journals/jocec/KalantariNM20}, etc.),
- and to do so by an \emph{engineering} and \emph{programming perspective}.
-%
-For instance, in~\cite{DBLP:journals/eaai/CasadeiVAPD21}
- the ability to self-organise into dynamic groups 
- is exploited to provide forms of intelligent behaviour at the edge;
- in~\cite{DBLP:journals/fgcs/PianiniCVN21}, 
- a self-organization pattern has been discovered
- that enables dynamic adjustment of the diameter of feedback-regulated networks and hence of the level of decentralization in a system, for intelligent use of resources.
-%
-In~\cite{DBLP:conf/coordination/AguzziCV22},
- reinforcement learning
- is used to learn policies
- for determining what actions to execute, in ``holes'' of \scafi{} programs,
- to improve the dynamics of collective algorithms.
-%
-\end{comment}

@@ -31,7 +31,7 @@ This problem revolves around splitting the swarm
  such that the individuals in the same \emph{cluster}
  are more similar to each other (for some definition of \emph{similarity}) than to those in other clusters.
 %
-Once a cluster is formed, typically it is assigned a sub-goal to be carried on collectively.
+Once a cluster is formed, typically it is assigned a \emph{sub-goal} to be carried on collectively.
 %
 Typical clustering approaches may consider
  the spatial distribution of the individuals
@@ -45,7 +45,7 @@ In this chapter,
  and the environmental values sensed by these individuals (through sensors).
  This is essential for \ac{cpsw} applications due to the tight integration with the physical world.
 %
-That is, the goal is to seek for clusters of neighbour individuals with a similar perception of some sensed value.
+That is, the goal is to seek clusters of neighbour individuals with a similar perception of some sensed value.
 %
 The problem can be in a \emph{static} form,
  where a snapshot of the system state is considered,
@@ -58,17 +58,18 @@ The problem has been considered in Wireless Sensor Networks (WSNs) and Internet-
   efficient distributed collection~\cite{DBLP:journals/ijcomsys/PhamLPC10},
   and disaster management~\cite{DBLP:journals/jaihc/KucukBSK20}.
 %
-However, to the best of our knowledge no existing work addresses the dynamic problem in \ac{cpsw}, which requires specific
+However, to the best of our knowledge, 
+ no existing work addresses the dynamic problem in \ac{cpsw}, which requires specific
 techniques to adaptively re-adjust clusters to face changes.
 %
 Additionally, we look for solutions featuring \emph{resilience}, namely,
  leveraging distribution and decentralization to continuously face changes and faults, hence avoiding single points of failures and potential bottlenecks.
 %
 %Therefore, i
-Accordingly, we present and address the \emph{dynamic sensing-based swarm clustering} problem.
-%
-
-Among the many approaches to express (and reason in terms of) collective behaviour featuring inherent adaptivity we shall consider the \emph{aggregate computing} approach as our language-based approach roots on it.
+Accordingly, we present and address the \emph{dynamic sensing-based swarm clustering} problem,
+ based on our language-based view of \ac{cpsw}, 
+ namely enforcing the use of a field-based programming model, 
+ both for the specification of the problem (i.e., the system model) and for the solution (i.e., the distributed aggregate computing program definition).  
 %
 %In this approach, computations
 % leverage an execution model based on repeated computation
@@ -100,7 +101,8 @@ Essentially, the core idea of our clustering approach is to make agents
 \label{s:background}
 %\meta{cross-disciplinary approaches $\to$ fields?}
 
-\section{Field-based Concurrent Processes}
+\section{Background: Field-based Concurrent Processes}
+\sloppy
 Field-based concurrent processes, also called \emph{aggregate processes}~\cite{DBLP:conf/coordination/CasadeiVAPD19,DBLP:journals/eaai/CasadeiVAPD21},
  are field-based computations
  that exist dynamically:
@@ -112,13 +114,12 @@ They have been formalized in \cite{DBLP:conf/coordination/CasadeiVAPD19}
  and deeply covered in \cite{DBLP:journals/eaai/CasadeiVAPD21},
  showing how they can support the design of intelligent collective behaviour by extending the practical expressiveness of field-based programming models~\cite{DBLP:journals/jlap/ViroliBDACP19}.
 %
-We provide a brief account of the details relevant for this manuscript in the following.
+We provide a brief account of the details relevant for this chapter in the following.
 
 Indeed, the aggregate process abstraction
- is relevant in this work
- since an aggregate process instance,
+ is relevant since an aggregate process instance,
  by running on a (evolving) subset of the agents,
- can be used to denote a dynamic cluster.
+ can be used to denote a \emph{dynamic} cluster.
 %
 Therefore, clustering algorithms
  can be expressed in terms of how
@@ -136,31 +137,38 @@ def spawn[K,A,R](process: K => A => (R,Boolean),
                  args: A): Map[K,R]
 \end{lstlisting}
 %
-The generic type \lstinline|K| instantiates to the type of \emph{process key}, also called a \emph{process identifier (PID)}, which also works as construction parameter;
+The generic type \lstinline|K| instantiates to the type of \emph{process key}, 
+ also called a \emph{process identifier (PID)}, which also works as construction parameter;
  the generic type \lstinline|A| instantiates to the type of runtime parameters for the currently running process instances;
  the generic type \lstinline|R| instantiates to the type of the output of the process.
 %
-A \emph{process definition} has curried type \lstinline|K => A => (R,Boolean)|, namely a function from a value of type \lstinline|K| and a value of type \lstinline|A| to a pair of a value of type \lstinline|R| and a Boolean.
+A \emph{process definition} has curried type \lstinline|K => A => (R,Boolean)|, 
+namely a function from a value of type \lstinline|K| and a value of type \lstinline|A| to a pair of a value of type \lstinline|R| and a Boolean.
 %
-The Boolean value, called the \emph{process status}, expresses if the device that has executed a given process instance
- would like to participate into the process (\lstinline|true| status)
+The Boolean value, called the \emph{process status}, 
+ expresses if the device that has executed a given process instance
+ would like to participate in the process (\lstinline|true| status)
  or not (\lstinline|false| status).
 %
-The crucial point is that every device that participates into a process with PID $\pi$ automatically propagates the process PID $\pi$ to all its neighbours, which will run a corresponding process instance when the \lstinline|spawn| function is evaluated.
+The crucial point is that every device that participates in a process with PID $\pi$ automatically propagates the process PID $\pi$ to all its neighbours, 
+which will run a corresponding process instance when the \lstinline|spawn| function is evaluated.
 %
 So, the \lstinline|spawn| function accepts a function \lstinline|process| of a field-based behaviour,
  a set \lstinline|newProcesses| of new process instances to be generated locally in the current round,
  and a value of type \lstinline|A| for the runtime input of the instances currently running in the local round of a given device.
 %
-Notice that, though \lstinline|process| can be a field of functions, it is typically a constant field of the same function, which means that usually a \lstinline|spawn| expression enables running zero or more process instances of the same kind of process.
+Notice that, though \lstinline|process| can be a field of functions, 
+ it is typically a constant field of the same function, 
+ which means that usually a \lstinline|spawn| expression enables running zero or more process instances of the same kind of process.
 %
 Evaluation of \lstinline|spawn| returns a \lstinline|Map[K,R]|
- (i.e., a hashmap or dictionary) which a set of entries
+ (i.e., a hashmap or dictionary) which is a set of entries
  mapping the PIDs of executed process instances (with status \lstinline|true|) to corresponding outputs of type \lstinline|R|.
 %
 
 As an example, consider building a separate gradient computation
- for each distinct source agent, that will expand within a certain range $\rho$. This could be coded as follows in ScaFi:
+ for each distinct source agent, that will expand within a certain range $\rho$. 
+ This could be coded as follows in ScaFi:
 \begin{lstlisting}[mathescape]
 type DeviceId = Int
 // Process definition as a function
@@ -201,7 +209,7 @@ The output of the \lstinline|spawn| expression
 
 An example of the dynamics of such a program is provided in \Cref{fig:spawn-dynamics}.
 %
-In the picture: nodes are agents; labels on nodes are agent IDs; edges denote neighbouring links, over which messages are sent and received; the output of the \lstinline|spawn| expression is shown above the nodes, unless it is an empty map (not shown); the different sub-pictures are snapshots of a corresponding hypothetical system state trajectory that may result after multiple rounds of execution in multiple devices.
+In the picture: nodes are agents; labels on nodes are agent IDs; edges denote neighbouring links, over which messages are sent and received; the output of the \lstinline|spawn| expression is shown above the nodes unless it is an empty map (not shown); the different sub-pictures are snapshots of a corresponding hypothetical system state trajectory that may result after multiple rounds of execution in multiple devices.
 %
 A more thorough introduction and description of aggregate processes together with more examples is available in \cite{DBLP:journals/eaai/CasadeiVAPD21}.
 
@@ -333,13 +341,26 @@ Before formally defining the problem of {\em Dynamic Sensing Based Swarm Cluster
 \item The measures of interest of the {\em environment} at two points in space close to each other tend to be positively correlated.
 \end{enumerate}
 %
-The above  assumptions are rather weak and, therefore, quite challenging. They encompass scenarios where a swarm of agents explores an area where multiple natural phenomena are happening.
+The above assumptions, based on our system model defined in \Cref{part:background}, 
+ are rather weak and, therefore, quite challenging. 
+ They encompass scenarios where a swarm of agents explores an area where multiple natural phenomena are happening. Therefore, even if the proposed solution target \ac{cpsw}, it can be applied to other scenarios, such as WSNs and IoT, where the above assumptions are satisfied.
 
 The field-based clustering algorithm for solving the {\em Dynamic Sensing Based Swarm Clustering} problem will be discussed below. For now, we just want to point out that our assumptions justify a fully distributed approach in which agents exchange information with their neighbours.
 
-First, given the very nature of swarm systems, problems are usually better solved by distributed algorithms than centralized algorithms, e.g., \cite{hoshino:2013,DBLP:journals/asc/CruzNM17}. In particular, by our assumption that agents and communications can fail, and that there is no global communication infrastructure, a node in charge of all the computations (either a agent or a base station) would constitute a risky single-point of failure. Even if the swarm was able to recover from such failure by automatically choosing another central node, the switch would be cumbersome and potentially very costly, only to reach a again a situation with another single point of failure.
+First, given the very nature of swarm systems, 
+ problems are usually better solved by distributed algorithms than centralized algorithms, e.g., \cite{hoshino:2013,DBLP:journals/asc/CruzNM17}. 
+ In particular, by our assumption that agents and communications can fail, 
+ and that there is no global communication infrastructure, 
+ a node in charge of all the computations (either an agent or a base station) 
+ would constitute a risky single point of failure. 
+ Even if the swarm was able to recover from such failure by automatically choosing another central node, the switch would be cumbersome and potentially very costly, only to reach again a situation with another single point of failure.
 
-Given agents whose connection links are established and lost based on the proximity with other agents, it may be possible to build an abstraction on top of that, whereby multi-hop communications are transparent, and each agent has the illusion to be able to immediately communicate with any other agent in the swarm by specifying an appropriate ID (this is, e.g., the typical abstraction brought by the IP layer of the TCP/IP stack). While the cost of adding such additional layer may be acceptable in some situations, for the specific goal of clustering this would not bring any advantage: as we shall see in the sections below, clusters spring out, expand, and collapse following spatial vicinity---i.e., a new cluster expands first to the immediate neighbours of the agent that generated it, and then progressively spreads to further agents in an incremental way.
+Given agents whose connection links are established and lost based on the proximity with other agents, 
+ it may be possible to build an abstraction on top of that, 
+ whereby multi-hop communications are transparent, 
+ and each agent has the illusion of being able to immediately communicate with any other agent in the swarm by specifying an appropriate ID 
+ (this is, e.g., the typical abstraction brought by the IP layer of the TCP/IP stack). 
+ While the cost of adding such an additional layer may be acceptable in some situations, for the specific goal of clustering this would not bring any advantage: as we shall see in the sections below, clusters spring out, expand, and collapse following spatial vicinity---i.e., a new cluster expands first to the immediate neighbours of the agent that generated it, and then progressively incrementally spreads to further agents.
 }
 
 \subsection{Problem Definition}\label{ssec:problem-def}
@@ -347,20 +368,21 @@ Given agents whose connection links are established and lost based on the proxim
 We address the problem of situation awareness and recognition, where a value distributed in space (e.g., temperature as measured by sensors) has to be monitored,
  by recognizing compact clusters with similar values (e.g., spatial regions with a similar temperature).
  This problem, called \emph{sensing-driven clustering} in literature, has been investigated largely in static scenarios \cite{DBLP:journals/jaihc/KucukBSK20,DBLP:journals/ijcomsys/PhamLPC10,DBLP:conf/ccnc/LinM07},
- where data from a fixed sensor network has to be processed in order to obtain the relevant clusters.
- However, solutions for such networks do not extend well to dynamic contexts, such as micro-drone swarms monitoring an environment:
+ where data from a fixed sensor network has to be processed to obtain the relevant clusters.
+ However, solutions for such networks do not extend well to dynamic contexts, such as a mobile \acp{cpsw} system monitoring an environment:
  in this scenario, mobility and proximity of communication are key,
- and need to be handled by an algorithm that is resilient to changes in both values, network structure and placement in space.
+ and need to be handled by an algorithm that is resilient to changes in values, network structure and placement in space.
  To the best of our knowledge, this problem has never been previously considered in the literature.
 
-A sensing-driven clustering algorithm for mobile \rev{swarms} could be useful for several outcomes.
+A sensing-driven clustering algorithm for such system could be useful for several outcomes.
  Clusters may provide a compressed summary of the value distribution in space,
  to upload on the cloud and be graphically represented for human convenience.
 %
 Clusters may also be used to drive more complex situation recognition patterns:
  algorithms to detect dangerous situations may be run in each cluster separately,
- using information from that cluster to reach a verdict, without interference from information on neighbouring clusters.
- Clusters may also be used to drive task assignment to the monitoring drones,
+ using information from that cluster to reach a verdict, 
+ without interference from information on neighbouring clusters.
+ Clusters may also be used to drive task assignments to the monitoring drones,
  possibly guiding their placement in space, by directing more drones in clusters where the need arises.
 
 More formally, we consider the following problem:
@@ -368,7 +390,10 @@ More formally, we consider the following problem:
 	\item \textbf{Input:} for each device, a unique identifier $i$ and a \emph{value} $v_i$ of type $T$ \rev{(possibly obtained through a sensor reading);}
 	\item \textbf{Output:} for each device, a list of clusters to which the device belongs, represented as a map from unique identifiers $l$ of cluster leaders to corresponding cluster summary values $w^l$ of type $S$.
 \end{itemize}
-In order to formally specify the output, we need some further details characterizing what a \emph{cluster} is, how they should be selected, and what is their \emph{summary}. This is attained through the following problem parameters.
+To formally specify the output, 
+ we need some further details characterizing what a \emph{cluster} is, 
+ how they should be selected, and what is their \emph{summary}. 
+ This is attained through the following problem parameters.
 \begin{itemize}
 	\item \textbf{Metric:} a data type $M$ with
 	\begin{itemize}
@@ -393,10 +418,10 @@ According to this description, a candidate cluster $\mathcal{C}$ is a set of dev
  according to the metric given by $d$.
  The summary $w_i$ of such cluster is the repeated aggregation through $f$ of the values $\{v_j : ~ j \in \mathcal{C}\}$.
  Nearby clusters are merged if their summaries are similar according to predicate $p$,
- and in such case, the lowest identifier is selected as the leader of the merged cluster.
+ and in such cases, the lowest identifier is selected as the leader of the merged cluster.
 
 \rev{
-Leaders are used to regulate clusters via aggregate processes and to easily support consistent coordination and decision-making regarding the activity of a cluster.
+Leaders are used to regulating clusters via aggregate processes and to easily support consistent coordination and decision-making regarding the activity of a cluster.
 %
 Notice that agents 
  may belong to multiple clusters:
@@ -409,8 +434,6 @@ Indeed, if a node is in between two phenomena,
  or handle both phenomena.
 }
 %
-
-
 We highlight that we aim to solve this problem by an \emph{adaptive} algorithm,
  that is, a program that is able to handle changes in its input, by periodically and asynchronously updating its internal values.
 
@@ -419,8 +442,10 @@ We highlight that we aim to solve this problem by an \emph{adaptive} algorithm,
 In the evaluation section, we consider a specific instantiation of the \rev{parameters just introduced,}
  for centroid-based clustering on numeric values.
  In this context, the metric is a simple distance on values, so that $d(i, j) = \lvert v_i - v_j \rvert$.
- To prevent the creation of a candidate cluster for every device, the candidate radius $r(i)$ is set to zero whenever $i$ is not a local minimum
- (i.e., has a neighbouring device $j$ such that $v_j < v_i$). If instead $i$ is a local minimum, $r(i)$ is set to a fixed difference value $\theta$.
+ To prevent the creation of a candidate cluster for every device, 
+ the candidate radius $r(i)$ is set to zero whenever $i$ is not a local minimum
+ (i.e., has a neighbouring device $j$ such that $v_j < v_i$). 
+ If instead $i$ is a local minimum, $r(i)$ is set to a fixed difference value $\theta$.
  The values $s(i)$ to be summarized are set to a tuple $[x_i, y_i, v_i, 1]$ of the devices' positions\footnote{We assume that a GPS-like sensor is available.} and values with the number 1,
  with an aggregator function $f$ that is a component-wise sum, so that the overall aggregate of a cluster $\mathcal{C}$ is (eventually) equal to the tuple
  $[\sum_{i \in \mathcal{C}} x_i, \sum_{i \in \mathcal{C}} y_i, \sum_{i \in \mathcal{C}} v_i, \#\mathcal{C}]$ (where $\#\mathcal{C}$ is the actual number of members of cluster $C$).
@@ -446,9 +471,11 @@ Each equation may involve inspecting the state of variables in neighbour devices
  and each state equation can be computed locally in the current device $i$, without remote memory accesses.
 %
 We use $\mathcal{N}(i)$ to denote the set of current neighbours of device $i$, i.e., the set of devices $j$ for which a view of their state is locally available in $i$ (not including $i$ itself).
- The execution of state equations can be performed in asynchronous rounds, as described in \Cref{s:background-fieldcomp}.
+ The execution of state equations can be performed in asynchronous rounds, as described in \Cref{part:background}.
  %
- \rev{In order to showcase the algorithm at work by examples, in the following we consider a network of three interconnected devices $i=0,1,2$, so that $\mathcal{N}(0) = \mathcal{N}(1) = \mathcal{N}(2) = \{0,1,2\}$. We assume that the devices are placed in positions $(x_0, y_0) = (0,0)$, $(x_1, y_1) = (1,1)$, $(x_2,y_2) = (2,0)$ and hold values $v_0 = 2$, $v_1 = 3$, $v_2 = 1$. We will also assume that the parameters are as described in Section \ref{ssec:instantiation}, with $\theta = \gamma = 3$.}
+ \rev{In order to showcase the algorithm at work by examples, in the following we consider a network of three interconnected devices $i=0,1,2$, so that $\mathcal{N}(0) = \mathcal{N}(1) = \mathcal{N}(2) = \{0,1,2\}$. 
+  We assume that the devices are placed in positions $(x_0, y_0) = (0,0)$, $(x_1, y_1) = (1,1)$, $(x_2,y_2) = (2,0)$ and hold values $v_0 = 2$, $v_1 = 3$, $v_2 = 1$. 
+  We will also assume that the parameters are as described in Section \ref{ssec:instantiation}, with $\theta = \gamma = 3$.}
 
 \begin{table}
 \begin{tabular}{clcl}
@@ -484,8 +511,8 @@ Thus, $\mathcal{S}_i$ includes $i$ provided that $r(i) > 0_M$, together with oth
  %
 \rev{In our sample network, the initial value for $\mathcal{S}_i$ in each $i$ will only consider the current device, as information from neighbouring devices is not available yet. Thus, we will have $\mathcal{S}_0 = \{0\}, \mathcal{S}_1 = \{\}, \mathcal{S}_2 = \{2\}$. After convergence, each node will understand itself as possibly belonging to clusters 0 and 2, so that $\mathcal{S}_0 = \mathcal{S}_1 = \mathcal{S}_2 = \{0,2\}$.}
 
-Most of the meta-algorithm computation is repeated for each of the candidate leaders $\ell \in \mathcal{S}_i$. First, a metric $m^\ell_i$ of distance between $\ell$ and $i$ is computed,
- through the following equation (i.e., the \lstinline|gradient| block in field-based computing---cf. \Cref{sec:field-based-programming-model}):
+Most of the meta-algorithm computation is repeated for each of the candidate leaders $\ell \in \mathcal{S}_i$. First, a metric $m^\ell_i$ of the distance between $\ell$ and $i$ is computed,
+ through the following equation (i.e., the \lstinline|gradient| block in field-based computing---cf. \Cref{sec:field-calculus-building-blocks}):
 \[
 m^\ell_i = \begin{cases}
 	0_M & \text{if } \ell = i \\
@@ -502,7 +529,7 @@ p^\ell_i = \begin{cases}
 \end{cases}
 \]
 \rev{In our example, we have that $p^0_1 = 0$, $p^2_1 = 2$, $p^2_0 = p^0_2 = 1$ while $p^0_0$ and $p^2_2$ are undefined.}
-Through it, partial summaries $t^\ell_i$ can be computed (\lstinline|C| block in field-based computing---cf. \Cref{sec:field-based-programming-model}):
+Through it, partial summaries $t^\ell_i$ can be computed (\lstinline|C| block in field-based computing---cf. \Cref{sec:field-calculus-building-blocks}):
 \[
 t^\ell_i = \text{reduce}(\{s(i)\} \cup \{t^\ell_j :~ j \in \mathcal{N}(i) \text{ and } p^\ell_j = i\}, f)
 \]
@@ -570,7 +597,7 @@ return result.map(x => { x._2._1 -> x._2._2 })
 \end{lstlisting}
 \end{figure}
 
-This meta-algorithm is presented as \scafi{} pseudo-code in \Cref{fig:pseudocode}, using \scafi{} library functions \lstinline|gradient|, \lstinline|C|, and \lstinline|broadcast|---cf. \Cref{s:background-fieldcomp}.
+This meta-algorithm is presented as \scafi{} pseudo-code in \Cref{fig:pseudocode}, using \scafi{} library functions \lstinline|gradient|, \lstinline|C|, and \lstinline|broadcast|---cf. \Cref{sec:field-calculus-building-blocks}.
 %
 \rev{Notice that since clusters are represented as aggregate processes, and aggregate processes define ``scopes'' for collective computations, the participation of an agent in an aggregate process has by itself the information about the cluster membership; so, collective tasks may be assigned to any cluster, and these will be inherently played by all the members of that cluster.
 }
@@ -1201,17 +1228,10 @@ For instance, a prominent related macro approach to swarm programming
 
 \subsection{Related Field-based Algorithms} %% TODO THESIS -- undestand if something might be introduced before this discussion or it could be ok to put everything here!! 
 \label{s:rw:related-ac-algorithms}
-The field-based computing approach adopted has been applied for
- programming several swarm intelligence algorithms
- such as robust distance estimation (\emph{gradient}),%~\cite{DBLP:conf/saso/AudritoCDV17},
- leader election~\cite{DBLP:conf/saso/MoBD18},
- distributed data collection~\cite{audrito2021jcee-distributed-collection},
- and team formation and coordination~\cite{DBLP:journals/eaai/CasadeiVAPD21}.
-
 Field-based computing has the peculiar ability to capture collective behaviours as functions operating on fields
 and to compose them together as ``building blocks'' to address problems of increasing complexity~\cite{DBLP:journals/jlap/ViroliBDACP19}.
 %
-Of particular relevance for the present discussion is the implementation of the \emph{SCR (Self-Organising Coordination Regions)} pattern in~\cite{DBLP:journals/fgcs/PianiniCVN21}, where three building blocks are composed to support control and monitoring of a distributed system: the sparse-choice \emph{S block} (used for leader election); the generalized gradient \emph{G block} (for information broadcasting along gradient fields); and the information collection \emph{C block}.
+Of particular relevance for the present discussion is the implementation of the \emph{SCR (Self-Organising Coordination Regions)} pattern.
 %
 Most specifically, the SCR pattern can be denoted as a feedback chain S-G-C-G: leaders are elected (S); then, a gradient from leaders builds the communication structure (G); then, data from members (indirectly defined by the information path towards a leader) is collected towards leaders (C); then, data from leaders is propagated back to the members of the regions (G).
 %
@@ -1221,7 +1241,7 @@ Roughly, the sensing-based clustering algorithm
  covered in this work could replace the initial C-G composition
  that determines the system regions.
 
-Similarly to a clustering algorithm, 
+Similar to a clustering algorithm, 
  the S block~\cite{DBLP:conf/saso/MoBD18} provides a distributed mechanism to elect leaders from a set of candidates, 
  and to assign each remaining {\em user} node to a leader, 
  thus partitioning the system into regions. 
@@ -1232,12 +1252,8 @@ The approach presented here is different in several respects:
 %
  second, each candidate cluster head spawns an aggregate process to recruit other nodes within the cluster; 
 % 
- finally, the other nodes can join more than one cluster, based on the similarity of their sensed values with the ones sensed by leaders.
-
-%% However, few solutions have been devised for effective creation of clusters,
-%%  often based on combining space-based  and : a gradient field is created with G by considering as sources the leaders given by S, and any given device in the system ``belongs'' to the cluster defined by the distance field pointing to the closest leader.
-%% %
-%% However, such a S+G solution is not very effective in general as state-of-the-art solutions for the S block are subject to various issues~\cite{DBLP:journals/jlap/ViroliBDACP19} and, most importantly, it does not address the sensing-driven clustering problem.
+ finally, the other nodes can join more than one cluster, 
+ based on the similarity of their sensed values with the ones sensed by leaders.
 
 \section{Final Remarks}
 \label{s:conc}
@@ -1245,24 +1261,20 @@ The approach presented here is different in several respects:
 %\meta{ASSIGNED TO: Ferruccio / Mirko}
 
 In this chapter, we precisely define and address
- the dynamic sensing-based mobile swarm clustering problem.
+ the dynamic sensing-based mobile swarm clustering problem---an essential task in the context of \ac{cpsw}, to support the coordination of collective tasks based on environmental sensing data.
 %
 Most specifically,
- we use the field-based paradigm
- to develop a novel configurable meta-algorithm
+ we use our language-based approach centred on aggregate computing to devise 
+ a novel configurable meta-algorithm
  promoting self-organised clustering in a swarm
  of neighbouring-interacting agents.
 %
-The algorithm is evaluated on a set of synthetic environment configurations.
+The algorithm is evaluated on a set of synthetic environment configurations
+ in the context of swarm robotics---a typical application domain for \ac{cpsw}.
 %
 In particular, we show that a swarm can autonomously
  create clusters reflecting the underlying dynamics of the  perceptible target phenomenon in the environment,
- and is able to deal with a certain degree of change in the swarm topology and environment.
-%
-In order to perform the evaluation, 
- we have implemented our algorithms using the \scafi{} Scala framework for field-based computing.
-%
-This algorithm could serve as a foundational solution for organizing collective tasks based on environmental sensing data in the context of \ac{cpsw}, as discussed in \Cref{chap:cpsw:vision}.
+ and can deal with changes in the swarm topology and environment.
 %
 The subsequent chapter will introduce a general programming pattern for distributed sensing and actuation in Cyber-Physical Social Wearable (\ac{cpsw}) systems. 
  This pattern aims to provide a comprehensive solution for addressing the challenges associated with \ac{cpsw} programming.
