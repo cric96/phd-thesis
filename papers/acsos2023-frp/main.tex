@@ -27,7 +27,7 @@ This problem can be reduced to the definition of the control program
  that each agent has to execute~\cite{DBLP:journals/tib/MartiusH12}.
 %
 
-In this work, we focus on the \emph{programming language-based} approach to self-organization,
+As our language-based approach, in this chapter we focus on an approach to self-organization,
  where the developer writes the self-organising control program
  using a suitable \emph{macroprogramming language}~\cite{casadei2023macro,DBLP:journals/jisa/JuniorSBP21} (i.e., one aiming at expressing the macro-level behaviour of a system), be it general-purpose or domain-specific (e.g., explicitly tailored to robotic swarms~\cite{DBLP:journals/swarm/BrambillaFBD13} or wireless sensor networks~\cite{DBLP:journals/csur/MottolaP11}).
 %
@@ -64,17 +64,13 @@ through an open-source, permanently available artefact with reproducible simulat
 \end{itemize}
 %
 The result is a functional reactive self-organization programming model, 
- relying on functional composition of behaviours,
+ relying on the functional composition of behaviours,
 and whereby each sub-expression is amenable to independent scheduling:
  overall, we maintain the same expressiveness and benefits of aggregate programming
- while enabling significant improvements in terms of scheduling controllability, flexibility in the sensing/actuation model, and execution efficiency. %sec:contrib
+ while enabling significant improvements in terms of scheduling controllability, 
+ flexibility in the sensing/actuation model, and execution efficiency. %sec:contrib
  
 \section{Background and Motivation}\label{acsos2023-frp:sec:background}
-
-%\meta{
-%budget: 1 pages
-%}
-
 In this section,
  we review approaches for self-organization engineering (\Cref{acsos2023-frp:sec:background:selforg}),
  and set the goal of combining the benefits of reactive approaches
@@ -87,31 +83,24 @@ Then, we provide background on \ac{frp} (\Cref{acsos2023-frp:sec:background:frp}
 
 \subsection{Self-organization Engineering Approaches}
 \label{acsos2023-frp:sec:background:selforg}
-
-%\section{Related Work}
-
-%\meta{Plan: we may briefly recall the kinds of approaches as per the Intro. And then cover a few approaches for programming self-org, such as: TOTA as representative for reactive models, and AC as representativ
-
 Among reactive approaches is \emph{Tuples On The Air (TOTA)}~\cite{tota},
  a programming model for decentralized peer-to-peer networks of mobile nodes or agents.
 %
 It uses \emph{tuples} to represent context information 
  and mediate interactions between agents.
 %
-In particular, tuples are \emph{reactive}: they are associated with propagation rules that
-describe how tuples should be propagated to neighbours (hop-by-hop) in a network and how the
-content of tuples should change during propagation
+In particular, tuples are \emph{reactive}: 
+ they are associated with propagation rules that describe how tuples 
+ should be propagated to neighbours (hop-by-hop) in a network and how the
+ content of tuples should change during propagation
  or in reaction to environmental events. 
 %
 The agents behave and coordinate
  through operations on tuples (e.g., insertion, read, removal, waiting) or by subscribing to tuple-related events.
 %
-Other reactive approaches exist, such as the \emph{Higher-Order Chemical Language (HOCL)}\cite{DBLP:journals/ijuc/BanatreFR07},
+Other reactive approaches exist, 
+ such as the \emph{Higher-Order Chemical Language (HOCL)}\cite{DBLP:journals/ijuc/BanatreFR07},
  but they feature quite a large abstraction gap.
-%% HOCL =
-%% supports expressing self-organising computations
-%% in terms of chemical solutions
-%% consisting of \emph{molecules} (data) interacting according to \emph{reactive rules}.
 %
 On the other side, there are programming models 
  based on a \emph{round-based} execution model
@@ -129,14 +118,11 @@ Though it might be acceptable for predictable patterns of environmental change,
   this becomes largely suboptimal for highly variable dynamics.
 %
 Indeed,
-the round-based approach seems to be a legacy of imperative languages or solutions featuring limited compositionality.
-Instead, more compositional languages like, e.g., aggregate computing languages~\cite{aggregatecomputing,DBLP:journals/nca/BachrachBM10,DBLP:conf/ecoop/AudritoCDSV22} and Buzz~\cite{DBLP:conf/iros/PinciroliB16},
+ the round-based approach seems to be a legacy of imperative languages or solutions featuring limited compositionality.
+ Instead, more compositional languages like, e.g., aggregate computing languages~\cite{aggregatecomputing,DBLP:journals/nca/BachrachBM10,DBLP:conf/ecoop/AudritoCDSV22} and Buzz~\cite{DBLP:conf/iros/PinciroliB16},
  allow building complex self-organising behaviour
  by composing \emph{blocks} of simpler self-organising behaviours.
 % reactivity also makes sense for self-organisation,
-% because the idea is to steer behaviour
-% as a response to (local) change.
-%
 Therefore, each individual block of behaviour 
   is \emph{potentially independent of others (i.e., independently schedulable)},
   with data dependencies arising from each composition.
@@ -145,25 +131,21 @@ A reactive extension of aggregate computing has been proposed in~\cite{DBLP:jour
   based on manually specifying dependencies and reactive policies (with configurable triggers) among different aggregate computations.
 %
 Instead,
-a more practical approach could be
-decoupling programs from the specification of reactive policies
-and letting them only define the data dependencies between program portions.
+ a more practical approach could be
+ decoupling programs from the specification of reactive policies
+ and letting them only define the data dependencies between program portions.
 %
 The most suitable programming approach for this
  is the \emph{functional reactive programming} paradigm~\cite{DBLP:journals/csur/BainomugishaCCMM13}, briefly introduced in the following.
 %
-%\meta{RC: we might provide a table to show the pros \& cons of the discussed reactive and proactive approaches}
-%\meta{MV: possibly, not strictly needed I feel}
-
 \subsection{Functional Reactive Programming}
 \label{acsos2023-frp:sec:background:frp}
 
-\emph{Reactive programming}~\cite{DBLP:journals/csur/BainomugishaCCMM13} is a paradigm suitable for developing event-driven applications,
- leveraging abstractions to express (relationships between) time-varying values and 
- automatically handle the propagation of change
+\emph{Reactive programming}~\cite{DBLP:journals/csur/BainomugishaCCMM13} 
+ is a paradigm suitable for developing event-driven applications,
+ leveraging abstractions to express (relationships between) 
+ time-varying values and automatically handle the propagation of change
 (cf.\ the paradigmatic example of spreadsheets~\cite{blackheath2016frp-sodium}).
-%
-%It is very much related to the \emph{synchronous dataflow programming} paradigm~\cite{DBLP:journals/pieee/LeeM87} for concurrent/parallel systems.
 %
 Reactive programming is often combined with the functional programming paradigm~\cite{DBLP:journals/csur/BainomugishaCCMM13,blackheath2016frp-sodium}
 in the so-called \ac{frp}.
@@ -395,9 +377,7 @@ Also, inbound and outbound reactivity can be regulated by throttling, i.e.,
 \subsection{Programming Abstractions and Primitives}
 \label{acsos2023-frp:programming-constructs}
 
-%\meta{rep/LOOP, nbr, branch-- introduced through simple examples (see e.g. the progression of examples from~\cite{DBLP:journals/lmcs/AudritoCDV23}: counting rounds (here, we should provide a frequency explicitly), counting the number of neighbours or getting the mean of a value from neighbourhood}
-
-We adopt a \emph{macroprogramming} approach\cite{casadei2023macro},
+In this thesis we adopt the general system model devised in \Cref{part:background},
  where a single program
  is used to express the collective behaviour
  of the entire system of devices.
@@ -413,11 +393,6 @@ Specifically,
  (iii) the environment dynamics (which will affect neighbourhoods and the data perceived by sensors).
 
 %
-%All the constructs of the \texttt{Language} deal with \texttt{Flow}s, a type which is designed to encapsulate aggregate (sub-)computations as a dependency graph (in a way that's closely related to the dependency graph of an FRP engine).
-%%
-%A \texttt{Flow} is essentially a function that takes a path and a \texttt{Context} and returns a cell of \texttt{Export}s, possibly depending on the exports of other \texttt{Flow}s recursively.
-%%
-%The path represents the point in the evaluation tree where that \texttt{Flow} is placed, while the \texttt{Context} places the computation inside some device.
 
 Since \ac{langname} is implemented as a \ac{dsl} internal (or embedded) in Scala,
  Scala types and features (e.g., functions)
@@ -1398,13 +1373,14 @@ Indeed, in \ac{langname},
  turns into a distributed computation dependency graph,
  where distinct sub-computations may execute independently 
  depending on whether their context has changed.
+ %
+This represents a seminal advancement in the field of \ac{cpsw} engineering, 
+ as it enables both the expression of self-organizing behaviours--
+ crucial for the development of robust collective applications--
+ and fine-grained control over computational scheduling—key for optimizing the efficiency of these applications.
 
-\begin{comment}
-In future work,
- we would like to formalize a core calculus capturing behaviour and properties of \ac{langname} (similarly to field calculi and related formal languages \cite{vbdacp:ac:survey:jlamp,DBLP:conf/ecoop/AudritoCDSV22,DBLP:journals/lmcs/AudritoCDV23}),
- and explore how to support flexibility in actuation models (cf. swarm robotics).
-Also, it would be interesting 
-  to study the deployment of \ac{langname} applications, e.g.\ by considering how reactive dynamics and consumption profiles may interact with application partitioning strategies like the pulverization model~\cite{CPPVW-FI2020} and deployment options.
-\end{comment}
-
-%\printbibliography
+These chapters serve as a bridge between the complex problem domain of \ac{cpsw} and practical solution engineering. 
+ However, the question of how to effectively deploy such intricate behaviours within contemporary complex IT infrastructures remains unresolved.
+%
+In the final chapter, we explore a potential approach to address this challenge, 
+ melding the innovative aspects of pulverized architecture with multi-tier programming.

@@ -26,7 +26,7 @@ Complex patterns can emerge through the interaction of simple agents~\cite{bonab
 % \emph{field-based coordination}~\cite{DBLP:journals/corr/Lluch-LafuenteL16,Mamei:2004a}, and \emph{aggregate computing}~\cite{DBLP:journals/jlap/ViroliBDACP19}. 
  
 %
-Though a number of approaches and languages have been proposed 
+Though several approaches and languages have been proposed 
  for specifying or programming swarm behaviour~\cite{Meld2007,%
 DBLP:conf/icra/CarrollNS21,%
 paros,%
@@ -38,25 +38,30 @@ DBLP:conf/iros/PinciroliB16,%
 DBLP:conf/iros/YiDLD0WY20},
  a key feature that is generally missing or provided only to a limited extent
  is \emph{compositionality},
- namely the ability of combining blocks of simple swarm behaviour to construct swarm systems of increasing complexity in a controlled/engineered way.
+ namely the ability to combine blocks of simple swarm behaviour to construct swarm systems of increasing complexity in a controlled/engineered way.
 %
-Additionally, most of existing approaches tend to be pragmatic, not formally-founded and quite ad-hoc: they 
- enable construction of certain types of swarm applications
- but with limited support for analysis and principled design of complex applications (e.g.~\cite{lima2018dolphin,paros,DBLP:conf/iros/PinciroliB16,DBLP:conf/icra/CarrollNS21}).
+Additionally, most existing approaches tend to be pragmatic, not formally founded and quite ad-hoc: 
+ they enable the construction of certain types of swarm applications
+ but with limited support for analysis and principled design of complex applications 
+ (e.g.~\cite{lima2018dolphin,paros,DBLP:conf/iros/PinciroliB16,DBLP:conf/icra/CarrollNS21}).
 %
-Exceptions that provide a formal approach exist, but they are typically overly abstract, requiring additional effort to actually code and execute swarm control programs~\cite{DBLP:journals/csur/LuckcuckFDDF19}.
+Exceptions that provide a formal approach exist, 
+ but they are typically overly abstract, 
+ requiring additional effort to code and execute swarm control programs~\cite{DBLP:journals/csur/LuckcuckFDDF19}.
 
-In this chapter we introduce a formally-grounded \ac{api},
+In this chapter, we introduce a formally-grounded \ac{api},
  expressive and practical enough
  to concisely and elegantly encode a wide array of swarm behaviours.
 %
-This is based on the field-based coordination paradigm~\cite{DBLP:journals/jlap/ViroliBDACP19} and the field calculus~\cite{AVDPB-TOCL2019}:
-each block of swarm behaviour is captured by a purely functional transformation of sensing fields into actuation fields including movement vectors,
-and such a transformation declaratively captures the state/computation/interaction mechanisms necessary to achieve that behaviour.
+In the eye of the language-based approach, we based this design on aggregate computing:
+ each block of swarm behaviour is captured by a purely functional transformation of sensing fields into actuation fields including movement vectors,
+ and such a transformation declaratively captures the state/computation/interaction mechanisms necessary to achieve that behaviour.
 %
-Practically, such specifications can be programmed as Scala scripts in the \scafi{} framework \cite{DBLP:journals/softx/CasadeiVAP22}, a reference implementation for field-based coordination and aggregate computing.
+Practically, such specifications can be programmed as Scala scripts in the \scafi{} framework \cite{DBLP:journals/softx/CasadeiVAP22}, 
+ a reference implementation for field-based coordination and aggregate computing.
 %
-Accordingly, we present \MacroSwarm{}, a \scafi{}-based framework to help programming with swarm behaviours by providing a set of blocks covering key swarming patterns as identified in literature~\cite{DBLP:journals/swarm/BrambillaFBD13}: flocking, leader-follower behaviours, morphogenesis, and team formation.
+Accordingly, we present \MacroSwarm{}, 
+ a \scafi{}-based framework to help programming with swarm behaviours by providing a set of blocks covering key swarming patterns as identified in literature~\cite{DBLP:journals/swarm/BrambillaFBD13}: flocking, leader-follower behaviours, morphogenesis, and team formation.
 %
 To evaluate \MacroSwarm{}, we show a use case that leverage our \ac{api} 
  in a simulated environment based on the Alchemist multi-agent system simulator. 
@@ -87,7 +92,9 @@ By contrast,
  and the resulting execution is decentralized
  (e.g., based on interaction with neighbours, like in Meld~\cite{Meld2007}).
 %
-In chaper, we focus on \emph{decentralized} solutions, for they support resilience and scalability by avoiding single-points-of-failure and bottlenecks.
+In this chapter,  
+ we focus on \emph{decentralized} solutions, 
+ since they support resilience and scalability by avoiding single points of failure and bottlenecks.
 
 In the general context of behaviour-based swarm design,
  researchers have pointed out various issues~\cite{DBLP:journals/swarm/BrambillaFBD13,DBLP:journals/scirobotics/TheraulazT20}
@@ -138,34 +145,13 @@ Finally, we observe in the literature
  that are more usable.
 %
 In a recent survey on formal specification methods for swarm robotics~\cite{DBLP:journals/csur/LuckcuckFDDF19}
- it is reported that a major limitation lies in (i) the tooling and (i) the formalization of the ``last step'' of passing from a formal model to program code.
+ it is reported that a major limitation lies in (i) the tooling and (ii) the formalization of the ``last step'' of passing from a formal model to program code.
 %
-Hence, we seek here for an approach that combines the benefits of formal methods and the pragmatism of concrete \acp{dsl}.
+Hence, we seek here an approach that combines the benefits of formal methods and the pragmatism of concrete \acp{dsl}.
 
 In summary,
- this work is motivated by the need of an
+ this work is motivated by the need for an
  approach for \emph{formal-yet-practical top-down behaviour-based design of decentralized swarm behaviour}.
-
-
-%
-%\meta{Moreover, interestingly, it is not necessary to understand the primitives of the field calculus to use higher-level functions from fields to fields.}
-
-%% TODO! move this discussionn at the begginig of the thesis, perhaps in the same place that Mirko suggest
-\begin{comment}
-\section{Aggregate computing for swarm programming}
-%
-To motivate why aggregate computing appears to be a good match for swarm programming, we briefly explain how it helps to address the challenges identified, as studied in previous papers (presented in \Cref{coordination2023-macro:sec:context}).
-%
-\begin{itemize}
-\item \emph{Top-down behaviour-based design.} It is promoted by the \emph{compositionality} and \emph{collective stance} of aggregate computing, supported by the functional paradigm and the field abstraction~\cite{AVDPB-TOCL2019,DBLP:conf/ecoop/AudritoCDSV22}.
-\item \emph{Scalability.} Since execution is fully decentralized and asynchronous, the approach is scalable to hundreds, thousands, and even more devices~\cite{DBLP:journals/eaai/CasadeiVAPD21}.
-\item \emph{Formal approach.} Aggregate computing and \scafi{} are based on the field calculus~\cite{ACDV-LMCS2023,AVDPB-TOCL2019}, which enables formal analysis of programs and proofs of interesting properties like self-stabilisation~\cite{DBLP:journals/tomacs/ViroliABDP18}, universality~\cite{DBLP:conf/coordination/AudritoBDV18}, and others~\cite{DBLP:journals/jlap/ViroliBDACP19}.
-\item \emph{Pragmatism.} Promoted by layers of abstractions, this is witnessed by open-source, maintained, concrete software artefacts like the \scafi{} \ac{dsl}~\cite{DBLP:journals/softx/CasadeiVAP22},  simulation platforms like Alchemist~\cite{DBLP:journals/jos/PianiniMV13} and {\sc{}\scafi{} Web}~\cite{DBLP:conf/coordination/AguzziCMPV21}\footnote{\url{https://scafi.github.io/web/}}, and the possibility to devise libraries of high-level functions~\cite{DBLP:journals/eaai/CasadeiVAPD21}.
-\item \emph{Operational flexibility.} Concrete aggregate computing systems can be deployed and operated using different architectural styles~\cite{DBLP:journals/fi/CasadeiPPVW20} and execution policies~\cite{DBLP:journals/lmcs/PianiniCVMZ21}, supporting different technological and resource requirements.
-\end{itemize}
-%
-%The claims are properly backed by previous research: the reader is encouraged to look those references up for details.
-\end{comment}
 
 \section{\MacroSwarm{}}
 \label{coordination2023-macro:sec:contrib}
@@ -177,10 +163,9 @@ To motivate why aggregate computing appears to be a good match for swarm program
   represent the main modules of the library.
   }\label{coordination2023-macro:fig:architecture}
 \end{figure}
-
 This section presents the \MacroSwarm{} approach and \ac{api}.
 %
-In particular, we describe its overall architecture, and the main blocks exposed by the \ac{api}
+In particular, we describe its overall architecture and the main blocks exposed by the \ac{api}
  (summarized in \Cref{coordination2023-macro:fig:architecture}), 
  which support the specification of a wide range of high-level swarm behaviours. 
 %
@@ -223,7 +208,7 @@ In addition to that simple logic,
  there are movements based on GPS like \lstinline|goTo| 
  (produces a velocity vector that eventually moves the system to sink at one single point)
  and \lstinline|explore| 
- (produces a velocity vector that let the system explore a rectangle defined through \lstinline|minBound| and \lstinline|maxBound|).
+ (produces a velocity vector that lets the system explore a rectangle defined through \lstinline|minBound| and \lstinline|maxBound|).
 %
 The last one is based on temporal blocks, 
   like \lstinline|maintainTrajectory| and \lstinline|maintainUntil|.
@@ -238,7 +223,7 @@ This module also exposes an \lstinline|obstacleAvoidance| block (\Cref{coordinat
 
 Even if these blocks are quite simple, 
  it is still possible to combine them to create interesting behaviours. 
-For instance, program 
+For instance, the program 
 \begin{lstlisting}
 (maintainVelocity(browian()) + obstacleAvoidance(sense("obs"))).normalize
 \end{lstlisting}
@@ -246,10 +231,8 @@ expresses a collective behaviour in which the nodes will explore the environment
  while avoiding any obstacles perceived through a sensor. 
 Notice how the composition is achieved by simply summing the computational fields produced by the sub-blocks.
 %
-Expression \lstinline|v.normalize| yields \lstinline|v| as a unit vector (of length 1), while keeping the same direction---useful when combining several vectors together.
-% since we want to keep the direction of the vector but we want to reduce its magnitude.
-%% @metaphori and @mviroli it makes sense to have a table with the blocks and a short description of them?
-%
+The expression \lstinline|v.normalize| yields \lstinline|v| as a unit vector (of length 1), while keeping the same direction---useful when combining several vectors together.
+%%
 A summary of the blocks exposed by this module is reported in the following listing:
 \begin{lstlisting}
 // Movement library
@@ -311,7 +294,6 @@ Therefore, the flocking blocks accept a ``query'' strategy towards a variable ne
     aggregate computing communication by spawning 
     an aggregate process for each node that expands itself within the range passed.
 \end{itemize}
-
 The flocking models are typically described 
  by an iterated function in which the velocity at time $t+1$ depends on the velocity at time $t$.
 Taking as an example the Vicsek rule, it is described as:
@@ -328,25 +310,20 @@ This is because the previous velocities
  may be influenced by other factors, 
  such as constant movements or a target position. 
 %
-%To express changes in the computational field 
-% in the aggregate computing context, the \lstinline|rep| operator 
-% can be used (refer to \Cref{coordination2023-macro:sec:background} for more details). 
 Typical usage of this operator follows the following schema:
 \begin{lstlisting}
 rep(initialVelocity) { oldVelocity => flockingOperator(oldVelocity, ..) }  
 \end{lstlisting}
 For example, 
  the following program describes a collective movement 
- in which the nodes try to reach the position \texttt{(x,y)} while maintaining a distance of \texttt{k} meters from one another:
+ in which the nodes try to reach the position \texttt{(x,y)} 
+ while maintaining a distance of \texttt{k} meters from one another:
 \begin{lstlisting}
 rep(Point2D.Zero) {
   v => (goTo(Point2D(x, y)) + 
        separation(v, OneHopNeighbourhoodWithinRange(k))).normalize
 }
 \end{lstlisting}
-%Until this level, 
-% the self-organizing blocks of aggregate computing 
-% are used only within the extended neighbourhood (through the aggregated processes).
 
 \subsection{Leader-based blocks}\label{coordination2023-macro:subsec:leader}
 These blocks allow agents to follow a designated leader.
@@ -358,12 +335,11 @@ In the context of aggregate computing,
  and \lstinline|false| for non-leaders. 
 %
 Leaders can be predetermined (i.e., nodes with certain characteristics), 
- virtual (i.e., nodes that do not actually exist in the system but are simulated for collective movement steering),
+ virtual (i.e., nodes that do not exist in the system but are simulated for collective movement steering),
  or chosen in space (e.g., using the \lstinline|S| block---see \Cref{sec:field-based-programming-model}). %, which seeks to create spatial partitions of the system). 
 % 
 A leader can be thought of as creating an \emph{area of influence}, affecting the actions of its followers.
-%This leader creates a field of influence in which actions chosen by it can be taken.
-
+%
 Currently, we have identified \lstinline|alignWithLeader| and \lstinline|sinkAt| (\Cref{coordination2023-macro:fig:towards-leader}) 
  as essential blocks. 
 %
@@ -383,9 +359,7 @@ These blocks are useful for higher-level blocks,
 \subsection{Team formation blocks}\label{coordination2023-macro:subsec:team}
 These blocks allow agents to form \emph{teams} or sub-groups within the swarm,
  useful e.g. for work division
- or situations requiring intervention by few agents.
-% 
-%Team formation is essential in cases where work division  is necessary or when specific situations arise. 
+ or situations requiring intervention by a few agents.
 % 
 In general, the formation of a team creates a ``split'' in the swarm logic, 
  conceptually creating multiple swarms with potentially different goals (cf. \Cref{coordination2023-macro:fig:team}).
@@ -403,13 +377,16 @@ creates two groups, each of which follows a certain velocity dictated by the lea
 Other times, one needs to create teams based on the spatial structure of the network or when certain conditions are met. 
 %
 The \lstinline|teamFormation| block supports this scenario. %% todo ad reference to the last listing 
-By internally using \lstinline|S|, it allows for the creation of teams based on certain spatial constraints expressed through parameters \lstinline|intraDistance| (i.e., the distance between team members) and
- \lstinline|targetExtraDistance| (i.e., the size of the leader's area of influence). 
+By internally using \lstinline|S|, 
+ it allows for the creation of teams based on certain spatial constraints expressed through parameters \lstinline|intraDistance| (i.e., the distance between team members) 
+ and \lstinline|targetExtraDistance| (i.e., the size of the leader's area of influence). 
 %
-It is also possible to create teams based on predetermined leaders, denoted explicitly by Boolean fields. %(instead of leveraging \lstinline|S| under the hood).
+It is also possible to create teams based on predetermined leaders, 
+ denoted explicitly by Boolean fields. %(instead of leveraging \lstinline|S| under the hood).
 %
-Moreover, since team formation may take time to complete, or require conditions to be met (e.g., that at least $N$ members are present, or that the minimum distance between all nodes is less than a certain threshold),
- we also parameterise \lstinline|teamFormation| by a \lstinline|condition| predicate. 
+Moreover, since team formation may take time to complete, 
+ or require conditions to be met (e.g., that at least $N$ members are present, or that the minimum distance between all nodes is less than a certain threshold),
+ we also parameterize \lstinline|teamFormation| by a \lstinline|condition| predicate. 
  %or that the number of nodes near the leader is greater than 10, %etc. 
 %
 An example of built-in predicate is \lstinline|isTeamFormed|, which verifies that each node under 
@@ -440,19 +417,7 @@ team.insideTeam{ leader =>
   }
 }
 \end{lstlisting}
-%In the following, there is the complete API for this layer:
-%\begin{lstlisting}
-%// Team formation API
-%def teamFormation(
-%  intraDistance: Double, extraDistance: Double, 
-%  condition: Boolean => Boolean // leader field from the condition field
-%): Team
-%def isTeamFormed(source: Boolean, targetDistance: Double, necessary: Int): Boolean
-%// Team abstraction
-%class Team(leader: ID, formed: Boolean, nodeVelocity: Point3D) {
-%  def insideTeam(velocityGenerator: ID => Point3D): Point3D
-%}
-%\end{lstlisting}
+%
 
 \begin{figure}[t]
 \centering
@@ -494,21 +459,17 @@ team.insideTeam{ leader =>
 \end{figure}
 
 \subsection{Pattern formation blocks}\label{coordination2023-macro:subsec:pattern}
-%they enable agents to create complex spatial patterns. 
 Team formation blocks can be used to create groups of agents with certain characteristics.
 %
 However, sometimes we are also interested in the \emph{spatial structure} of the group. 
 %
-In swarm behaviours, the spatial structures of the teams can be instrumental for performing certain tasks (e.g., coverage or transportation tasks).
+In swarm behaviours, the spatial structures of the teams can be instrumental in performing certain tasks (e.g., coverage or transportation tasks).
 % 
 In \MacroSwarm{} some of the most idiomatic spatial structures are available. 
-% have been implemented to show how they can be easily integrated into this framework. 
-%
 
-The implementation is as follows. First, the formation of structures is based on the presence of a leader that
- %it is not a must since there are other approaches in which this is done in a distributed way,
- %but for simplicity, we chose to use a leader to perform this coordination task.  
-collects the hop-by-hop distances 
+The implementation is as follows. 
+ First, the formation of structures is based on the presence of a leader that
+ collects the hop-by-hop distances 
  of their followers (leveraging \lstinline|G| and \lstinline|C|) and
  sends them a direction in which they should go to form the required structure (using \lstinline|G|).
 
@@ -519,7 +480,6 @@ The structures currently supported (\Cref{coordination2023-macro:fig:formations}
 Additionally, it is assumed that the leader has his own speed logic. 
  In this way,
  the group will follow the leader maintaining the chosen structure. 
-%\meta{Here we can put a figure that summarizes the relation between the blocks and also with the standard AC blocks.}
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.9\textwidth]{papers/coordination2023-macro/images/shapes.png}
@@ -530,8 +490,7 @@ Additionally, it is assumed that the leader has his own speed logic.
    \label{coordination2023-macro:fig:formations}
 \end{figure}
   
-\subsection{Swarm Planning blocks}\label{coordination2023-macro:subsec:planner} %% I dunno if we wanna discuss this
-
+\subsection{Swarm Planning blocks}\label{coordination2023-macro:subsec:planner} 
 With the previous blocks available, there is a need for a handy mechanism to express a series of \emph{plans} that 
  change over time and move the swarm towards different targets. 
 %
@@ -570,7 +529,6 @@ For example, \MacroSwarm{} enables describing a swarm behaviour where:
   \item a group of nodes gathers around a leader,
   \item the leader brings the entire group towards the \lstinline|goalOne|,
   \item the leader brings the entire group towards the \lstinline|goalTwo|.
-
 \end{enumerate}
 %
 This can be described using the following code:
@@ -599,16 +557,21 @@ In our scenario, we want a fleet of drones to patrol a spatial area.
 % 
 In the area, dangerous situations may arise (e.g., a fire breaks out, a person gets injured, etc.). 
 %
- In response to these, a drone designated as a \emph{healer} 
- must approach and resolve them. %how this should be resolved is beyond the scope of this case study). 
+In response to these, a drone designated as a \emph{healer} 
+ must approach and resolve them. 
 %
 Exploration must be carried out in groups composed of \emph{at least} one 
  healer and several \emph{explorers}, who will help the healer identify alarm situations.
 
 \subsubsection{Goal}
-The goal of the proposed case study is to demonstrate the effectiveness of the proposed \ac{api} in terms of \emph{expressiveness} (i.e., the ability to describe complex behaviours easily) and \emph{correctness} (i.e., the described behaviour collectively does what is expressed). 
+The goal of the proposed case study is to demonstrate the effectiveness of the proposed \ac{api} in terms of \emph{expressiveness} 
+ (i.e., the ability to describe complex behaviours easily) and 
+ \emph{correctness} (i.e., the described behaviour collectively does what is expressed). 
 %
-For the first point, since it is a qualitative metric, we will show the development process that led to the implementation of the produced code, demonstrating its ease of understanding. 
+For the first point, 
+ since it is a qualitative metric, 
+ we will show the development process that led to the implementation of the produced code, 
+ demonstrating its ease of understanding. 
 %
 For the second point, 
  since deploying a swarm of drones is costly, 
@@ -617,14 +580,11 @@ For the second point,
  and quantitatively 
  (i.e., extracting the necessary data and computing metrics that allow us to understand if the system behaves as it should).
 %
-%The area to be monitored is a square 1000x1000 meters in size. 
-%
-
 \subsubsection{Setup}
 Initially, 50 explorers and 5 healers are randomly positioned in an area of $1 km^2$. 
  Each drone has a maximum speed of approximately 20 km/h and a communication range of 100 meters.
 %
-The alarm situations are randomly generated at different times %every minute 
+The alarm situations are randomly generated at different times
  within the spatial area in a $[0,50]$ minutes time-frame. 
 %
 % After 50 minutes, no more alarm situations will be generated. 
@@ -632,7 +592,6 @@ The alarm situations are randomly generated at different times %every minute
 Each simulation run lasts 90 minutes, 
  during which we expect the number of alarm situations to reach a minimum value.
 The node should form teams of at least one healer and several explorers, maintaining a distance of at least 50 meters between the node and the leader
-
 \subsubsection{Implementation details}
 \begin{figure}[t]
 \begin{subfigure}{0.29\textwidth}
@@ -660,11 +619,10 @@ The node should form teams of at least one healer and several explorers, maintai
  afterwards, the teams assume a spatial formation (circular, in this case);
  finally, the teams start exploring the overall area.}\label{coordination2023-macro:fig:scenario}
 \end{figure}
-
 To structure the desired swarm behaviour, 
  we break the problem into parts:
 \begin{enumerate}
-  \item the swarm must split into teams regulated by a healer, who works as a \emph{leader} %in which at least one leader is present 
+  \item the swarm must split into teams regulated by a healer, who works as a \emph{leader} 
    (\Cref{coordination2023-macro:fig:team-formation});
   \item teams must assume a spatial formation promoting the efficiency of the exploration (\Cref{coordination2023-macro:fig:circle-formation});
   \item the teams must explore the overall area (\Cref{coordination2023-macro:fig:explore});
@@ -673,7 +631,7 @@ To structure the desired swarm behaviour,
   \item then, the team should return to the exploration phase.
 \end{enumerate}
 %
-We now describe the implementation of each part, leveraging the \MacroSwarm{} API. % and \scafi{} for the aggregate programming basic blocks.
+We now describe the implementation of each part, leveraging the \MacroSwarm{} API. 
 First, for creating teams, we can use the \textbf{Team Formation} blocks:
 \begin{lstlisting}
 val teamFormedLogic = 
@@ -688,7 +646,6 @@ where \lstinline|minimumDistance| is the minimum distance between nodes during t
 Each team then should follow the aforementioned steps, 
  expressible using the \textbf{Swarm Planning} \ac{api}: 
 %
-%Particularly, this set of instructions will produce the effects described in the above enumeration:
 \begin{lstlisting}[xrightmargin=-2pt]
 def insideTeamPlanning(team: Team): Vector = 
  team.insideTeam {
@@ -703,12 +660,12 @@ def insideTeamPlanning(team: Team): Vector =
    ).run() // repeat the plan
  }
 \end{lstlisting}
-%Focusing on each of the steps, 
 The first step is the formation of the teams, 
  based on method \lstinline|formation| which
  internally uses \lstinline|centeredCircle| 
   to place the nodes in a circle around the leader node. 
- Function \lstinline|circleIsFormed| verifies whether the nodes are in a circle formation, i.e., that the distance between any node and the leader is less than \lstinline|radius| (set to 50 meters in this scenario).
+ Function \lstinline|circleIsFormed| verifies whether the nodes are in a circle formation, i.e., 
+ that the distance between any node and the leader is less than \lstinline|radius| (set to 50 meters in this scenario).
 %
 The second step is the exploration phase, 
  implemented by method \lstinline|wanderInFormation|, 
@@ -734,9 +691,9 @@ The third step is the movement towards the danger node,
  which uses again the \lstinline|centeredCircle| function
  with a delta vector that moves the leader node towards the danger node.
 \lstinline|inDanger| is computed similarly to \lstinline|dangerFound|, 
- but, in this case, the position will be shared instead. % of the presence of the danger node.
+ but, in this case, the position will be shared instead. 
  \lstinline|dangerReached| is a Boolean field indicating if the healer node is close enough to the danger node.
-The last step is the healing of the danger node, which is modelled as an actuation of the healer. % on the node in danger. 
+The last step is the healing of the danger node, which is modelled as an actuation of the healer. 
  The rescue ends when the danger node is healed.
 As a final note, we also want the nodes to be able to avoid 
  each other when they are too close, even if they are not in the same team.
@@ -749,18 +706,15 @@ rep(Vector.Zero) { v =>
   separation(v, OneHopNeighbourhoodWithinRange(avoidDistance))
 }.normalize
 \end{lstlisting}
-%The result is intuitive and therefore allows us to conclude that the created 
 This program shows that the \ac{api} 
  is flexible enough to create complex behaviours handling various coordination aspects.
-%
-
 \subsubsection{Results}
 We validated the results by effectively running Alchemist simulations, 
  publicly available at \url{https://zenodo.org/badge/latestdoi/611692727}. 
 %
 We launched 64 simulation runs with different random seeds: 
  \Cref{coordination2023-macro:fig:results} shows the average results obtained. 
-We extracted the following data:
+Furthermore, we extracted the following data:
 \begin{itemize}
   \item \emph{intra-team distance}:
    after an initial adjustment phase, 
@@ -801,31 +755,44 @@ The results (\Cref{coordination2023-macro:fig:results}) show that the system can
   \Cref{coordination2023-macro:fig:distance} shows the average team distance in the first two minutes. 
   \Cref{coordination2023-macro:fig:min_distance} shows the minimum distance between nodes. 
   \Cref{coordination2023-macro:fig:danger} shows the nodes in danger through time. 
-  Since we run several simulations, 
+  Since we ran several simulations, 
    the lines show the average values, whereas 
    the area around the lines shows the confidence interval throughout the simulations.
 }\label{coordination2023-macro:fig:results}
 \end{figure}
-%\meta{We will show the results of the simulations of the swarm behaviours, and the composition of the behaviours. }
-%% figure composed of two subfigures
 
 \subsection{Discussion}\label{coordination2023-macro:subsec:discussion}
 %
 Despite its simplicity, 
-this use case allowed us to demonstrate the capability of \MacroSwarm{}, both in qualitative terms (i.e., the produced code is simple and understandable) and quantitative terms (i.e., the data show that the swarm follows the given instructions correctly).
+ this use case allowed us to demonstrate the capability of \MacroSwarm{}, 
+ both in qualitative terms (i.e., the produced code is simple and understandable) 
+ and quantitative terms (i.e., the data show that the swarm follows the given instructions correctly).
 
-That being said, there are several things to consider when using the library in real-world contexts. Ours is a top-down approach, in which we have defined an evaluation and implementation system that is general enough to be executed in various multi-agent systems. Specifically, we require that at least: 
-\emph{i)} nodes can perceive and interact with neighbours and approximate a direction vector to each of them; 
-\emph{ii)} they can move in a specific direction with a certain velocity; and 
-\emph{iii)} they can perceive distance and direction for certain obstacles.
+That being said, 
+ there are several things to consider when using the library in real-world contexts. 
+ Ours is a top-down approach, in which we have defined an evaluation and implementation system that is general enough to be executed in various multi-agent systems. 
+ Specifically, we require that at least: 
+\begin{enumerate}
+  \item[i)] nodes can perceive and interact with neighbours and approximate a direction vector to each of them;  
+  \item[ii)] they can move in a specific direction with a certain velocity; and  
+  \item[iii)] they can perceive distance and direction for certain obstacles.
+\end{enumerate} 
 %
-As for point \emph{i)}, this can be developed using specific local sensors (e.g., range and bearing systems~\cite{DBLP:conf/antsw/BilalogluSAST22}), by using GPS, by approximating distances using cameras mounted on each drone, or by using Bluetooth direction finding~\cite{DBLP:conf/wcnc/SambuW22}.
+As for point \emph{i)}, 
+ this can be developed using specific local sensors 
+ (e.g., range and bearing systems~\cite{DBLP:conf/antsw/BilalogluSAST22}),
+ by using GPS, by approximating distances using cameras mounted on each drone, or by using Bluetooth direction finding~\cite{DBLP:conf/wcnc/SambuW22}.
 % 
-Concerning the point \emph{ii)} the velocity vector can be mapped to the motors of the UAVs, or the motor's wheels of the ground agents~\cite{DBLP:conf/icra/KorenB91}, so it can be easily implemented in real case scenarios.
+Concerning the point \emph{ii)} the velocity vector can be mapped to the motors of the UAVs, or the motor's wheels of the ground agents~\cite{DBLP:conf/icra/KorenB91}, 
+ so it can be easily implemented in real-case scenarios.
 %
-Finally, concerning \emph{iii)}, there are several solutions for perceiving the direction of obstacles by leveraging various sensors, like \emph{\ac{lidar}} systems~\cite{DBLP:conf/icinfa/PengQZXLG15}.
+Finally, concerning \emph{iii)}, 
+ there are several solutions for perceiving the direction of obstacles by leveraging various sensors, 
+ like \emph{\ac{lidar}} systems~\cite{DBLP:conf/icinfa/PengQZXLG15}.
 
-That being said, we know that the reality gap for real-world scenarios could introduce divergences from the behaviours shown, as the used simulator, although general, does not simulate many aspects of reality, such as communication delay, friction, and possible perception errors. 
+That being said, 
+ we know that the reality gap for real-world scenarios could introduce divergences from the behaviours shown, as the used simulator, although general, 
+ does not simulate many aspects of reality, such as communication delay, friction, and possible perception errors. 
 %
 We aim to test the \ac{api} in more realistic simulators (like Gazebo~\cite{DBLP:conf/iros/KoenigH04}) or real systems as a future work.
 
@@ -874,7 +841,7 @@ For swarm-wide consensus,
  a notion of \emph{virtual stigmergy} is leveraged,
  based on distributed tuple spaces.
 %
-Buzz is designed to be an extensible language, since new primitives can be added.
+Buzz is designed to be an extensible language since new primitives can be added.
 %
 Indeed, Buzz is based on a set of quite effective but ad-hoc mechanisms.
 %
@@ -888,7 +855,13 @@ By contrast, \MacroSwarm{} uses few general and expressive primitives,
 Additionally, \MacroSwarm{} can leverage theoretical results from field calculi~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/tomacs/ViroliABDP18}, making programs amenable for formal analysis.
 
 
-Voltron~\cite{Mottola2014voltron} is a programming model for team-level design of drone systems. It represents a group of individual drones through a \emph{team abstraction}, which is responsible for the overall task. The details of individual drone actions and their timing are delegated to the platform system during runtime. The programmer issues \emph{action commands} to the drone team, along with \emph{spatio-temporal constraints}. The tasks in Voltron are associated with spatial locations, and the team self-organises to populate \emph{multisets of future values} that represent the task's eventual result at a specific location. 
+Voltron~\cite{Mottola2014voltron} is a programming model for team-level design of drone systems. It represents a group of individual drones through a \emph{team abstraction}, 
+ which is responsible for the overall task. 
+ The details of individual drone actions and their timing are delegated to the platform system during runtime. 
+ The programmer issues \emph{action commands} to the drone team, 
+ along with \emph{spatio-temporal constraints}. 
+ The tasks in Voltron are associated with spatial locations, 
+ and the team self-organises to populate \emph{multisets of future values} that represent the task's eventual result at a specific location. 
 %
 However, Voltron is imperative in nature, limiting the compositionality of team-level behaviours.
 
@@ -995,17 +968,18 @@ Finally, we mention another category of related works, which are \emph{task orch
 \section{Final Remarks}
 \label{coordination2023-macro:sec:conc}
 
-This chapter showcases
- a framework 
- for top-down swarm programming
- that provides composable blocks 
- capturing common decentralized swarm behaviours.
-%
-It builds on aggregate computing,
- %a formally-grounded field-based coordination paradigm,
- and is implemented on top of the \scafi{} toolkit/\ac{dsl}.
-%
-We show through examples and a simulated case study
- that the approach is compositional, practical, and expressive.
-%
+This chapter presents a comprehensive framework for top-down swarm programming, 
+ offering modular building blocks that encapsulate prevalent decentralized swarm behaviours. 
+
+We delineate the key contributions of this work as follows:
+\begin{enumerate}
+  \item A programming model founded on the concepts of \emph{collective behaviours} and \emph{swarm capabilities};
+  \item A library of modular, reusable building blocks designed for swarm programming and grounded in field calculus;
+  \item A case study that validates the expressively and efficacy of the framework herein proposed.
+\end{enumerate}
+
+The discussions in \Cref{chap:eng:clustering,chap:eng:decentralization,chap:eng:macroswarm} contribute to the broader vision of developing a swarm-API for \ac{cpsw}. This aims to bridge the gap between domain-specific problems and their concrete implementations.
+
+In the subsequent chapter, we introduce a novel programming model for \ac{cpsw}, which addresses temporal considerations through a functional reactive programming paradigm.
+
 %\printbibliography
