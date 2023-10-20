@@ -187,7 +187,7 @@ The system will operate through continuous data
  and strategically located infrastructure sensors. 
  These sensors monitor various parameters such as traffic flow, 
  road conditions, and even weather. 
- The autonomous cars provide a ``street-level'' perspective, 
+ Autonomous cars provide a ``street-level'' perspective, 
  allowing for real-time adjustments to routing algorithms 
  and speed controls.
 
@@ -209,25 +209,27 @@ In specific scenarios where immediate action is required
 
 \section{Characteristics}
 Drawing from the overview and the diverse examples provided, 
- several distinct characteristics emerge that set \acp{cpsw} apart from other large-scale distributed systems. 
+ several distinct characteristics emerge that set \acp{cpsw} apart from other large-scale 
+ distributed systems. 
 % 
 These unique traits not only define the essence of \acp{cpsw} but also pose specific challenges in their design and implementation. 
  Each of these characteristics will be discussed in detail below.
 
 \paragraph*{Scale}
 \acp{cpsw} are inherently scalable, 
- often comprising hundreds or even thousands of interconnected nodes. This scale-independence ensures that the same programmatic logic can be applied across networks of varying sizes, 
+ often comprising hundreds or even thousands of interconnected nodes. 
+ The behaviour scale independence ensures that the same programmatic logic can be applied across networks of varying sizes, 
  making them highly adaptable to different application scenarios.
+ In doing this, is essential to capture the right collective abstraction that 
+ allows both to help the developers to think in terms of the collective behaviour
+ and to effectively design the collective behaviour itself.
 
 \paragraph*{Device Heterogeneity}
-While the nodes in a \ac{cpsw} may differ in hardware capabilities or other attributes, they are designed to work in unison. 
-This heterogeneity can be in terms of computational power, 
-sensor types, or communication protocols, and it adds a layer of complexity to the system design.
-
+While the nodes in a \ac{cpsw} may possess varying hardware capabilities and attributes, they are engineered to operate cohesively. Interoperability stands as a fundamental requirement for these systems, particularly because they often incorporate a diverse array of devices manufactured by different vendors. In today's Internet of Things (IoT) landscape, semantic interoperability presents a significant challenge. Devices from various vendors might employ divergent communication protocols or data formats, complicating the task of achieving seamless interaction. This heterogeneity isn't limited to communication protocols; it also extends to computational power, sensor types, and other attributes. Such diversity introduces an additional layer of complexity in system design, necessitating the identification of a common framework that enables effective communication and collaboration among the devices.
 \paragraph*{Behaviour Homogeneity}
 Despite the diverse hardware configurations, 
  nodes within a \ac{cpsw} display consistent behaviour at the local level.
- They run the same local algorithms, thereby achieving the system's collective objectives in a standardized way. 
+ They run the same local \emph{algorithms}, thereby achieving the system's collective objectives in a standardized way. 
  However, it is important to clarify that ``homogeneous behaviour'' does not imply that all nodes do the same thing at the same time.
  Indeed, given the system's inherently distributed and potentially expansive nature, 
  the input received by one node may differ from that of another, 
@@ -235,7 +237,7 @@ Despite the diverse hardware configurations,
 
 \paragraph*{Distributed Control}
 Centralized control mechanisms are often impractical in \acp{cpsw} due to their scale and complexity. 
- As a result, these systems rely on distributed control algorithms that enable nodes to make local decisions that collectively contribute to the global objectives.
+ As a result, these systems rely on distributed control algorithms that enable nodes to make local decisions that collectively contribute to global objectives.
 
 \paragraph*{Self-organization}
 One feature of \acp{cpsw} is their ability to self-organize. 

@@ -61,7 +61,7 @@ The complexities involved in these swarms stem from a myriad of factors,
  the evolving landscape of IT architectures, and significant scalability considerations.
 %
 Given these multifaceted challenges, 
- this thesis introduces a comprehensive \emph{language-based} approach (i.e., solution built around a programming model) that incorporates robust models, 
+ this thesis introduces a comprehensive \emph{language-based} approach that incorporates robust models, 
  cutting-edge techniques, and pioneering algorithms. 
  The objective is to streamline the design and deployment of self-organizing behaviours in \acp{cpsw} that are both \emph{predictable} and \emph{adaptable}. 
 This is achieved by integrating established manual design methodologies, namely aggregate computing~\cite{aggregatecomputing}, 
@@ -89,19 +89,40 @@ The current state-of-the-art solutions in both automatic and manual design are l
 \subsection*{Contributions}
 
 The thesis contributes to an area called ``language-based engineering,'' where models, algorithms, machine learning solutions, and tools are constructed around a specific programming language within a given context. 
-This choice was guided by the observation that certain languages are more effective in engineering \ac{cpsw} because they close the abstraction gap between the \emph{problem} and the \emph{solution} space.
-As a case in point, this thesis focuses on aggregate computing because it aligns closely with the needs of designing applications for \acf{cpsw}. 
-This can be largely attributed to the \emph{self-organizing} characteristics of aggregate computing, which are independent of system size. Additionally, its high-level programming model facilitates the design of collective applications.
-
-In this regard, the thesis explores both \emph{hybrid} aggregate computing and standard engineering approaches, which is reflected in its structure. Specifically, our contributions toward a hybrid approach include:
+In the realm of software engineering, 
+ a language-based approach is fundamentally concerned with describing tools, models, and applications using high-level abstractions provided by a specific programming language. 
+ One of the unique attributes of this methodology is its domain-specific nature. 
+ In essence, it starts by establishing a reference framework, 
+ constructs the necessary abstractions to articulate the possible behaviours of a given application, 
+ and then employs a Domain-Specific Language (DSL) to formulate solutions.
+%
+For the purpose of this dissertation, 
+ we have selected \ac{cpsw} as our broad reference class of systems. 
+ We observed that the existing paradigm of aggregate computing (AC) 
+ is particularly well-suited for describing emergent behaviours in a straightforward and effective manner. This suitability arises from the top-down nature of AC and its capacity to express self-organizing emergent behaviours.
+%
+Building on this foundation, 
+ we adopted a layered approach to bridge the gaps between aggregate computing and the broader domain of reference. 
+ In this endeavour, we have utilized both standard engineering techniques--
+ proposing new programming models specifically tailored for the intricacies of CPWS and developing APIs that bring programmers closer to this complex landscape--
+ as well as \emph{unconventional} methods. 
+ The latter, which we term as ``hybrid,'' 
+ involves integrating Artificial Intelligence techniques 
+ to either enhance certain aspects of the existing paradigm or improve the learning process itself.
+% 
+Lastly, this research offers a modern perspective on software engineering, 
+ made increasingly relevant by the advent of large language models like GPT~\cite{floridi2020gpt} and LLaMa~\cite{touvron2023llama}. 
+ The role of such AI models in assisting and guiding the software development process can no longer be ignored, 
+ signalling a new era where human programmers are augmented by intelligent systems capable of facilitating more effective development strategies.
+Specifically, our contributions toward a hybrid approach include:
 \begin{enumerate}
     \item developing a comprehensive roadmap for integrating aggregate computing with machine learning,
     \item introducing a collective program synthesis method to establish robust self-organizing behaviours,
     \item proposing a distributed scheduling solution to accelerate the convergence of collective structures expressed through aggregate computing,
     \item presenting a novel multi-agent reinforcement learning technique, termed ``field-informed reinforcement learning'', designed to create robust distributed controllers for large-scale computations, and
-    \item creating a tool called ScaRLIB, which supports hybrid aggregate computing by combining state-of-the-art deep learning libraries with the aggregate computing toolchain.
+    \item creating a tool called ScaRLib, which supports hybrid aggregate computing by combining state-of-the-art deep learning libraries with the aggregate computing toolchain.
 \end{enumerate}
-While  contributions toward standard engineering approaches include:
+While contributions toward standard engineering approaches include:
 \begin{enumerate}
     \item introducing a novel programming language called FRASP, 
     which is designed to facilitate the engineering of self-organizing behaviours in \ac{cpsw},
