@@ -1,2 +1,123 @@
 %!TeX root = thesis-main.tex
 \chapter{Conclusion}\label{chap:wrap-up}%\mtcaddchapter
+This dissertation situates itself within the realm of complex systems engineering and \acf{MAARL} applications, 
+ adopting unconventional methods to address the unique challenges posed by \acf{cpsw} (introduced in ~\Cref{chap:cpsw}). 
+ It is grounded in a language-based approach focused on aggregate computing (discussed in \Cref{chap:macro-programming}), 
+ further integrated with machine learning techniques (overviewed in \Cref{chap:marl})---particularly the one based on the notion of \emph{many-agent}. 
+ Following this, 
+ an analysis of the principal contributions 
+ and potential future work that continues in the direction proposed by this thesis is presented.
+\section{Discussion}
+\subsection*{Swarms API for Cyber-Physical Swarms}
+\ac{ac} proves to be a composable, 
+ modular, and predictable approach for self-organizing systems, 
+ making it versatile across various domain-specific applications.
+% 
+After identifying the class of \ac{cpsw}, 
+ we noted existing gaps in aggregate computing's ability to manage the complexity inherent in these systems. 
+ To address this, we first identified algorithms capable of supporting high-level applications, 
+ such as the swarm clustering algorithm introduced in \Cref{chap:eng:clustering}. 
+% 
+We further sought to identify design patterns that can aid designers in crafting collective processes, 
+ as detailed in \Cref{chap:eng:decentralization}. 
+ Lastly, we encapsulated an essential API for coordinated movement and collective decision-making in \Cref{chap:eng:macroswarm}. 
+%
+This corpus of contributions serves as a milestone in designing applications for \acp{cpsw}, 
+ providing designers with both a suite of essential tools and a design space that narrows the gap between the problem space and the solution space.
+\subsection*{Deployments in Complex Infrastructure}
+Aggregate computing offers a flexible model with minimal constraints on deployment. 
+ In this dissertation, 
+ the model aligns perfectly with the \acp{cpsw} systems under consideration. 
+ However, this top-down approach eventually needs to be grounded, 
+ ensuring that the collective application remains independent of the chosen deployment scheme, 
+ thereby decoupling logic from architectural considerations.
+%
+To that end, 
+ we introduced a modern deployment approach for collective applications based on the ``pulverization'' model and multi-tier programming (\Cref{chap:eng:multitier}). 
+ This allowed us to capture essential components required for aggregate computation, 
+ facilitating their opportunistic distribution based on the chosen infrastructure, 
+ managed through the multi-tier paradigm, 
+ particularly leveraging Scala Loci.
+
+\subsection*{Novel Programming Models for CPSws}
+Field calculus emerged as an effective paradigm for declarative and expressive conceptualization and implementation of complex, 
+ self-organizing behaviours at the collective level. 
+% 
+This was applied in a range of applications, 
+ from swarm robotics and crowd engineering to data centres.
+% 
+However, the approach highlighted certain limitations,   particularly concerning \emph{efficiency}--
+ crucial in aggregate systems featuring low-power computational devices. 
+ In response, we introduced FRASP (\Cref{chap:eng:frp}), 
+ a new model founded on reactive programming combined with spatial computing, offering greater flexibility in execution by allowing partial re-computation when needed.
+
+\subsection*{Learning for Aggregate Computing}
+Our language-based approach opened a new frontier in the design of collective applications. 
+ Conventionally, a stark distinction exists between manual design (e.g., defining behaviours through programming languages) and automatic design (e.g., employing machine learning techniques for collective behaviours). 
+% 
+In this thesis, we attempted to bridge these two worlds,
+ striking a balance between declarative simplicity and the complexity and adaptability of described collective behaviours. 
+%
+ To do so, we outlined a roadmap (\Cref{chap:learning:roadmap}) that helped us frame the problem and the layers of interaction required for this hybrid vision.
+% 
+ Our research ventured into program synthesis in collective systems, 
+ where parts of the program were left undefined to be later filled by \ac{MAARL} algorithms (\Cref{chap:learning:sketching}). 
+% 
+Another line of work focused on learning intelligent scheduling policies to expedite the attainment of equilibrium compared to a pre-set program (\Cref{chap:rl:schedulers}).
+%
+Lastly, we introduce a novel tool called ScaRLib (\Cref{chap:rl:scarlib}), 
+ which allows for the seamless integration of aggregate computing and deep reinforcement learning, 
+ supporting the hybrid design discussed in this thesis.
+\subsection*{Aggregate Computing for Learning}
+
+In line with the hybrid approach, aggregate computing itself can serve as a medium for enhancing learning. As explored in \Cref{chap:rl:field-informed}, 
+ we combined graph neural networks with aggregate computing and deep reinforcement learning. 
+ This unification proved to be highly effective, 
+ allowing for localized learning processes that are informed by collective knowledge gathered through aggregate computing, akin to programmed stigmergy.
+
+\section{Future works}
+
+\subsection*{Unified Programming Model}
+In the quest for a seamless interface between aggregate computing and machine learning, 
+ the development of a unified programming model stands as a crucial next step. 
+ This framework could enable practitioners to design complex behaviours across the swarm with reduced cognitive load, focusing on higher-level objectives instead of intricate details. 
+
+\subsection*{Comprehensive Swarm API}
+While the Swarms API presented in this thesis serves as a good foundation, it is by no means exhaustive. 
+ Upcoming work aims to expand the API to accommodate more swarm behaviours and complex orchestrations, 
+ further streamlining the application development process for cyber-physical swarm systems. 
+ This will entail not only algorithmic contributions but also real-world testing and validation against robustness and scalability criteria.
+
+\subsection*{Benchmarking}
+As more algorithms and approaches get introduced in this space, benchmarking them against standard metrics becomes essential for meaningful comparison and adoption. 
+ Future efforts will aim to establish such benchmarks, enabling the empirical evaluation of different strategies in terms of performance, efficiency, and adaptability.
+
+\subsection*{Opportunistic Deployment}
+Building on the deployment methods discussed,
+ future work will also investigate opportunistic deployment strategies that take advantage of the system's inherent flexibility. 
+ For example, identifying the conditions under which it might be beneficial to move computation closer to the data source or a more powerful computational node, 
+ thereby optimizing for both efficiency and latency.
+
+\subsection*{Aggregate Computing for Learning: Distributed Learning}
+Following the promising results in leveraging aggregate computing for learning, 
+ the next steps will focus on enhancing distributed learning paradigms. 
+ This can open avenues for more effective, decentralized learning schemes (e.g., federated learning), 
+ reducing the need for a centralized learning authority and thereby increasing the robustness and resilience of the system.
+
+\subsection*{Online Learning}
+The current research has largely focused on offline learning mechanisms. 
+ However, real-world applications often require the ability to adapt and learn in \emph{real time}. 
+ Future work aims to extend the proposed models and algorithms for online learning capabilities, 
+ allowing swarms to dynamically adapt to changing environments.
+
+\subsection*{Learn to Deploy}
+Taking inspiration from the emerging ``DevOps'' culture in software engineering, 
+ we plan to explore how learning algorithms can aid in the deployment and management of swarm applications. 
+ This line of research would aim to automate many aspects of deployment, 
+ from selecting optimal locations for computational nodes to dynamically allocating resources based on real-time system performance.
+
+\subsection*{Unified Design Process}
+Last but not least, 
+ integrating all these disparate elements--
+ programming models, deployment strategies, and learning algorithms—into a unified design process represents a grand challenge for future work. 
+ The goal would be to offer practitioners a one-stop solution for designing, deploying, and managing cyber-physical swarm systems effectively and efficiently.
