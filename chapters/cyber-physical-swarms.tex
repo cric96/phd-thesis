@@ -1,7 +1,7 @@
 %!TeX root = thesis-main.tex
 \chapter{Cyber-Physical Swarms}\label{chap:cpsw}\mtcaddchapter
 \minitoc% Creating an actual minitoc
-The aim of this section is to elucidate the concept of \textit{Cyber-Physical Swarms}, 
+This section aims to elucidate the concept of \textit{Cyber-Physical Swarms}, 
  distinguish systems that align with our conceptual framework (an overview is given in \Cref{fig:overview-cpsw}), 
  and identify research domains grappling with analogous challenges. 
 % 
@@ -38,24 +38,14 @@ However, each node can still have local objectives,
 Given that centralization is not feasible, 
  the architecture relies on distributed control mechanisms. 
  While modern computing paradigms such as cloud or edge infrastructures are applicable, 
- it is imperative that the system be capable of swift local responses. 
- This is especially critical given that these are often \emph{critical systems}, 
- where delays in decision-making could have severe repercussions.
+ the system must be capable of swift local responses. 
+ %This is especially critical given that these are often \emph{critical systems}, where delays in decision-making could have severe repercussions.
 
 In concluding, 
  it is pertinent to clarify that the focus of this study is on the \textit{macro-level} behaviours of the swarm, 
  rather than the \textit{micro-level} interactions. 
  Rather than characterizing the collective through emergent properties, 
  the intention is to define a \emph{globally} desirable structure.
-
-%As for related concepts, 
-% \acp{cpsw} can be considered a subset of Complex Adaptive Systems~\cite{holland1992complex}. 
-% However, our framework imposes additional conditions not universally found in standard definitions of complex systems, 
-% such as many collaborative agents.
-% 
-%Collective Adaptive Systems~\cite{DBLP:journals/corr/abs-1108-5643} closely resemble our definition of \acp{cpsw}, 
-% but they diverge in that agents in our framework are geared toward \emph{collective} goals 
-% and exhibit homogeneous behaviour.
 
 In the subsequent section, 
  the concept of \acp{cpsw} will be elucidated through a range of examples. 
@@ -73,10 +63,11 @@ These green expanses are not only a source of natural beauty but also play a cru
  that is about 5\% of the entire forest area of Canada~\cite{enwiki:1178342069}. 
 
 To address this pressing issue, 
- there is a growing consensus on the need for proactive and localized interventions. 
+ there is a growing consensus on the need for \emph{proactive} and \emph{localized} interventions. 
  Specialized monitoring systems are essential for keeping tabs on vulnerable regions, 
  especially given the impracticality of relying solely on human observation due to the vastness of these areas. 
- One innovative solution might be the deployment of a sophisticated network of environmental sensors, strategically placed to monitor temperature, humidity, and other fire-prone conditions. 
+ One innovative solution might be the deployment of a sophisticated network of environmental sensors, 
+ strategically placed to monitor temperature, humidity, and other fire-prone conditions. 
  These sensors might be complemented by a swarm of drones equipped with advanced imaging and data collection capabilities.
 
 The system operates through ongoing collaboration between ground-based sensors and aerial drones. 
@@ -85,6 +76,7 @@ The system operates through ongoing collaboration between ground-based sensors a
  This integrated approach enables the early detection of potential fire hazards, 
  thereby facilitating the pre-emptive mobilization of emergency services.
 
+\sloppypar
 However, the implementation of such a comprehensive monitoring system comes with its own set of challenges. 
  Each sensor or drone has a limited operational range and can only provide a \emph{partial} view of the overall system. 
  Therefore, robust data fusion algorithms are necessary to merge information from multiple sources into a cohesive and actionable overview. 
@@ -102,7 +94,7 @@ Moreover, the system must be highly responsive to emergency conditions.
  These local analyses can then be used to trigger collective alarms, 
  ensuring immediate action is taken to mitigate the risk of wildfires.
 \subsection{Crowd steering}
-Concert venues (or public event like soccer matches) 
+Concert venues (or public events like soccer matches) 
  are often filled with an energetic and enthusiastic crowd, 
  eager to enjoy live performances. 
  These events can attract tens of thousands of attendees, 
@@ -110,10 +102,10 @@ Concert venues (or public event like soccer matches)
 % 
 However, traditional methods of crowd control, 
  such as barriers and security personnel, 
- are increasingly proving to be inadequate in the face of evolving challenges like sudden surges or emergency situations. 
- Take, for example, the 2019 stampede at the San Carlo place in Turin, 
+ are increasingly proving to be inadequate in the face of evolving challenges like sudden surges or emergencies. 
+ Take, for example, the 2019 stampede at the San Carlo Place in Turin, 
  where a sudden downpour led to chaotic movements among the crowd, 
- resulting in thousands minor injuries and three deaths~\cite{enwiki:1164182872}.
+ resulting in thousands of minor injuries and three deaths~\cite{enwiki:1164182872}.
 
 To address this complex issue, 
  there is a growing interest in leveraging technology for more effective crowd steering. 
@@ -143,7 +135,7 @@ Therefore, sophisticated algorithms are needed to aggregate
  such as sudden weather changes or unexpected incidents during the concert.
 
 In specific situations where immediate action is required 
- -- such as medical emergencies or security threats -- 
+ --such as medical emergencies or security threats-- 
  there may be a need to send targeted alerts or instructions to specific groups of attendees. 
  Given that smart devices have limited battery life, 
  the system must also \emph{self-organize} to prioritize critical alerts and instructions, 
@@ -205,8 +197,8 @@ However, the deployment of such a sophisticated system is fraught with challenge
 In specific scenarios where immediate action is required
  ---like emergency vehicle passage or sudden road closures---
  there may be a need to prioritize certain routes or vehicles. 
- Given that each car operates on a finite energy source, the system must \emph{self-organize} to ensure that cars with lower battery levels are routed to charging stations without disrupting the overall traffic flow.
-
+ Given that each car operates on a finite energy source, 
+ the system must \emph{self-organize} to ensure that cars with lower battery levels are routed to charging stations without disrupting the overall traffic flow.
 \section{Characteristics}
 Drawing from the overview and the diverse examples provided, 
  several distinct characteristics emerge that set \acp{cpsw} apart from other large-scale 
@@ -224,20 +216,31 @@ These unique traits not only define the essence of \acp{cpsw} but also pose spec
  allows both to help the developers to think in terms of the collective behaviour
  and to effectively design the collective behaviour itself.
 
-\paragraph*{Device Heterogeneity}
-While the nodes in a \ac{cpsw} may possess varying hardware capabilities and attributes, they are engineered to operate cohesively. Interoperability stands as a fundamental requirement for these systems, particularly because they often incorporate a diverse array of devices manufactured by different vendors. In today's Internet of Things (IoT) landscape, semantic interoperability presents a significant challenge. Devices from various vendors might employ divergent communication protocols or data formats, complicating the task of achieving seamless interaction. This heterogeneity isn't limited to communication protocols; it also extends to computational power, sensor types, and other attributes. Such diversity introduces an additional layer of complexity in system design, necessitating the identification of a common framework that enables effective communication and collaboration among the devices.
-\paragraph*{Behaviour Homogeneity}
+\paragraph*{Device heterogeneity}
+While the nodes in a \ac{cpsw} may possess varying hardware capabilities and attributes, they are engineered to operate cohesively. 
+ Interoperability stands as a fundamental requirement for these systems, 
+ particularly because they often incorporate a diverse array of devices manufactured by different vendors.
+%
+In today's Internet of Things (IoT) landscape, 
+ semantic interoperability presents a significant challenge. 
+ Devices from various vendors might employ divergent communication protocols or data formats, complicating the task of achieving seamless interaction. 
+ This heterogeneity is not limited to communication protocols; 
+ it also extends to computational power, sensor types, and other attributes. 
+ Such diversity introduces an additional layer of complexity in system design, 
+ necessitating the identification of a common framework that enables effective communication and collaboration among the devices.
+\paragraph*{Behaviour homogeneity}
 Despite the diverse hardware configurations, 
  nodes within a \ac{cpsw} display consistent behaviour at the local level.
- They run the same local \emph{algorithms}, thereby achieving the system's collective objectives in a standardized way. 
+ They run the same local \emph{algorithms}, thereby achieving the system's collective objectives.
  However, it is important to clarify that ``homogeneous behaviour'' does not imply that all nodes do the same thing at the same time.
- Indeed, given the system's inherently distributed and potentially expansive nature, 
- the input received by one node may differ from that of another, 
+ Indeed, given the system's inherently distributed and extensive: 
+ the input received by one node differ from that of another far from it, 
  leading to variations in local behaviour.
 
-\paragraph*{Distributed Control}
+\paragraph*{Distributed control}
 Centralized control mechanisms are often impractical in \acp{cpsw} due to their scale and complexity. 
- As a result, these systems rely on distributed control algorithms that enable nodes to make local decisions that collectively contribute to global objectives.
+ As a result, 
+ these systems rely on distributed control algorithms that enable nodes to make local decisions that collectively contribute to global objectives.
 
 \paragraph*{Self-organization}
 One feature of \acp{cpsw} is their ability to self-organize. 
@@ -248,11 +251,11 @@ This is particularly important in scenarios where the environment is unpredictab
 \acp{cpsw} are typically open systems, meaning that the total node count is not predetermined. 
 New nodes can join or leave the network dynamically, requiring the system to be flexible enough to accommodate these changes without compromising its functionality.
 
-\paragraph*{Collective Intelligence}
+\paragraph*{Collective intelligence}
 The nodes in a \ac{cpsw} work collaboratively to achieve common goals, displaying a form of collective intelligence. 
 This is facilitated by advanced algorithms that enable the system to learn from its environment and adapt its behaviour accordingly.
 
-\paragraph*{Cyber-physical Interactions}
+\paragraph*{Cyber-physical interactions}
 The term ``cyber-physical'' aptly describes the integration of computational and physical elements in \acp{cpsw}. 
  Each node is usually connected to a physical entity via sensors and can influence its environment through actuators. 
  This seamless integration is crucial for applications that require real-time interaction with the physical world.
@@ -265,8 +268,8 @@ The term ``cyber-physical'' aptly describes the integration of computational and
     \hline
                                 & MAS                         & Swarm Robotics          & CAS          & \ac{cpsw}         \\ \hline
     Scale                       & Dozens                      & Hundreds                & Thousands    & Thousands    \\ \hline
-    Capabilities                & Heterogenous                & Homogenous              & Heterogenous & Heterogenous \\ \hline
-    Behaviours                  & Heterogenous                & Homogenous              & Heterogenous & Homogenous   \\ \hline
+    Capabilities                & Heterogeneous                & Homogeneous              & Heterogeneous & Heterogeneous \\ \hline
+    Behaviours                  & Heterogeneous                & Homogeneous              & Heterogeneous & Homogeneous   \\ \hline
     Control                     & Centralized/Distributed     & Centralized/Distributed & Distributed  & Distributed  \\ \hline
     Cyber-Physical              & Yes/No    & Yes & Yes/No  & Yes  \\ \hline
     \end{tabular}%
@@ -295,7 +298,7 @@ One of the significant challenges in designing a \ac{cpsw} is the high stochasti
  Unlike controlled settings where outcomes can be predicted with a high degree of accuracy, \acp{cpsw} often operate in dynamic and unpredictable environments. 
  This makes it nearly impossible to pre-program optimal behaviours for all agents. 
  The agents must, therefore, be capable of adapting their behaviours in real-time based on their sensory inputs and the inputs from other agents in the network. 
- This requires sophisticated algorithms that can handle uncertainty and make near-optimal decisions in real-time.
+ This requires sophisticated algorithms that can handle uncertainty and make near-optimal decisions in real time.
 
 Moreover, the agents in a \ac{cpsw} are designed to work collaboratively to achieve collective goals, 
  rather than pursuing individual objectives. 
