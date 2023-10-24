@@ -234,31 +234,87 @@ Despite the diverse hardware configurations,
  They run the same local \emph{algorithms}, thereby achieving the system's collective objectives.
  However, it is important to clarify that ``homogeneous behaviour'' does not imply that all nodes do the same thing at the same time.
  Indeed, given the system's inherently distributed and extensive: 
- the input received by one node differ from that of another far from it, 
+ the input received by one node differs from that of another far from it, 
  leading to variations in local behaviour.
 
 \paragraph*{Distributed control}
 Centralized control mechanisms are often impractical in \acp{cpsw} due to their scale and complexity. 
- As a result, 
- these systems rely on distributed control algorithms that enable nodes to make local decisions that collectively contribute to global objectives.
+ In a centralized system, a single controller manages the behaviour of all agents, 
+ necessitating high computational power and introducing a single point of failure. 
+ This becomes increasingly challenging when dealing with \acp{cpsw} that comprise a large scale of highly distributed agents. 
+ Any failure or delay in the central controller could lead to system-wide disruptions.
 
+In contrast, distributed control algorithms decentralize the decision-making process, 
+ allowing nodes to make local decisions based on their immediate environment and information from neighbouring nodes. 
+ This approach offers several advantages:
+
+\begin{itemize}
+\item \textbf{scalability}: as the system grows, the computational burden is distributed across multiple nodes, making it easier to scale;
+\item \textbf{fault tolerance}: since there is no single point of failure, the system can continue to operate even if some nodes fail;
+\item \textbf{adaptability}: distributed control algorithms are often more flexible, 
+ enabling the system to adapt to changing conditions without requiring global recalibration;
+\item \textbf{efficiency}: local decision-making can often lead to more efficient utilization of resources, 
+ as nodes can make decisions that are optimal for their specific conditions;
+\item \textbf{reduced latency}: decisions can be made more quickly when they are processed locally, 
+ which is crucial for real-time applications where delays can have significant consequences.
+\end{itemize}
 \paragraph*{Self-organization}
-One feature of \acp{cpsw} is their ability to self-organize. 
-Nodes can dynamically adapt to changing conditions, reconfiguring themselves to maintain system integrity and performance. 
-This is particularly important in scenarios where the environment is unpredictable or hostile.
+One feature of \acp{cpsw} is their ability to \emph{self-organize}. 
+ Nodes can dynamically adapt to changing conditions, 
+ reconfiguring themselves to maintain system integrity and performance.
+% 
+ This is particularly important in scenarios where the environment is unpredictable or hostile.
+%
+To be more precise, self-organization 
+ is defined as a dynamical and adaptive process where systems acquire and maintain structure themselves, without external control. 
+ It can be also denoted as a property ``to arrange several elements into a purposeful sequential or spatial (or both) order or structure''. 
+ Therefore, self-organization is an autonomous, robust, and flexible process that seeks an increase of order~\cite{de2004emergence}.
 
 \paragraph*{Openness}
-\acp{cpsw} are typically open systems, meaning that the total node count is not predetermined. 
-New nodes can join or leave the network dynamically, requiring the system to be flexible enough to accommodate these changes without compromising its functionality.
+\acp{cpsw} are typically open systems, 
+ meaning that the total node count is not predetermined. 
+ New nodes can join or leave the network dynamically, 
+  requiring the system to be flexible enough to accommodate these changes without compromising its functionality.
 
 \paragraph*{Collective intelligence}
-The nodes in a \ac{cpsw} work collaboratively to achieve common goals, displaying a form of collective intelligence. 
-This is facilitated by advanced algorithms that enable the system to learn from its environment and adapt its behaviour accordingly.
+The nodes in a \ac{cpsw} work collaboratively to achieve common goals, 
+ displaying a form of \emph{collective intelligence}~\cite{nguyen2009computational}. 
+ This is facilitated by advanced algorithms that enable the system to learn from its environment and adapt its behaviour accordingly. 
+ Through decentralized decision-making processes, each node contributes its unique computational resources and sensory data, leading to a more robust and resilient system. 
+ This collective approach allows for enhanced efficiency, as the system can dynamically allocate tasks and resources based on the real-time needs and constraints.
+%
+The \emph{collective intelligence} exhibited by the nodes also enables fault tolerance and self-healing capabilities. 
+ If one node encounters a failure or is compromised, 
+ the remaining nodes can recalibrate and reorganize to continue functioning effectively. 
+ Moreover, the collective intelligence is not static; 
+ it evolves over time as the system interacts with its environment, 
+ making it possible to handle unforeseen challenges and complex scenarios.
 
+Therefore, collective intelligence in \ac{cpsw} is not merely a by-product but a crucial feature that substantially enhances the system's adaptability, resilience, and overall performance.
 \paragraph*{Cyber-physical interactions}
 The term ``cyber-physical'' aptly describes the integration of computational and physical elements in \acp{cpsw}. 
  Each node is usually connected to a physical entity via sensors and can influence its environment through actuators. 
- This seamless integration is crucial for applications that require real-time interaction with the physical world.
+ This seamless integration is crucial for applications that require real-time interaction with the physical world, such as industrial automation, healthcare monitoring, and autonomous vehicles.
+
+The sensors collect various types of data--
+ ranging from temperature and pressure to more complex measurements like vibration or chemical composition--
+ which is then processed and analysed by the computational components. 
+ These insights enable the nodes to make informed decisions and execute actions via actuators, 
+ which might include motors, valves, or other control mechanisms. 
+ The end-to-end loop from sensing to actuation ensures a high degree of responsiveness and adaptability,
+ allowing the system to cope with dynamic and unpredictable conditions effectively.
+
+Additionally, cyber-physical integration offers the ability for remote monitoring and control, 
+ thus expanding the operational scope and adaptability of the system. 
+ For instance, operators can receive real-time data and adjust system parameters without needing to be physically present, 
+ thereby reducing both risks and operational costs.
+
+Furthermore, the cyber aspect of \acp{cpsw} often incorporates cloud computing and edge computing solutions. 
+ Cloud computing allows for the storage and analysis of large volumes of data, while edge computing provides low-latency processing capabilities closer to the source of data generation. 
+ The harmonious blend of cloud and edge computing caters to both large-scale data analytics and real-time processing requirements, thus elevating the system's performance and utility.
+
+In summary, the term ``cyber-physical'' encapsulates a sophisticated blend of computational intelligence and physical interaction. 
+ The seamless integration of these element's benefits requires a modern computing paradigm, making \acp{cpsw} highly versatile and robust.
 
 \section{Related concepts}
 \begin{table}[h]
@@ -298,7 +354,7 @@ One of the significant challenges in designing a \ac{cpsw} is the high stochasti
  Unlike controlled settings where outcomes can be predicted with a high degree of accuracy, \acp{cpsw} often operate in dynamic and unpredictable environments. 
  This makes it nearly impossible to pre-program optimal behaviours for all agents. 
  The agents must, therefore, be capable of adapting their behaviours in real-time based on their sensory inputs and the inputs from other agents in the network. 
- This requires sophisticated algorithms that can handle uncertainty and make near-optimal decisions in real time.
+ This requires sophisticated algorithms that can handle uncertainty and make near-optimal decisions in real-time.
 
 Moreover, the agents in a \ac{cpsw} are designed to work collaboratively to achieve collective goals, 
  rather than pursuing individual objectives. 
