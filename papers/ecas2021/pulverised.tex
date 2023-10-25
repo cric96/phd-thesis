@@ -39,10 +39,10 @@
 \draw[loglink] (d2.east) -- (d21.west);
 \draw[loglink] (d21.west) -- (d2.east);
 \end{tikzpicture}
-\subcaption{A pulverized logical device, split into sub-components, and one of its neighbours.\label{fig:pulv:dev}}
+\subcaption{A pulverized logical device split into sub-components, and one of its neighbours.\label{fig:pulv:dev}}
 \end{minipage}\hfill%
 \begin{minipage}[b][0.3\textheight][b]{\textwidth}
-\begin{minted}[mathescape=true]{scala}
+  \begin{lstlisting}[basicstyle=\scriptsize\ttfamily, frame=single]
 @multitier trait LogicalSystem {
   // A logical node, connected to other logical nodes
   @peer type LNode <: { type Tie <: Multiple[LNode] }
@@ -55,11 +55,9 @@
   @peer type BehaviourComponent     <: LNode  // $\LComp$
   @peer type CommunicationComponent <: LNode  // $\LComm$
 }
-\end{minted}
+\end{lstlisting}
 %}
-\subcaption{\scalaloci{} code describing 
-%the architectural relationship between the sub-components of a partitioned device
-a pulverized logical system. (See \Cref{scafiloci} for more details.)\label{code:loci:pulverised}}
+\subcaption{\scalaloci{} code describing a pulverized logical system. (See \Cref{scafiloci} for more details.)\label{code:loci:pulverised}}
 \end{minipage}
 \caption{Pulverization model and corresponding \scalaloci{} specification.}
 \label{img:pulverised-loci}
