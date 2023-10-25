@@ -65,7 +65,7 @@ In this chapter,
  we address the problem of capturing the right abstractions for modelling \acp{dcp},
  abstracting from the specific communication technologies, 
  taking inspiration from the analogous 
- approach taken in map-reduce frameworks for big data, 
+ the approach taken in map-reduce frameworks for big data, 
  where the declarative concept of \emph{stream} is adopted.
 %
 and propose the concepts of \emph{concurrent collective tasks} 
@@ -74,96 +74,6 @@ and propose the concepts of \emph{concurrent collective tasks}
 %
 \section{Motivation}\label{sec:motiv}
 
-%\meta{
-% BUDGET: ca. 1500 words
-%% CURRENT: ca. 1250 words
-%}
-
-% Go with the following progression, with one subsection* each:
-\begin{comment}
-\subsection{Declarative abstractions for complex decentralized \ac{iot} systems}
-\label{declarative-abstractions}
-
-%\meta{
-%*) Modern complex and intelligent platforms require indentification of suitable abstractions, such that the user/programmer can work on top by declaratively expressing intended goal, while the platform under-the-hood deals with the mundane complexity of handling dynamicity, faults, heterogeneity, and so on. Spark (and not just Spark) is an example of that.
-%}
-
-Modern computing ecosystems
- such as \ac{iot} ones
- are increasingly complex
- and resourceful,
- providing opportunities
- %that can be reified as ambitious application goals,
- %both 
- turning into functional and non-functional goals.
-%
-The recurrent approach in computer/software engineering to harness 
- complexity
- is to adopt \emph{levels} of abstractions and mechanisms
- encapsulating coherent sets of problems and solutions.
-
-This work focuses on \emph{situated} distributed systems
-that need to monitor and act on a dynamically
-changing environment,
-and where a central coordinator
-may not be available.
-%
-Typical examples %are systems that deal with
-include 
-crowd tracking and steering,
-environmental (landslides, flooding, fires) monitoring and response,
-resource allocation in open systems,
-and coordination of robot swarms. %of dynamically-formed groups of unmanned mobile robots. 
-%
-Our \emph{target system model} is a \emph{network} of computing and communicating \emph{devices}.
-%
-Every device %, at some time, 
- may interact with a limited subset of other devices (its \emph{neighbours}).
-%
-% We are mainly interested in tasks and activities that last in time (transient or ongoing),
-%  namely, that require \emph{multiple computation and communication steps} by the devices---for instance, coordination, management, and self-organization processes.
-
-% In particular,
-We target the idea of programming the overall behaviour
-of such systems 
-by expressing a high-level goal---e.g.,
-monitoring the safety of an environment by integrating recent data from static and mobile sensors,
-then computing local suggestions for risk-mitigating actions.
-%
-However, we would not \emph{fully} specify \emph{how} activities should concretely be carried out,
-as long as these decisions do not affect the intended result.
-%
-More specifically, we intend to declaratively express
-\emph{what} is to be achieved,
-letting lower-level components 
-% \emph{middleware} or \emph{platform}
- deal with %the complexity of 
- issues like
- handling dynamicity (e.g., due to mobility or openness),
- failure,
- heterogeneity, etc.
-
-
-As an analogy, consider database management systems: %\acp{dbms}:
- %SQL 
- queries express what data has to be retrieved,
- and the query optimizer determines an efficient query plan satisfying the request.
-%
-% The same concept has also been ported to distributed settings:
-% Map-Reduce and Apache Spark,
-% for instance,
-% provide \acp{api}
-% for processing big data on a cluster
-% with implicit data parallelism, fault tolerance, and load balancing.
-%
-\Ac{wsn} macro-programming approaches~\cite{DBLP:journals/csur/MottolaP11} are another example
-where declarative queries get mapped to data processing and transfer operations
-carried out across sensor nodes and base stations.
-%
-We aim to apply the same principle to self-organizing systems,
-primarily to realize decentralized situation recognition and action.
-
-\end{comment}
 \acp{cpsw} are increasingly tasked with monitoring and acting upon dynamically changing environments, 
  often without the availability of a central coordinator.% Examples of such systems include crowd tracking and steering, environmental monitoring for landslides, flooding, and fires, and the coordination of robot swarms.
 
@@ -223,14 +133,14 @@ fully developed (in simulation) in \Cref{sec:eval}.
 %
 We want to monitor the rain intensity to pre-alert the public safety organizations close to areas at a \emph{risk} of floods.
 %
-The tracked phenomenon is spatially and temporally hard to predict with fine-enough grain
+The tracked phenomenon is spatially and temporally hard to predict with a fine-enough grain
 (data from the NOAA\footnote{https://www.noaa.gov/} has, at best, zip-code granularity):
 at a single-city level,
-we could perform better by promptly reacting to specialized sensors readings.
+we could perform better by promptly reacting to specialized sensor readings.
 %
 However, the information provided by individual sensors is too fragile,
-as the risk depends on the rain intensity in surroundings and not just on the specific spot
-(e.g., coastal zones with a steep elevation profiles could suffer floods even with light rain,
+as the risk depends on the rain intensity in the surroundings and not just on the specific spot
+(e.g., coastal zones with steep elevation profiles could suffer floods even with light rain,
 if the close-by higher-altitude zone is being hit hard).
 %
 Pre-defining areas
