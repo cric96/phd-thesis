@@ -7,8 +7,8 @@
 \newtheorem{example}{Example}
     
 \newtheorem{theorem}{Theorem}
-\chapter[Self-Organisation Programming]{
-Self-Organisation Programming: A Functional Reactive Macro Approach
+\chapter[Language: Self-Organisation Programming]{
+  Language: Self-Organisation Programming--A Functional Reactive Macro Approach
 }\label{chap:eng:frp}%\mtcaddchapter %% Todo improve
 \minitoc% Creating an actual minitoc
 
@@ -1262,6 +1262,7 @@ Finally, we show how the model promotes \emph{fine-grained reactivity}.
 %
 \Cref{acsos2023-frp:fig:subprogram-eval} shows how
  \ac{langname} enables a program to re-compute required sub-computations \emph{only}.
+ 
 %
 Indeed, at $t=200$, only the channel's target changes,
 and thus the source gradient is not re-computed
@@ -1299,18 +1300,18 @@ Also, this execution occurs only where needed,
       \label{acsos2023-frp:fig:gradient-output-rel}
   \end{subfigure}
   \caption[Simulation results of \ac{langname} simulations]{
-    Simulation data.
+    Simulation results of \ac{langname} simulations.
     %
-    The output value (lines 2 and 4)
-    from the round-based solution (left column) 
-    can be used as a reference to verify the correctness of the computation and the performance
-    of the reactive solutions (middle and right columns).
+    %The output value (lines 2 and 4)
+    %from the round-based solution (left column) 
+    %can be used as a reference to verify the correctness of the computation and the performance
+    %of the reactive solutions (middle and right columns).
     %
-    The number of messages (lines 1 and 3), instead,
-    provides an indication of the communication overhead.
-    We observe that purely reactive (middle column) and throttled (right column) policies
-    convergence to correct values faster than the round-based version;
-    also, their communication overhead does not grow with time, but depends on changes.
+    %The number of messages (lines 1 and 3), instead,
+    %provides an indication of the communication overhead.
+    %We observe that purely reactive (middle column) and throttled (right column) policies
+    %convergence to correct values faster than the round-based version;
+    %also, their communication overhead does not grow with time, but depends on changes.
   }
   \label{acsos2023-frp:fig:rel-values}
 \end{figure}
@@ -1345,11 +1346,7 @@ Also, this execution occurs only where needed,
     \centering
     \includegraphics[width=\textwidth]{papers/acsos2023-frp/imgs/message_count.pdf}
   \end{subfigure}
-  \caption[behaviour of the channel in response to changes in a destination]{
-  The behaviour of the channel in response to changes in a destination is shown through a sequence of snapshots in the first line (using the same graphical notation as \Cref{acsos2023-frp:fig:scenario-screenshots} where, additionally, the grey shadows denote nodes where computation is taking place). 
-  It is observed that the computation ``moves'' to different portions of the system until it reaches a stable situation. 
-  However, the computation only results in the re-computation of the destination gradient, as seen in the bottom plot.
-  }
+  \caption[behaviour of the channel in response to changes in a destination]{behaviour of the channel in response to changes in a destination}
   \label{acsos2023-frp:fig:subprogram-eval}
 \end{figure*}
 

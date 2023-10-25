@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usepackage{minted}
+\usepackage{fancyhdr}
 \usepackage[dvipsnames,svgnames]{xcolor}
 \usepackage{amssymb}
 \usepackage{amsmath, bm}
@@ -123,3 +124,9 @@
 
 \lstset{frame=single,basewidth=0.5em,language={scafi},
 basicstyle=\lst@ifdisplaystyle\small\fi\ttfamily}
+
+\pagestyle{fancy}
+\fancyhf{} % Clear header and footer
+\fancyfoot[LE,RO]{\leftmark \hfill \thepage} 
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.2pt} % Add the footer rule
