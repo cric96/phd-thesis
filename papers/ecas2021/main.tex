@@ -1,5 +1,5 @@
 %!TeX root = thesis-main.tex
-\chapter{Platform: Multi-Tier Pulverized Architectures}\label{chap:eng:multitier}%\mtcaddchapter
+\chapter{Platform: Deployment of CPWs applications}\label{chap:eng:multitier}%\mtcaddchapter
 \minitoc% Creating an actual minitoc
 %
 \newcommand{\scalaloci}{{ScalaLoci}}
@@ -11,7 +11,7 @@
  environmental conditions and inputs.
 %
 %
-As discussed in \Cref{part:background} reliance on a centralized device is not allowed,
+As discussed in \Cref{chap:macro-programming} reliance on a centralized device is not allowed,
 and the system is expected to reach global goals based 
  on the coordinated (inter-)actions of the individual entities that compose the system.
 aggregate computing foster the adoption of \emph{global-to-local} techniques,
@@ -28,8 +28,9 @@ Since in \acp{cpsw} the challenging case in which no controllers exist must typi
 %
 However, real-world networks are usually structured hierarchically, 
  and the ability to target multiple infrastructural setups can help to achieve non-functional benefits.
-
-\emph{Pulverization}~\cite{DBLP:journals/fi/CasadeiPPVW20}
+%
+Therefore, a contemporary approach designed to facilitate agile deployment of \ac{cpsw} should be versatile enough to accommodate multiple network architectures.
+In this direction, \emph{Pulverization}~\cite{DBLP:journals/fi/CasadeiPPVW20}
  is an approach proposed for aggregate computing 
  (but in principle applicable to other frameworks) 
  to neatly separate behavioural and deployment concerns.
