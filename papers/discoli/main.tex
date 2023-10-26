@@ -156,9 +156,9 @@ So, in \ac{ac}, a collective adaptive behaviour
  %to the field of minimum distances from those sources.
 %
 Usually, algorithms are \emph{progressive} -- they take time (computation rounds and communications) to converge to the ``correct'' value --
-and \emph{self-healing}, i.e., they can adjust their output following changes in its inputs and the system topology.
+and \emph{self-healing}, i.e., they can adjust their output following changes in their inputs and the system topology.
 %
-For instance, a gradient algorithm progressively corrects the field of distances after the set of sources change, or nodes move (hence changing the distances between neighbour nodes) or enter/leave the system.
+For instance, a gradient algorithm progressively corrects the field of distances after the set of sources changes, or nodes move (hence changing the distances between neighbour nodes) or enter/leave the system.
 %
 
 So, different gradient algorithms may achieve the \emph{same} functionality (i.e., the eventual computation of the field of minimum distances from sources)
@@ -177,7 +177,7 @@ Designing efficient and versatile \ac{ac} algorithms can be complex~\cite{DBLP:j
  whether algorithms can be learnt or synthesized
  given high-level functional goals.
 %
-To this purpose,
+For this purpose,
  an idea could be to combine
  the program synthesis~\cite{DBLP:journals/ftpl/GulwaniPS17} technique called \emph{sketching}~\cite{solar2008program-synthesis-sketching}
  with machine learning.
@@ -195,7 +195,7 @@ The resulting algorithm, then, would need extensive testing (e.g. by simulation)
 %
 In this regard, research is needed to identify what synthesis techniques, learning algorithms, frameworks, and methodologies can support the learning of algorithms able to achieve performance similar or better than state-of-the-art solutions.
 %
-First effort in this direction has been done in~\cite{DBLP:conf/coordination/CasadeiPVN19}, where a gradient algorithm has been learnt through a reinforcement learning approach~\Cref{chap:learning:sketching}.
+The first effort in this direction has been done in~\cite{DBLP:conf/coordination/CasadeiPVN19}, where a gradient algorithm has been learnt through a reinforcement learning approach~\Cref{chap:learning:sketching}.
 
 \subsection{Platform: learning execution strategies and adaptations}
 
@@ -266,7 +266,7 @@ As shown in recent work on \emph{pulverized architectures}~\cite{DBLP:journals/f
 %
 For instance,
  it is possible to embed evaluations of the aggregate program into the devices themselves,
- to move the entire computational part on the cloud (leaving devices as thin hosts dealing only with sensing and actuation),
+ to move the entire computational part to the cloud (leaving devices as thin hosts dealing only with sensing and actuation),
  or spread these onto a layer of edge-fog infrastructural devices.
 %
 Different deployments 
@@ -341,8 +341,7 @@ Additionally, the other crucial aspect of
  functional \emph{compositionality} of aggregate behaviours (denoted by functions operating on fields),
  is also expected to help, e.g.,
  by fostering learning processes
- whereby the goal is to find suitable
- compositions of elementary collective behaviours.
+ whereby the goal is to find suitable compositions of elementary collective behaviours.
 %
 Moreover, the ability to change execution strategies while guaranteeing the same behaviour could also be considered a form of \ac{ci}.
 
@@ -358,7 +357,7 @@ The significance of the problem
  is especially relevant nowadays because
  of the tension between
  the visions of pervasive computing~\cite{DBLP:journals/computer/SahaM03}, future-generation large-scale computational collectives~\cite{DBLP:journals/eaai/CasadeiVAPD21}, and autonomic computing (promoting smarter -- i.e. more computationally intensive -- devices)~\cite{DBLP:journals/computer/KephartC03}
- and the urge of limiting the impact
+ and the urge to limit the impact
  of humans and technologies on the environment.
 %
 \subsection*{Technical Challenges}
@@ -386,7 +385,7 @@ However, using only a local vision of the system could lead to the problem of \e
 %
 Another concern related to many-agent settings is the \emph{multi-agent credit assignment} problem~\cite{sutton-book}.
 %
-This is referred to in the difficulty of deriving local reward policy from a global utility that measures the system as a whole~\cite{DBLP:conf/atal/AgoginoT04}. 
+This is referred to in the difficulty of deriving a local reward policy from a global utility that measures the system as a whole~\cite{DBLP:conf/atal/AgoginoT04}. 
 %
 Besides, the reward received is typically very delayed and sparse in time, because an action taken in a point of large geographical space, could lead to an influence on the whole system only when it reaches all nodes.
 

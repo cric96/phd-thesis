@@ -27,7 +27,7 @@ This problem can be reduced to the definition of the control program
  that each agent has to execute~\cite{DBLP:journals/tib/MartiusH12}.
 %
 
-As our language-based approach, in this chapter we focus on an approach to self-organization,
+As our language-based approach, in this chapter, we focus on an approach to self-organization,
  where the developer writes the self-organising control program
  using a suitable \emph{macroprogramming language}~\cite{casadei2023macro,DBLP:journals/jisa/JuniorSBP21} (i.e., one aiming at expressing the macro-level behaviour of a system), be it general-purpose or domain-specific (e.g., explicitly tailored to robotic swarms~\cite{DBLP:journals/swarm/BrambillaFBD13} or wireless sensor networks~\cite{DBLP:journals/csur/MottolaP11}).
 %
@@ -369,7 +369,7 @@ Notice that the model is logical
 Also, inbound and outbound reactivity can be regulated by throttling, i.e.,
  by accumulating a certain amount of (change in) inputs (before re-evaluating the program or parts of it)
  and  accumulating a certain amount of (change in) outputs/exports
- (before executing actuations and/or sending the export to neighbours).
+ (before executing actions and/or sending the export to neighbours).
  
 %
 %\meta{RC: can we provide a picture of the idea?}
@@ -377,7 +377,7 @@ Also, inbound and outbound reactivity can be regulated by throttling, i.e.,
 \subsection{Programming Abstractions and Primitives}
 \label{acsos2023-frp:programming-constructs}
 
-In this thesis we adopt the general system model devised in \Cref{part:background},
+In this thesis, we adopt the general system model devised in \Cref{part:background},
  where a single program
  is used to express the collective behaviour
  of the entire system of devices.
@@ -468,7 +468,7 @@ and the string \lstinline|"normal"| otherwise.
 
 \subsubsection{Interaction with neighbours}
 %
-Communication with neighbours is handled \emph{in both directions at once} through a single construct, \lstinline|nbr(f)|, which takes a flow \texttt{f} as parameter.
+Communication with neighbours is handled \emph{in both directions at once} through a single construct, \lstinline|nbr(f)|, which takes a flow \texttt{f} as a parameter.
 %
 The local output of \texttt{f} will be automatically sent to neighbours.
 %
@@ -563,7 +563,7 @@ neighbours that run the other sub-computation
 This concept is called \emph{alignment} and is well-discussed, e.g., in~\cite{DBLP:journals/lmcs/AudritoCDV23}.
 % 
 Notice that, upon a change in the value sensed by \texttt{colour},
- a device may dynamically switch branch and hence sub-computation domain and ``aligned'' neighbour set.
+ a device may dynamically switch branches and hence sub-computation domain and ``aligned'' neighbour set.
  
 %With this semantics, any sub-computation under \texttt{t} or \texttt{e} will not align with any neighbor executing the opposite branch. %, due to the fact that their paths will differ at the \texttt{Then}/\texttt{Else} slot.
 %
@@ -702,7 +702,7 @@ Firstly, we re-implement the \emph{gradient} building block with the reactive ex
 %
 \Cref{acsos2023-frp:fig:scenario-g} provides a representation of a gradient.
  
-Multiple gradient computation algorithms exist~\cite{audrito2017ULT} as previous outlined. 
+Multiple gradient computation algorithms exist~\cite{audrito2017ULT} as previously outlined. 
 A basic algorithm can be implemented in \ac{langname} as follows.
 
 \begin{lstlisting}[caption=Gradient implemented with FRASP, label=acsos2023-frp:lst:gradients]
@@ -815,7 +815,7 @@ For a graphical view of the local and distributed dependency graph, see \Cref{ac
     \label{acsos2023-frp:fig:interactions}
   \end{subfigure}
   \caption[The reactive dataflow graph corresponding to the channel example.]{
-      The reactive dataflow graph corresponding to \Cref{acsos2023-frp:ex:channel}.
+      The reactive dataflow graph corresponds to \Cref{acsos2023-frp:ex:channel}.
       %
       \Cref{acsos2023-frp:fig:channel-graphical} provides the local view of the computation for a single node
       (where the layers denote different semantic kinds of dependencies),
@@ -824,7 +824,7 @@ For a graphical view of the local and distributed dependency graph, see \Cref{ac
       The arrows denote dependencies.
       %
       The dashed arrows denote dependencies based on platform-level scheduling and node interaction---e.g.,
-      a red block depends on changes corresponding to neighbours' red blocks and communicated via message passing.
+      a red block depends on changes corresponding to neighbours' red blocks and is communicated via message passing.
   }
   \label{acsos2023-frp:fig:channel:graph}
 \end{figure}
@@ -862,7 +862,7 @@ Considering the system model introduced in \Cref{acsos2023-frp:sec:sys-model},
 \begin{itemize}
     \item \emph{Re-compute only upon \emph{relevant} changes in the context}: computations should occur reactively only when relevant changes are observed from the environment (i.e., sensing and neighbour data). %, in order to avoid wasteful resources usage;
     \item \emph{Avoid re-evaluation of unaffected sub-computations}: if a portion of the computation depends on data that did not change, it should not be re-evaluated.
-    \item \emph{Interact only upon relevant changes}: each device should avoid broadcasting an export that did not change since the last one, with the direct consequence that no further message exchange should be required if a computation reaches a stable configuration.
+    \item \emph{Interact only upon relevant changes}: each device should avoid broadcasting an export that has not changed since the last one, with the direct consequence that no further message exchange should be required if a computation reaches a stable configuration.
 \end{itemize}
 
 \subsection{Architecture}
@@ -1051,12 +1051,12 @@ In the above setup, the two programs discussed in \Cref{acsos2023-frp:sec:contri
  i.e., the self-healing gradient (\emph{scenario G}---cf. \Cref{acsos2023-frp:fig:scenario-g}) and channel (\emph{scenario C}---cf.~\Cref{acsos2023-frp:fig:scenario-c}),
  are executed for 300 simulated time units. 
 %
-The former represents a minimally complex self-organising behaviour, enabling evaluation of basic dynamics, 
+The former represents a minimally complex self-organising behaviour, enabling the evaluation of basic dynamics, 
  whereas the latter is representative of larger behaviours that can be defined as compositions of simpler ones, hence 
  providing insights about what could happen when multiple reactive computations are combined.
 
 For \emph{scenario G},
- a group of nodes (i.e., a $20m \times 20m$ area at the bottom left) is marked as gradient source.
+ a group of nodes (i.e., a $20m \times 20m$ area at the bottom left) is marked as a gradient source.
 %
 Also, a set of nodes marked as obstacles is positioned at the centre in a $8m \times 2m$ area.
 %
@@ -1174,7 +1174,7 @@ Indeed, starting with the messages metric, we observe that
 %  
 This result is expected:
  in the purely reactive model
- each message different from a previous one
+ each message different from the previous one
  causes a program re-evaluation and subsequent message sending.
 %
 Analysing the policies with throttling, 
@@ -1189,7 +1189,7 @@ In the gradient scenario, for instance,
 %
 Despite consuming more, 
  purely reactive policies are still more efficient than round-based ones,
-sending approximately 40\% less messages.
+sending approximately 40\% fewer messages.
 %
 However, it is also noteworthy that, 
  in the case of continuous variations, 

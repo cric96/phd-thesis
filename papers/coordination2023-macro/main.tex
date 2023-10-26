@@ -12,7 +12,7 @@ In \ac{cpsw} domains,
  the emergence of desired global-level outcomes %(or the accomplishment of joint goals) 
  with inherent robustness and resiliency to changes and faults in the swarm or the environment.
 %
-Complex patterns can emerge through the interaction of simple agents~\cite{bonabeau1999swarmintelligence-book}, and centralized approaches %of decision-making 
+Complex patterns can emerge through the interaction of simple agents~\cite{bonabeau1999swarmintelligence-book} and centralized approaches %of decision-making 
  can suffer from scalability and dependability issues: as such,  
  we seek for an approach based on %adopting 
  suitable distributed coordination models and languages to steer the micro-level activity of a possibly large set of agents.
@@ -38,7 +38,7 @@ DBLP:conf/iros/PinciroliB16,%
 DBLP:conf/iros/YiDLD0WY20},
  a key feature that is generally missing or provided only to a limited extent
  is \emph{compositionality},
- namely the ability to combine blocks of simple swarm behaviour to construct swarm systems of increasing complexity in a controlled/engineered way.
+ namely, the ability to combine blocks of simple swarm behaviour to construct swarm systems of increasing complexity in a controlled/engineered way.
 %
 Additionally, most existing approaches tend to be pragmatic, not formally founded and quite ad-hoc: 
  they enable the construction of certain types of swarm applications
@@ -664,7 +664,7 @@ The first step is the formation of the teams,
  based on method \lstinline|formation| which
  internally uses \lstinline|centeredCircle| 
   to place the nodes in a circle around the leader node. 
- Function \lstinline|circleIsFormed| verifies whether the nodes are in a circle formation, i.e., 
+ The function \lstinline|circleIsFormed| verifies whether the nodes are in a circle formation, i.e., 
  that the distance between any node and the leader is less than \lstinline|radius| (set to 50 meters in this scenario).
 %
 The second step is the exploration phase, 
@@ -876,7 +876,7 @@ It leverages
 \emph{production rules} to generate new facts from existing facts, 
 and \emph{aggregate rules} to combine multiple facts into one fact by folding (e.g., maximization or summation).
 %
-The runtime deals with communication of facts and removal of invalidated facts.
+The runtime deals with the communication of facts and the removal of invalidated facts.
 %
 The declarativity and logical foundation 
  make Meld an interesting macroprogramming system;
@@ -975,7 +975,7 @@ We delineate the key contributions of this work as follows:
 \begin{enumerate}
   \item A programming model founded on the concepts of \emph{collective behaviours} and \emph{swarm capabilities};
   \item A library of modular, reusable building blocks designed for swarm programming and grounded in field calculus;
-  \item A case study that validates the expressively and efficacy of the framework herein proposed.
+  \item A case study that validates the expressiveness and efficacy of the framework herein proposed.
 \end{enumerate}
 
 The discussions in \Cref{chap:eng:clustering,chap:eng:decentralization,chap:eng:macroswarm} contribute to the broader vision of developing a swarm-API for \ac{cpsw}. This aims to bridge the gap between domain-specific problems and their concrete implementations.

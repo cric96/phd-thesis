@@ -17,7 +17,7 @@
 %% ACRONYMS
 %\ga{Page limit: 10 pages (include refs)}
 The coordination of a group of autonomous agents that can perceive and act in their environment is a fundamental problem in artificial intelligence. 
-Such agents need to cooperate and communicate in order to achieve a common goal, 
+Such agents need to cooperate and communicate to achieve a common goal 
  while dealing with the challenges of distributed and situated intelligence. 
  These challenges include the limited and local nature of the information available to each agent and the emergence of global behaviour from local interactions. 
 %
@@ -28,7 +28,7 @@ In this chapter, we propose a novel hybrid approach that combines the manual and
 Specifically, we propose a solution called \ac{FIRL} that utilizes aggregate computing together with a \ac{GNN}~\cite{DBLP:journals/aiopen/ZhouCHZYLWLS20} in combination with a reinforcement learning approach, namely \ac{DQN}. 
 % First, aggregate computing is utilized to collect information from neighbours and create a local knowledge base for each agent. Second, we utilize a \ac{GNN} within the \ac{DQN}. 
  Here the \ac{GNN} is trained on \emph{field-information} from aggregate computing and provides so-called node embeddings for each agent, serving as input for the \ac{DQN}. 
- The \ac{DQN} provides then the appropriate actions for the agent to achieve their tasks.
+ The \ac{DQN} provides the appropriate actions for the agent to achieve their tasks.
 %We further combine this with reinforcement learning techniques to respond to changing conditions in the environment. 
 %
 The main contribution of \ac{FIRL} is the \emph{definition of distributed controllers that are informed by collective knowledge that has been distilled during training, but that use only local information when deployed}. 
@@ -40,7 +40,7 @@ Moreover, the learned policies have the potential to scale with size and adapt t
 Conceptually, \ac{FIRL} leverages the ideas of \emph{behaviour implicit communication} \cite{DBLP:journals/ijaci/CastelfranchiPT10} \cite{DBLP:conf/e4mas/TummoliniCRVO04}, whereby intelligent agents (here trained by DQN) achieve collective goals by learning how to use signs they left in the environment (here made of fields): much like ants collectively rely on pheromones they produce \cite{DBLP:journals/anor/Parunak97}.
 
 We employ this approach in a swarm-like system setting where agents are tasked to cover phenomena detected in their environment. 
-Over time, the agents have to converge over each phenomenon in order to cover it appropriately as illustrated in \Cref{acsos2023:fig:simulations}.
+Over time, the agents have to converge over each phenomenon to cover it appropriately as illustrated in \Cref{acsos2023:fig:simulations}.
 \begin{figure}[t]
 	\centering
 	\begin{subfigure}[b]{0.32\linewidth}
@@ -103,7 +103,7 @@ Let $G = (V, E)$ be a graph where $E\subseteq V\times V$ defines the neighbourho
 
 Given $f_v$, the goal of a \ac{GNN} is to learn the node embedding $h_v$ for each node $v \in V$. 
  The node embedding $h_v$ describes the node in the network and summarizes the geometric properties of the graph in this location, 
- allowing for comparison of various nodes in the graph. 
+ allowing for the comparison of various nodes in the graph. 
  This is analogous to how convolutional neural networks (CNNs) learn spatial hierarchies in images; 
  \acp{GNN} learn to capture the topological and combinatorial structure of graphs.
 
@@ -156,7 +156,7 @@ In our specific case, the agents can only interact with 1-hop neighbours and are
 \end{equation*}
 where $\mathcal{N}^v$ is the set of neighbours of $v$.
 %
-This model can be used then to express the evolution of the system in time.
+This model can be used to express the evolution of the system in time.
 Specifically, starting from a global state $\mathcal{S}^P_t$, the next state $\mathcal{S}^P_{t+1}$ is defined as:
 \begin{equation*}
 \mathcal{A}^P_t = \pi(\xi(S^P_t))
@@ -239,7 +239,7 @@ and the \ac{GNN} can be locally evaluated using only neighbourhood information.
 We want to emphasize that, in this case, the \acp{GNN} must be 1-hop; 
 otherwise, they could not have a local interpretation for each agent, according to our system model.
 %
-This intuition of base a policy based only on neighborhood information came from mean-field RL, introduced in \Cref{chap:marl}
+This intuition of basing a policy based only on neighbourhood information came from mean-field RL, introduced in \Cref{chap:marl}
 \subsection{Learning algorithm}
 %
 Here we discuss a variant of many agent Deep-Q learning:
@@ -341,9 +341,9 @@ This is because, even though the actions are produced using only local and neigh
 
   %\includegraphics[width=0.3\textwidth]{papers/acsos2023/imgs/example.png}
  
-  \caption[Simulations of the case study scenario in Alchemist for \ac{FIRL}.]{Simulations of the case study scenario in Alchemist. 
+  \caption[Simulations of the case study scenario in Alchemist for \ac{FIRL}.]{ Simulations of the case study scenario in Alchemist. 
   The dots represent drones, 
-  the circle area on represents the phenomenon to be monitored.
+  the circle area represents the phenomenon to be monitored.
   \Cref{acsos2023:fig:static} represents the scenario used during training \review{as well as during test}. 
   The others \review{instead} are only used in the test phase to evaluate the policy found. }
   \label{acsos2023:fig:scenarios}
@@ -359,17 +359,17 @@ Initially,
   %Additionally, the phenomenon can change its shape during runtime. 
   Finally, the phenomenon may have varying areas of interest, defined by an underlying distribution function. 
   This underlying distribution is utilized in the feature set of each drone's observation and guides the drones to rally over the phenomenon. 
-  While we only use Guassian distributions but we can use any other distribution and shape. 
+  While we only use Gaussian distributions, we can use any other distribution and shape. 
 For the \ac{GNN}, we use the implementation provided by PyTorch Geometric~\cite{DBLP:journals/corr/abs-1903-02428}, 
  which is a library for deep learning on graphs built on top of PyTorch~\cite{torch}.
 Finally, we use \scafi{}~\cite{casadei2022scafi} as the aggregate programming language to support our field-informed approach.
 %
 The evaluation is performed in two stages, 
- first the neural networks are trained in an explicit training phase before being extensively evaluated in the testing stage.
+ first, the neural networks are trained in an explicit training phase before being extensively evaluated in the testing stage.
 \footnote{The simulations are publicly available at \url{https://github.com/AggregateComputing/experiment-2023-acsos-field-informed-rl}.}
 \subsection{Scenario}
 \Cref{acsos2023:fig:scenarios} presents the three different types of scenarios utilized within the evaluation. 
- The first type of experiments considers a single phenomenon at a static location (i.e., \emph{Zone Fixed}), 
+ The first type of experiment considers a single phenomenon at a static location (i.e., \emph{Zone Fixed}), 
  the second type of experiment considers two phenomena in two independent but static locations (i.e., \emph{Two Zones}), 
  and the third type of experiment considers a moving phenomenon (i.e., \emph{Moving}). 
  All phenomena are modelled as a Gaussian distribution. 
@@ -381,8 +381,8 @@ Each drone can perceive the presence
 %
 Additionally, each drone has a coverage range $\omega$ (fixed to 75 meters) 
  that describes the area it can monitor. 
- Each drone can only communicate directly with its own neighbourhood $\mathcal{N}$, 
- which in this case depends on a $\mathbb{O}$ range fixed to 300 meters. %\lukas{$\mathbb{O}$  not defined.}
+ Each drone can only communicate directly with its neighbourhood $\mathcal{N}$, 
+ which in this case depends on an $\mathbb{O}$ range fixed to 300 meters. %\lukas{$\mathbb{O}$  not defined.}
 Through this communication channel, drones can exchange information. 
 %From the neighbourhood, each agent can also perceive the direction of the other agents.
 %
@@ -493,7 +493,7 @@ L_\delta = \begin{cases}
   \delta \cdot (|y - \hat{y}| - \frac{1}{2} \delta) & \text{otherwise,} 
  \end{cases}
 \end{equation*}
-where $\delta$ is a hyperparameter that determines the threshold between the two loss functions (fixed to 1 in our experiemnt) and $y$ and $\hat{y}$ are the target and predicted values, respectively.
+where $\delta$ is a hyperparameter that determines the threshold between the two loss functions (fixed to 1 in our experiments) and $y$ and $\hat{y}$ are the target and predicted values, respectively.
 This function is used to penalize the drone if the action taken is too far from the optimal action. 
 %\lukas{what is the value of $\delta$ in the training?}
 %\lukas{also: $\delta$ is used as a function and as a value?}
@@ -516,23 +516,19 @@ this setup represents a challenge for the drones.
 Finally, the third type contained moving phenomena. 
 In each scenario, the starting position as well as the direction of movement is randomly sampled from a uniform distribution. 
 The movement is in a straight line with a constant speed of 5m/s within an unbounded environment. 
-%to ensure the agents can keep up with the phenomenon. 
-%\lukas{64 experiments per mode with random initial positions of the phenomena. Moving: starting at random position and move in a straight line moving with 5m/s in an unbounded environment.}
 %
-Examples of all three types of experiments are shown in~\Cref{acsos2023:fig:scenarios}. %\lukas{can we create a figure with at least 3 sample scenarios (1 stationary, 2 split, 1 moving (with a line indicating its trajectory))?} 
-
-%\lukas{I would move this up into IV.A --> emphasise that we only used a single static phenomena in the training therefore this section is improtant!}
+Examples of all three types of experiments are shown in~\Cref{acsos2023:fig:scenarios}. 
 
 \subsection{Baselines}
 We compare our \ac{FIRL} approach against baseline approaches where the \ac{DQN} utilizes a \ac{MLP} as well as an approach only relying on \acp{GNN}, without additional field information. 
 %
-In all approaches, the underlying neural network (i.e., the \ac{MLP} and the \ac{GNN}) are trained %with the same parameters of the proposed approach 
+In all approaches, the underlying neural network (i.e., the \ac{MLP} and the \ac{GNN}) are trained 
 with a single, stationary phenomenon.
 %
 
 The \ac{MLP} uses the same feature set as the \ac{GNN} but applies it in the \ac{DQN} but 
 %in the proposed approach, but differently, it uses a standard DQN approach 
-without leveraging the graph structure. Moreover, we increase the batch size to 512 and the replay buffer to 10000 since we record 25 drones' experiences for each step instead of one graph experience.
+without leveraging the graph structure. Moreover, we increased the batch size to 512 and the replay buffer to 10000 since we recorded 25 drones' experiences for each step instead of one graph experience.
 %\lukas{to make sure: in all three cases we use DQN but with (i) MLP, (ii) standard GNN, (iii) our approach - a field-informed GNN, right?}
 %
 %The \ac{GNN} instead of using the field information, use directly the position of nodes and the local sensor value as input features.
@@ -544,7 +540,7 @@ Indeed, the \ac{MLP} baseline is used to verify the effectiveness of the \ac{GNN
 \subsection{Metrics}
 We evaluate the performance of the different approaches by measuring the coverage of the phenomenon over time.
 %
-The coverage is defined as the percentage of the phenomenon covered by the drones.
+The coverage is defined as the percentage of the phenomenon covered by drones.
 %
 Specifically, we can measure the coverage as the intersection over the union of the phenomenon and the drones' view range.
 %
@@ -595,7 +591,7 @@ It is worth noting that, in the \emph{Zone Fixed} experiment, % (left graph in \
 Interesting observations arise when we use scenarios different from the training phase. 
 % Starting from a division into two zones, 
 In the \emph{Two Zones} experiment,
- we notice that our approach using field-information finds a better configuration than the simple GNN counterpart. 
+ we notice that our approach using field information finds a better configuration than the simple GNN counterpart. 
 %
 It exhibits both higher overall coverage and manages to divide the system into two equally covered parts. 
 %

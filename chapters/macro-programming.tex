@@ -147,15 +147,11 @@ The approach originates from previous work
 %
 In particular, in co-fields, computational fields represent contextual information, 
  locally sensed by the agents and repeatedly distributed by the agents themselves or the infrastructure according to a propagation rule.
-%moreover, they are associated with a propagation rule that determines how they should change as they are distributed.
 
 In this work, by field-based coordination we mean a specific programming and computational model,
  also known as \emph{aggregate computing} in literature~\cite{aggregatecomputing},
  which is surveyed in~\cite{DBLP:journals/jlap/ViroliBDACP19}.
 % and that we recap in the following.
-%%
-%In particular, we mean an approach
-%  where
 In this model,  
  collective and self-organising behaviour
  is programmed through a composition
@@ -236,9 +232,9 @@ As per the above consideration,
 \begin{enumerate}
 \item \emph{Context acquisition.} The agent gathers its context by considering its previous state as well as the most recent sensor readings and messages from neighbours.
 \item \emph{Computation.} The agent runs a computation against the acquired context, 
- yielding (i) an \emph{output} describing potential actuations; 
- and (ii) a \emph{coordination message} containing all the information to be sent to neighbours for the purpose of coordination at a collective level.
-\item \emph{Actuation \rev{and communication}.} The agent performs the actuations described by the program output and dispatches the coordination message to the entire neighbourhood.
+ yielding (i) an \emph{output} describing potential actions; 
+ and (ii) a \emph{coordination message} containing all the information to be sent to neighbours for coordination at a collective level.
+\item \emph{Actuation \rev{and communication}.} The agent performs the actions described by the program output and dispatches the coordination message to the entire neighbourhood.
 \end{enumerate}
 %
 \rev{
@@ -371,7 +367,7 @@ An expression $\q{e}$ can be:
 \end{itemize}
 Within this suite of operations, 
  the \texttt{nbr} and \texttt{rep} constructs serve distinct roles, 
- facilitating message exchanges between devices and managing state within the iterative rounds of an individual device, respectively. 
+ facilitating message exchanges between devices and managing states within the iterative rounds of an individual device, respectively. 
 %
 These constructs are underpinned by a data gathering mechanism enabled through a technique known as \emph{alignment}~\cite{audrito2016run}. 
 This ensures accurate message correspondence, 
@@ -401,7 +397,7 @@ It takes three parameters:
 \begin{enumerate}
 \item the neutral element, which serves as the initial value for the aggregation;
 \item the aggregation function, which defines how the values should be combined;
-\item The query to neighbours, which specifies what information is to be collected from each neighbour.
+\item the query to neighbours, which specifies what information is to be collected from each neighbour.
 \end{enumerate} 
 \paragraph*{Local field evolution (time)}
 If with \texttt{nbr} we can collect information from the neighbourhood, 
@@ -724,7 +720,6 @@ Alchemist offers an effortless method for loading simulations.
 \centering
 \begin{subfigure}[b]{0.49\textwidth}
     \centering
-    %% change the listing size to small with the correct font family
     \begin{lstlisting}[language=yaml, basicstyle=\small\ttfamily, caption={An Alchemist simulation example.}, captionpos=b, label=coordination2023:fig:alchemist-yaml]
 incarnation: scafi
 network-model:

@@ -60,7 +60,7 @@ As anticipated in \Cref{chap:macro-programming},
 \end{itemize}
 %
 While the latter cannot be controlled, 
- the importance of the first element is reflected in research
+ the importance of the first element is reflected in the research
  on the design of novel algorithms (cf.~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:conf/saso/AudritoCDV17}),
  while the second element is studied 
  w.r.t. the possibility of tuning and adaptivity 
@@ -191,7 +191,7 @@ To incorporate historical data,
 The action space is bifurcated into two categories: 
  \texttt{ConsiderNeighbourhood}, 
  which executes the traditional gradient evaluation, and \texttt{Ignore(velocity)}, 
- which disregards neighboring data to adjust the gradient at a designated \texttt{velocity}. 
+ which disregards neighbouring data to adjust the gradient at a designated \texttt{velocity}. 
  The corresponding \texttt{update} function is defined accordingly:
 \begin{lstlisting}[mathescape]
 def update($o_{t-1}$, $a_{t-1}$, metric) = // $o_{t-1}$ is the previous gradient output
@@ -237,7 +237,7 @@ When the output aligns with the expected ideal value, a reward of $0$ is issued.
 To evaluate our approach, we run a set of Alchemist simulated experiments and verify that an aggregate system
  can successfully learn an improved way to compute a gradient field (cf. the gradient block described in \Cref{part:background}).
 %
-The source code, data, and instructions for running the experiments have been made fully available at a public repository\footnote{\url{https://github.com/cric96/experiment-2022-coordination}}, to promote reproducibility of results.
+The source code, data, and instructions for running the experiments have been made fully available at a public repository\footnote{\url{https://github.com/cric96/experiment-2022-coordination}}, to promote the reproducibility of results.
 
 \subsection{Simulation setup}
 
@@ -298,9 +298,9 @@ We finalize the optimal configuration based on box plot analyses (\Cref{coordina
  The best-performing configuration, characterized by parameters \(\gamma = 0.9\), \(\epsilon_0 = 0.5\), \(\theta = 200\), \(\alpha = 0.3\), and \(\beta = 0.05\), was selected based on \Cref{coordination2022:subfig:boxplot}. 
  The trend of the mean error across episodes is illustrated in \Cref{coordination2022:subfig:mean-error-over-episode}, where the shaded region represents the standard deviation and the dashed vertical line marks the time of source alteration.
 
-The principal objective of this research was to develop an algorithm that offers a superior performance against the rising-value problem when compared to traditional gradient methods. 
+The principal objective of this research was to develop an algorithm that offers superior performance against the rising-value problem when compared to traditional gradient methods. 
  This is corroborated by \Cref{coordination2022:subfig:mean-error-over-episode}, which demonstrates that our algorithm successfully reduces the \(error_{episode}\) compared to conventional approaches. 
- Specifically, the agents adaptively learn when to disregard the neighboring nodes and accelerate the output through the \lstinline|Ignore| action.
+ Specifically, the agents adaptively learn when to disregard the neighbouring nodes and accelerate the output through the \lstinline|Ignore| action.
 
 This adaptive behaviour is further substantiated by \Cref{coordination2022:subfig:error-few,coordination2022:subfig:error-many,coordination2022:subfig:output-few,coordination2022:subfig:output-many}. Especially in \Cref{coordination2022:subfig:error-few,coordination2022:subfig:output-few}, 
  where the agent count is fewer, the rapid decline in error (and corresponding quick output increase) is evident when the source node is deactivated. 
@@ -311,7 +311,7 @@ Another noteworthy aspect is the system-wide applicability of the learned policy
  thereby enabling straightforward scalability across deployments with varying node counts. 
  Moreover, the policy outperforms the baseline across different system configurations.
 
-We would also like to emphasize that the asynchronous nature of node activation eliminates the need for a global synchronized clock. 
+We would also like to emphasize that the asynchronous nature of node activation eliminates the need for a globally synchronized clock. 
  This feature enhances the policy's adaptability, as it remains effective regardless of the local order in which aggregate programs are evaluated. Consequently, the learned policy is versatile enough to be employed in a wide range of deployment scenarios.
 \section{Final Remarks}\label{coordination2022:s:conc}
 

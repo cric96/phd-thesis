@@ -18,28 +18,51 @@
 
 %\chapter{Addressing Collective Computations Efficiency: Towards a Platform-level Reinforcement Learning Approach}
 
-\chapter[Platform: Distributed Schedulers for Collective Computations]{
-    Platform: Distributed Schedulers for Collective Computations
-}\label{chap:rl:schedulers}%\mtcaddchapter
+\chapter[Platform: Addressing Collective Computations Efficiency---a Platform-level Reinforcement Learning Approach]{Platform: Addressing Collective Computations Efficiency---a Platform-level Reinforcement Learning Approach}\label{chap:rl:schedulers}%\mtcaddchapter
 \minitoc% Creating an actual minitoc
 %\input{acronyms.tex}
 %\lstset{language=scafi}
 
-An aggregate program is usually deployed across a network of devices that interact with their neighbours. These devices execute the program through asynchronous sense-compute-act rounds~\cite{DBLP:journals/fi/CasadeiPPVW20}.
-The goal is to facilitate the emergence of collective behaviour through repeated evaluations of the program, thereby directing the system towards globally coherent objectives.
+An aggregate program is typically deployed
+ to a network of neighbour-interacting devices
+ that will execute it 
+ through asynchronous sense-compute-act \emph{rounds}.
 %
-The program encompasses both \emph{functional} and \emph{non-functional aspects}, 
- such as resilience and resource complexity in terms of time, memory, and message overhead. 
- Some of these non-functional aspects can be managed at the middleware level. %
-The \ac{AC} execution platform serves as the logical or software middleware that coordinates networked devices, 
- enabling them to operate as an aggregate system and supporting the execution of aggregate applications through properly scheduled computation rounds~\cite{danilo2021lmcs}. %
+%In particular, \ac{AC} follows a pragmatic methodology in which the collective behaviours could be reused in different applications since it is decoupled from the underline IT architecture. 
 %
-Typically, the aggregate platform is manually configured to initiate rounds based on a specific frequency or triggers. %
-However, this chapter investigates the application of \ac{RL} at the platform level to discover effective scheduling policies. 
- The aim is to enhance system efficiency while preserving its functionality, as characterized by the eventual collective outcome. %
+The idea is that collective behaviour 
+ has to emerge by repeated evaluation of the aggregate program,
+ which describes computations and communications
+ needed to steer the system (and its self-organization)
+ towards globally coherent goals.
+%
+An aggregate program deals both with \emph{functional} aspects (i.e, how the overall ensemble should behave) 
+ and \emph{non-functional aspects} (e.g., resilience as well as time, memory, and message complexity).
+%
+In part, non-functional aspects 
+ can also be addressed by system designers
+ at the middleware level.
+%while the burden of managing non-functional aspects (e.g., energy consumption, bandwidth consumption, convergence time, etc.) is left to the \emph{execution platform}.
+%
+An \ac{AC} execution platform (\emph{aggregate platform} in short) is the logic or software middleware 
+ on a set of networked devices 
+ that make them work as an \emph{aggregate system}
+ and support the execution of aggregate applications (which are the result of an aggregate program, the actual distributed protocol, and the environment) by properly scheduling rounds of computation~\cite{DBLP:journals/fi/CasadeiPPVW20}. 
 
-We substantiate our thesis through a case study, 
- where a variant of many-agent Q-Learning is successfully applied to minimize system-wide power consumption without requiring modifications to the aggregate program itself~\cite{DBLP:conf/icml/LauerR00}.
+The aggregate platform is generally manually configured to run rounds at a certain frequency, or whenever certain triggers fire~\cite{danilo2021lmcs}.
+%
+Instead, in this chapter, 
+ we explore the possibility of applying \ac{RL} at the aggregate platform level
+ in order to learn effective scheduling policies for rounds.
+%
+The idea is to let an aggregate system
+ address non-functional aspects  
+ to improve efficiency % and efficacy
+ while 
+ achieving the same functionality
+ (defined in terms of the eventual collective outcome). 
+%
+Our thesis is exposed through a case study, in which \ac{RL} -- and in particular a variant multi-agent Q-Learning~\cite{DBLP:conf/icml/LauerR00} -- is successfully applied to reduce system-wide power consumption without modifying the aggregate program.   
 
 \section{Background and Related Work}
 
@@ -69,7 +92,7 @@ The focus of our solution is mainly on energy efficiency
 One way to improve efficiency would be to act at the level of scheduling
  as already explored in related work about wireless sensor network scheduling.
  In~\cite{DBLP:journals/automatica/IwakiWWSJ21,DBLP:journals/ijcnds/MihaylovBTN12} the system learns 
- when a node should be awakened to reduce conflicting messages 
+ when a node should be awakened in order to reduce conflicting messages 
  (and therefore to reduce the power consumption). 
 However, our work is quite different from the previous. 
  We aim to leverage learning to improve a \emph{general} collective computation 
@@ -150,7 +173,7 @@ Using learning instead, the agents self-adapt as a consequence
 %
 Also, in the case of \emph{online} and \emph{continuous} learning, 
  it is possible to learn a good policy \emph{by doing}, 
- even if the nodes are in an unknown environment without any prior knowledge of the application domain.
+ even if the nodes are in an unknown environment with any prior knowledge of the application domain.
 %
 This situation is difficult to handle with handcraft algorithms, that require a deep domain knowledge.
 
@@ -164,9 +187,29 @@ This situation is difficult to handle with handcraft algorithms, that require a 
     The agent receives the state and reward from the platform and produces an action that can affect one of the platform aspects (blue circles).}
     \label{acsos2022:fig:rl-and-ac}
 \end{figure}
-The learning settings follow the one discussed in \Cref{sec:manyrl:solutions},
- therefore a many-agent Q-learning configuration with \emph{parameter} and \emph{experience} sharing.
+In the \ac{AC} framework, 
+ we can assume \emph{homogenous} collective behaviours---
+ i.e., agents which participate in the aggregate system should execute the same program. 
+ In terms of the \ac{RL} process, this means that we could find a single policy for the entire system even if we are in multi-agent settings.%----as pointed out in~\Cref{chap:learning:roadmap}
+Specifically, we aim to use a global $Q$-table during the learning time, 
+ by which each node uses and refines it with the local experience.
+This means that each node, after collecting the typical ($s_t, a_t, r_{t+1}$) trajectory,
+ performs the Q-learning update on the shared table.
 %
+ This way, the $Q$-table encapsulates the knowledge of the whole aggregate behaviour.
+%
+At the end of the learning phase then, 
+ the final $Q$-table is conceptually assigned to the whole system, by sharing the $Q$-table with all the agents.
+%
+ The nodes consequently follow a greedy policy over that table, 
+ which is a typical approach used in \emph{swarm}-like system~\cite{DBLP:journals/jmlr/HuttenrauchSN19, DBLP:conf/atal/SosicKZK17}.
+%
+In doing so, the policy works for small networks as well as large networks  (i.e., scales with the agent's population size).
+
+%
+The agent, however, could \emph{inspect} the learning and evaluation process. 
+ Therefore, the agent state should depend on locally produced export and outputs, 
+ and the messages received from the neighbours.
 %
 The actions chosen by the agents only indirectly influence the local program output: 
  this is done by producing side-effects at the infrastructural level---e.g., 
@@ -235,7 +278,7 @@ In doing this, the signal weighs these two contributions using an additional par
 \begin{equation}
 r_t = - \theta * \Delta / T
 \end{equation}
-$T$ is defined by the action with the highest next wake-up value.
+$T$ is defined by the action with the highest next wake up value.
 %
 This gives a negative reward if the node stays in a non-stable condition for a long time (i.e., when $\Delta = T$).
 Otherwise, the reward function is evaluated as:
@@ -394,7 +437,7 @@ This metric is intended to be maximized,
     The colours of the small squares denote the node frequencies 
     (the redder, the higher the frequency).
     The colours of the large squares denote the output 
-    (the greener, the closer the nodes are to the sources).
+    (the greener, the closer the nodes to the sources).
     In the leftmost figure, a new source appears in the bottom right corner. 
     The signal propagation produces a frequency drop on the node that evaluates the new value 
     (the black node grows toward the gradient direction).
@@ -473,6 +516,7 @@ $\gamma$ tends to reduce the long-term consumption,
 % 
 Finally, with a great value of $w$, 
  agents tend to better understand the output progression and then they better react to local changes. 
+ %$\epsilon$ does not seem that alter so much the results in that cases. 
 
 The best results are achieved in the \swapscen{} (\Cref{acsos2022:fig:training-performance})
  scenario and with the gradient program. 
@@ -485,7 +529,7 @@ Particularly, the consumption is near to our \adhocsol{} solution,
 %
 Interestingly, at the swap time, the round frequency drops until a peak and then soars (\Cref{acsos2022:fig:simulation-evolution}).
 This behaviour may appear counter-intuitive.
- At a first glance, indeed, we expect that the nodes tend to maintain a low-cost power consumption, 
+ At first glance, indeed, we expect that the nodes tend to maintain a low-cost power consumption, 
  and then when changes in the environment happen, 
  the nodes start to increase the frequency to react quickly against them.
 %
@@ -499,7 +543,7 @@ In the \multiswap{} scenario,
 %
 This happens because we gave more importance to the convergence time 
  (with $\theta = 0.99$) and therefore the algorithm tended 
- to prefer solutions with low error. 
+ to prefer solutions with low error. % (i.e, slow convergence time).
 %
 Nevertheless, even if it has higher consumption, 
  it reaches a similar performance of \periodicsol{} but with half of the ticks.
@@ -514,7 +558,7 @@ Interestingly, $\theta$ could be used to decide the trade-off
  the program with $\theta=0.9$ (fourth line \Cref{acsos2022:fig:simulation-results}) 
  has a low error but a limited reduction in the power consumption ($\sim$ 40 $\%$); 
  instead, the program with $\theta=0.975$ has an increased convergence 
- time in the swap moments but the overall consumption is reduced by a factor of 70.
+ time in the swap moments, but the overall consumption is reduced by a factor of 70.
  %
 %Thus, given some energy constraints, 
 % the designer could tune the system consumption by only changing $\theta$.
@@ -528,7 +572,7 @@ To verify this consideration, we use the same policy found with
  Particularly, in \Cref{acsos2022:fig:check-scale}, the power consumption reduction 
   remains stable as the nodes vary. 
   Moreover, the error is constant too. 
-There were some oscillations but the error remains negligible even 
+There were some oscillations, but the error remains negligible even 
   if the size is 10 times the nodes of the training configuration. 
 Differently, the heuristic worsens by a factor of three.}
  \revision{
@@ -579,7 +623,7 @@ This chapter explores the combination of in combining \ac{RL} with \ac{AC}
 %
 In particular, this work leverages Q-Learning 
  to reduce the cost of executing \ac{AC} programs 
- in several synthetic scenarios.
+ in different synthetic scenarios.
 %
 The contribution \revision{can be framed within a larger} vision in which 
  the designer could mainly focus on functionality and key non-functional aspects (e.g., resiliency)
