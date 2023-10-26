@@ -17,6 +17,10 @@
 %
 \minitoc% Creating an actual minitoc
 %
+In this dissertation, 
+ we advocate for a language-based approach to the engineering of \ac{cpsw}. 
+ Specifically, we propose a hybrid vision that combines \ac{rl} and aggregate computing. 
+ This approach underscores the need to create a corpus of solutions to address the overarching problem of \ac{MAARL}.
 \Ac{MAARL}~\cite{yang2021many,https://doi.org/10.48550/arxiv.2106.09825}
  offers significant opportunities in the design of large-scale systems
  requiring agents to coordinate and collaborate effectively, 
@@ -40,12 +44,8 @@ To start addressing these problems, in this work, we present \scarlib{},
  integration with a simulator for large-scale pervasive computing systems (Alchemist),
  and the possibility to express field-based coordination problems thanks to the integration with \scafi{}.
 %
-With \scafi{}, in particular, \scarlib{} is provided with a high-level language for distributed computing that provides a declarative
+With \scafi{}, in particular, we support our language-based vision: \scarlib{} is provided with a high-level language for distributed computing that provides declarative
  and compositional ways of expressing complex coordination tasks. 
-%% TODO probably here we should add a discussion about why the DSL is important, or in general why this framework is better w.r.t. the others
-%% Here we should add the outline of the paper
-
-%\input{papers/softwarex2021/main.tex}
 \section{Software Description}\label{coordination2023:contribution}
 \scarlib{} \footnote{Tool available on GitHub at \url{https://github.com/ScaRLib-group/ScaRLib}}~\footnote{demo video at: \url{https://github.com/ScaRLib-group/ScaRLib-demo-video}} is a research Scala framework designed to support
 the development of \ac{MAARL} systems by JVM-based high-level specification, and with learning performed under the hood by PyTorch\footnote{\url{https://pytorch.org/}}.
@@ -80,7 +80,7 @@ expressed by a reward function.
 %
 The tool comes with two types of systems already implemented that are very common in literature~\cite{Du2020},
 i.e., centralized training and decentralized execution (\texttt{CTDESystem}) and decentralized training and execution (\texttt{DTDESystem}).
-Furthermore, an implementation of the DQN algorithm \cite{Mnih2015} is provided and used to train agents. 
+Furthermore, an implementation of the DQL algorithm \cite{Mnih2015} is provided and used to train agents. 
 The end-user who wants to run a learning process only has to implement four elements
 in order to define his own system with the desired \emph{collective} goal, which are:
 \begin{enumerate}
@@ -633,18 +633,6 @@ Finally, some innovative approaches aim to scale solutions to large populations 
 
 Overall, \ac{MAARL} is a high-level framework that reduces the effort required for developers and practitioners to define and implement \ac{MAARL} problems when compared to current state-of-the-art solutions.
 
-\subsection{Many-Agent Proof of Concept:}
-The above RL library solutions are mainly created for multi-agent systems, 
- so they generally do not scale well with large populations of agents. 
- Novel approaches aim to scale the solution to potentially infinite populations of cooperative agents. 
-In particular, mean-field RL~\cite{meanfield} is probably one of the 
- most interesting solutions in this context, 
- as it abstracts over the entire agent population 
- by considering only the average response of the neighbourhood. 
-%
-Currently, however, only a few implementations 
- exist~\footnote{\url{https://github.com/mlii/mfrl}} and they are not considered to be general-purpose. 
- \scarlib{} instead is practical and already provides a simple implementation that can be leveraged in \ac{MAARL} settings. 
 \section{Final Remarks}\label{coordination2023:conclusion}
 In this chapter, we presented \scarlib{}: 
  a collaborative many-agent deep reinforcement learning framework that integrates the functionalities of \scafi{} and Alchemist.
