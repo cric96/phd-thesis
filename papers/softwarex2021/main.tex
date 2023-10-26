@@ -74,7 +74,7 @@ The \texttt{StandardLibrary} is provided by leveraging
  providing traits of functionality to be mixed into \texttt{AggregateProgram}s.
 }
 
-\subparagraph{Software Functionalities}
+\paragraph*{Software Functionalities}
 \label{}
 
 \subparagraph*{Expressing aggregate programs through a Scala DSL}
@@ -207,98 +207,7 @@ Then, an object-oriented façade API is provided to set up a system of middlewar
 %\label{}
 
 %\subparagraph{Illustrative Examples}
-\label{sec:examples}
-\subparagraph{Hello \scafi{}: building an aggregate system that computes a gradient, from scratch}
-This complete example, shown in \Cref{fig:example-full} and available online\footnote{\url{https://github.com/scafi/hello-scafi}}, illustrates how it \scafi{} can be used
- to program a (simulated) aggregate system
- for computing a self-stabilising \emph{gradient} field~\cite{DBLP:conf/sac/BealBVT08,DBLP:journals/tomacs/ViroliABDP18}
- where the output of each device self-stabilises to
- its minimum distance from an appointed \emph{source} device.
-%
-Development comes in two parts:
-\begin{enumerate}
-  \item definition of the aggregate program,
-  namely the logic of collective behaviour (\Cref{fig:example-full1})\footnote{For a detailed explanation of this gradient implementation, please refer to e.g. \cite{DBLP:journals/eaai/CasadeiVAPD21}.}~\footnote{Concerning source code listings, we highlight symbols as follows: we use blue for Scala keywords, red for \scafi{} DSL constructs, purple for \scafi{} library functions, and brown for other \scafi{} API symbols (e.g., types, objects, constants, and methods).};
-  \item definition of an ``aggregate execution protocol''
-  determining how devices communicate and act upon their environment (\Cref{fig:example-full2}).
-\end{enumerate}
-
-\begin{figure}
-\newsavebox{\exoprogram}
-\begin{lrbox}{\exoprogram}% Store first listing
-\begin{lstlisting}[basicstyle=\lst@ifdisplaystyle\footnotesize\fi\ttfamily]
-// 1. Define/import an incarnation, it provides ScaFi types and classes
-object MyIncarnation extends
-  it.unibo.scafi.incarnations.BasicAbstractIncarnation
-// 2. Bring into scope the stuff from the chosen incarnation
-import MyIncarnation._
-// 3. Define an "aggregate program" using the ScaFi DSL 
-// by extending AggregateProgram and specifying a "main" expression
-class GradientProgram extends AggregateProgram {
-  def isSource: Boolean = sense("source")
-  override def main(): Any = rep(Double.PositiveInfinity)(d => {
-    mux(isSource){ 0.0 } {
-      foldhoodPlus(Double.PositiveInfinity)(Math.min){ nbr(d) + 1.0 } 
-}})}
-\end{lstlisting}
-\end{lrbox}
-\newsavebox{\exosystem}
-\begin{lrbox}{\exosystem}% Store first listing
-\begin{lstlisting}[deletekeywords={[2]{nbr}},
-emph={state}, basicstyle=\lst@ifdisplaystyle\footnotesize\fi\ttfamily]
-// 4. In your program, implement an "execution loop" whereby
-// your device or system executes the aggregate program
-object HelloScafi extends App {
-  case class DeviceState(self: ID, exports: Map[ID, EXPORT],
-      localSensors: Map[CNAME, Any], 
-      nbrSensors: Map[CNAME, Map[ID, Any]]) {
-    def updateExport(dev: ID, export: EXPORT): DeviceState = 
-        this.copy(exports = exports + (dev -> export))
-  }
-  val devices = 1 to 5  // (1,2,3,4,5), i.e., 5 devices
-  val sourceId = 2      // device 2 is the source of the gradient
-  val scheduling = devices ++ devices ++ devices ++ devices ++ devices
-  val program = new GradientProgram()
-  def neighboursFrom(id: ID): Seq[Int] = // topology [1]-[2]-[3]-[4]-[5]
-    Seq(id - 1, id, id + 1).filter(n => n > 0 && n < 6)
-// Now let's build a simplified system to illustrate the execution model
-  var state: Map[ID, DeviceState] = (for {
-    d <- devices
-  } yield d -> DeviceState(d, Map.empty, Map("source" -> false),
-      Map(NBR_RANGE -> (neighboursFrom(d).toSet[ID]
-        .map(nbr => nbr -> Math.abs(d - nbr).toDouble)).toMap))).toMap
-  state = state + (sourceId -> state(sourceId).copy(localSensors =
-      state(sourceId).localSensors + ("source" -> true))) // set source
-// The cycle simulates scheduling&communication by read/write on `state`
-  for(d <- scheduling){ // run 5 rounds for each device `d`, round-robin
-    // build the local context for device d
-    val ctx = factory.context(selfId = d, exports = state(d).exports,
-      lsens = state(d).localSensors,nbsens = state(d).nbrSensors)
-    println(s"RUN: DEVICE ${d}\n\tCONTEXT: ${state(d)}")
-    // run the program against the local context
-    val export = program.round(ctx)
-    // update d's state
-    state += d -> state(d).updateExport(d, export)
-    // Simulate sending of messages to neighbours
-    state(d).nbrSensors(NBR_RANGE).keySet.foreach(
-      nbr => state += nbr -> state(nbr).updateExport(d, export))
-    println(s"\tEXPORT: ${export}\n\tOUTPUT: ${export.root()}\n---")
-  }
-}
-\end{lstlisting}
-%  // Import standard sensors name defined in incarnation
-%  val sensorsNames = new StandardSensorNames {}; import sensorsNames._
-\end{lrbox}
-\subfloat[\label{fig:example-full1}Program definition]{
-\usebox{\exoprogram}
-}\\
-\subfloat[\label{fig:example-full2}System and execution definition]{
-\usebox{\exosystem}
-}
-\caption{Complete example: an aggregate system computing a gradient.}
-\label{fig:example-full}
-\end{figure}
-\subparagraph{Features}
+\paragraph*{Features}
 \label{s:impact}
 \scafi{}
  has been used 

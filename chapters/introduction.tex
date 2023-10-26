@@ -88,7 +88,7 @@ The current state-of-the-art solutions in both automatic and manual design are l
 
 \subsection*{Contributions}
 
-The thesis contributes to an area called ``language-based engineering,'' where models, algorithms, machine learning solutions, and tools are constructed around a specific programming language within a given context. 
+The thesis contributes (summarized in \Cref{fig:contributions}) to an area called ``language-based engineering,'' where models, algorithms, machine learning solutions, and tools are constructed around a specific programming language within a given context.
 In the realm of software engineering, 
  a language-based approach is fundamentally concerned with describing tools, models, and applications using high-level abstractions provided by a specific programming language. 
  One of the unique attributes of this methodology is its domain-specific nature. 
@@ -99,15 +99,27 @@ In the realm of software engineering,
 For the purpose of this dissertation, 
  we have selected \ac{cpsw} as our broad reference class of systems. 
  We observed that the existing paradigm of aggregate computing (AC) 
- is particularly well-suited for describing emergent behaviours in a straightforward and effective manner. This suitability arises from the top-down nature of AC and its capacity to express self-organizing emergent behaviours.
+ is particularly well-suited for describing emergent behaviours straightforwardly and effectively. This suitability arises from the top-down nature of AC and its capacity to express self-organizing emergent behaviours.
 %
 Building on this foundation, 
  we adopted a layered approach to bridge the gaps between aggregate computing and the broader domain of reference. 
- In this endeavour, we have utilized both standard engineering techniques--
+ In this endeavour, 
+ we initially sought to identify the \emph{facets} to target in order to close this gap, 
+ which can be broadly categorized into \emph{platform}, \emph{language}, and \emph{design patterns}. 
+ At the platform level, 
+ we considered all aspects related to executing and deploying a program written in the reference language. 
+ At the language level, we aimed to determine if any unique features are particularly relevant to \ac{cpsw}. 
+ These choices could also be influenced by platform-specific factors, 
+ such as the optimal way to run a certain program. 
+ Finally, above the language layer, 
+ we attempted to identify a set of design patterns, encompassing algorithms, APIs, and libraries, 
+ that could be effective in describing collective behaviours in CPWS.
+ Then, we have utilized both standard engineering techniques--
  proposing new programming models specifically tailored for the intricacies of CPWS and developing APIs that bring programmers closer to this complex landscape--
  as well as \emph{unconventional} methods. 
  The latter, which we term as ``hybrid,'' 
- involves integrating Artificial Intelligence techniques 
+ is based on the facets identified above and the engineering approaches proposed
+ integrating Artificial Intelligence techniques 
  to either enhance certain aspects of the existing paradigm or improve the learning process itself.
 % 
 Lastly, this research offers a modern perspective on software engineering, 
@@ -126,12 +138,12 @@ While contributions toward standard engineering approaches include:
 \begin{enumerate}
     \item introducing a novel programming language called FRASP, 
     which is designed to facilitate the engineering of self-organizing behaviours in \ac{cpsw},
-    \item developing a set of `swarm-like' API for coordinated movement, distributed sensing and sensing-based clustering
+    \item developing a set of `swarm-like' patterns for coordinated movement, distributed sensing and sensing-based clustering
     \item A novel architecture for deployment on the edge-cloud continuum through a multi-tier pulverized architecture.
 \end{enumerate}
 \begin{figure}
     \includegraphics[width=\textwidth]{chapters/img/contribution-visual-2.drawio.pdf}
-    \caption{Graphical overview of the thesis contributions.}
+    \caption{Graphical overview of the thesis contributions.}\label{fig:contributions}
 \end{figure}
 \section{Thesis structure}
 This thesis is organized as follows.
