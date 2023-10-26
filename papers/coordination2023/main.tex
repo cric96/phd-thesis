@@ -315,20 +315,6 @@ For further details on how to specify simulations and environments,
 
 %\subsection*{Cohesion and Collision}
 \subsection{Description}
-%This environment consists of a group of agents (in our experiment fifty) that interact in a 2D world 
-% to learn how to stay close with each other without colliding. 
-%Each agent has a fixed neighborhood (the three closest, that is an hyper-parameter) 
-% and can perform eight actions, namely: north, south, east, 
-% west, north-east, north-west, south-east and south-west. 
-% The state of each agent consist of the relative distance to the neighborhood 
-%  and of his own position.
-%The reward function (\Cref{coordination2023:fig:cc-rf}) is parametrized by a target distance $d$, in the graph the target
-% distance is represented by the red vertical line.
-% The portion of the graph to the right of the red line represents the influence of the cohesion term:
-% the more the agents are far from each other, the more the reward linearly decrease.
-% Instead, the portion of the graph to the left of the red line represents the influence of the 
-% collision term: if the agents are too close to each other, the reward function 
-% has an exponential decreasing trend. 
 To test ScarLib's functionality, 
  we develop an experiment~\footnote{repository available at \url{https://github.com/ScaRLib-group/ScaRLib-flock-demo}}
  involving a relatively large number of agents 

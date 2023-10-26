@@ -242,18 +242,14 @@ otherwise, they could not have a local interpretation for each agent, according 
 This intuition of base a policy based only on neighborhood information came from mean-field RL, introduced in \Cref{chap:marl}
 \subsection{Learning algorithm}
 %
-Since we consider swarm-like systems, 
- which are an example of many-agent systems, 
- the proposed approach follows a \ac{CTDE} learning pattern,
- but differently from mean-field approaches and actor-critic solutions,
+Here we discuss a variant of many agent Deep-Q learning:
  we use a \emph{value-based} approach combined with a \ac{GNN} as a function approximator.
 %
 Specifically, we leveraged the property of \acp{GNN} to have a \emph{dual} interpretation, 
 i.e., to function globally over the entire graph and locally only over the neighbourhood. 
 Importantly, each agent only has local information from itself and its neighbourhood to utilize in the \ac{GNN}.
 %
-As value-based algorithm we relied on \ac{DQN}
-with two major modifications (see \Cref{chap:rl:single}): 
+The major modifications to many-agent DQL are: (see \Cref{chap:rl:single}): 
 \begin{enumerate}
   \item experience replay stores experiences in the form of \emph{graphs} decorated with features (e.g., observations, actions, rewards, etc.),
   \item the neural network used to compute the Q function is based on a \ac{GNN} with an \ac{MLP} downstream.

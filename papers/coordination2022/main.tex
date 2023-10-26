@@ -49,52 +49,24 @@ We consider the case of the classic gradient algorithm,
  a paradigmatic and key building block of self-organising coordination \cite{DBLP:journals/jlap/ViroliBDACP19,beal2013organizing-aggregate,DBLP:journals/corr/abs-2201-03473}: we show via simulations 
  that the system, after sufficient training,
  learns an improved way to compute and adjust gradient fields to network perturbations.
-\begin{comment}
-\section{Motivation}
-The self-healing gradient is a foundational building block, used in several applications, 
-ranging from swarm robotics to crowd engineering.
-Though working and self-stabilising,
- this algorithm suffers some problems~\cite{DBLP:conf/saso/AudritoCDV17}.
-%
-One is the \emph{rising value problem} (also known as \emph{count to infinity}): due to the repeated minimisation of all the contributions, 
- the system handles well the situations when the output needs to drop (e.g. a new source enters the system) but it instead reacts slowly when the output needs to rise (e.g. a source node turns off). 
-% 
-In literature, several heuristics are proposed to tackle the problems of the classical gradient~\cite{DBLP:conf/saso/AudritoCDV17}.
-%
-%FLEX~\cite{DBLP:conf/sac/Beal09} aims to increase the \emph{smoothness} by introducing a filtering function in order to maintain at the same time the output stable against local variation and the system-wide error under an $\epsilon$ value. 
-%
-One of them is CRF (Constraint and Restoring Force)~\cite{DBLP:conf/sac/BealBVT08}. Its goal is to deal with the problem by enforcing a constant rising speed when nodes recognise a local slow rising of the gradient field. 
-%
-To this end, each node is affected by a set of constraints (i.e. nodes that have a lower gradient value). 
-%
-If a node finds that it is slowly rising (i.e. there are no more constraints) then it increases its output at a fixed velocity, ignoring its neighbours.
-%
-Otherwise, the output of the gradient follows the classical formula.
-%
 
-Even though these methods show potential, 
- they necessitate an intricate understanding of the environment and meticulous parameter selection for optimal performance. 
- As a solution, we suggest employing \ac{rl} to derive a policy that enhances the gradient algorithm universally.
-
-\end{comment}
 \section{Aggregate Programs Improvement through \ac{rl}}
 \input{papers/coordination2022/rl-ac-architecture.tex}
-As anticipated in \Cref{part:background}, 
+As anticipated in \Cref{chap:macro-programming}, 
  the behaviour of an aggregate system depends on the interplay of three main ingredients:
 \begin{itemize}
-  \item the aggregate program, expressing conceptually the global behaviour of the entire system, and concretely the local behaviour of each individual node in terms of local processing and data exchange with neighbours; and
+  \item the aggregate program, expressing conceptually the global behaviour of the entire system, and concretely the local behaviour of each node in terms of local processing and data exchange with neighbours; and
   \item the aggregate execution model, promoting certain dynamics of the system in terms of topology management (e.g., via neighbour discovery), execution of rounds, scheduling of communications; and
-  \item the environment dynamics.
 \end{itemize}
 %
 While the latter cannot be controlled, 
- the importance of the first element is reflected by research
+ the importance of the first element is reflected in research
  on the design of novel algorithms (cf.~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:conf/saso/AudritoCDV17}),
  while the second element is studied 
  w.r.t. the possibility of tuning and adaptivity 
  according to 
  available technology and infrastructure 
- or the dynamics of the environment---see the previous chapter. %(e.g. reacting to a phenomenon that changes quickly requires increasing the execution frequency---cf.~\cite{danilo2021lmcs}).
+ or the dynamics of the environment---see ~\Cref{chap:rl:schedulers} %(e.g. reacting to a phenomenon that changes quickly requires increasing the execution frequency---cf.~\cite{danilo2021lmcs}).
 %
 Since tuning programs or execution details to specific environments
  or adapting those to changing environments
@@ -109,7 +81,7 @@ Differently from the previous chapter,
  where we used \ac{rl} to improve the execution model, 
  here we use \ac{rl} to improve the aggregate program.
 %
-Specifically, we integrate \ac{rl} within the \ac{ac} control architecture to support learning of good collective behaviour sketched by a given aggregate program (\Cref{coordination2022:fig:ac-and-rl}): 
+Specifically, we integrate \ac{rl} within the \ac{ac} control architecture to support the learning of good collective behaviour sketched by a given aggregate program (\Cref{coordination2022:fig:ac-and-rl}): 
  we focus on improving \ac{ac} building blocks (such as the gradient algorithm covered in \Cref{part:background}) through learning, 
  leading toward a so-called \emph{reinforcement learning-based aggregate computing}. 
 %
@@ -144,18 +116,6 @@ Our idea is that it should not be the designer who codes a particular block to b
 
 \input{papers/coordination2022/general-learning-schema.tex}
 
-The continuous and variable state problems are typically tackled using deep learning to learn the right state representation for a given problem~\cite{DBLP:journals/corr/abs-1806-08894}. %and Graph Neural Networks (to regulate variable-size inputs). 
-%
-In this case, instead, we used a handcraft feature engineering process since we are more interested in devising a general design process.
-
-Concerning the \emph{multi-agent credit assignment problem}, 
-we decided to use offline learning 
-%based on simulation and then the policy is deployed in a concrete system 
-in a typical \ac{ctde} setting (\Cref{coordination2022:fig:learning-scheme}).
-%
-This way, we assess the influence of an individual in comparison to the entire system, 
-which cannot be done in online learning due to the difficulty of achieving global snapshots of the system in a reasonable time.
-
 \section{Learning Schema} 
 The learning algorithm is seen as a state ($s_t$) evolution function in which the nodes try to apply a correction factor (\lstinline|update|) following a policy ($\pi^Q_{target}$ or $\pi^Q_{behavioral}$) refined by learning.
 %
@@ -165,10 +125,11 @@ The state is built from a neighbourhood field of the building block generic outp
 %
 The branching operator (\lstinline|branch|) on \lstinline|learn| condition makes it possible to use the \ac{ctde} schema since when the \lstinline|learn| is \lstinline|false| there is no need for a central entity (\lstinline|simulation|).
 %
-The Q table is gathered using \lstinline|sense|, a \scafi{} operator used to query sensors and collect data from them. 
+Here we applied a many-agent Q-Learning with hysteretic updated (from the Hysteretic Q-Learning algorithm described in \Cref{chap:rl:single}):
+the Q table is gathered using \lstinline|sense|, a \scafi{} operator used to query sensors and collect data from them. 
 %
 At simulation time, Q is a shared object, 
- but at runtime each agent owns a local table.
+ but at runtime, each agent owns a local table.
 %
 \input{papers/coordination2022/learning-based-opt-block.tex}
 %
@@ -207,14 +168,14 @@ The literature provides various heuristic solutions to overcome the limitations 
  One notable technique is the Constraint and Restoring Force (CRF)~\cite{DBLP:conf/sac/BealBVT08}, 
  designed to enforce a uniform rate of increase in the gradient field when nodes detect a local, slow ascent. 
  In this context, each node is influenced by a set of constraints, specifically, nodes that possess lower gradient values. 
- If a node identifies a sluggish increase and finds itself unconstrained, it elevates its output at a fixed rate, independent of its neighbors. 
+ If a node identifies a sluggish increase and finds itself unconstrained, it elevates its output at a fixed rate, independent of its neighbours. 
  Otherwise, it adheres to the traditional gradient formula. 
- Our proposed learning algorithm aims to emulate this behavior while eliminating the necessity for manual algorithmic design.
+ Our proposed learning algorithm aims to emulate this behaviour while eliminating the necessity for manual algorithmic design.
 
 To articulate our learning problem, 
  we employ the general schema depicted in \Cref{coordination2022:fig:learning-scheme}. 
  The \lstinline|state| function captures sufficient information for agents to dynamically accelerate local value increases. 
- Specifically, we define the state \( s_t \) as the difference between a node's perceived output and the minimum and maximum gradient values received from its neighbors: \( s_t = (|min_t - o_t|, |max_t - o_t|) \). 
+ Specifically, we define the state \( s_t \) as the difference between a node's perceived output and the minimum and maximum gradient values received from its neighbours: \( s_t = (|min_t - o_t|, |max_t - o_t|) \). 
  To manage the high dimensionality of this state space, we employ discretization, thereby mitigating the risk of overfitting. 
  The discretization is governed by two parameters: 
  \( maxBound \) and \( buckets \). 
@@ -283,7 +244,7 @@ The source code, data, and instructions for running the experiments have been ma
 The simulation comprises $N$ devices, 
  organized within a structured grid. 
  The grid environments employed for this study fall into two categories, 
- each having identical dimensions with respect to width (\SI{200}{\metre}) and inter-node spacing (\SI{5}{\metre}). 
+ each having identical dimensions concerning width (\SI{200}{\metre}) and inter-node spacing (\SI{5}{\metre}). 
  However, they differ in the number of rows: 
  the first scenario features a single row (essentially aligning the nodes linearly), while the second includes five rows.
 
@@ -303,7 +264,7 @@ An entire simulation spans $N_E = 1200$ episodes.
  each agent utilizes the optimized Q-table, adhering to a greedy policy for action selection.
 
 The Hysteretic Q-Learning algorithm serves as the learning mechanism (refer to \Cref{chap:rl:single}). 
- The behavioral policy adopts an $\epsilon$-greedy strategy with exponential decay, optimizing the balance between exploration and exploitation. 
+ The behavioural policy adopts an $\epsilon$-greedy strategy with exponential decay, optimizing the balance between exploration and exploitation. 
  The decay rate is formulated as \(\epsilon_i = \epsilon_0 \cdot e^{{i} / \theta}\) for each episode $i$.
 
 To determine the most effective configuration, 
@@ -341,10 +302,10 @@ The principal objective of this research was to develop an algorithm that offers
  This is corroborated by \Cref{coordination2022:subfig:mean-error-over-episode}, which demonstrates that our algorithm successfully reduces the \(error_{episode}\) compared to conventional approaches. 
  Specifically, the agents adaptively learn when to disregard the neighboring nodes and accelerate the output through the \lstinline|Ignore| action.
 
-This adaptive behavior is further substantiated by \Cref{coordination2022:subfig:error-few,coordination2022:subfig:error-many,coordination2022:subfig:output-few,coordination2022:subfig:output-many}. Especially in \Cref{coordination2022:subfig:error-few,coordination2022:subfig:output-few}, 
+This adaptive behaviour is further substantiated by \Cref{coordination2022:subfig:error-few,coordination2022:subfig:error-many,coordination2022:subfig:output-few,coordination2022:subfig:output-many}. Especially in \Cref{coordination2022:subfig:error-few,coordination2022:subfig:output-few}, 
  where the agent count is fewer, the rapid decline in error (and corresponding quick output increase) is evident when the source node is deactivated. 
  In addition, our algorithm's performance closely parallels that of the manually crafted CRF solution for the rising-value problem. 
- Both exhibit an initial acceleration phase followed by a transient period of overestimation, eventually leading the system to the accurate gradient field values.
+ Both exhibit an initial acceleration phase followed by a transient period of overestimation, eventually leading the system to accurate gradient field values.
 
 Another noteworthy aspect is the system-wide applicability of the learned policy. The policy is universally shared among the nodes, 
  thereby enabling straightforward scalability across deployments with varying node counts. 
@@ -354,7 +315,7 @@ We would also like to emphasize that the asynchronous nature of node activation 
  This feature enhances the policy's adaptability, as it remains effective regardless of the local order in which aggregate programs are evaluated. Consequently, the learned policy is versatile enough to be employed in a wide range of deployment scenarios.
 \section{Final Remarks}\label{coordination2022:s:conc}
 
-This chapter discusses the integration of \acl{ac} and \acl{rl} with the goal of fostering the design of collective adaptive behaviour.
+This chapter discusses the integration of \acl{ac} and \acl{rl} to foster the design of collective adaptive behaviour.
 % 
 In particular, we propose to use \ac{rl} as a means to improve building block \ac{ac} algorithms. %- in a similar way to what is done in program synthesis. 
 %
