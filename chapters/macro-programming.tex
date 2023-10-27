@@ -2,7 +2,6 @@
 \chapter{Macro-programming}\label{chap:macro-programming}%\mtcaddchapter
 \minitoc% Creating an actual minitoc
 \newcommand{\q}[1]{\texttt{#1}}
-%% TODO REMEMBER TO DISCUSS THE GRADIENT
 Macroprogramming, as a paradigm, 
  has emerged as a pivotal approach in the realm of large-scale distributed systems. 
 %
@@ -374,7 +373,7 @@ This ensures accurate message correspondence,
  eliminating the possibility of unintended message swapping between different instances of \texttt{nbr} expressions, 
  as well as preventing state memory interchange between different instances of \texttt{rep} expressions. 
 % 
-A significant implication of this is the isolated execution of the two branches in a \texttt{if} statement within field calculus; 
+A significant implication of this is the isolated execution of the two branches in an \texttt{if} statement within field calculus; 
   a device executing the \texttt{then} branch is unable to communicate with the \texttt{else} branch of a neighbouring device, and vice versa.
 %
 \subsubsection{Examples}
@@ -440,9 +439,11 @@ where \lstinline|mux| is a conditional expression,
 Building upon both theoretical insights and pragmatic considerations, 
  aggregate programming introduces a stratified architecture designed to significantly ease the design, development, and maintenance of intricate distributed systems. 
  This methodology stems from three pivotal observations related to engineering sophisticated coordination schemas:
-i) the composition of modules and subsystems should be straightforward and transparent;
-ii) various subsystems necessitate distinct coordination mechanisms that are context-sensitive, varying according to regions and temporal conditions;
-iii) robust coordination mechanisms should be encapsulated within abstractions, thereby obviating the need for programmers to grapple with their underlying complexities.
+\begin{itemize}
+  \item the composition of modules and subsystems should be straightforward and transparent;
+  \item various subsystems necessitate distinct coordination mechanisms that are context-sensitive, varying according to regions and temporal conditions;
+  \item  robust coordination mechanisms should be encapsulated within abstractions, thereby obviating the need for programmers to grapple with their underlying complexities.  
+\end{itemize}
 
 Field calculus, along with its language incarnations, 
  offers solutions for the first two observations but falls short of ensuring resilience. 
@@ -479,8 +480,7 @@ Throughout the development of aggregate computing,
 \paragraph*{Gradient-cast (G) --- \Cref{fig:gradient-cast}}
 various forms of aggregation 
  can be executed along a distance gradient.
- Essentially, a generalized operator G serves as a gradient algorithm. 
- This algorithm is tailored based on a specific \emph{metric} used for measuring increments or distances. 
+ This algorithm, called G, is tailored based on a specific \emph{metric} used for measuring increments or distances. 
  It enables the transfer of a particular field value from the source in an outward direction, 
  evolving according to a specified logic as it ascends the gradient:
 \begin{lstlisting}

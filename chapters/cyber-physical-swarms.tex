@@ -115,7 +115,7 @@ To address this complex issue,
  forming a dynamic and adaptive network.
 
 The system functions through real-time data exchange 
- between the individual devices %and strategically placed sensors around the venue. 
+ between the individual devices. %and strategically placed sensors around the venue. 
  The individual smart devices provide a ``ground-level'' perspective, 
  allowing for a granular understanding of crowd behaviour.
 
@@ -134,9 +134,7 @@ Therefore, sophisticated algorithms are needed to aggregate
  Additionally, the system must be able to \emph{adapt} rapidly to changing conditions, 
  such as sudden weather changes or unexpected incidents during the concert.
 
-In specific situations where immediate action is required 
- --such as medical emergencies or security threats-- 
- there may be a need to send targeted alerts or instructions to specific groups of attendees. 
+In specific situations where immediate action is required--such as medical emergencies or security threats--there may be a need to send targeted alerts or instructions to specific groups of attendees. 
  Given that smart devices have limited battery life, 
  the system must also \emph{self-organize} to prioritize critical alerts and instructions, 
  ensuring that crowd management remains effective throughout the event.
@@ -194,9 +192,7 @@ However, the deployment of such a sophisticated system is fraught with challenge
  Therefore, advanced machine learning algorithms are essential to integrate this fragmented data into a cohesive and actionable real-time model. 
  Additionally, the system must be capable of \emph{adapting} quickly to changing conditions, such as road closures, accidents, or even fluctuating demand patterns.
 
-In specific scenarios where immediate action is required
- ---like emergency vehicle passage or sudden road closures---
- there may be a need to prioritize certain routes or vehicles. 
+In specific scenarios where immediate action is required--like emergency vehicle passage or sudden road closures--there may be a need to prioritize certain routes or vehicles. 
  Given that each car operates on a finite energy source, 
  the system must \emph{self-organize} to ensure that cars with lower battery levels are routed to charging stations without disrupting the overall traffic flow.
 \section{Characteristics}
@@ -221,7 +217,7 @@ While the nodes in a \ac{cpsw} may possess varying hardware capabilities and att
  Interoperability stands as a fundamental requirement for these systems, 
  particularly because they often incorporate a diverse array of devices manufactured by different vendors.
 %
-In today's Internet of Things (IoT) landscape, 
+In today's IoT landscape, 
  semantic interoperability presents a significant challenge. 
  Devices from various vendors might employ divergent communication protocols or data formats, complicating the task of achieving seamless interaction. 
  This heterogeneity is not limited to communication protocols; 
@@ -281,7 +277,7 @@ The nodes in a \ac{cpsw} work collaboratively to achieve common goals,
  displaying a form of \emph{collective intelligence}~\cite{nguyen2009computational}. 
  This is facilitated by advanced algorithms that enable the system to learn from its environment and adapt its behaviour accordingly. 
  Through decentralized decision-making processes, each node contributes its unique computational resources and sensory data, leading to a more robust and resilient system. 
- This collective approach allows for enhanced efficiency, as the system can dynamically allocate tasks and resources based on the real-time needs and constraints.
+ This collective approach allows for enhanced efficiency, as the system can dynamically allocate tasks and resources based on real-time needs and constraints.
 %
 The \emph{collective intelligence} exhibited by the nodes also enables fault tolerance and self-healing capabilities. 
  If one node encounters a failure or is compromised, 
@@ -314,7 +310,7 @@ Furthermore, the cyber aspect of \acp{cpsw} often incorporates cloud computing a
  The harmonious blend of cloud and edge computing caters to both large-scale data analytics and real-time processing requirements, thus elevating the system's performance and utility.
 
 In summary, the term ``cyber-physical'' encapsulates a sophisticated blend of computational intelligence and physical interaction. 
- The seamless integration of these element's benefits requires a modern computing paradigm, making \acp{cpsw} highly versatile and robust.
+ The seamless integration of these elements requires a modern computing paradigm, making \acp{cpsw} highly versatile and robust.
 
 \section{Related concepts}
 \begin{table}[h]
@@ -353,8 +349,8 @@ In a \ac{cpsw}, agents are not just virtual entities but are tethered to physica
 One of the significant challenges in designing a \ac{cpsw} is the high stochastic of the environment. 
  Unlike controlled settings where outcomes can be predicted with a high degree of accuracy, \acp{cpsw} often operate in dynamic and unpredictable environments. 
  This makes it nearly impossible to pre-program optimal behaviours for all agents. 
- The agents must, therefore, be capable of adapting their behaviours in real-time based on their sensory inputs and the inputs from other agents in the network. 
- This requires sophisticated algorithms that can handle uncertainty and make near-optimal decisions in real-time.
+ The agents must, therefore, be capable of adapting their behaviours in real time based on their sensory inputs and the inputs from other agents in the network. 
+ This requires sophisticated algorithms that can handle uncertainty and make near-optimal decisions in real time.
 
 Moreover, the agents in a \ac{cpsw} are designed to work collaboratively to achieve collective goals, 
  rather than pursuing individual objectives. 
@@ -365,9 +361,9 @@ Moreover, the agents in a \ac{cpsw} are designed to work collaboratively to achi
 In summary, while \acp{cpsw} share similarities with MAS in terms of multi-agent interaction and decision-making, they extend the concept by incorporating large-scale, cyber-physical integration, and a focus on collective intelligence. 
  The challenges in designing \acp{cpsw} are manifold, ranging from handling the stochastic nature of the environment to ensuring robust and adaptive collective behaviours.
 
-\paragraph*{Swarm intelligence} It is an interdisciplinary field that draws inspiration from the collective behaviours observed in social animals, 
+\paragraph*{Swarm intelligence} It is a branch of collective intelligence with an interdisciplinary field that draws inspiration from the collective behaviours observed in social animals, 
  such as ants, birds, and fish, to develop computational algorithms and systems. 
- Initially, the focus was primarily on Swarm Robotics, 
+ Initially, the focus was primarily on swarm robotics, 
  where the objective was to create robotic systems that could emulate the complex behaviours seen in natural swarms. 
  The methodology employed is fundamentally bottom-up. 
  Designers and researchers study the behaviours of individual animals in their natural habitats to understand the rules or heuristics they follow. 
@@ -382,8 +378,8 @@ In recent years, the focus of swarm intelligence has evolved to concentrate more
 Each of these algorithms has its own set of rules and heuristics, modelled after the specific animal behaviours they are inspired by, and they have been applied successfully in various domains such as network design, resource allocation, and data clustering.
 
 While these optimization algorithms offer valuable methodologies and have broad applicability, they are not the central focus of this thesis. 
- Differently, the focus is on harnessing the \emph{principles} of Swarm Intelligence to develop \emph{artificial} systems that can achieve similar collective behaviours through mechanisms of \emph{self-organization}. 
- Unlike traditional Swarm Intelligence algorithms that often aim to \textit{mimic} nature, this thesis draws \textit{inspiration} from natural systems to understand the fundamental principles that make these systems \emph{robust}, \emph{scalable}, and \emph{adaptable}. 
+ Differently, the focus is on harnessing the \emph{principles} of swarm intelligence to develop \emph{artificial} systems that can achieve similar collective behaviours through mechanisms of \emph{self-organization}. 
+ Unlike traditional swarm intelligence algorithms that often aim to \textit{mimic} nature, this thesis draws \textit{inspiration} from natural systems to understand the fundamental principles that make these systems \emph{robust}, \emph{scalable}, and \emph{adaptable}. 
  The ultimate goal is to exploit these principles to design and implement artificial swarm systems that can operate effectively and efficiently in complex, dynamic, and potentially hostile environments. 
  
 \paragraph*{Swarm robotics}
@@ -395,7 +391,7 @@ Historically,
  The overarching goal of \emph{swarm engineering} is to establish a rigorous methodology for the entire lifecycle of a swarm robotics system, 
  from conceptualization to operation and maintenance~\cite{DBLP:journals/swarm/BrambillaFBD13}.
 
-In traditional Swarm Robotics, the primary focus is on \textit{robots} that are \emph{autonomous}, \emph{situated}, and operate under \emph{no central control}. 
+In traditional swarm robotics, the primary focus is on \textit{robots} that are \emph{autonomous}, \emph{situated}, and operate under \emph{no central control}. 
  These robots are designed to interact with each other and their environment to achieve collective goals. 
  \ac{cpsw} extends this paradigm to include other ``swarm-like'' systems that may not necessarily involve robots. 
  Examples include crowds of people in public spaces, 
@@ -407,7 +403,7 @@ In traditional Swarm Robotics, the primary focus is on \textit{robots} that are 
 
 One of the most promising avenues for extending the principles of swarm robotics to these other domains is the emerging field of \textit{automatic design}~\cite{DBLP:journals/firai/FrancescaB16}. 
  In automatic design approaches, 
- the control logic for the agents in the swarm is not manually programmed but is instead derived through optimization techniques such as \textit{genetic algorithms} or \textit{Multi-agent Reinforcement Learning}.
+ the control logic for the agents in the swarm is not manually programmed but is instead derived through optimization techniques such as \textit{genetic algorithms} or \textit{multi-agent reinforcement learning}.
 These methods aim to optimize a \textit{global} utility function that captures the overall objectives of the swarm. 
  This is particularly appealing for \acp{cpsw}, 
  where the complexity and scale of the system make manual programming impractical.
@@ -418,8 +414,8 @@ In summary,
  By leveraging the principles of swarm intelligence,
  we can create a more robust, adaptable, and intelligent \acp{cpsw} that can operate effectively in a wide range of applications and environments.
 
-\paragraph*{Collective Adaptive Systems}
-Collective adaptive systems are a broad class of systems composed of agents 
+\paragraph*{Collective adaptive systems}
+Collective adaptive systems (CAS) are a broad class of systems composed of agents 
  (potentially heterogeneous) capable of adapting to environmental conditions 
  while striving to achieve a collective goal through the emergence of individual node cooperation. 
 %
@@ -434,9 +430,9 @@ These self-* properties contribute to the system's overall \emph{resilience} and
 
 \ac{cpsw} can be understood as a specialized subset of the broader CAS.
 This specialization arises from two key distinguishing characteristics:
-i) The involved entities are not merely digital but also have a \emph{cyber-physical} nature,
+i) the involved entities are not merely digital but also have a \emph{cyber-physical} nature,
  integrating both computational and physical elements.
-ii) Despite the heterogeneous nature of the devices within the system, 
+ii) despite the heterogeneous nature of the devices within the system, 
  their behaviour manifests uniformly.
 These unique attributes have a profound impact on the system's design methodology, 
  which is why this thesis specifically focuses on this subclass of systems.
@@ -444,13 +440,15 @@ These unique attributes have a profound impact on the system's design methodolog
 %\printbibliography
 
 \section{Final Remarks}
-\Acf{cpsw} represent a specialized subset of Collective Adaptive Systems (CAS), distinguished by their cyber-physical nature and homogeneous behaviour despite device heterogeneity. 
+\Acf{cpsw} represent a specialized subset of Collective Adaptive Systems (CAS), 
+ distinguished by their cyber-physical nature and homogeneous behaviour despite device heterogeneity. 
  Drawing from the principles of swarm intelligence, multi-agent systems, and swarm robotics, 
  \ac{cpsw} offer a promising avenue for tackling complex, large-scale problems in a variety of domains, from environmental monitoring to crowd management and autonomous transportation.
 
 The unique characteristics of \ac{cpsw}, such as scale, 
-device heterogeneity, behaviour homogeneity, and self-organization, not only define their essence but also pose specific challenges and opportunities in their design and implementation. 
-These challenges necessitate innovative approaches in automatic design,
+device heterogeneity, behaviour homogeneity, and self-organization, 
+ not only define their essence but also pose specific challenges and opportunities in their design and implementation. 
+ These challenges necessitate innovative approaches in automatic design,
  distributed control, and self-organization.
 
 This thesis aims to contribute to the understanding and engineering of \ac{cpsw} by exploring these challenges and proposing methodologies that leverage the principles of collective behaviour to design systems that are robust, scalable, and adaptable. 
