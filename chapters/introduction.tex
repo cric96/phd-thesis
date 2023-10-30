@@ -18,7 +18,7 @@ This phenomenon is most prominent in the explosion of \ac{iot} devices.
  there are currently over 15 billion IoT devices globally, 
  and this number is expected to surpass 30 billion by the year 2030.
 
-The widespread adoption of computational technologies kick off a transformative phase for the IT landscape, 
+The widespread adoption of computational technologies kicks off a transformative phase for the IT landscape, 
  starting from the \emph{edge} of the network where connected devices are becoming more sophisticated and efficient. 
  These edge devices are not merely passive data collectors but are now capable of \emph{localized} computation  (thus \emph{cyber-physical}), storage, and analytics. 
 Moving towards the core, 
@@ -26,18 +26,18 @@ Moving towards the core,
  Traditional centralized data centres are evolving into a more distributed,
  decentralized, and dynamic architecture to meet the ever-changing demands of users and applications.
 
-In this context, the term \emph{edge-cloud continuum} aptly encapsulates the current IT landscape. 
+In this context, the term \emph{edge-cloud continuum} suitably encapsulates the current IT landscape. 
  It symbolizes a \emph{fluid} environment where the edge and the cloud are not isolated silos but exist as two poles on a spectrum. 
- Between these poles lies a multitude of intermediate layers, 
- comprising \emph{fog computing}, micro data centres, and hybrid cloud solutions, among others. 
+ %Between these poles lies a multitude of intermediate layers, 
+ %comprising \emph{fog computing}, micro data centres, and hybrid cloud solutions, among others. 
 
 This fluid computational landscape is backed by contemporary theories like  ubiquitous~\cite{ubiquitous}, pervasive
  ~\cite{DBLP:journals/computer/SahaM03}, everyware~\cite{greenfield2010everyware}, and collective~\cite{DBLP:journals/computer/Abowd16} computing.
 %
-These paradigms collectively herald an era where computation 
+These paradigms collectively announce an era where computation 
  is not confined to specific devices but emerges as an integrated capability across a vast, 
  interconnected ecosystem in which a vast array of simple devices interact in a decentralized fashion, 
- harnessing their collective might to accomplish intricate tasks often far beyond the capability of individual units. 
+ leveraging their collective might to accomplish intricate tasks often far beyond the capability of individual units. 
 %
 Drawing from natural systems, 
  it is striking how these intricate computational networks mimic the complex collective behaviours seen in nature. 
@@ -45,11 +45,11 @@ Drawing from natural systems,
  Such natural phenomena serve as powerful metaphors for understanding and conceptualizing the self-organizing properties within computational systems.
  
 These observations have culminated in the formulation of the concept of \acp{cpsw}, 
- an ensemble of \emph{heterogeneous} computational entities deeply integrated with the physical world. Unlike monolithic systems, \acp{cpsw} leverages diversity—both in terms of device capabilities and functionalities—to achieve collective objectives. 
+ an ensemble of \emph{heterogeneous} computational entities deeply integrated with the physical world which, locally interact with each other, produces a collective outcome. %Unlike monolithic systems, \acp{cpsw} leverages diversity—both in terms of device capabilities and functionalities—to achieve collective objectives. 
  This heterogeneous nature enriches the system's adaptability, robustness, and overall performance, thereby enabling it to solve problems in a more nuanced manner.
 %
 Instances of \acp{cpsw} are becoming increasingly prevalent and varied, 
- seen not only in the realm of swarm robotics but also in human crowd dynamics and in the burgeoning field of IoT devices. 
+ seen not only in the realm of swarm robotics but also in human crowd dynamics and the field of IoT devices. 
  In each of these cases, the core principles remain consistent: the employment of self-organizing mechanisms to achieve collective goals in an efficient, resilient, and \emph{adaptable} manner.
 
 \section{Overview and Contribution}
@@ -88,18 +88,18 @@ The current state-of-the-art solutions in both automatic and manual design are l
 
 \subsection*{Contributions}
 
-The thesis contributes (summarized in \Cref{fig:contributions}) to an area called ``language-based engineering,'' where models, algorithms, machine learning solutions, and tools are constructed around a specific programming language within a given context.
+The thesis contributes to an area called ``language-based engineering'' (\Cref{fig:contributions}), where models, algorithms, machine learning solutions, and tools are constructed around a specific programming language within a given context.
 In the realm of software engineering, 
- a language-based approach is fundamentally concerned with describing tools, models, and applications using high-level abstractions provided by a specific programming language. 
- One of the unique attributes of this methodology is its domain-specific nature. 
+ a language-based approach is fundamentally concerned with describing solutions using high-level abstractions provided by a specific programming language. 
+ One of the unique attributes of this methodology is its \emph{domain-specific} nature. 
  In essence, it starts by establishing a reference framework, 
  constructs the necessary abstractions to articulate the possible behaviours of a given application, 
  and then employs a Domain-Specific Language (DSL) to formulate solutions.
 %
-For the purpose of this dissertation, 
+For this dissertation, 
  we have selected \ac{cpsw} as our broad reference class of systems. 
- We observed that the existing paradigm of aggregate computing (AC) 
- is particularly well-suited for describing emergent behaviours straightforwardly and effectively. This suitability arises from the top-down nature of AC and its capacity to express self-organizing emergent behaviours.
+ We observed that the existing paradigm of \acf{ac} 
+ is particularly well-suited for describing emergent behaviours straightforwardly and effectively. This suitability arises from the top-down nature of \ac{ac} and its capacity to express self-organizing emergent behaviours.
 %
 Building on this foundation, 
  we adopted a layered approach to bridge the gaps between aggregate computing and the broader domain of reference. 
@@ -114,11 +114,11 @@ Building on this foundation,
  Finally, above the language layer, 
  we attempted to identify a set of design patterns, encompassing algorithms, APIs, and libraries, 
  that could be effective in describing collective behaviours in CPWS.
- Then, we have utilized both standard engineering techniques--proposing new programming models specifically tailored for the intricacies of CPWS and developing APIs that bring programmers closer to this complex landscape--as well as \emph{unconventional} methods. 
+ Then, we have utilized both standard engineering techniques--proposing new programming models specifically tailored for the intricacies of CPWS and identifying patterns that bring programmers closer to this complex landscape--as well as \emph{unconventional} methods. 
  The latter, which we term as ``hybrid,'' 
- is based on the facets identified above and the engineering approaches proposed
+ is based on the facets identified above and consists in
  integrating Artificial Intelligence techniques 
- to either enhance certain aspects of the existing paradigm or improve the learning process itself.
+ to either enhance certain aspects of the existing solutions (i.e., improve the efficiency of collective computation) or improve the learning process itself (i.e., reduce the learning time of a given problem).
 % 
 Lastly, this research offers a modern perspective on software engineering, 
  made increasingly relevant by the advent of large language models like GPT~\cite{floridi2020gpt} and LLaMa~\cite{touvron2023llama}. 
@@ -129,6 +129,7 @@ Specifically, our contributions toward a hybrid approach include:
     \item developing a comprehensive roadmap for integrating aggregate computing with machine learning;
     \item introducing a collective program synthesis method to establish robust self-organizing behaviours;
     \item proposing a distributed scheduling solution to accelerate the convergence of collective structures expressed through aggregate computing;
+    \sloppy
     \item presenting a novel multi-agent reinforcement learning technique, termed ``field-informed reinforcement learning'', designed to create robust distributed controllers for large-scale computations;
     \item creating a tool called ScaRLib, which supports hybrid aggregate computing by combining state-of-the-art deep learning libraries with the aggregate computing toolchain.
 \end{enumerate}
@@ -162,8 +163,8 @@ This thesis is organized as follows.
  Furthermore, \Cref{chap:eng:frp} presents an innovative programming model engineered specifically for \acp{cpsw}, aiming to enhance the efficiency of collective computations. 
  Finally, \Cref{chap:eng:multitier} expounds a contemporary deployment strategy that employs aggregate computing across the edge-cloud continuum.
 
-\Cref{part:learning} focuses on contemporary hybrid learning methodologies applicable to \acp{cpsw}.  
- \Cref{chap:learning:roadmap} sketches a comprehensive roadmap for the amalgamation of aggregate computing and machine learning. 
+\Cref{part:learning} focuses on hybrid learning methodologies applicable to \acp{cpsw}.  
+ \Cref{chap:learning:roadmap} sketches a comprehensive roadmap for the unification of aggregate computing and machine learning. 
  \Cref{chap:learning:sketching} introduces a groundbreaking technique for synthesizing collective programs. 
  In addition, \Cref{chap:rl:field-informed} presents an inventive approach to reinforcement learning within \acp{cpsw}, grounded in field calculus. 
  \Cref{chap:rl:schedulers} details a cutting-edge strategy for distributed scheduling in these complex systems. 
