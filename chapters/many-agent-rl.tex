@@ -55,7 +55,7 @@ Particularly, the first three approaches are based on the idea of \emph{learning
   \item \emph{semi-supervised}: A middle-ground between supervised and unsupervised learning, this approach utilizes both labelled and unlabelled data for training. 
   The model learns to improve its predictions gradually.
 \end{itemize}
-Reinforcement learning sets itself apart from other methodologies 
+\Ac{RL} sets itself apart from other methodologies 
  by operating without the need for labelled data or supervision and through a sequential interaction between an agent and an environment employing a \emph{trial-and-error} strategy. 
  Subsequent sections will delve into the nuances of this distinctive approach, 
  starting from single-agent settings and then moving to multi-agent and many-agent systems.
@@ -452,8 +452,8 @@ While the fundamental algorithms discussed in previous sections provide a strong
  The primary challenges they face are:
 
 \begin{itemize}
-  \item \textbf{Curse of dimensionality}: The state and action spaces in practical problems can be so large that enumerating them becomes computationally infeasible.
-  \item \textbf{Partial observability}: In many scenarios, the agent cannot fully observe the entire state of the environment, 
+  \item \textbf{Curse of dimensionality}: the state and action spaces in practical problems can be so large that enumerating them becomes computationally infeasible.
+  \item \textbf{Partial observability}: in many scenarios, the agent cannot fully observe the entire state of the environment, 
   making it difficult to make optimal decisions.
 \end{itemize}
 To illustrate the curse of dimensionality, 
@@ -502,7 +502,7 @@ However, directly applying neural networks to Q-Learning presents challenges,
 \begin{itemize}
   \item \textbf{Experience replay}: DQL stores past experiences \((s, a, r, s')\) in a replay buffer and samples mini-batches randomly during training. 
   This decorrelates the data and leads to more stable training.
-  \item \textbf{Target network}: DQN introduces a separate, 
+  \item \textbf{Target network}: DQL introduces a separate, 
   slowly updated target network to calculate the target Q-values, 
   reducing the overestimation bias and improving stability.
 \end{itemize}
@@ -698,9 +698,7 @@ In mixed tasks, agents operate under both cooperative and competitive dynamics.
 This is the most general setting, and it is often the most challenging to solve.
 \subsubsection{Policy type}
 Another crucial aspect to explore is the nature of the policy that an agent ought to learn. 
-Although numerous classifications of policies exist
- ---ranging from deterministic to stochastic, centralized to decentralized, and joint to individual---
- this thesis places special focus on distinguishing between \emph{homogeneous} and \emph{heterogeneous} policy family.
+Although numerous classifications of policies exist---ranging from deterministic to stochastic, centralized to decentralized, and joint to individual---this thesis places special focus on distinguishing between \emph{homogeneous} and \emph{heterogeneous} policy family.
 
 \paragraph*{Homogeneous Policies}
 In the context of homogeneous policies, 
@@ -955,8 +953,8 @@ In a \ac{MAARL} scenario,
 The learning paradigm typically employed in this context is CDTE, for the following reasons:
 \begin{itemize}
 \item fully decentralized learning is impractical due to the high level of non-stationarity 
- that arises from concurrent learning.
-\item An agent's view of the system is so limited that locally 
+ that arises from concurrent learning;
+\item an agent's view of the system is so limited that locally 
  collected experiences are insufficient for capturing the full range of possible local behaviour.
 \end{itemize}
 While several CDTE algorithms, such as MAPPO and QMIX, aim to find $N$ policies, 

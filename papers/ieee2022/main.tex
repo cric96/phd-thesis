@@ -488,17 +488,7 @@ decentralizedRecognitionAndResponse(sensing,response)
 
 \end{subfigure}
 \caption[Scala implementation of the dynamic decentralization domains API]{
-  Scala implementation of the proposed API,
-  showing the abstractions (a)
-  and their exemplary use (b).
-  \texttt{DistributedSensing} represents the configuration of the collective value-reading operation,
-  that selects a leading node, expands an area of influence, and produces an area-wide result;
-  \texttt{Action} represents a collective task enacted in response to a distributed perception;
-  \texttt{Perception} links each distributed sensing process to the corresponding computed value 
-  (i.e., the result of the collective sensing process);
-  \texttt{SituatedRecognition} maps collective perceptions to actual actions;
-  \texttt{decentralizedRecognitionAndResponse} is the entry point.
-}
+  Scala implementation of the proposed API}
 \label{code}
 \end{figure*}
 
@@ -538,7 +528,15 @@ we want to:
 \end{enumerate}
 %
 The application logic, leveraging our \ac{api}, is %captured by the code 
- shown in \Cref{code:example}.
+ shown in \Cref{code:example}--it exemplifies the abstractions (a)
+  and their exemplary use (b).
+  \texttt{DistributedSensing} represents the configuration of the collective value-reading operation,
+  that selects a leading node, expands an area of influence, and produces an area-wide result;
+  \texttt{Action} represents a collective task enacted in response to a distributed perception;
+  \texttt{Perception} links each distributed sensing process to the corresponding computed value 
+  (i.e., the result of the collective sensing process);
+  \texttt{SituatedRecognition} maps collective perceptions to actual actions;
+  \texttt{decentralizedRecognitionAndResponse} is the entry point.
 % \footnote{The full source is available at the repository provided in \Cref{sec:eval}.},
 % in which we leverage the \scafi{} Scala \ac{dsl}~\cite{DBLP:conf/isola/CasadeiVAD20}
 % to compactly express the FloodWatch case study.
@@ -549,9 +547,6 @@ The application logic, leveraging our \ac{api}, is %captured by the code
 %Notice how we use two different metrics and central positions for the two spatial phenomena under observation,
 %and how these data are subsequently used to generate the adaptation strategy at runtime.
 %
-As detailed in \cite{DBLP:conf/isola/CasadeiVAD20,DBLP:journals/eaai/CasadeiVAPD21},
-this specification is also the ``script'' that each device executes repeatedly in asynchronous \emph{sense--compute--interact} rounds,  %(cf. aggregate execution model),
-progressively building the intended global behaviour.
 
 \section{Evaluation}\label{sec:eval}
 

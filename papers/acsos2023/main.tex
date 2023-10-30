@@ -249,7 +249,7 @@ Specifically, we leveraged the property of \acp{GNN} to have a \emph{dual} inter
 i.e., to function globally over the entire graph and locally only over the neighbourhood. 
 Importantly, each agent only has local information from itself and its neighbourhood to utilize in the \ac{GNN}.
 %
-The major modifications to many-agent DQL are: (see \Cref{chap:rl:single}): 
+The major modifications to many-agent DQL are (see \Cref{chap:rl:single}): 
 \begin{enumerate}
   \item experience replay stores experiences in the form of \emph{graphs} decorated with features (e.g., observations, actions, rewards, etc.),
   \item the neural network used to compute the Q function is based on a \ac{GNN} with an \ac{MLP} downstream.
@@ -685,3 +685,4 @@ By combining manual design and machine learning techniques,
 %
 The demonstrated success in the proposed case study in solving collective tasks underscores the potential impact of this approach in advancing the field of multi-agent systems and swarm robotics. 
 %\ga{Page budget: 0.5}
+In the next chapter, we will discuss how reinforcement learning can be used to platform aspects of the aggregate computing model.

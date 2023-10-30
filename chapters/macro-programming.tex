@@ -10,7 +10,7 @@ It offers a unique perspective,
 % 
 This chapter delves into the intricacies of macroprogramming, 
  its historical evolution, and its significance in the modern computational landscape, 
- leading to aggregate computing -- a novel macro-programming approach for 
+ leading to aggregate computing--a novel macro-programming approach for 
  programming collective self-organizing behaviours in highly scalable and distributed systems.
 
 \begin{figure}
@@ -24,7 +24,7 @@ Macroprogramming~\cite{casadei2023macroprogramming} emphasizes the overarching b
 The primary motivation behind macroprogramming 
  is to simplify the design and development of collective systems. 
  By providing a higher-level perspective, 
- it allows developers to address system-wide concerns without getting bogged down by the details of individual components. 
+ it allows developers to address system-wide concerns without getting buried by the details of individual components. 
  Indeed, developers should focus solely on the system's overall behaviour, 
  rather than worrying about its technological details, 
  individual component capabilities, or communication protocols.
@@ -64,22 +64,19 @@ The term ``program'' refers to an abstract description executable by a computati
 \sloppy
 Macroprogramming is defined as an abstract paradigm for programming the macroscopic behaviour of systems of computational entities. 
  As a paradigm, it is an approach rooted in a mathematical theory or a set of coherent principles. 
- The foundational principles of macroprogramming include: i) \emph{micro-macro distinction},
-  ii) \emph{macroscopic perspective}, iii) \emph{microprogram}, and iv) \emph{macro-to-micro mapping}.
+ The foundational principles of macroprogramming include: 
 \begin{itemize}
     \item \emph{micro-macro distinction}: recognizing two primary system levels -- macro (global structures) and micro (computational entities);
     \item \emph{macroscopic perspective}: focusing on the system's macroscopic aspects, 
-    considering micro-level entities from a global perspective.
-    \item \emph{microprogram}: the result of macroprogramming deployment is a program executed by individuals reaching the macroscopic perspective.
-    \item \emph{Macro-to-micro mapping}: implementing how a macro program is executed by the system, 
+    considering micro-level entities from a global perspective;
+    \item \emph{microprogram}: the result of macroprogramming deployment is a program executed by individuals reaching the macroscopic perspective;
+    \item \emph{macro-to-micro mapping}: implementing how a macro program is executed by the system, 
     defining a logic to map macro instructions to micro-level behaviours.
 \end{itemize}
-
-\subsubsection*{Micro-macro distinction}
-The concept of micro-macro levels is common in various scientific areas including social sciences and artificial intelligence. 
+Particularly, the concept of micro-macro levels is common in various scientific areas including social sciences and artificial intelligence. 
  In programming, particularly in macroprogramming, 
  the micro and macro dimensions are defined by specific design boundaries. 
- Micro entities in macroprogramming have computational behaviour and can be autonomous, active, or reactive. 
+ Micro entities have computational behaviour and can be autonomous, active, or reactive. 
  They interact with other micro-entities and can include agents, actors, objects, and microservices. 
  Macro entities can be categorized as macro-level observables and macro-level constructs. 
  Macro-level observables are high-level system behaviours that may be hard to deduce from micro-level states. 
@@ -88,17 +85,14 @@ The concept of micro-macro levels is common in various scientific areas includin
  The challenge in macroprogramming is to effectively map these macro-level constructs to micro-level entities. 
  The notion of `emergence' is key to understanding the relationship between the micro and macro levels.
 
-\subsubsection*{Collectives}
-In macroprogramming, 
- the focus is often on ``collectives'', 
+Another essential aspect is the concept of ``collectives'', 
  which are groups of similar entities that share common traits, goals, or mechanisms for interaction. Examples of collectives include a group of co-located workers or a swarm of drones. 
  These entities within a collective usually share common goals and interaction mechanisms, 
  although differences among them can enhance collective capabilities. 
  Heterogeneous collectives, which include diverse elements like humans, robots, and sensors, also exist and can be managed through macroprogramming. 
  However, heterogeneity complicates macroprogramming by emphasizing individual perspectives and widening the gap between macro-level and micro-level considerations.
 
-\subsubsection*{Declarativity}
-Macroprogramming often employs a declarative approach, 
+Finally, macroprogramming often employs a declarative approach, 
  focusing on specifying what the goal of a computation is rather than detailing how to achieve it.
  %
  Declarative programming allows for the abstraction of elements like function evaluation order, 
@@ -456,9 +450,7 @@ Field calculus, along with its language incarnations,
 \subsubsection{Resilient coordination operators}\label{sec:field-calculus-building-blocks}
 Throughout the development of aggregate computing, 
  a consistent set of foundational building blocks has emerged over the years (\Cref{fig:resilient-coordination-operators}). 
- These building blocks are known for their self-stabilizing properties--
- details on which will be discussed later--
- and they serve as the foundation for various high-level patterns in aggregate computing.
+ These building blocks are known for their self-stabilizing properties--details on which will be discussed later--and they serve as the foundation for various high-level patterns in aggregate computing.
 \begin{figure}
     \begin{subfigure}{0.3\textwidth}
         \centering
@@ -504,7 +496,7 @@ def G(src, phi, acc, metric) =
         \includegraphics[width=\textwidth]{chapters/img/gradient-full.png}
         \caption{}\label{fig:gradient-full}
     \end{subfigure}
-    \caption{Gradient computation in a sparse and dense network of devices, In \Cref{fig:gradient-sparse}, the output from executing a gradient program is presented, with the source node positioned in the bottom-left corner. 
+    \caption{Gradient computation in a sparse and dense network of devices. In \Cref{fig:gradient-sparse}, the output from executing a gradient program is presented, with the source node positioned in the bottom-left corner. 
     \Cref{fig:gradient-full} displays the execution of a gradient program in a dense network, where the source node is situated in the top-left corner. The intensity of the colour serves as a gauge for proximity, with redder hues indicating closer distances.}\label{fig:gradient-computation}
 \end{figure}
 
@@ -525,8 +517,7 @@ in essence, G facilitates the flow of information from originating devices to th
  Conversely, a secondary operation enables data to flow from a widespread area to specific gathering points, 
  aiding in decentralized sensing tasks. 
  This is enabled by another generalized operator C -- 
- it accumulates values along a potential field, beginning at source points where the potential is highest, and aggregates these values as it moves down the parent chain, 
- eventually converging at points where the potential is lowest:
+ it accumulates values along a potential field, getting the data from the lowest point of the gradient up to the highest point, that is the centre of the potential field:
 \begin{lstlisting}[language=scafi]
 def C(potential, acc, phi, Null) = {
   rep(phi) { v =>
@@ -581,7 +572,7 @@ def distanceCompetition(d, lead, uid, grain, metric) = {
 \subsubsection{Behavioural Properties}\label{sec:field-calculus-behavioural-properties}
 The field calculus is architected as a universal language specifically tailored for computations in spatially distributed systems. 
  One of the most critical properties studied within subsets of this core language is that of \emph{self-stabilization}, 
- which ensures the system's ability to autonomously reach a correct state~\cite{lafuente2015fixpoint}%~\cite{Dol00, LLM17, LLM15}.
+ which ensures the system's ability to autonomously reach a correct state~\cite{lafuente2015fixpoint}.%~\cite{Dol00, LLM17, LLM15}.
  Defined formally within the context of the transition system \( N \stackrel{\text{act}}{\rightarrow} N \) representing network evolution, self-stabilization guarantees that:
 \begin{enumerate}
     \item the program evaluation, given an eventually constant input, 

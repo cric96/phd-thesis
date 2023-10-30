@@ -53,7 +53,7 @@ We consider the case of the classic gradient algorithm,
 \section{Aggregate Programs Improvement through \ac{rl}}
 \input{papers/coordination2022/rl-ac-architecture.tex}
 As anticipated in \Cref{chap:macro-programming}, 
- the behaviour of an aggregate system depends on the interplay of three main ingredients:
+ the behaviour of an aggregate system depends on the interplay of two main ingredients:
 \begin{itemize}
   \item the aggregate program, expressing conceptually the global behaviour of the entire system, and concretely the local behaviour of each node in terms of local processing and data exchange with neighbours; and
   \item the aggregate execution model, promoting certain dynamics of the system in terms of topology management (e.g., via neighbour discovery), execution of rounds, scheduling of communications; and
@@ -66,7 +66,7 @@ While the latter cannot be controlled,
  w.r.t. the possibility of tuning and adaptivity 
  according to 
  available technology and infrastructure 
- or the dynamics of the environment---see ~\Cref{chap:rl:schedulers} %(e.g. reacting to a phenomenon that changes quickly requires increasing the execution frequency---cf.~\cite{danilo2021lmcs}).
+ or the dynamics of the environment---see ~\Cref{chap:rl:schedulers}. %(e.g. reacting to a phenomenon that changes quickly requires increasing the execution frequency---cf.~\cite{danilo2021lmcs}).
 %
 Since tuning programs or execution details to specific environments
  or adapting those to changing environments
