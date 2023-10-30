@@ -41,6 +41,7 @@
 \selectlanguage{italian}
 \dominitoc
 \renewcommand*\abstractname{Abstract}
+
 \begin{abstract}
 \section*{Italiano}
 I sistemi IT sono sempre più pervasivi e interconnessi, 
@@ -58,11 +59,20 @@ Il lavoro di tesi si concentra quindi sulle sfide d'\emph{ingegneria} uniche per
 L'adozione di un approccio language-based ha portato a progressi significativi sia in metodi ibridi--che combinano soluzioni dichiarative e sub-simboliche--
  sia in approcci ingegneristici standard per i \acp{cpsw}. 
 %
-In particolare, sono stati sviluppati nuovi algoritmi auto-organizzanti, 
- nuovi strumenti e architetture, 
- e una roadmap per l'integrazione del machine learning con la computazione aggregata.
+In particolare, abbiamo identificato due principali aspetti su cui concentrarsi sugli aspetti ingegneristici: 
+ \emph{pattern di progettazione}--ovvero le soluzioni riutilizzabili ai problemi comuni in un determinato contesto--e 
+gli \emph{aspetti della piattaforma}--cioè l'infrastruttura sottostante che supporta il software, coinvolgendo strategie di distribuzione ed esecuzione collettiva.
+Per quanto riguarda il primo, abbiamo sviluppato nuovi algoritmi, 
+ API e metodologie di progettazione. 
+ Per il secondo, abbiamo agito a livello di distribuzione ed esecuzione collettiva.
+%
+Parallelamente, abbiamo esplorato come l'apprendimento possa essere integrato in questa catena di strumenti attraverso una roadmap. 
+ Abbiamo efficacemente combinato i due aspetti sia a livello di pattern, con lavori basati sull'apprendimento rinforzato multi-agente, 
+ specificamente la progettazione di programmi collettivi e \emph{field-informed reinforcement learning}, sia a livello di piattaforma con un nuovo approccio che mira a creare pianificatori distribuiti per il calcolo collettivo.
+Per corroborare i risultati e fornire supporto allo sviluppo, abbiamo anche progettato uno strumento per la gestione della programmazione di applicazioni ibride chiamato ScarLib.
 
-L'obiettivo della ricerca è fornire un approccio olistico per l'ingegnerizzazione e il deployment efficace di \acp{cpsw} su larga scala, adattabili e robusti.
+\sloppy
+In definitiva, l'obiettivo della ricerca è fornire un approccio olistico per l'ingegnerizzazione e il deployment efficace di \acp{cpsw} su larga scala, adattabili e robusti.
 
 \sloppypar
 Parole chiave -- \emph{cyber-physical swarms, programmazione aggregata, auto-organizzazione, ingegneria del software language-based, intelligenza collettiva, intellingenza di sciame, apprendimento automatico, apprendimento per rinforzo multi agent}.
@@ -78,18 +88,23 @@ IT systems are becoming increasingly ubiquitous and interconnected,
  which consist of large networks of interconnected distributed computational devices deeply embedded in the physical world, exhibiting collective behaviors.
 
 \sloppypar
-This thesis explores the unique engineering challenges associated with these systems, 
+This thesis explores the unique \emph{engineering} challenges associated with these systems, 
  focusing particularly on managing the complexities arising from their collective intelligence and large-scale nature. 
- To address these challenges, this work introduces a language-based approach centered on ``aggregate computing'', that is a top-down programming paradigm designed to describe large-scale collective behaviors. 
+ To address these challenges, this work introduces a language-based approach centered on \emph{aggregate computing}, which is a top-down programming paradigm designed to describe large-scale collective behaviors. 
  This paradigm was chosen because it facilitates the design of self-organizing behaviors, which are crucial for the efficient and resilient operation of \acp{cpsw}.
 %
 Adopting a language-based approach has led to significant advancements in both hybrid methods--combining declarative and sub-symbolic solutions--and standard engineering approaches. 
-Specifically, new algorithms for robust self-organization have been developed, 
-along with new tools and architectures, 
-and a roadmap for integrating machine learning with aggregate computing 
- that discuss how to combine the strengths of both approaches.
+Specifically, we identified two major facets to focus on engineering aspects: \emph{design patterns}--i.e. the reusable solutions to common problems within a given context--and the \emph{platform aspects}--i.e. the underlying infrastructure that supports the software, involving deployment strategies and collective execution.
+ Regarding the former, we have developed new algorithms, APIs, and design methodologies. For the latter, we have taken action at the deployment and collective execution levels.
+%  
+Concurrently, 
+ we have explored how learning can be integrated into this toolchain through a roadmap. We have effectively combined the two aspects both at the pattern level, 
+ with work based on many-agent reinforcement learning, 
+ specifically collective program sketching and \emph{field-informed reinforcement learning}, 
+ and at the platform level with a novel approach that aims to create distributed schedulers for collective computation. 
+ To corroborate the findings and provide development support, we have also designed a tool for managing the programming of hybrid applications called ScarLib.
 
-The ultimate goal of the research is to provide a holistic approach 
+Ultimately, the goal of this research is to provide a holistic approach 
  for the effective design and deployment of large-scale, adaptable, and robust \acp{cpsw}.
 
 \sloppypar
