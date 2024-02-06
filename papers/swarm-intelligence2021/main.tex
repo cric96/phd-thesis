@@ -9,6 +9,19 @@
 
 %\chapter{A Field-based Computing Approach to Sensing-driven Clustering in Robot Swarms}
 \chapter[Patterns: Sensing-driven Clustering in Swarms]{Patterns: Sensing-driven Clustering in Swarms}\label{chap:eng:clustering}\mtcaddchapter
+\begin{flushright}
+  \begin{minipage}{0.5\textwidth}
+    What is sensing-driven clustering?
+    
+    How this problem can be addressed in \ac{cpsw}?
+    
+    What are the \emph{assumptions} underlying the approach?
+
+    Why is this problem relevant for \ac{cpsw}?
+  
+    -- \textbf{RQ3, RQ4}    
+  \end{minipage}
+\end{flushright}
 \minitoc% Creating an actual minitoc
 
 \emph{Swarm intelligence}
@@ -871,7 +884,7 @@ The plotted results consist of the average (lines)
 %
 In \Cref{fig:simulation-snapshot} there is a graphical representation of a run of our algorithm.
 
-\paragraph{Scenario 1: Gaussian patterns (\Cref{fig:standard})}
+\subsubsection{Scenario 1: Gaussian patterns (\Cref{fig:standard})}
 \subparagraph{Description}
 In this scenario, the drones are stationary (i.e., they stand still).
  There are five zones with a Gaussian distribution, and there is no overlap between distributions.
@@ -880,7 +893,7 @@ In this scenario, the drones are stationary (i.e., they stand still).
 \subparagraph{Why} Used to verify \ref{goal:1}, particularly
  we expect that the algorithm finds clusters without making any errors and that they will be stable over time.
 %%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Scenario 2: Stretched Gaussian patterns (\Cref{fig:stretched})}
+\subsubsection{Scenario 2: Stretched Gaussian patterns (\Cref{fig:stretched})}
 \label{scenario-2}
 \subparagraph{Description}
 These simulations are similar to the previous one, but in this case, the Gaussian distributions have an ellipse-like shape.
@@ -888,7 +901,7 @@ These simulations are similar to the previous one, but in this case, the Gaussia
 With these experiments, we would check that the shape does not make such a difference in the clustering process.
  Indeed, we expect a result similar to the one in the previous example (\ref{goal:1}).
 %%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Scenario 3: One direction temperature field (\Cref{fig:one-direction,,fig:one-direction-one-candidate})}
+\subsubsection{Scenario 3: One direction temperature field (\Cref{fig:one-direction,,fig:one-direction-one-candidate})}
 \subparagraph{Description} In this case, we imagine that only one cluster is present
  (fixing $\theta$ to \SI{1}{\celsius} and putting a total variation of temperature equal to \SI{1}{\celsius}).
  Temperatures grow from left to right in a constant fashion. \rev{Namely, in \Cref{fig:one-direction} the temperature varies in one dimension (horizontally), whereas in \Cref{fig:one-direction-one-candidate} the temperature varies in two dimensions (diagonally)}.
@@ -903,7 +916,7 @@ and hence the algorithm should result in one cluster.
 
 
 %%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Scenario 4: Gaussian overlapped patterns (\Cref{fig:overlapped})}
+\subsubsection{Scenario 4: Gaussian overlapped patterns (\Cref{fig:overlapped})}
 \subparagraph{Description}
 In this case, we have several Gaussian patterns that could be overlapped. We imagine that the $\theta$ value is essential here:
  if the value is too high, the system will recognise the set of overlapping clusters as one;
@@ -911,14 +924,14 @@ In this case, we have several Gaussian patterns that could be overlapped. We ima
 \subparagraph{Why}
 This experiment serves to emphasize that $\theta$ is a domain-dependent choice.
  Moreover, it will show that the algorithm could be used also to find overlapped situations (\ref{goal:1}).
-\paragraph{Scenario 5: Non convex patterns (\Cref{fig:non-convex})}
+\subsubsection{Scenario 5: Non convex patterns (\Cref{fig:non-convex})}
 \subparagraph{Description}
  In this case, there are two zones, one with a non-convex shape with a lower temperature than the outer zone.
  Here we expect that, eventually, the system will identify the presence of only two clusters.
  The program might identify several candidates in the transitory phases (cf. one for each edge).
  Hence, the merging policy should fix this issue by producing only two clusters.
  \subparagraph{Why} With this scenario, we want to point out that the program can cope with zones of arbitrary shape.
-\paragraph{Scenario 6: Gaussian patterns with movement}
+\subsubsection{Scenario 6: Gaussian patterns with movement}
 \subparagraph{Description}
 We test the result using four Gaussian distributions (arranged similarly to \Cref{fig:standard}) combined with movement.
  Here, both merging policy, and \emph{waiting candidate time} ($\beta$) will be essential.
@@ -926,7 +939,7 @@ We test the result using four Gaussian distributions (arranged similarly to \Cre
  In general, we imagine that high values of $\omega$ and $\zeta$ will make the algorithm more unstable.
 \subparagraph{Why} We are interested in seeing how movement affects the result of the clustering process (\ref{goal:2}).
 
-\paragraph{Scenario 7: Variable size Gaussian pattern}
+\subsubsection{Scenario 7: Variable size Gaussian pattern}
 \subparagraph{Description}
 In this experiment, the temperature distributions are placed similarly as \Cref{fig:standard},
  but then the size of areas evolves in time.
@@ -935,7 +948,7 @@ In this experiment, the temperature distributions are placed similarly as \Cref{
  Here we expect that the cluster area follows the underlying temperature distribution.
 \subparagraph{Why} In this experiment, we verify the algorithm's robustness against temperature changes (\ref{goal:3}).
 \rev{
-\paragraph{Scenario 8: Random Failures}
+\subsubsection{Scenario 8: Random Failures}
 \subparagraph{Description}
  The temperature distribution of choice follows the \Cref{fig:standard}.
 Nodes could disappear randomly with a rate specified by \emph{failure frequency}.

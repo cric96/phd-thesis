@@ -4,8 +4,37 @@ This dissertation situates itself within the realm of complex systems engineerin
  adopting unconventional methods to address the unique challenges posed by \acf{cpsw} (introduced in ~\Cref{chap:cpsw}). 
  It is grounded in a language-based approach focused on aggregate computing (discussed in \Cref{chap:macro-programming}), 
  further integrated with machine learning techniques (overviewed in \Cref{chap:marl})---particularly the one based on the notion of \emph{many-agent}. 
- Following this, 
- an analysis of the principal contributions 
+
+Focusing on the research questions posed in \Cref{chap:introduction}, 
+ we have sought to address the following.
+Regarding \textbf{RQ1}, 
+   we have chosen to use the aggregate computing model 
+   as a reference because it allows for
+   handling the various challenges of CPSW, 
+   including scale, collective behaviors, and the possibility of creating self-healing behaviors. 
+   We have also shown other plausible models used in different contexts, such as the multi-agent RL, particularly SwarMDP. 
+   We have seen how these can be combined (see \Cref{chap:rl:field-informed}).
+ 
+About \textbf{RQ2}, 
+  we explored the various aspects of this combination (i.e., the hybrid approach) in \Cref{part:learning}. 
+  We demonstrated how this seems to be a winning combination at all
+  levels of engineering, 
+  both at the application level and the platform level.
+ 
+ For \textbf{RQ3}, 
+  we sought to outline the main characteristics that differentiate CPSW
+  systems from known ones --- see discussion in \Cref{chap:cpsw}. 
+  In particular homogeneity and self-organisation were the characteristics that then
+  guided the choice of the reference model and the solutions discussed.
+ 
+Finally, concerning \textbf{RQ4}, 
+ we discussed throughout the thesis how this
+ influences the design process, 
+ discussing new patterns and how this affects the
+ distributed execution platform of such applications. 
+ 
+Following this, 
+ an in-depth analysis of the principal contributions 
  and potential future work that continues in the direction proposed by this thesis is presented.
 \section{Discussion}
 \subsection*{Design Patterns for Cyber-Physical Swarms}
