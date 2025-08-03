@@ -19,6 +19,6 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - uses: DanySK/compile-and-publish-all-latex@1.0.15
+      - uses: DanySK/compile-and-publish-all-latex@1.1.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
